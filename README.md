@@ -1,5 +1,4 @@
 # Speedrunner CMS
-Yii 2 CMS aims to speed up and simplify development of small/medium web-projectsYii 2 CMS aims to speed up and simplify development of small/medium web-projects.
 Yii 2 CMS aims to speed up and simplify development of small/medium web-projects.
 
 ## Requirements

@@ -8,13 +8,9 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
-            'enableSchemaCache' => true,
-            'schemaCache' => 'cache',
-            'schemaCacheDuration' => 84000,
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
-            'cache' => 'yii\caching\FileCache',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

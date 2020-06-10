@@ -1,0 +1,88 @@
+*,
+a, a:hover,
+input,
+label,
+.close, .close:hover,
+.dropdown-item {
+    color: #fff;
+}
+
+table tr[class*=table-] td,
+table tr[class*=table-] td a {
+    color: #000;
+}
+
+.alert *,
+.alert .close:hover {
+    color: inherit;
+}
+
+
+
+body {
+    background: #254F54;
+}
+
+input.form-control, textarea.form-control, select.form-control,
+input.form-control:focus, textarea.form-control:focus, select.form-control:focus,
+.custom-file-label {
+    border-color: #7fa3a5;
+    background: transparent;
+    color: #fff;
+}
+
+input.form-control:focus, textarea.form-control:focus {
+    border-color: transparent;
+    outline-color: #7fa3a5;
+}
+
+.main-shadow {
+    box-shadow: none;
+    border: 4px #7fa3a5 double;
+}
+
+.modal-content {
+    background: #254F54;
+}
+
+.dropdown-menu {
+    border-color: #7fa3a5;
+    background: #254f54;
+    color: #fff;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: #067a7d;
+    color: #fff;
+}
+
+.select2-container .select2-selection--single, .select2-container .select2-search--dropdown .select2-search__field {
+    border-color: #7fa3a5;
+    background: transparent;
+}
+
+.select2-dropdown {
+    background: #254f54;
+}
+
+.select2-container .select2-selection__rendered {
+    color: #fff !important;
+}
+
+.has-success label,
+.has-error label,
+.has-error .help-block {
+    color: #fff;
+}
+
+.page-link,
+.page-item.disabled .page-link {
+    color: #fff;
+    background: #254f54;
+    border: 1px solid #7fa3a5;
+}
+
+.page-link:hover {
+    color: #fff;
+    background-color: #7fa3a5;
+}

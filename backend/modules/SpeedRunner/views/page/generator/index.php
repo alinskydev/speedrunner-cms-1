@@ -1,0 +1,142 @@
+<?php
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
+
+$this->title = 'Page Generator';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
+
+?>
+
+<?php $form = ActiveForm::begin([
+    'id' => 'edit-form'
+]); ?>
+
+<h2 class="main-title">
+    <?= $this->title ?>
+    <?= Html::submitButton(
+        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('app', 'Generate'),
+        ['class' => 'btn btn-primary btn-icon float-right']
+    ) ?>
+</h2>
+
+<div class="row">
+    <div class="col-lg-2 col-md-3">
+        <ul class="nav flex-column nav-pills main-shadow" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#tab-general">
+                    <?= Yii::t('app', 'General') ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#tab-blocks">
+                    <?= Yii::t('app', 'Blocks') ?>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
+        <div class="tab-content main-shadow p-3">
+            <div id="tab-general" class="tab-pane active">
+                <?= $form->field($model, 'page_name')->textInput() ?>
+                
+                <?= $form->field($model, 'has_seo_meta', [
+                    'checkboxTemplate' => Yii::$app->params['switcher_template'],
+                ])->checkbox([
+                    'class' => 'custom-control-input'
+                ])->label(null, [
+                    'class' => 'custom-control-label'
+                ]) ?>
+            </div>
+            
+            <div id="tab-blocks" class="tab-pane fade">
+                <?= $this->render('_parts') ?>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('speedrunner', 'GO'), ['class' => 'btn btn-primary btn-block', 'name' => 'contact-button']) ?>
+        </div>
+    </div>
+</div>
+
+<?php ActiveForm::end(); ?>
+
+
+<script>
+    window.onload = function() {
+        var el, action, sendData,
+            partIndex = 0;
+        
+        $(document).on('click', '.btn-part-add', function() {
+            el = $(this);
+            action = el.data('action');
+            
+            sendData = {
+                part_name: $('.part-name').val(),
+                part_index: partIndex
+            };
+            
+            $.get(action, sendData, function(data) {
+                $('#tab-blocks').append(data);
+                partIndex++;
+            });
+        });
+        
+        $(document).on('click', '.btn-part-remove', function() {
+            $(this).parents('.part').remove();
+            partIndex--;
+        });
+        
+//        ------------------------------------------------
+        
+        $(document).on('click', '.btn-block-add', function() {
+            el = $(this);
+            action = el.data('action');
+            
+            sendData = {
+                part_name: el.data('part_name'),
+                part_index: el.data('part_index')
+            };
+            
+            $.get(action, sendData, function(data) {
+                el.parents('table').find('tbody').append(data);
+            });
+        });
+        
+        $(document).on('click', '.btn-block-remove', function() {
+            $(this).parents('tr').remove();
+        });
+        
+//        ------------------------------------------------
+        
+        $(document).on('click', '.btn-attr-add', function() {
+            el = $(this);
+            action = el.data('action');
+            
+            $.get(action, {}, function(data) {
+                el.parents('td').find('.page-attrs-wrap').append(data);
+            });
+        });
+        
+        $(document).on('click', '.btn-attr-remove', function() {
+            $(this).parents('.page-attrs').remove();
+        });
+    };
+</script>
+
+
+<style>
+    table th,
+    table td {
+        vertical-align: middle !important;
+    }
+    
+    .attr-mover {
+        left: 7px;
+    }
+</style>

@@ -1,0 +1,78 @@
+.grid-view table {
+    overflow: hidden;
+}
+
+
+@media (max-width: 767px) {
+	.grid-view table, .grid-view thead, .grid-view tbody,
+    .grid-view tr, .grid-view th, .grid-view td {
+		display: inline-block;
+        width: 100%;
+	}
+    
+    .grid-view {
+        margin-top: 20px;
+    }
+	
+	.grid-view thead tr.labels { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.grid-view thead tr.filters {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+	}
+    
+	.grid-view thead tr.filters:before {
+        content: 'Filter';
+        position: relative;
+        width: 100%;
+        padding: 10px;
+        font-weight: 700;
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 1px #ccc solid;
+        margin-bottom: 10px;
+	}
+	
+	.grid-view thead tr.filters input,
+	.grid-view thead tr.filters select {
+        width: 100%;
+	}
+	
+	.grid-view tr {
+        border: 1px solid #ccc;
+    }
+	
+	.grid-view td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	.grid-view td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+    
+    .grid-view td input[type=checkbox] {
+        float: right;
+    }
+    
+    .grid-view table tr td.action-column {
+        text-align: right;
+    }
+    
+    .grid-view table tr td.action-column a {
+        display: inline-block;
+    }
+}

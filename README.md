@@ -22,6 +22,12 @@ yii speedrunner/db-import main.sql
 ```
 or import SQL file `/console/db/main.sql` using MySQL manager.
 
+## Running
+Use following urls to get application you need:
+* `<your-domain>/api` for **api**
+* `<your-domain>/admin` for **backend**
+* `<your-domain>/` for **frontend**
+
 ## Important notes
 * Do not use update command `composer update-all`, framework only (!) updating is allowed. Example: `composer update yiisoft/yii2`
 

@@ -15,8 +15,8 @@ class BlogController extends Controller
         return [
             'cache' => [
                 'class' => 'yii\filters\PageCache',
-                'enabled' => Yii::$app->settings->use_frontend_cache,
                 'duration' => 0,
+                'only' => ['index', 'view'],
                 'variations' => [
                     Yii::$app->language,
                     Yii::$app->user,

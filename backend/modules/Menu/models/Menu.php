@@ -93,11 +93,4 @@ class Menu extends ActiveRecord
     {
         return new MenuQuery(get_called_class());
     }
-    
-    public function afterDelete()
-    {
-        MenuTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

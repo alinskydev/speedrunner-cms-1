@@ -66,22 +66,4 @@ class Page extends ActiveRecord
     {
         return $this->hasOne(PageTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
-    
-    
-    public function beforeSave($insert)
-    {
-        return parent::beforeSave($insert);
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        PageTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

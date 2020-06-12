@@ -25,14 +25,12 @@ class GeneratorForm extends Model
     
     public $attrs_fields;
     
-    public $use;
-    
     public function rules()
     {
         return [
             [['module_name', 'generate_files', 'controller_name', 'controller_actions', 'table_name'], 'required'],
             [['with_translation', 'has_seo_meta'], 'boolean'],
-            [['model_relations', 'view_relations', 'attrs_fields', 'use'], 'safe'],
+            [['model_relations', 'view_relations', 'attrs_fields'], 'safe'],
             [['module_name'], 'in', 'range' => $this->modulesList, 'not' => true, 'when' => function ($model) {
                 return in_array('module', $this->generate_files);
             }],
@@ -60,7 +58,6 @@ class GeneratorForm extends Model
             'model_relations' => Yii::t('speedrunner', 'Model relations'),
             'view_relations' => Yii::t('speedrunner', 'View relations'),
             'attrs_fields' => Yii::t('speedrunner', 'Attributes fields'),
-            'use' => Yii::t('speedrunner', 'Use'),
         ];
     }
     
@@ -87,8 +84,6 @@ class GeneratorForm extends Model
     
     public function generate()
     {
-        $this->use = $this->use ? ArrayHelper::index($this->use, null, 'type') : [];
-        
         $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/module/generator');
         $folder_template_render = '@backend/modules/SpeedRunner/templates/module/generator';
         $folder_module = Yii::getAlias("@backend/modules/$this->module_name/");

@@ -107,15 +107,8 @@ class Column extends BaseObject
         } else {
             $options = $this->contentOptions;
         }
-        
-        if (\Yii::$app->settings->use_mobile_grid) {
-            $result = Html::tag('label', $this->getHeaderCellLabel(), ['class' => 'col-xs-6 visible-xs']);
-            $result .= Html::tag('div', $this->renderDataCellContent($model, $key, $index), ['class' => 'col-xs-6 width-sm-auto grid-column-content']);
-            $result = Html::tag('div', $result, ['class' => 'row']);
-            return Html::tag('td', $result, $options);
-        } else {
-            return Html::tag('td', $this->renderDataCellContent($model, $key, $index), $options);
-        }
+
+        return Html::tag('td', $this->renderDataCellContent($model, $key, $index), $options);
     }
 
     /**
@@ -123,16 +116,7 @@ class Column extends BaseObject
      */
     public function renderFilterCell()
     {
-        if (\Yii::$app->settings->use_mobile_grid) {
-            $filter_cell_content = str_replace('&nbsp;', '', $this->renderFilterCellContent());
-            $result = $filter_cell_content ? Html::tag('label', $this->getHeaderCellLabel(), ['class' => 'visible-xs']) : '';
-            $result .= $filter_cell_content;
-            $this->filterOptions['class'] .= $result ? '' : ' hidden-xs';
-
-            return Html::tag('td', $result, $this->filterOptions);
-        } else {
-            return Html::tag('td', $this->renderFilterCellContent(), $this->filterOptions);
-        }
+        return Html::tag('td', $this->renderFilterCellContent(), $this->filterOptions);
     }
 
     /**

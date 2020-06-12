@@ -12,6 +12,7 @@ echo '<?php';
 
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 
 $this->title = Yii::t('app', 'View: {name}', ['name' => $model->name]);

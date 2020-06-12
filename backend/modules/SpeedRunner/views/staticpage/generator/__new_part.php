@@ -24,7 +24,7 @@
                 <td colspan="7">
                     <button type="button"
                             class="btn btn-success btn-block btn-block-add"
-                            data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/page/generator/new-block']) ?>"
+                            data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-block']) ?>"
                             data-part_name="<?= $part_name ?>"
                             data-part_index="<?= $part_index ?>"
                     >

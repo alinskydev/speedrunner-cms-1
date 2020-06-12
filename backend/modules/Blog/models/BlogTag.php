@@ -18,7 +18,7 @@ class BlogTag extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'unique'],
-            [['name'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 100],
         ];
     }
     
@@ -29,12 +29,5 @@ class BlogTag extends ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'created' => Yii::t('app', 'Created'),
         ];
-    }
-    
-    public function afterDelete()
-    {
-        BlogTagRef::deleteAll(['tag_id' => $this->id]);
-        
-        return parent::afterDelete();
     }
 }

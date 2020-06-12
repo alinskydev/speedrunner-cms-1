@@ -62,7 +62,8 @@ class ProductCategory extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'url', 'full_url', 'image'], 'string', 'max' => 100],
+            [['name', 'url', 'image'], 'string', 'max' => 100],
+            [['full_url'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['full_url'], 'unique', 'message' => Yii::t('app', 'Url must be unique')],
@@ -157,14 +158,5 @@ class ProductCategory extends ActiveRecord
         ProductCategoryAttributeRef::deleteAll(['category_id' => $this->id, 'attribute_id' => $attributes]);
         
         return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        ProductCategoryTranslation::deleteAll(['item_id' => $this->id]);
-        ProductCategoryRef::deleteAll(['category_id' => $this->id]);
-        ProductCategoryAttributeRef::deleteAll(['category_id' => $this->id]);
-        
-        return parent::afterDelete();lete();
     }
 }

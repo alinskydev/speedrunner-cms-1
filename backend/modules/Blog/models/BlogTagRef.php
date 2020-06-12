@@ -12,13 +12,4 @@ class BlogTagRef extends ActiveRecord
     {
         return 'BlogTagRef';
     }
-    
-    public function rules()
-    {
-        return [
-            [['blog_id', 'tag_id'], 'required'],
-            [['blog_id', 'tag_id'], 'integer'],
-            [['lang'], 'string', 'max' => 20],
-        ];
-    }
 }

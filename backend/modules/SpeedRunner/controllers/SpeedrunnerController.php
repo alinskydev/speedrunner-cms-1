@@ -11,41 +11,67 @@ class SpeedrunnerController extends Controller
 {
     public function actionIndex()
     {
-        $actions = [
-            'module_generator' => [
-                'url' => ['speedrunner/module/generator'],
-                'label' => 'Module Generator',
-                'bg_class' => 'primary',
-                'icon_class' => 'fas fa-file-code'
+        $action_types = [
+            [
+                'label' => 'Module',
+                'actions' => [
+                    'module_generator' => [
+                        'url' => ['speedrunner/module/generator'],
+                        'label' => 'Generator',
+                        'bg_class' => 'primary',
+                        'icon_class' => 'fas fa-file-code'
+                    ],
+                    'module_duplicator' => [
+                        'url' => ['speedrunner/module/duplicator'],
+                        'label' => 'Duplicator',
+                        'bg_class' => 'primary',
+                        'icon_class' => 'fas fa-copy'
+                    ],
+                    'module_destroyer' => [
+                        'url' => ['speedrunner/module/destroyer'],
+                        'label' => 'Destroyer',
+                        'bg_class' => 'primary',
+                        'icon_class' => 'far fa-times-circle'
+                    ],
+                ],
             ],
-            'module_duplicator' => [
-                'url' => ['speedrunner/module/duplicator'],
-                'label' => 'Module Duplicator',
-                'bg_class' => 'success',
-                'icon_class' => 'fas fa-copy'
+            [
+                'label' => 'Static Page',
+                'actions' => [
+                    'staticpage_generator' => [
+                        'url' => ['speedrunner/staticpage/generator'],
+                        'label' => 'Generator',
+                        'bg_class' => 'warning',
+                        'icon_class' => 'fas fa-file-alt'
+                    ],
+                ],
             ],
-            'page_generator' => [
-                'url' => ['speedrunner/page/generator'],
-                'label' => 'Page Generator',
-                'bg_class' => 'warning',
-                'icon_class' => 'fas fa-file-alt'
+            [
+                'label' => 'Block',
+                'actions' => [
+                    'block_generator' => [
+                        'url' => ['speedrunner/block/generator'],
+                        'label' => 'Generator',
+                        'bg_class' => 'info',
+                        'icon_class' => 'fas fa-th'
+                    ],
+                ],
             ],
-            'block_generator' => [
-                'url' => ['speedrunner/block/generator'],
-                'label' => 'Block Generator',
-                'bg_class' => 'info',
-                'icon_class' => 'fas fa-th'
-            ],
-            'api_generator' => [
-                'url' => ['speedrunner/api/generator'],
-                'label' => 'API Generator',
-                'bg_class' => 'primary',
-                'icon_class' => 'fas fa-mobile-alt'
+            [
+                'label' => 'API',
+                'actions' => [
+                    'api_generator' => [
+                        'url' => ['speedrunner/api/documentator'],
+                        'label' => 'Documentator',
+                        'bg_class' => 'success',
+                        'icon_class' => 'fas fa-file-alt'
+                    ],
+                ],
             ],
         ];
         
         return $this->render('index', [
-            'actions' => $actions
+            'action_types' => $action_types
         ]);
     }
 }

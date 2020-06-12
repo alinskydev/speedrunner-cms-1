@@ -8,10 +8,6 @@ use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 
-if (Yii::$app->settings->use_mobile_grid) {
-    $this->registerCssFile('@web/css/mobile-grid.css', ['depends' => [AppAsset::className()]]);
-}
-
 if (Yii::$app->session->get('theme_dark')) {
     $this->registerCssFile('@web/css/theme-dark.css', ['depends' => [AppAsset::className()]]);
 }

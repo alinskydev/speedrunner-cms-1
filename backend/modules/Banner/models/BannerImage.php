@@ -31,8 +31,8 @@ class BannerImage extends ActiveRecord
     {
         return [
             [['image'], 'required'],
-            [['text_1', 'text_2', 'text_3'], 'string', 'max' => 1000],
-            [['link', 'image'], 'string', 'max' => 100],
+            [['text_1', 'text_2', 'text_3', 'link'], 'string', 'max' => 1000],
+            [['image'], 'string', 'max' => 100],
         ];
     }
     
@@ -53,12 +53,5 @@ class BannerImage extends ActiveRecord
     public function getTranslation()
     {
         return $this->hasOne(BannerImageTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
-    }
-    
-    public function afterDelete()
-    {
-        BannerImageTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
     }
 }

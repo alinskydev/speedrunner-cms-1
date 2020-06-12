@@ -42,8 +42,7 @@ class ProductBrand extends ActiveRecord
         return [
             [['name'], 'required'],
             [['description'], 'string'],
-            [['name'], 'string', 'max' => 50],
-            [['url', 'image'], 'string', 'max' => 100],
+            [['name', 'url', 'image'], 'string', 'max' => 100],
             [['url'], 'unique'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
         ];
@@ -65,12 +64,5 @@ class ProductBrand extends ActiveRecord
     public function getTranslation()
     {
         return $this->hasOne(ProductBrandTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
-    }
-    
-    public function afterDelete()
-    {
-        ProductBrandTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
     }
 }

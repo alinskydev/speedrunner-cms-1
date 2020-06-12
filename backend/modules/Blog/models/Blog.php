@@ -172,16 +172,4 @@ class Blog extends ActiveRecord
         
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) { $img->delete(); };
-        
-        BlogTranslation::deleteAll(['item_id' => $this->id]);
-        BlogTagRef::deleteAll(['blog_id' => $this->id]);
-        BlogComment::deleteAll(['blog_id' => $this->id]);
-        BlogRate::deleteAll(['blog_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

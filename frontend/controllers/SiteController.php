@@ -49,16 +49,6 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'cache' => [
-                'class' => 'yii\filters\PageCache',
-                'enabled' => Yii::$app->settings->use_frontend_cache,
-                'duration' => 0,
-                'only' => ['index', 'about', 'contact'],
-                'variations' => [
-                    Yii::$app->language,
-                    Yii::$app->user,
-                ],
-            ],
         ];
     }
     

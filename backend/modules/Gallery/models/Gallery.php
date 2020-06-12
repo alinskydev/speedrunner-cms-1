@@ -76,11 +76,4 @@ class Gallery extends ActiveRecord
         
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) { $img->delete(); };
-        
-        return parent::afterDelete();
-    }
 }

@@ -67,11 +67,4 @@ class ZzzCategory extends ActiveRecord
     {
         return $this->hasMany(Zzz::className(), ['category_id' => 'id']);
     }
-    
-    public function afterDelete()
-    {
-        ZzzCategoryTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

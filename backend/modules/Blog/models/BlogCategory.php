@@ -70,11 +70,4 @@ class BlogCategory extends ActiveRecord
     {
         return $this->hasMany(Blog::className(), ['category_id' => 'id']);
     }
-    
-    public function afterDelete()
-    {
-        BlogCategoryTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

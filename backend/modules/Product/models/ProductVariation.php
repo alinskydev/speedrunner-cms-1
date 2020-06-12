@@ -23,7 +23,7 @@ class ProductVariation extends ActiveRecord
             [['attribute_id', 'option_id'], 'required'],
             [['attribute_id', 'option_id'], 'integer'],
             [['price'], 'number'],
-            [['sku'], 'string', 'max' => 50],
+            [['sku'], 'string', 'max' => 100],
             [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
         ];
     }
@@ -74,12 +74,5 @@ class ProductVariation extends ActiveRecord
         }
         
         return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) { $img->delete(); };
-        
-        return parent::afterDelete();
     }
 }

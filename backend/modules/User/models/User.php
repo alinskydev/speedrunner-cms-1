@@ -156,8 +156,6 @@ class User extends ActiveRecord implements IdentityInterface
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
         
-        $this->profile->delete();
-        
         return parent::afterDelete();
     }
     

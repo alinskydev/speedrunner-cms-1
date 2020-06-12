@@ -1,7 +1,6 @@
 <?php
 
 $index_title = ($model->module_name == $model->controller_name) ? $model->module_name : $model->module_name . ' ' . $model->controller_name;
-$use = isset($model->use['view_update']) ? $model->use['view_update'] : [];
 
 //      ATTRIBUTES
 
@@ -13,10 +12,10 @@ echo '<?php';
 
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
-<?php foreach ($use as $u) { ?>
-use <?= $u['value'] ?>;
-<?php } ?>
+use kartik\file\FileInput;
+use vova07\imperavi\Widget;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];

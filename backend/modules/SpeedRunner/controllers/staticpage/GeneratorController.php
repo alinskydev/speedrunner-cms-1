@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers\page;
+namespace backend\modules\SpeedRunner\controllers\staticpage;
 
 use Yii;
 use yii\web\Controller;
@@ -8,7 +8,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\db\Schema;
 
-use backend\modules\SpeedRunner\forms\page\GeneratorForm;
+use backend\modules\SpeedRunner\forms\staticpage\GeneratorForm;
 
 
 class GeneratorController extends Controller

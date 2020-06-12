@@ -7,17 +7,17 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\SpeedRunner\forms\module\DuplicatorForm;
+use backend\modules\SpeedRunner\forms\module\DestroyerForm;
 
 
-class DuplicatorController extends Controller
+class DestroyerController extends Controller
 {
     public function actionIndex()
     {
-        $model = new DuplicatorForm;
+        $model = new DestroyerForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->duplicate()) {
+            if ($model->destroy()) {
                 Yii::$app->session->setFlash('success', 'Succeccfully done');
             } else {
                 Yii::$app->session->setFlash('danger', 'Error');

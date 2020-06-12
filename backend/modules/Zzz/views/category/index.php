@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             'updated',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [],
             ],

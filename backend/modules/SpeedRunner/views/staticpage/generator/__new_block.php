@@ -37,7 +37,7 @@ $rnd_number = round(microtime(true) * 1000);
         
         <button type="button"
                 class="btn btn-success btn-block btn-attr-add"
-                data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/page/generator/new-attr', 'block' => $rnd_number]) ?>"
+                data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-attr', 'block' => $rnd_number]) ?>"
         >
             <i class="fa fa-plus"></i>
         </button>

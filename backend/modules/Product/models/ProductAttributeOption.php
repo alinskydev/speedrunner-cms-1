@@ -49,11 +49,4 @@ class ProductAttributeOption extends ActiveRecord
     {
         return $this->hasOne(ProductAttribute::className(), ['id' => 'item_id']);
     }
-    
-    public function afterDelete()
-    {
-        ProductAttributeOptionTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

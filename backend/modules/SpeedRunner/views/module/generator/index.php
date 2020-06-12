@@ -46,11 +46,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     <?= Yii::t('app', 'View') ?>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-use">
-                    <?= Yii::t('app', 'Use') ?>
-                </a>
-            </li>
         </ul>
     </div>
     
@@ -108,7 +103,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]) ?>
                 <hr>
                 
-                <?= $this->render('_model_relations') ?>
+                <div id="generatorform-relations-result"></div>
                 <hr>
                 
                 <?= $this->render('_view_relations', ['tables' => $tables]) ?>
@@ -116,10 +111,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-view" class="tab-pane fade">
                 <div id="generatorform-attrs-result"></div>
-            </div>
-            
-            <div id="tab-use" class="tab-pane fade">
-                <?= $this->render('_use') ?>
             </div>
         </div>
     </div>
@@ -139,50 +130,26 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         
 //        ------------------------------------------------
         
-        function getAttrsFields() {
-            action = '<?= Yii::$app->urlManager->createUrl(['speedrunner/module/generator/attrs-fields']) ?>';
+        function getModelSchema() {
+            action = '<?= Yii::$app->urlManager->createUrl(['speedrunner/module/generator/model-schema']) ?>';
             sendData = {
                 "table_name": $('#generatorform-table_name').val(),
                 "with_translation": $('#generatorform-with_translation').prop('checked') ? 1 : 0,
                 "_csrf-backend": $('meta[name=csrf-token]').attr('content')
             };
             
-            if (!['', null].includes($('#generatorform-table_name').val())) {
-                $.post(action, sendData, function(data) {
-                    $('#generatorform-attrs-result').html(data);
-                });
-            }
+            $.post(action, sendData, function(data) {
+                $('#generatorform-relations-result').html(data.relations);
+                $('#generatorform-attrs-result').html(data.attrs);
+            });
         }
         
         $('#generatorform-table_name').on('change', function() {
-            getAttrsFields();
+            getModelSchema();
         });
         
         $('#generatorform-with_translation').on('change', function() {
-            getAttrsFields();
-        });
-        
-//        ------------------------------------------------
-        
-        $(document).on('change', '.model_relations-name', function() {
-            $(this).parents('tr').find('.model_relations-model').val($(this).val());
-        });
-        
-//        ------------------------------------------------
-        
-        $(document).on('click', '.btn-add[data-table=use]', function(e) {
-            el = $(this);
-            
-            setTimeout(function() {
-                el.parents('table').find('.selectpicker-type-2').not('.select2-hidden-accessible').select2({
-                    tags: true,
-                    closeOnSelect: false
-                });
-                
-                el.parents('table').find('.selectpicker-type-2').on('select2:select', function(e) {
-                    $(e.target).data('select2').dropdown.$search.val(e.params.data.text).focus();
-                });
-            }, 0);
+            getModelSchema();
         });
     };
 </script>

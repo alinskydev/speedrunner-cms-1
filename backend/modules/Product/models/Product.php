@@ -314,19 +314,4 @@ class Product extends ActiveRecord
         
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) { $img->delete(); };
-        foreach ($this->vars as $v) { $v->delete(); };
-        
-        ProductTranslation::deleteAll(['item_id' => $this->id]);
-        ProductCategoryRef::deleteAll(['product_id' => $this->id]);
-        ProductOptionRef::deleteAll(['product_id' => $this->id]);
-        ProductRelatedRef::deleteAll(['product_id' => $this->id]);
-        ProductComment::deleteAll(['product_id' => $this->id]);
-        ProductRate::deleteAll(['product_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

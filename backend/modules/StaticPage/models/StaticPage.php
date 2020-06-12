@@ -19,11 +19,4 @@ class StaticPage extends ActiveRecord
     {
         return $this->hasMany(StaticPageBlock::className(), ['item_id' => 'id'])->orderBy('part_index');
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->blocks as $b) { $b->delete(); };
-        
-        return parent::afterDelete();
-    }
 }

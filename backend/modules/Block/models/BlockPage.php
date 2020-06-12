@@ -97,13 +97,4 @@ class BlockPage extends ActiveRecord
         
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->blocks as $b) { $b->delete(); };
-        
-        BlockPageTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

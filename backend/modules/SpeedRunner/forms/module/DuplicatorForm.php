@@ -6,9 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
-use yii\helpers\StringHelper;
-use yii\db\Schema;
-use yii\db\QueryBuilder;
 
 
 class DuplicatorForm extends Model
@@ -58,7 +55,7 @@ class DuplicatorForm extends Model
     
     public function duplicate()
     {
-        //      FILES
+        //        FILES
         
         if (in_array('files', $this->duplicate_types)) {
             $name_from = Yii::getAlias("@backend/modules/$this->module_name_from");
@@ -91,38 +88,20 @@ class DuplicatorForm extends Model
             }
         }
         
-        //      DB
+        //        DB
         
         if (in_array('db_tables', $this->duplicate_types)) {
-            $connection = Yii::$app->db;
-            $queryBuilder = $connection->queryBuilder;
-            $dbSchema = $connection->schema;
-            $tables = $dbSchema->getTableNames();
+            $tables = Yii::$app->db->schema->getTableNames();
+            $sql = null;
             
             foreach ($tables as $t) {
                 if (strpos($t, $this->module_name_from) === 0) {
                     $new_table_name = str_replace($this->module_name_from, $this->module_name_to, $t);
-                    $columns_tmp = $dbSchema->getTableSchema($t)->columns;
-                    $columns = [];
-                    
-                    if ($dbSchema->getTableSchema($new_table_name, true) !== null) {
-                        $sql = $queryBuilder->dropTable($new_table_name);
-                        $connection->createCommand($sql)->execute();
-                    }
-                    
-                    foreach ($columns_tmp as $key => $c_t) {
-                        if ($c_t->isPrimaryKey) {
-                            $columns[$key] = 'pk';
-                        } else {
-                            $columns[$key] = $c_t->dbType;
-                            $columns[$key] .= $c_t->allowNull ? ' NULL' : ' NOT NULL';
-                        }
-                    }
-                    
-                    $sql = $queryBuilder->createTable($new_table_name, $columns);
-                    $connection->createCommand($sql)->execute();
+                    $sql .= "CREATE TABLE $new_table_name LIKE $t;";
                 }
             }
+            
+            Yii::$app->db->createCommand($sql)->execute();
         }
         
         return true;

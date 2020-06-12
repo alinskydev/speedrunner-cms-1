@@ -3,8 +3,6 @@
 use yii\helpers\ArrayHelper;
 use yii\db\mysql\ColumnSchema;
 
-$use = isset($model->use['model']) ? $model->use['model'] : [];
-
 //      DB SCHEMA
 
 $dbSchema = Yii::$app->db->schema;
@@ -50,9 +48,6 @@ use Yii;
 use common\components\framework\ActiveRecord;
 <?php if(isset($columns['url'])) { ?>
 use yii\behaviors\SluggableBehavior;
-<?php } ?>
-<?php foreach ($use as $u) { ?>
-use <?= $u['value'] ?>;
 <?php } ?>
 <?php if ($model->with_translation) { ?>
 use backend\modules\<?= $model->module_name ?>\modelsTranslation\<?= $model->table_name ?>Translation;
@@ -116,29 +111,17 @@ class <?= $model->table_name ?> extends ActiveRecord
 <?php } ?>
         ];
     }
-    
-<?php if ($model->with_translation) { ?>
-    public function getTranslation()
-    {
-        return $this->hasOne(<?= $model->table_name ?>Translation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
-    }
-    
-<?php } ?>
 <?php foreach ($model->model_relations as $r) { ?>
+    
     public function get<?= $r['name'] ?>()
     {
         return $this-><?= $r['type'] ?>(<?= $r['model'] ?>::className(), [<?= "'" . $r['cond_from'] . "' => '" . $r['cond_to'] . "'" ?>]);
     }
-    
 <?php } ?>
-    public function beforeSave($insert)
-    {
-        return parent::beforeSave($insert);
-    }
+<?php if ($model->view_relations) { ?>
     
     public function afterSave($insert, $changedAttributes)
     {
-<?php if ($model->view_relations) { ?>
 <?php foreach ($model->view_relations as $r) { ?>
 <?php
     $var_name = $r['var_name'];
@@ -168,23 +151,7 @@ class <?= $model->table_name ?> extends ActiveRecord
         foreach ($<?= $var_name_rel ?> as $value) { $value->delete(); };
         
 <?php } ?>
-<?php } ?>
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-<?php if ($model->view_relations) { ?>
-<?php foreach ($model->view_relations as $r) { ?>
-<?php $var_name_rel = str_replace('_tmp', '', $r['var_name']); ?>
-        foreach ($this-><?= $var_name_rel ?> as $value) { $value->delete(); };
-        
 <?php } ?>
-<?php } ?>
-<?php if ($model->with_translation) { ?>
-        <?= $model->table_name ?>Translation::deleteAll(['item_id' => $this->id]);
-        
-<?php } ?>
-        return parent::afterDelete();
-    }
 }

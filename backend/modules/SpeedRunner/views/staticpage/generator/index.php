@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
-$this->title = 'Page Generator';
+$this->title = 'Static Page Generator';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

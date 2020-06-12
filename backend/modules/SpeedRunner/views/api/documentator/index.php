@@ -3,9 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use kartik\select2\Select2;
 
-$this->title = 'Module Duplicator';
+$this->title = 'API Documentator';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -18,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <h2 class="main-title">
     <?= $this->title ?>
     <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('app', 'Duplicate'),
+        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('app', 'Generate'),
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>
 </h2>
@@ -37,22 +36,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'duplicate_types')->widget(Select2::classname(), [
-                    'data' => $model->duplicateTypes,
-                    'options' => [
-                        'multiple' => true,
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]); ?>
-                
-                <?= $form->field($model, 'module_name_from')->dropDownList($model->modulesList, [
-                    'data-toggle' => 'selectpicker',
-                    'prompt' => ' '
-                ]) ?>
-                
-                <?= $form->field($model, 'module_name_to')->textInput() ?>
+                <?= $form->field($model, 'module')->dropDownList($model->modulesList) ?>
             </div>
         </div>
     </div>

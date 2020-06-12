@@ -6,16 +6,16 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
-use backend\modules\SpeedRunner\forms\api\GeneratorForm;
+use backend\modules\SpeedRunner\forms\api\DocumentatorForm;
 
 
-class GeneratorController extends Controller
+class DocumentatorController extends Controller
 {
     public function actionIndex()
     {
         //        FORM
         
-        $model = new GeneratorForm;
+        $model = new DocumentatorForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->generate()) {

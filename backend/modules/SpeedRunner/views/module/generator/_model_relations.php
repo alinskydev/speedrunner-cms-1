@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 $types = [
     'hasOne' => 'hasOne',
@@ -21,43 +22,53 @@ $types = [
             <th style="width: 20%;"><?= Yii::t('speedrunner', 'Model') ?></th>
             <th style="width: 20%;"><?= Yii::t('speedrunner', 'Condition (from)') ?></th>
             <th style="width: 20%;"><?= Yii::t('speedrunner', 'Condition (to)') ?></th>
-            <th style="width: 3%;"></th>
         </tr>
     </thead>
     <tbody>
-        <tr class="table-new-relation" data-table="model_relations">
-            <td class="table-sorter">
-                <i class="fas fa-arrows-alt"></i>
-            </td>
-            <td>
-                <?= Html::input('text', 'GeneratorForm[model_relations][__key__][name]', null, ['class' => 'form-control model_relations-name']); ?>
-            </td>
-            <td>
-                <?= Html::dropdownList('GeneratorForm[model_relations][__key__][type]', null, $types, ['class' => 'form-control']); ?>
-            </td>
-            <td>
-                <?= Html::input('text', 'GeneratorForm[model_relations][__key__][model]', null, ['class' => 'form-control model_relations-model']); ?>
-            </td>
-            <td>
-                <?= Html::input('text', 'GeneratorForm[model_relations][__key__][cond_from]', null, ['class' => 'form-control']); ?>
-            </td>
-            <td>
-                <?= Html::input('text', 'GeneratorForm[model_relations][__key__][cond_to]', null, ['class' => 'form-control']); ?>
-            </td>
-            <td class="text-right">
-                <button type="button" class="btn btn-danger btn-remove">
-                    <span class="fa fa-times"></span>
-                </button>
-            </td>
-        </tr>
+        <?php foreach ($foreign_keys as $fks_key => $fks) { ?>
+            <?php foreach ($fks as $key => $fk) { ?>
+                <?php
+                    ArrayHelper::remove($fk, 0);
+                    $fk = $fks_key == 'internal' ? array_flip($fk) : $fk;
+                ?>
+                
+                <tr>
+                    <td class="table-sorter">
+                        <i class="fas fa-arrows-alt"></i>
+                    </td>
+                    
+                    <td>
+                        <?= Html::input('text', "GeneratorForm[model_relations][$key][name]", str_replace($table_name, null, $key), [
+                            'class' => 'form-control',
+                        ]); ?>
+                    </td>
+                    
+                    <td>
+                        <?= Html::dropdownList("GeneratorForm[model_relations][$key][type]", null, $types, ['class' => 'form-control']); ?>
+                    </td>
+                    
+                    <td>
+                        <?= Html::input('text', "GeneratorForm[model_relations][$key][model]", $key, [
+                            'class' => 'form-control',
+                            'readonly' => true,
+                        ]); ?>
+                    </td>
+                    
+                    <td>
+                        <?= Html::input('text', "GeneratorForm[model_relations][$key][cond_from]", array_keys($fk)[0], [
+                            'class' => 'form-control',
+                            'readonly' => true,
+                        ]); ?>
+                    </td>
+                    
+                    <td>
+                        <?= Html::input('text', "GeneratorForm[model_relations][$key][cond_to]", array_values($fk)[0], [
+                            'class' => 'form-control',
+                            'readonly' => true,
+                        ]); ?>
+                    </td>
+                </tr>
+            <?php } ?>
+        <?php } ?>
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="7">
-                <button type="button" class="btn btn-success btn-block btn-add" data-table="model_relations">
-                    <i class="fa fa-plus"></i>
-                </button>
-            </td>
-        </tr>
-    </tfoot>
 </table>

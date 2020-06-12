@@ -6,14 +6,13 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use yii\db\Schema;
 
 use backend\modules\SpeedRunner\forms\module\GeneratorForm;
 
 
 class GeneratorController extends Controller
 {
-    public $dbSchema;
+    protected $dbSchema;
     
     public function beforeAction($action)
     {
@@ -48,15 +47,38 @@ class GeneratorController extends Controller
         ]);
     }
     
-    public function actionAttrsFields()
+    public function actionModelSchema()
     {
         $table_name = Yii::$app->request->post('table_name');
-        $columns = $this->dbSchema->getTableSchema($table_name)->columns;
+        $with_translation = Yii::$app->request->post('with_translation');
         
-        if ($with_translation = Yii::$app->request->post('with_translation')) {
+        //        RELATIONS
+        
+        $table_schema_all = ArrayHelper::index($this->dbSchema->getTableSchemas(), 'name');
+        $table_schema = ArrayHelper::getValue($table_schema_all, $table_name);
+        
+        $foreign_keys['internal'] = ArrayHelper::index($table_schema->foreignKeys, 0);
+        $foreign_keys['external'] = ArrayHelper::map($table_schema_all, 'name', function ($value) use ($table_name) {
+            foreach (ArrayHelper::index($value->foreignKeys, 0) as $fk) {
+                return $fk[0] == $table_name ? $fk : null;
+            }
+        });
+        
+        $foreign_keys['external'] = array_filter($foreign_keys['external']);
+        
+        $data['relations'] = $this->renderAjax('_model_relations', [
+            'table_name' => $table_name,
+            'foreign_keys' => $foreign_keys,
+        ]);
+        
+        //        ATTRS
+        
+        $columns = $table_schema->columns;
+        
+        if ($with_translation) {
             $translation_attrs = ['item_id', 'lang'];
             
-            $columns_translation = $this->dbSchema->getTableSchema($table_name . 'Translation')->columns;
+            $columns_translation = ArrayHelper::getValue($table_schema_all, $table_name . 'Translation.columns');
             
             foreach ($translation_attrs as $t_a) {
                 unset($columns_translation[$t_a]);
@@ -65,10 +87,12 @@ class GeneratorController extends Controller
             $columns = ArrayHelper::merge($columns_translation, $columns);
         }
         
-        return $this->renderAjax('_attr_fields', [
+        $data['attrs'] = $this->renderAjax('_attr_fields', [
             'model' => new GeneratorForm,
             'table_name' => $table_name,
             'columns' => $columns,
         ]);
+        
+        return $this->asJson($data);
     }
 }

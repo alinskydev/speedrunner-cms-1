@@ -37,11 +37,4 @@ class BlockType extends ActiveRecord
     {
         return $this->hasMany(Block::className(), ['type_id' => 'id']);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->blocks as $b) { $b->delete(); };
-        
-        return parent::afterDelete();
-    }
 }

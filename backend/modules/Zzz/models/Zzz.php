@@ -103,13 +103,4 @@ class Zzz extends ActiveRecord
         
         return parent::afterSave($insert, $changedAttributes);
     }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) { $img->delete(); };
-        
-        ZzzTranslation::deleteAll(['item_id' => $this->id]);
-        
-        return parent::afterDelete();
-    }
 }

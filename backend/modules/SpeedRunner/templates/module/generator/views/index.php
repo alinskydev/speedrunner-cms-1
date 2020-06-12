@@ -3,7 +3,6 @@
 use yii\helpers\ArrayHelper;
 
 $title = ($model->module_name == $model->controller_name) ? $model->module_name : $model->module_name . ' ' . $model->controller_name;
-$use = isset($model->use['view_index']) ? $model->use['view_index'] : [];
 
 //      ATTRIBUTES
 
@@ -22,10 +21,8 @@ echo '<?php';
 
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
-<?php foreach ($use as $u) { ?>
-use <?= $u['value'] ?>;
-<?php } ?>
 
 $this->title = Yii::t('app', '<?= $title ?>s');
 $this->params['breadcrumbs'][] = ['label' => $this->title];

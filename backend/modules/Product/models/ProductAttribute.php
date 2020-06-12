@@ -28,7 +28,7 @@ class ProductAttribute extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code', 'type', 'use_filter', 'use_compare', 'use_detail'], 'required'],
+            [['name', 'code', 'type'], 'required'],
             [['name', 'code'], 'string', 'max' => 100],
             [['code'], 'unique'],
             [['code'], 'match', 'pattern' => '/^[a-zA-Z0-9\_-]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
@@ -100,16 +100,5 @@ class ProductAttribute extends ActiveRecord
         foreach ($options as $o) { $o->delete(); };
         
         return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        foreach ($this->options as $o) { $o->delete(); };
-        
-        ProductAttributeTranslation::deleteAll(['item_id' => $this->id]);
-        ProductCategoryAttributeRef::deleteAll(['attribute_id' => $this->id]);
-        ProductOptionRef::deleteAll(['attribute_id' => $this->id]);
-        
-        return parent::afterDelete();
     }
 }

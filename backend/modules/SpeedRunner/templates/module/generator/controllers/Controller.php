@@ -1,6 +1,5 @@
 <?php
 
-$use = isset($model->use['controller']) ? $model->use['controller'] : [];
 $controller_default_actions = ['index', 'view', 'create', 'update', 'delete'];
 $controller_extra_actions = array_diff($model->controller_actions, $controller_default_actions);
 
@@ -14,9 +13,6 @@ namespace backend\modules\<?= $model->module_name ?>\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-<?php foreach ($use as $u) { ?>
-use <?= $u['value'] ?>;
-<?php } ?>
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;
 use backend\modules\<?= $model->module_name ?>\modelsSearch\<?= $model->table_name ?>Search;

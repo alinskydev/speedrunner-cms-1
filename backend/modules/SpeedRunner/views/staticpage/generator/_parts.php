@@ -14,7 +14,7 @@ use yii\helpers\Html;
         <label>&nbsp;</label><br>
         <button type="button"
                 class="btn btn-success btn-block btn-icon btn-part-add"
-                data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/page/generator/new-part']) ?>"
+                data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-part']) ?>"
         >
             <i class="fa fa-plus"></i>
             <?= Yii::t('app', 'Add') ?>

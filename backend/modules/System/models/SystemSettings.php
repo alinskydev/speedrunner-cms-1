@@ -18,8 +18,7 @@ class SystemSettings extends ActiveRecord
         return [
             [['label'], 'required'],
             [['sort'], 'integer'],
-            [['label'], 'string', 'max' => 100],
-            [['value'], 'string', 'max' => 1000],
+            [['label', 'value'], 'string', 'max' => 100],
         ];
     }
     

@@ -12,7 +12,7 @@ use yii\helpers\Inflector;
 use backend\modules\Block\models\BlockType;
 
 
-class GeneratorForm extends Model
+class DocumentatorForm extends Model
 {
     public $module;
     
@@ -126,8 +126,8 @@ class GeneratorForm extends Model
             }
         }
         
-        $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/api/generator');
-        $folder_template_render = '@backend/modules/SpeedRunner/templates/api/generator/';
+        $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/api/documentator');
+        $folder_template_render = '@backend/modules/SpeedRunner/templates/api/documentator/';
         $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result]);
         
         //        ZIP ARCHIVE

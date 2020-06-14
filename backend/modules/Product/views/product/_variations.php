@@ -42,7 +42,7 @@
                             <span><?= $var->attr->name ?></span>
                         </td>
                         <td>
-                            <span><?= $var->option->value ?></span>
+                            <span><?= $var->option->name ?></span>
                         </td>
                         <td>
                             <span><?= $var->price ?></span>

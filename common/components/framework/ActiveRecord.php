@@ -3,8 +3,11 @@
 namespace common\components\framework;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\HtmlPurifier;
+use yii\db\Expression;
+use yii\db\JsonExpression;
 
 
 class ActiveRecord extends \yii\db\ActiveRecord
@@ -13,9 +16,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         //        TRANSLATIONS
         
-        if (isset($this->translation_attrs) && isset($this->translation)) {
+        if (isset($this->translation_attrs)) {
             foreach ($this->translation_attrs as $a) {
-                $this->{$a} = $this->translation->{$a};
+                $this->{$a} = ArrayHelper::getValue($this->{$a}, Yii::$app->language);
             }
         }
         
@@ -34,14 +37,22 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        DATETIME
+        //        TRANSLATIONS
         
-        if (array_key_exists('created', $this->attributes)) {
-            $this->created = $this->created ?: date('Y-m-d H:i:s');
-        }
-        
-        if (array_key_exists('updated', $this->attributes)) {
-            $this->updated = date('Y-m-d H:i:s');
+        if (isset($this->translation_attrs)) {
+            foreach ($this->translation_attrs as $a) {
+                if ($json = ArrayHelper::getValue($this->oldAttributes, $a)) {
+                    $json[Yii::$app->language] = $this->{$a};
+                } else {
+                    $langs = Yii::$app->i18n->getLanguages(true);
+                    
+                    foreach ($langs as $l) {
+                        $json[$l['code']] = $this->{$a};
+                    } 
+                }
+                
+                $this->{$a} = new JsonExpression($json);
+            }
         }
         
         //        DATETIME FORMAT
@@ -52,6 +63,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['beforeSave'], strtotime($this->{$a})) : null;
                 }
             }
+        }
+        
+        //        DATETIME
+        
+        if (array_key_exists('created', $this->attributes)) {
+            $this->created = $this->created ?: date('Y-m-d H:i:s');
+        }
+        
+        if (array_key_exists('updated', $this->attributes)) {
+            $this->updated = date('Y-m-d H:i:s');
         }
         
         //        HTML PURIFIER
@@ -69,12 +90,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        TRANSLATIONS
-        
-        if (isset($this->translation_attrs)) {
-            Yii::$app->sr->translation->set($this, $insert);
-        }
-        
         //        SEO META
         
         if (isset($this->seo_meta) && $value = Yii::$app->request->post('SeoMeta')) {
@@ -134,35 +149,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
     
-    static function getItemsList()
+    static function itemsList($attr, $type, $limit = null, $q = null, $cond = [])
     {
-        $model = new static;
+        $query = self::find();
+        $lang = Yii::$app->language;
         
-        if (isset($model->translation_attrs)) {
-            return self::find()->with(['translation'])->indexBy('id')->asArray()->all();
-        } else {
-            return self::find()->indexBy('id')->asArray()->all();
+        switch ($type) {
+            case 'self':
+                $query->select(['id', "$attr as text"])
+                    ->andFilterWhere(['like', $attr, $q]);
+                
+                break;
+            case 'translation':
+                $query->select(['id', new Expression("$attr->>'$.$lang' as text")])
+                    ->andFilterWhere(['like', new Expression("JSON_EXTRACT($attr, '$.$lang')"), $q]);
+                
+                break;
         }
-    }
-    
-    static function getSelectionList($q, $attr, $condition = [])
-    {
-        $model = new static;
         
-        if (isset($model->translation_attrs)) {
-            return self::find()
-                ->alias('self')
-                ->select(['self.id', 'translation.'.$attr.' as text'])
-                ->joinWith(['translation as translation'])
-                ->where(['like', 'translation.'.$attr, $q])
-                ->andWhere($condition)
-                ->limit(10)->asArray()->all();
-        } else {
-            return self::find()
-                ->select(['id', $attr.' as text'])
-                ->where(['like', $attr, $q])
-                ->andWhere($condition)
-                ->limit(10)->asArray()->all();
-        }
+        return $query->andWhere($cond)->limit($limit)->asArray()->all();
     }
 }

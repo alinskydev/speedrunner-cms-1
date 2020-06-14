@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     
                     <div class="col-md-6">
                         <h4><?= Yii::t('app', 'Used') ?></h4><hr>
-                        <ul id="sortable-to" class="p-0 m-0">
+                        <ul id="sortable-to" class="px-0 pb-5 m-0">
                             <?php if ($model->blocks) { ?>
                                 <?php foreach ($model->blocks as $b) { ?>
                                     <li class="mb-2 d-flex">

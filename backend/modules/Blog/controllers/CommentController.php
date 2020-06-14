@@ -19,13 +19,17 @@ class CommentController extends Controller
     
     public function actionView($id)
     {
-        if ($model = BlogComment::findOne($id)) {
-            return $this->render('view', [
-                'model' => $model,
-            ]);
-        } else {
+        if (!($model = BlogComment::findOne($id))) {
             return $this->redirect(['index']);
         }
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->refresh();
+        }
+        
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
     
     public function actionDelete()

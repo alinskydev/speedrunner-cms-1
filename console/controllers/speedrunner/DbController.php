@@ -1,15 +1,15 @@
 <?php
 
-namespace console\controllers;
+namespace console\controllers\speedrunner;
 
 use Yii;
 use yii\helpers\Console;
 use yii\console\Controller;
 
 
-class SpeedrunnerController extends Controller
+class DbController extends Controller
 {
-    public function actionDbImport($file)
+    public function actionImport($file)
     {
         $file = Yii::getAlias("@console/db/$file");
         
@@ -33,7 +33,7 @@ class SpeedrunnerController extends Controller
         }
     }
     
-    public function actionDbExport($file)
+    public function actionExport($file)
     {
         $file = Yii::getAlias("@console/db/$file");
         

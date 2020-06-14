@@ -7,27 +7,10 @@ use yii\helpers\ArrayHelper;
 $dbSchema = Yii::$app->db->schema;
 $columns = $dbSchema->getTableSchema($model->table_name)->columns;
 
-//      TRANSLATION
-
-if ($model->with_translation) {
-    $translation_attrs = ['id', 'item_id', 'lang'];
-    
-    $columns_translation = $dbSchema->getTableSchema($model->table_name . 'Translation')->columns;
-    
-    foreach ($translation_attrs as $t_a) {
-        unset($columns_translation[$t_a]);
-    }
-    
-    $columns = ArrayHelper::merge($columns_translation, $columns);
-    $columns_translation = ArrayHelper::map($columns_translation, 'type', 'name');
-} else {
-    $columns_translation = [];
-}
-
 //      RULES & SEARCH
 
 $rules = $model->generateSearchRules($columns);
-$searchConditions = $model->generateSearchConditions($columns, $columns_translation);
+$searchConditions = $model->generateSearchConditions($columns);
 
 echo '<?php';
 
@@ -68,12 +51,7 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
     
     public function search($params)
     {
-<?php if ($model->with_translation) { ?>
-        $query = <?= $model->table_name ?>::find()->alias('self')
-            ->joinWith(['translation as translation']);
-<?php } else { ?>
-        $query = <?= $model->table_name ?>::find()->alias('self');
-<?php } ?>
+        $query = <?= $model->table_name ?>::find();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -84,15 +62,6 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
                 'defaultOrder' => ['id' => SORT_DESC]
             ],
         ]);
-        
-<?php if ($model->with_translation) { ?>
-        foreach ($this->translation_attrs as $t_a) {
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ['translation.' . $t_a => SORT_ASC],
-                'desc' => ['translation.' . $t_a => SORT_DESC],
-            ];
-        }
-<?php } ?>
         
         $this->load($params);
 		$this->beforeSearch();

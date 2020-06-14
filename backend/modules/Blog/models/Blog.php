@@ -7,21 +7,15 @@ use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Blog\modelsTranslation\BlogTranslation;
 
 
 class Blog extends ActiveRecord
 {
-    public $translation_table = 'BlogTranslation';
     public $translation_attrs = [
         'name',
         'short_description',
         'full_description',
     ];
-    
-    public $name;
-    public $short_description;
-    public $full_description;
     
     public $tags_tmp;
     public $images_tmp;
@@ -40,6 +34,7 @@ class Blog extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -65,25 +60,18 @@ class Blog extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'category_id' => Yii::t('app', 'Category'),
             'name' => Yii::t('app', 'Name'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'full_description' => Yii::t('app', 'Full Description'),
             'url' => Yii::t('app', 'Url'),
+            'category_id' => Yii::t('app', 'Category'),
             'image' => Yii::t('app', 'Image'),
             'published' => Yii::t('app', 'Published'),
-            'published_from' => Yii::t('app', 'Published from'),
-            'published_to' => Yii::t('app', 'Published to'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'full_description' => Yii::t('app', 'Full Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'tags_tmp' => Yii::t('app', 'Tags'),
             'images_tmp' => Yii::t('app', 'Images'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(BlogTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getCategory()

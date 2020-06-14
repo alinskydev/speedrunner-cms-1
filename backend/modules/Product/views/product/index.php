@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['product/brand/get-selection-list']),
+                            'url' => Yii::$app->urlManager->createUrl(['product/brand/items-list']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
-                'filter' => ProductCategory::getItemsList([1]),
+                'filter' => ProductCategory::itemsTree([1]),
                 'value' => function ($model) {
                     return $model->mainCat ? $model->mainCat->name : null;
                 },

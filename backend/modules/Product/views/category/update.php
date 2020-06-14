@@ -76,7 +76,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     
                     <?php
                         if ($model->isNewRecord) {
-                            echo $form->field($model, 'parent_id')->dropDownList($model->itemsList, [
+                            echo $form->field($model, 'parent_id')->dropDownList($model->itemsTree(), [
                                 'data-toggle' => 'selectpicker',
                             ]);
                         }
@@ -85,7 +85,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 
                 <div id="tab-attributes" class="tab-pane fade">
                     <?= $form->field($model, 'attrs_tmp')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map($model->attrs, 'id', 'translation.name'),
+                        'data' => ArrayHelper::map($model->attrs, 'id', 'name'),
                         'options' => [
                             'placeholder' => '',
                             'multiple' => true,
@@ -94,7 +94,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                             'allowClear' => true,
                             'tags' => true,
                             'ajax' => [
-                                'url' => Yii::$app->urlManager->createUrl(['product/attribute/get-selection-list']),
+                                'url' => Yii::$app->urlManager->createUrl(['product/attribute/items-list']),
                                 'dataType' => 'json',
                                 'delay' => 300,
                                 'data' => new JsExpression('function(params) { return {q:params.term}; }')

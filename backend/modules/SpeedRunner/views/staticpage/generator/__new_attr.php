@@ -9,8 +9,8 @@ unset($attr_types['images'], $attr_types['groups']);
 
 ?>
 
-<div class="form-group page-attrs">
-    <div class="form-group" style="display: flex;">
+<div class="page-attrs">
+    <div class="mb-2" style="display: flex;">
         <?= Html::textInput(
             "GeneratorForm[blocks][$block][attrs][$rnd_number][name]",
             null,
@@ -21,14 +21,16 @@ unset($attr_types['images'], $attr_types['groups']);
             <i class="fa fa-times"></i>
         </button>
     </div>
-    <div class="form-group">
+    
+    <div class="mb-2">
         <?= Html::textInput(
             "GeneratorForm[blocks][$block][attrs][$rnd_number][label]",
             null,
             ['class' => 'form-control', 'placeholder' => 'Label', 'required' => true]
         ); ?>
     </div>
-    <div class="form-group">
+    
+    <div class="mb-2">
         <?= Html::dropdownList(
             "GeneratorForm[blocks][$block][attrs][$rnd_number][type]",
             null,

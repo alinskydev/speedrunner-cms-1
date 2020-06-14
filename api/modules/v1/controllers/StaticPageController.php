@@ -37,13 +37,13 @@ class StaticPageController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => StaticPage::find()->with(['blocks.translation', 'blocks.images']),
+            'query' => StaticPage::find()->with(['blocks', 'blocks.images']),
         ]);
     }
     
     public function actionView($id)
     {
-        if ($model = StaticPage::find()->with(['blocks.translation', 'blocks.images'])->where(['id' => $id])->one()) {
+        if ($model = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['id' => $id])->one()) {
             return $model;
         } else {
             throw new \yii\web\NotFoundHttpException();

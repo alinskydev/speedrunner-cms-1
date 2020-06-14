@@ -41,7 +41,7 @@ class GeneratorForm extends Model
                 $block->{$a} = $b[$a];
             }
             
-            $block->attrs = isset($b['attrs']) ? json_encode($b['attrs'], JSON_UNESCAPED_UNICODE) : null;
+            $block->attrs = ArrayHelper::getValue($b, 'attrs', []);
             $block->save();
         }
         

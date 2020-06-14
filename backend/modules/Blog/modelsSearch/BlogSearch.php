@@ -5,14 +5,13 @@ namespace backend\modules\Blog\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+
 use backend\modules\Blog\models\Blog;
 
 
 class BlogSearch extends Blog
 {
-    public $published_from;
-    public $published_to;
-    
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -25,7 +24,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'category_id'], 'integer'],
-            [['name', 'url', 'created', 'updated', 'published', 'published_from', 'published_to'], 'safe'],
+            [['name', 'url', 'created', 'updated', 'published'], 'safe'],
         ];
     }
 
@@ -36,10 +35,8 @@ class BlogSearch extends Blog
 
     public function search($params)
     {
-        $query = Blog::find()->alias('self')->joinWith([
-            'translation as translation',
-        ])->with([
-            'category.translation',
+        $query = Blog::find()->with([
+            'category',
             'tags',
         ]);
 
@@ -52,13 +49,6 @@ class BlogSearch extends Blog
                 'defaultOrder' => ['id' => SORT_DESC]
             ],
         ]);
-        
-        foreach ($this->translation_attrs as $t_a) {
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ['translation.' . $t_a => SORT_ASC],
-                'desc' => ['translation.' . $t_a => SORT_DESC],
-            ];
-        }
 
         $this->load($params);
 		$this->beforeSearch();
@@ -68,22 +58,27 @@ class BlogSearch extends Blog
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
-            'self.category_id' => $this->category_id,
+            'id' => $this->id,
+            'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'translation.name', $this->name])
-            ->andFilterWhere(['like', 'self.url', $this->url])
-            ->andFilterWhere(['like', 'self.created', $this->created])
-            ->andFilterWhere(['like', 'self.updated', $this->updated])
-            ->andFilterWhere(['like', 'published', $this->published]);
+        $query->andFilterWhere(['like', 'url', $this->url])
+            ->andFilterWhere(['like', 'published', $this->published])
+            ->andFilterWhere(['like', 'created', $this->created])
+            ->andFilterWhere(['like', 'updated', $this->updated]);
         
-        if ($this->published_from && $this->published_to) {
-            $query->andFilterWhere([
-                'and',
-                ['>=', 'published', date('Y-m-d', strtotime($this->published_from))],
-                ['<=', 'published', date('Y-m-d', strtotime($this->published_to))],
-            ]);
+        //        TRANSLATIONS
+        
+        $lang = Yii::$app->language;
+        
+        foreach ($this->translation_attrs as $t_a) {
+            $query->andFilterWhere(['like', new Expression("JSON_EXTRACT($t_a, '$.$lang')"), $this->{$t_a}]);
+            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
+            
+            $dataProvider->sort->attributes[$t_a] = [
+                'asc' => ["json_$t_a" => SORT_ASC],
+                'desc' => ["json_$t_a" => SORT_DESC],
+            ];
         }
         
 		$this->afterSearch();

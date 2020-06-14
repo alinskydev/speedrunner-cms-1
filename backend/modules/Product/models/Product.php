@@ -7,21 +7,15 @@ use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Product\modelsTranslation\ProductTranslation;
 
 
 class Product extends ActiveRecord
 {
-    public $translation_table = 'ProductTranslation';
     public $translation_attrs = [
         'name',
         'short_description',
         'full_description',
     ];
-    
-    public $name;
-    public $short_description;
-    public $full_description;
     
     public $images_tmp;
     public $cats_tmp = '[]';
@@ -52,6 +46,7 @@ class Product extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -79,16 +74,16 @@ class Product extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'brand_id' => Yii::t('app', 'Brand ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'full_description' => Yii::t('app', 'Full Description'),
+            'brand_id' => Yii::t('app', 'Brand ID'),
             'main_category_id' => Yii::t('app', 'Main category'),
             'price' => Yii::t('app', 'Price'),
             'sale' => Yii::t('app', 'Sale'),
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'Sku'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'full_description' => Yii::t('app', 'Full Description'),
             'is_active' => Yii::t('app', 'Is Active'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
@@ -98,11 +93,6 @@ class Product extends ActiveRecord
             'related_tmp' => Yii::t('app', 'Related'),
             'vars_tmp' => Yii::t('app', 'Variations'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ProductTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getImages()
@@ -172,7 +162,7 @@ class Product extends ActiveRecord
             if (!$result[$o['attr']['translation']['name']]) {
                 $result[$o['attr']['translation']['name']] = [];
             }
-            array_push($result[$o['attr']['translation']['name']], $o['translation']['value']);
+            array_push($result[$o['attr']['translation']['name']], $o['translation']['name']);
         }
         
         return $result;
@@ -199,8 +189,7 @@ class Product extends ActiveRecord
     {
         $result = self::find()
             ->with([
-                'translation',
-                'cats.translation',
+                'cats',
             ])
             ->where([
                 'and',
@@ -300,7 +289,10 @@ class Product extends ActiveRecord
         
         if ($this->vars_tmp) {
             foreach ($this->vars_tmp as $key => $v) {
-                $var_mdl = ProductVariation::findOne($key) ?: new ProductVariation;
+                $var_mdl = ProductVariation::find()
+                    ->where(['item_id' => $this->id, 'attribute_id' => $v['attribute_id'], 'option_id' => $v['option_id']])
+                    ->one() ?: new ProductVariation;
+                
                 $var_mdl->item_id = $this->id;
                 $var_mdl->attribute_id = $v['attribute_id'];
                 $var_mdl->option_id = $v['option_id'];

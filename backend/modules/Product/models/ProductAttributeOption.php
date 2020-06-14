@@ -4,17 +4,13 @@ namespace backend\modules\Product\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
-use backend\modules\Product\modelsTranslation\ProductAttributeOptionTranslation;
 
 
 class ProductAttributeOption extends ActiveRecord
 {
-    public $translation_table = 'ProductAttributeOptionTranslation';
     public $translation_attrs = [
-        'value',
+        'name',
     ];
-    
-    public $value;
     
     public static function tableName()
     {
@@ -24,9 +20,8 @@ class ProductAttributeOption extends ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'sort'], 'required'],
-            [['value'], 'string', 'max' => 100],
-            [['sort'], 'integer'],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 100],
         ];
     }
     
@@ -35,14 +30,9 @@ class ProductAttributeOption extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'item_id' => Yii::t('app', 'Item ID'),
+            'name' => Yii::t('app', 'Name'),
             'sort' => Yii::t('app', 'Sort'),
-            'value' => Yii::t('app', 'Value'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ProductAttributeOptionTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getAttr()

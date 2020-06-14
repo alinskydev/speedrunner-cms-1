@@ -32,7 +32,7 @@ class PageController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = BlockPage::find()->with(['blocks.translation', 'blocks.type', 'blocks.images'])->where(['id' => $id])->one();
+        $model = BlockPage::find()->with(['blocks', 'blocks.type', 'blocks.images'])->where(['id' => $id])->one();
         
         if ($post_data = Yii::$app->request->post('Block')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');

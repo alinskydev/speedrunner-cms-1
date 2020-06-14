@@ -5,19 +5,14 @@ namespace backend\modules\Zzz\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Zzz\modelsTranslation\ZzzCategoryTranslation;
 
 
 class ZzzCategory extends ActiveRecord
 {
-    public $translation_table = 'ZzzCategoryTranslation';
     public $translation_attrs = [
         'name',
         'description',
     ];
-    
-    public $name;
-    public $description;
     
     public static function tableName()
     {
@@ -31,6 +26,7 @@ class ZzzCategory extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -51,16 +47,11 @@ class ZzzCategory extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
-            'description' => Yii::t('app', 'Description'),
             'image' => Yii::t('app', 'Image'),
+            'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ZzzCategoryTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getZzzs()

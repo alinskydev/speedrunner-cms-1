@@ -5,6 +5,8 @@ namespace backend\modules\Zzz\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+
 use backend\modules\Zzz\models\Zzz;
 
 
@@ -33,11 +35,7 @@ class ZzzSearch extends Zzz
 
     public function search($params)
     {
-        $query = Zzz::find()->alias('self')->joinWith([
-            'translation as translation',
-        ])->with([
-            'category.translation',
-        ]);
+        $query = Zzz::find()->with(['category']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,13 +46,6 @@ class ZzzSearch extends Zzz
                 'defaultOrder' => ['id' => SORT_DESC]
             ],
         ]);
-        
-        foreach ($this->translation_attrs as $t_a) {
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ['translation.' . $t_a => SORT_ASC],
-                'desc' => ['translation.' . $t_a => SORT_DESC],
-            ];
-        }
 
         $this->load($params);
 		$this->beforeSearch();
@@ -64,14 +55,27 @@ class ZzzSearch extends Zzz
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
+            'id' => $this->id,
             'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'translation.name', $this->name])
-            ->andFilterWhere(['like', 'self.url', $this->url])
-            ->andFilterWhere(['like', 'self.created', $this->created])
-            ->andFilterWhere(['like', 'self.updated', $this->updated]);
+        $query->andFilterWhere(['like', 'url', $this->url])
+            ->andFilterWhere(['like', 'created', $this->created])
+            ->andFilterWhere(['like', 'updated', $this->updated]);
+        
+        //        TRANSLATIONS
+        
+        $lang = Yii::$app->language;
+        
+        foreach ($this->translation_attrs as $t_a) {
+            $query->andFilterWhere(['like', new Expression("JSON_EXTRACT($t_a, '$.$lang')"), $this->{$t_a}]);
+            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
+            
+            $dataProvider->sort->attributes[$t_a] = [
+                'asc' => ["json_$t_a" => SORT_ASC],
+                'desc' => ["json_$t_a" => SORT_DESC],
+            ];
+        }
 
 		$this->afterSearch();
 		return $dataProvider;

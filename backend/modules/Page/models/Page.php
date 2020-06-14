@@ -5,19 +5,14 @@ namespace backend\modules\Page\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Page\modelsTranslation\PageTranslation;
 
 
 class Page extends ActiveRecord
 {
-    public $translation_table = 'PageTranslation';
     public $translation_attrs = [
         'name',
         'description',
     ];
-    
-    public $name;
-    public $description;
     
     public $seo_meta = [];
     
@@ -34,6 +29,7 @@ class Page extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -54,16 +50,10 @@ class Page extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
             'url' => Yii::t('app', 'Url'),
+            'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];
-    }
-    
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(PageTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
 }

@@ -5,8 +5,7 @@ use yii\helpers\ArrayHelper;
 use vova07\imperavi\Widget;
 use zxbodya\yii2\elfinder\ElFinderInput;
 
-$attrs = json_decode($model->type->attrs, JSON_UNESCAPED_UNICODE);
-$attrs = ArrayHelper::index($attrs, 'name');
+$attrs = ArrayHelper::index($model->type->attrs, 'name');
 
 foreach ($attrs as $a) {
     $name = $a['name'];
@@ -24,51 +23,58 @@ $groups = ArrayHelper::merge($model->value, $new_group);
     <table class="table table-relations">
         <tbody>
             <?php foreach ($groups as $key => $group) { ?>
-                <tr class="<?= $key == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= 'groups-' . $model->id ?>">
+                <tr class="<?= $key == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= "groups-$model->id" ?>">
                     <td class="table-sorter">
                         <i class="fas fa-arrows-alt"></i>
                     </td>
                     
                     <td style="width: 100%;">
-                        <?php foreach ($group as $g_key => $g_value) { ?>
-                            <div class="form-group">
+                        <?php foreach ($attrs as $a_key => $a_value) { ?>
+                            <div class="form-group mb-3">
                                 <label>
-                                    <?= Yii::t('app', $attrs[$g_key]['label']) ?>
+                                    <?= Yii::t('app', $a_value['label']) ?>
                                 </label>
                                 
                                 <?php
-                                    switch ($attrs[$g_key]['type']) {
+                                    $input_name = "Block[$model->id][value][$key][$a_key]";
+                                    $input_value = ArrayHelper::getValue($group, $a_key);
+                                    
+                                    switch ($a_value['type']) {
                                         case 'textInput':
                                             echo Html::textInput(
-                                                "Block[$model->id][value][$key][$g_key]",
-                                                $g_value,
+                                                $input_name,
+                                                $input_value,
                                                 ['class' => 'form-control']
                                             );
                                             
                                             break;
                                         case 'textArea':
                                             echo Html::textArea(
-                                                "Block[$model->id][value][$key][$g_key]",
-                                                $g_value,
+                                                $input_name,
+                                                $input_value,
                                                 ['class' => 'form-control', 'rows' => 5]
                                             );
                                             
                                             break;
                                         case 'checkbox':
-                                            $checkbox = Html::checkbox("Block[$model->id][value][$key][$g_key]", $g_value, [
-                                                'uncheck' => 0,
-                                                'id' => "block-$key-$g_key",
-                                                'class' => 'custom-control-input',
-                                            ]);
+                                            $checkbox = Html::checkbox(
+                                                $input_name,
+                                                $input_value,
+                                                [
+                                                    'uncheck' => 0,
+                                                    'id' => "block-$key-$a_key",
+                                                    'class' => 'custom-control-input',
+                                                ]
+                                            );
                                             
-                                            $checkbox .= Html::label(null, "block-$key-$g_key", ['class' => 'custom-control-label']);
+                                            $checkbox .= Html::label(null, "block-$key-$a_key", ['class' => 'custom-control-label']);
                                             echo Html::tag('div', $checkbox, ['class' => 'custom-control custom-switch float-left']);
                                             
                                             break;
                                         case 'CKEditor':
                                             echo Widget::widget([
-                                                'name' => "Block[$model->id][value][$key][$g_key]",
-                                                'value' => $g_value,
+                                                'name' => $input_name,
+                                                'value' => $input_value,
                                                 'id' => "redactor-$key",
                                                 'settings' => [
                                                     'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
@@ -80,9 +86,9 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                         case 'ElFinder':
                                             echo ElFinderInput::widget([
                                                 'connectorRoute' => '/connection/elfinder-file-upload',
-                                                'name' => "Block[$model->id][value][$key][$g_key]",
+                                                'name' => $input_name,
+                                                'value' => $input_value,
                                                 'id' => "elfinder-$key",
-                                                'value' => $g_value,
                                             ]);
                                             
                                             break;
@@ -103,8 +109,8 @@ $groups = ArrayHelper::merge($model->value, $new_group);
         
         <tfoot>
             <tr>
-                <td colspan="<?= count((array)$attrs) + 2 ?>">
-                    <button type="button" class="btn btn-success btn-block btn-add" data-table="<?= 'groups-' . $model->id ?>">
+                <td colspan="3">
+                    <button type="button" class="btn btn-success btn-block btn-add" data-table="<?= "groups-$model->id" ?>">
                         <i class="fa fa-plus"></i>
                     </button>
                 </td>

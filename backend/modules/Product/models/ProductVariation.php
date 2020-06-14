@@ -21,7 +21,8 @@ class ProductVariation extends ActiveRecord
     {
         return [
             [['attribute_id', 'option_id'], 'required'],
-            [['attribute_id', 'option_id'], 'integer'],
+            [['attribute_id'], 'exist', 'targetClass' => ProductAttribute::className(), 'targetAttribute' => 'id'],
+            [['option_id'], 'exist', 'targetClass' => ProductAttributeOption::className(), 'targetAttribute' => 'id'],
             [['price'], 'number'],
             [['sku'], 'string', 'max' => 100],
             [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],

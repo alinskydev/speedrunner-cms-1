@@ -10,10 +10,6 @@ foreach ($model->view_relations as $r) {
     
     $columns = $dbSchema->getTableSchema($relation['model'])->columns;
     
-    if ($dbSchema->getTableSchema($relation['model'] . 'Translation')) {
-        $columns = ArrayHelper::merge($dbSchema->getTableSchema($relation['model'] . 'Translation')->columns, $columns);
-    }
-    
     foreach ($attrs as $a) {
         unset($columns[$a]);
     }

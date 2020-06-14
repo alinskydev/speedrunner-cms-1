@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-images">
-                    <?= Yii::t('app', 'Images') ?>
+                <a class="nav-link" data-toggle="pill" href="#tab-groups">
+                    <?= Yii::t('app', 'Groups') ?>
                 </a>
             </li>
         </ul>
@@ -43,8 +43,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
             </div>
             
-            <div id="tab-images" class="tab-pane fade">
-                <?= $this->render('_images', [
+            <div id="tab-groups" class="tab-pane fade">
+                <?= $this->render('_groups', [
                     'model' => $model,
                     'form' => $form,
                 ]); ?>

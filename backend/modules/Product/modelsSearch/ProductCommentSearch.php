@@ -5,6 +5,7 @@ namespace backend\modules\Product\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+
 use backend\modules\Product\models\ProductComment;
 
 
@@ -25,8 +26,7 @@ class ProductCommentSearch extends ProductComment
 
     public function search($params)
     {
-        $query = ProductComment::find()->alias('self')
-            ->with(['product.translation', 'user']);
+        $query = ProductComment::find()->with(['product', 'user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -46,14 +46,14 @@ class ProductCommentSearch extends ProductComment
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
-            'self.product_id' => $this->product_id,
-            'self.user_id' => $this->user_id,
-            'self.status' => $this->status,
+            'id' => $this->id,
+            'product_id' => $this->product_id,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'self.text', $this->text])
-            ->andFilterWhere(['like', 'self.created', $this->created]);
+        $query->andFilterWhere(['like', 'text', $this->text])
+            ->andFilterWhere(['like', 'created', $this->created]);
 
 		$this->afterSearch();
 		return $dataProvider;

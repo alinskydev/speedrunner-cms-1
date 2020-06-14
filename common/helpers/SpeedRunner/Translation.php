@@ -13,37 +13,6 @@ use backend\modules\System\models\TranslationMessage;
 
 class Translation
 {
-    public function set($model, $insert)
-    {
-        $query = new Query;
-        
-        foreach ($model->translation_attrs as $t_a) {
-            $params[$t_a] = $model->{$t_a};
-        }
-        
-        if ($model->translation || isset($model['attributes']['tree'])) {
-            $query->createCommand()->update($model->translation_table, $params, ['item_id' => $model->id, 'lang' => Yii::$app->language])->execute();
-        } elseif ($insert) {
-            $langs = SystemLanguage::getItemsList();
-            
-            foreach ($langs as $l) {
-                $params['item_id'] = $model->id;
-                $params['lang'] = $l['code'];
-                $params_keys = array_keys($params);
-                $params_values = array_values($params);
-                
-                $query->createCommand()->batchInsert($model->translation_table, $params_keys, [$params_values])->execute();
-            }
-        } else {
-            $params['item_id'] = $model->id;
-            $params['lang'] = Yii::$app->language;
-            $params_keys = array_keys($params);
-            $params_values = array_values($params);
-            
-            $query->createCommand()->batchInsert($model->translation_table, $params_keys, [$params_values])->execute();
-        }
-    }
-    
     public function fixMessages()
     {
         $query = new Query;

@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function actionCatalog($full_url)
     {
-        $cat = ProductCategory::find()->with(['translation'])->where(['full_url' => $full_url])->one();
+        $cat = ProductCategory::find()->where(['full_url' => $full_url])->one();
         
         return $this->render('catalog', [
             'cat' => $cat,

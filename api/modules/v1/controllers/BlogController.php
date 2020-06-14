@@ -37,7 +37,7 @@ class BlogController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => Blog::find()->with(['translation']),
+            'query' => Blog::find(),
             'pagination' => [
                 'pageSize' => 20
             ],

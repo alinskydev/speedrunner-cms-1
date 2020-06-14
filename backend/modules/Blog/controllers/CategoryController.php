@@ -33,9 +33,9 @@ class CategoryController extends Controller
         return Yii::$app->sr->record->deleteModel(new BlogCategory);
     }
     
-    public function actionGetSelectionList($q = '')
+    public function actionItemsList($q = '')
     {
-        $out['results'] = BlogCategory::getSelectionList($q, 'name');
+        $out['results'] = BlogCategory::itemsList('name', 'translation', 20, $q);
         return $this->asJson($out);
     }
 }

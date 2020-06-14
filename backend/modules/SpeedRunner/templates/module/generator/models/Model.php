@@ -8,22 +8,6 @@ use yii\db\mysql\ColumnSchema;
 $dbSchema = Yii::$app->db->schema;
 $columns = $dbSchema->getTableSchema($model->table_name)->columns;
 
-//      TRANSLATION
-
-if ($model->with_translation) {
-    $translation_attrs = ['item_id', 'lang'];
-    
-    $columns_translation = $dbSchema->getTableSchema($model->table_name . 'Translation')->columns;
-    
-    foreach ($translation_attrs as $t_a) {
-        unset($columns_translation[$t_a]);
-    }
-    
-    $columns = ArrayHelper::merge($columns_translation, $columns);
-    
-    unset($columns_translation['id']);
-}
-
 //      RULES
 
 foreach ($model->view_relations as $r) {
@@ -49,24 +33,16 @@ use common\components\framework\ActiveRecord;
 <?php if(isset($columns['url'])) { ?>
 use yii\behaviors\SluggableBehavior;
 <?php } ?>
-<?php if ($model->with_translation) { ?>
-use backend\modules\<?= $model->module_name ?>\modelsTranslation\<?= $model->table_name ?>Translation;
-<?php } ?>
 
 
 class <?= $model->table_name ?> extends ActiveRecord
 {
 <?php if ($model->with_translation) { ?>
-    public $translation_table = '<?= $model->table_name ?>Translation';
     public $translation_attrs = [
 <?php foreach ($columns_translation as $c_t) { ?>
         '<?= $c_t->name ?>',
 <?php } ?>
     ];
-<?php foreach ($columns_translation as $c_t) { ?>
-    
-    public $<?= $c_t->name ?>;
-<?php } ?>
     
 <?php } ?>
 <?php if ($model->view_relations) { ?>
@@ -93,6 +69,7 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }

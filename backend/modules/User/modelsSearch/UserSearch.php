@@ -5,6 +5,7 @@ namespace backend\modules\User\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+
 use backend\modules\User\models\User;
 
 
@@ -39,13 +40,6 @@ class UserSearch extends User
             ],
         ]);
         
-        foreach ($this->profile_attrs as $p_a) {
-            $dataProvider->sort->attributes[$p_a] = [
-                'asc' => ['profile.'.$p_a => SORT_ASC],
-                'desc' => ['profile.'.$p_a => SORT_DESC],
-            ];
-        }
-        
         $this->load($params);
 		$this->beforeSearch();
 
@@ -65,6 +59,13 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'profile.address', $this->address])
             ->andFilterWhere(['like', 'self.created', $this->created])
             ->andFilterWhere(['like', 'self.updated', $this->updated]);
+        
+        foreach ($this->profile_attrs as $p_a) {
+            $dataProvider->sort->attributes[$p_a] = [
+                'asc' => ['profile.'.$p_a => SORT_ASC],
+                'desc' => ['profile.'.$p_a => SORT_DESC],
+            ];
+        }
 
 		$this->afterSearch();
 		return $dataProvider;

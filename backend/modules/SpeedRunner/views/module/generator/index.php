@@ -86,14 +86,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'prompt' => ' '
                 ]) ?>
                 
-                <?= $form->field($model, 'with_translation', [
-                    'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                ])->checkbox([
-                    'class' => 'custom-control-input'
-                ])->label(null, [
-                    'class' => 'custom-control-label'
-                ]) ?>
-                
                 <?= $form->field($model, 'has_seo_meta', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],
                 ])->checkbox([
@@ -134,7 +126,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             action = '<?= Yii::$app->urlManager->createUrl(['speedrunner/module/generator/model-schema']) ?>';
             sendData = {
                 "table_name": $('#generatorform-table_name').val(),
-                "with_translation": $('#generatorform-with_translation').prop('checked') ? 1 : 0,
                 "_csrf-backend": $('meta[name=csrf-token]').attr('content')
             };
             
@@ -145,10 +136,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         }
         
         $('#generatorform-table_name').on('change', function() {
-            getModelSchema();
-        });
-        
-        $('#generatorform-with_translation').on('change', function() {
             getModelSchema();
         });
     };

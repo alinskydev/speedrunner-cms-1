@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'options' => [
                                             'accept' => 'image/*',
                                             'multiple' => true,
-                                            'name' => "StaticPageBlock[$b->id][value]",
+                                            'name' => "StaticPageBlock[$b->id][value][]",
                                             'id' => "staticpageblock-$b->id",
                                         ],
                                         'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [

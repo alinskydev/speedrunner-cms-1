@@ -592,16 +592,6 @@ class NestedSetsBehavior extends Behavior
 
             $this->shiftLeftRightAttribute($rightValue + 1, $leftValue - $rightValue - 1);
         }
-        
-        $owner = $this->owner->findOne($this->owner->id);
-        
-        if ($owner->tree == 1 && array_key_exists('full_url', $owner->attributes)) {
-            $parents = $owner->parents()->orderBy('lft')->all();
-            $urls = \yii\helpers\ArrayHelper::getColumn($parents, 'url');
-            
-            $owner->full_url = count($urls) > 1 ? ltrim(implode('/', $urls), '/') . '/' . $owner->url : $owner->url;
-            $owner->validate() ? $owner->save(false) : $owner->delete();
-        }
     }
 
     /**

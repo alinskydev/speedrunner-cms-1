@@ -5,19 +5,14 @@ namespace backend\modules\Blog\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Blog\modelsTranslation\BlogCategoryTranslation;
 
 
 class BlogCategory extends ActiveRecord
 {
-    public $translation_table = 'BlogCategoryTranslation';
     public $translation_attrs = [
         'name',
         'description',
     ];
-    
-    public $name;
-    public $description;
     
     public $seo_meta = [];
     
@@ -33,6 +28,7 @@ class BlogCategory extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -54,16 +50,11 @@ class BlogCategory extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
-            'description' => Yii::t('app', 'Description'),
             'image' => Yii::t('app', 'Image'),
+            'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(BlogCategoryTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getBlogs()

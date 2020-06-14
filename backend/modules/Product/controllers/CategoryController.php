@@ -22,8 +22,9 @@ class CategoryController extends Controller
     {
         $model = new ProductCategory;
         
-        if ($model->load(Yii::$app->request->post()) && $model->makeRoot() && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->makeRoot()) {
             if ($parent = ProductCategory::findOne($model->parent_id)) {
+                $model->refresh();
                 $model->appendTo($parent);
             }
             
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = ProductCategory::findOne($id);
+        $model = ProductCategory::find()->with(['attrs'])->where(['id' => $id])->one();
         $model->attrs_tmp = $model->attrs;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

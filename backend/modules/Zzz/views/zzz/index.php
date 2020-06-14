@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'category_id',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map(ZzzCategory::getItemsList(), 'id', 'translation.name'),
+                'filter' => ArrayHelper::map(ZzzCategory::itemsList('name', 'translation'), 'id', 'text'),
                 'value' => function ($model) {
                     return $model->category ? $model->category->name : null;
                 },

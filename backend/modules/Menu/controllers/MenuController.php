@@ -22,8 +22,9 @@ class MenuController extends Controller
     {
         $model = new Menu;
         
-        if ($model->load(Yii::$app->request->post()) && $model->makeRoot() && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->makeRoot()) {
             if ($parent = Menu::findOne($model->parent_id)) {
+                $model->refresh();
                 $model->appendTo($parent);
             }
             

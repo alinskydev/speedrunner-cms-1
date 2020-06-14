@@ -33,10 +33,10 @@ class UserController extends Controller
         return Yii::$app->sr->record->deleteModel(new User);
     }
     
-    public function actionGetSelectionList($q = '', $role = null)
+    public function actionItemsList($q = '', $role = null)
     {
-        $condition = $role ? ['role' => $role] : [];
-        $out['results'] = User::getSelectionList($q, 'username', $condition);
+        $cond = $role ? ['role' => $role] : [];
+        $out['results'] = User::itemsList('username', 'self', 20, $q);
         return $this->asJson($out);
     }
 }

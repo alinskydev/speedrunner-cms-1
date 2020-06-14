@@ -41,7 +41,7 @@ class DestroyerForm extends Model
     public function destroy()
     {
         foreach ($this->modules as $m) {
-            $module = ucfirst($m);
+            $module = strtolower($m);
             
             //        FILES
             
@@ -55,7 +55,7 @@ class DestroyerForm extends Model
             $sql = null;
             
             foreach ($tables as $t) {
-                if (strpos($t, ucfirst($m)) === 0) {
+                if (strpos($t, $m) === 0) {
                     $sql .= "DROP TABLE $t;";
                 }
             }

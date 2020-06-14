@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class Banner extends ActiveRecord
 {
-    public $images_tmp;
+    public $groups_tmp;
     
     public static function tableName()
     {
@@ -21,7 +21,7 @@ class Banner extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
-            [['images_tmp'], 'safe'],
+            [['groups_tmp'], 'safe'],
         ];
     }
     
@@ -33,7 +33,7 @@ class Banner extends ActiveRecord
             'location' => Yii::t('app', 'Location'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
-            'images_tmp' => Yii::t('app', 'Images'),
+            'groups_tmp' => Yii::t('app', 'Groups'),
         ];
     }
     
@@ -45,37 +45,37 @@ class Banner extends ActiveRecord
         ];
     }
     
-    public function getImages()
+    public function getGroups()
     {
-        return $this->hasMany(BannerImage::className(), ['item_id' => 'id'])->orderBy('sort');
+        return $this->hasMany(BannerGroup::className(), ['item_id' => 'id'])->orderBy('sort');
     }
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        IMAGES
+        //        GROUPS
         
-        $images = ArrayHelper::index($this->images, 'id');
+        $groups = ArrayHelper::index($this->groups, 'id');
         
-        if ($this->images_tmp) {
+        if ($this->groups_tmp) {
             $counter = 0;
             
-            foreach ($this->images_tmp as $key => $img) {
-                $image_mdl = BannerImage::findOne($key) ?: new BannerImage;
-                $image_mdl->item_id = $this->id;
-                $image_mdl->text_1 = ArrayHelper::getValue($img, 'text_1');
-                $image_mdl->text_2 = ArrayHelper::getValue($img, 'text_2');
-                $image_mdl->text_3 = ArrayHelper::getValue($img, 'text_3');
-                $image_mdl->link = ArrayHelper::getValue($img, 'link');
-                $image_mdl->image = ArrayHelper::getValue($img, 'image');
-                $image_mdl->sort = $counter;
-                $image_mdl->save();
+            foreach ($this->groups_tmp as $key => $g) {
+                $group_mdl = BannerGroup::findOne($key) ?: new BannerGroup;
+                $group_mdl->item_id = $this->id;
+                $group_mdl->text_1 = ArrayHelper::getValue($g, 'text_1');
+                $group_mdl->text_2 = ArrayHelper::getValue($g, 'text_2');
+                $group_mdl->text_3 = ArrayHelper::getValue($g, 'text_3');
+                $group_mdl->link = ArrayHelper::getValue($g, 'link');
+                $group_mdl->image = ArrayHelper::getValue($g, 'image');
+                $group_mdl->sort = $counter;
+                $group_mdl->save();
                 
-                ArrayHelper::remove($images, $key);
+                ArrayHelper::remove($groups, $key);
                 $counter++;
             }
         }
         
-        foreach ($images as $img) { $img->delete(); };
+        foreach ($groups as $g) { $g->delete(); };
         
         return parent::afterSave($insert, $changedAttributes);
     }

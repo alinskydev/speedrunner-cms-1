@@ -36,9 +36,7 @@ class GeneratorController extends Controller
         }
         
         foreach ($this->dbSchema->getTableNames() as $t) {
-            if (strpos($t, 'Translation') === false) {
-                $tables[$t] = $t;
-            }
+            $tables[$t] = $t;
         }
             
         return $this->render('index', [
@@ -50,7 +48,6 @@ class GeneratorController extends Controller
     public function actionModelSchema()
     {
         $table_name = Yii::$app->request->post('table_name');
-        $with_translation = Yii::$app->request->post('with_translation');
         
         //        RELATIONS
         
@@ -74,18 +71,6 @@ class GeneratorController extends Controller
         //        ATTRS
         
         $columns = $table_schema->columns;
-        
-        if ($with_translation) {
-            $translation_attrs = ['item_id', 'lang'];
-            
-            $columns_translation = ArrayHelper::getValue($table_schema_all, $table_name . 'Translation.columns');
-            
-            foreach ($translation_attrs as $t_a) {
-                unset($columns_translation[$t_a]);
-            }
-            
-            $columns = ArrayHelper::merge($columns_translation, $columns);
-        }
         
         $data['attrs'] = $this->renderAjax('_attr_fields', [
             'model' => new GeneratorForm,

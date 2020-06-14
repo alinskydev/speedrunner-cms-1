@@ -16,7 +16,7 @@ class StaticPageController extends Controller
 {
     public function actionUpdate($location)
     {
-        $model = StaticPage::find()->with(['blocks.translation', 'blocks.images'])->where(['location' => $location])->one();
+        $model = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['location' => $location])->one();
         
         if ($post_data = Yii::$app->request->post('StaticPageBlock')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');

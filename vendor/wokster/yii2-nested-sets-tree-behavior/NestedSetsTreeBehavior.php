@@ -3,6 +3,8 @@
 namespace wokster\treebehavior;
 
 use yii\base\Behavior;
+use yii\db\Expression;
+
 
 class NestedSetsTreeBehavior extends Behavior
 {
@@ -47,7 +49,7 @@ class NestedSetsTreeBehavior extends Behavior
     {
         $makeNode = function ($node) {
             $newData = [
-                $this->labelOutAttribute => $node['translation'][$this->labelAttribute],
+                $this->labelOutAttribute => $node[$this->labelAttribute],
                 'expanded' => intval($node['expanded']),
             ];
             if (is_callable($makeLink = $this->makeLinkCallable)) {
@@ -60,7 +62,8 @@ class NestedSetsTreeBehavior extends Behavior
 
         // Trees mapped
         $trees = array();
-        $collection = $this->owner->children()->with(['translation'])->asArray()->all();
+        $lang = \Yii::$app->language;
+        $collection = $this->owner->children()->addSelect(['*', new Expression("name->>'$.$lang' as name")])->asArray()->all();
 //        $collection = $this->owner->find()->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])->with(['translation'])->asArray()->all();
 
         if (count($collection) > 0) {

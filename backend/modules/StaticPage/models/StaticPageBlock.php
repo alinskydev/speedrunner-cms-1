@@ -6,7 +6,7 @@ use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use backend\modules\StaticPage\modelsTranslation\StaticPageBlockTranslation;
+use yii\db\JsonExpression;
 
 
 class StaticPageBlock extends ActiveRecord
@@ -36,13 +36,12 @@ class StaticPageBlock extends ActiveRecord
     
     public function valueValidation($attribute, $params, $validator)
     {
-        $attrs = json_decode($this->attrs, JSON_UNESCAPED_UNICODE);
-        $attrs = ArrayHelper::getColumn($attrs, 'name');
+        $attrs = ArrayHelper::getColumn($this->attrs, 'name');
         
-        foreach ($this->{$attribute} as $attr) {
-            foreach ($attr as $key => $a) {
+        foreach ($this->value as $val) {
+            foreach ($val as $key => $v) {
                 if (!$key || !in_array($key, $attrs)) {
-                    $error_msg = Yii::t('app', 'Invalid type in {label}', ['label' => $this->type->label]);
+                    $error_msg = Yii::t('app', 'Invalid type in {label}', ['label' => $this->label]);
                     $this->addError($attribute, $error_msg);
                     Yii::$app->session->setFlash('danger', $error_msg);
                 }
@@ -62,11 +61,6 @@ class StaticPageBlock extends ActiveRecord
         ];
     }
     
-    public function getTranslation()
-    {
-        return $this->hasOne(StaticPageBlockTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
-    }
-    
     public function getImages()
     {
         return $this->hasMany(StaticPageBlockImage::className(), ['item_id' => 'id'])->orderBy('sort');
@@ -74,14 +68,7 @@ class StaticPageBlock extends ActiveRecord
     
     public function afterFind()
     {
-        if (isset($this->translation)) {
-            $this->value = $this->has_translation ? $this->translation->value : $this->value;
-        }
-        
-        if ($this->type == 'groups') {
-            $this->value = json_decode($this->value, JSON_UNESCAPED_UNICODE) ?: [];
-        }
-        
+        $this->value = $this->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;
         return parent::afterFind();
     }
     
@@ -94,7 +81,7 @@ class StaticPageBlock extends ActiveRecord
         }
         
         if ($this->type == 'groups' && !is_array($this->value)) {
-            $this->value = null;
+            $this->value = [];
         }
         
         return parent::beforeValidate();
@@ -102,8 +89,22 @@ class StaticPageBlock extends ActiveRecord
     
     public function beforeSave($insert)
     {
+        if ($this->has_translation) {
+            if ($json = ArrayHelper::getValue($this->oldAttributes, 'value')) {
+                $json[Yii::$app->language] = $this->value;
+            } else {
+                $langs = Yii::$app->i18n->getLanguages(true);
+                
+                foreach ($langs as $l) {
+                    $json[$l['code']] = $this->value;
+                } 
+            }
+            
+            $this->value = new JsonExpression($json);
+        }
+        
         if ($this->type == 'groups') {
-            $this->value = json_encode($this->value, JSON_UNESCAPED_UNICODE);
+            $this->value = new JsonExpression($this->value);
         }
         
         return parent::beforeSave($insert);
@@ -111,20 +112,8 @@ class StaticPageBlock extends ActiveRecord
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        IMAGES
-        
         if ($images_tmp = UploadedFile::getInstances($this, $this->id)) {
             Yii::$app->sr->image->save($images_tmp, new StaticPageBlockImage(['item_id' => $this->id]));
-        }
-        
-        //        TRANSLATION
-        
-        if ($this->has_translation) {
-            $translation_mdl = $this->translation ?: new StaticPageBlockTranslation;
-            $translation_mdl->item_id = $this->id;
-            $translation_mdl->lang = Yii::$app->language;
-            $translation_mdl->value = $this->value;
-            $translation_mdl->save();
         }
         
         return parent::afterSave($insert, $changedAttributes);

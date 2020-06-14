@@ -37,13 +37,13 @@ class BannerController extends Controller
     public function actionIndex()
     {
         return new ActiveDataProvider([
-            'query' => Banner::find()->with(['images.translation']),
+            'query' => Banner::find()->with(['images']),
         ]);
     }
     
     public function actionView($id)
     {
-        if ($model = Banner::find()->with(['images.translation'])->where(['id' => $id])->one()) {
+        if ($model = Banner::find()->with(['images'])->where(['id' => $id])->one()) {
             return $model;
         } else {
             throw new \yii\web\NotFoundHttpException();

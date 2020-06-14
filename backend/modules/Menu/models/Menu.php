@@ -7,19 +7,15 @@ use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use creocoder\nestedsets\NestedSetsBehavior;
 use wokster\treebehavior\NestedSetsTreeBehavior;
-use backend\modules\Menu\modelsTranslation\MenuTranslation;
+use yii\db\Expression;
 
 
 class Menu extends ActiveRecord
 {
-    public $translation_table = 'MenuTranslation';
     public $translation_attrs = [
         'name',
         'url',
     ];
-    
-    public $name;
-    public $url;
     
     public $parent_id;
     
@@ -55,6 +51,7 @@ class Menu extends ActiveRecord
             [['parent_id'], 'required', 'when' => function ($model) {
                 return $model->isNewRecord;
             }],
+            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -62,31 +59,31 @@ class Menu extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
             'tree' => Yii::t('app', 'Tree'),
             'lft' => Yii::t('app', 'Lft'),
             'rgt' => Yii::t('app', 'Rgt'),
             'depth' => Yii::t('app', 'Depth'),
             'expanded' => Yii::t('app', 'Expanded'),
+            'name' => Yii::t('app', 'Name'),
+            'url' => Yii::t('app', 'Url'),
             'parent_id' => Yii::t('app', 'Parent'),
         ];
     }
     
-    static function getItemsList($id = 1)
+    static function itemsTree($excepts = [])
     {
-        $items = self::find()->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])->with(['translation'])->asArray()->all();
+        $lang = Yii::$app->language;
         
-        foreach ($items as $item) {
-            $result[$item['id']] = str_repeat('- ', $item['depth']) . $item['translation']['name'];
-        }
+        $result = self::find()
+            ->select([
+                'id',
+                new Expression("CONCAT(REPEAT(('- '), depth), name->>'$.$lang') as name"),
+            ])
+            ->where(['not in', 'id', $excepts])
+            ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
+            ->asArray()->all();
         
-        return $result;
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(MenuTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
+        return ArrayHelper::map($result, 'id', 'name');
     }
     
     public static function find()

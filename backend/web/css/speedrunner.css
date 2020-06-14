@@ -464,6 +464,10 @@ header .dropdown-menu .flag-wrapper img {
     z-index: 111111;
 }
 
+.table-relations .form-group {
+    margin: 0;
+}
+
 .ui-dialog.ui-widget {
     z-index: 99999;
 }

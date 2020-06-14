@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'category_id')->dropDownList(
-                    ArrayHelper::map(ZzzCategory::getItemsList(), 'id', 'translation.name'),
+                    ArrayHelper::map(ZzzCategory::itemsList('name', 'translation'), 'id', 'text'),
                     [
                         'data-toggle' => 'selectpicker',
                         'prompt' => ' '

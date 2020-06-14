@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['product/brand/get-selection-list']),
+                            'url' => Yii::$app->urlManager->createUrl(['product/brand/items-list']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -139,7 +139,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-cats-attrs" class="tab-pane fade">
-                <?= $form->field($model, 'main_category_id')->dropDownList(ProductCategory::getItemsList([1]), [
+                <?= $form->field($model, 'main_category_id')->dropDownList(ProductCategory::itemsTree([1]), [
                     'data-toggle' => 'selectpicker',
                     'prompt' => ' '
                 ]) ?>
@@ -168,7 +168,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['product/product/get-selection-list', 'id' => $model->id]),
+                            'url' => Yii::$app->urlManager->createUrl(['product/product/items-list', 'id' => $model->id]),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -190,7 +190,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <script>
     window.onload = function() {
         var action = '<?= Yii::$app->urlManager->createUrl('product/product/get-attributes') ?>',
-            receiveData, receiveJson, html, options;
+            json_data, html, options;
         
         function getAttsFunc(categories) {
             sendData = {
@@ -199,14 +199,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             };
             
             $.get(action, sendData, function(data) {
-                receiveData = JSON.parse(data);
-                receiveJson = receiveData.attrs_json;
                 html = '';
+                json_data = data.json;
                 
-                $('#attributes-inner').html(receiveData.attrs_html);
+                $('#attributes-inner').html(data.html);
                 
-                for (i = 0; i < receiveJson.length; i++) {
-                    html += '<option value="' + receiveJson[i]['id'] + '">' + receiveJson[i]['translation']['name'] + '</option>';
+                for (i = 0; i < json_data.length; i++) {
+                    html += '<option value="' + json_data[i]['id'] + '">' + json_data[i]['name'] + '</option>';
                 }
                 
                 $('#vars-attr-list').html(html);
@@ -217,12 +216,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         function changeAttrFunc(attrId) {
             html = '';
             
-            for (i = 0; i < receiveJson.length; i++) {
-                if (attrId == receiveJson[i]['id']) {
-                    options = receiveJson[i]['options'];
+            for (i = 0; i < json_data.length; i++) {
+                if (attrId == json_data[i]['id']) {
+                    options = json_data[i]['options'];
                     
                     for (j = 0; j < options.length; j++) {
-                        html += '<option value="' + options[j]['id'] + '">' + options[j]['translation']['value'] + '</option>';
+                        html += '<option value="' + options[j]['id'] + '">' + options[j]['name'] + '</option>';
                     }
                     
                     $('#vars-option-list').html(html);

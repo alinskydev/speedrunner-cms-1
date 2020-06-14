@@ -5,19 +5,14 @@ namespace backend\modules\Product\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Product\modelsTranslation\ProductBrandTranslation;
 
 
 class ProductBrand extends ActiveRecord
 {
-    public $translation_table = 'ProductBrandTranslation';
     public $translation_attrs = [
         'name',
         'description',
     ];
-    
-    public $name;
-    public $description;
     
     public $seo_meta = [];
     
@@ -33,6 +28,7 @@ class ProductBrand extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -53,16 +49,11 @@ class ProductBrand extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
             'url' => Yii::t('app', 'Url'),
             'image' => Yii::t('app', 'Image'),
+            'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ProductBrandTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
 }

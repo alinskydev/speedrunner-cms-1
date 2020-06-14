@@ -28,11 +28,7 @@ class Record
     public function updateModel($model, $render_file = 'update', $render_params = [])
     {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->isAjax) {
-                return Yii::$app->controller->redirect([Yii::$app->request->get('action'), 'id' => $model->id]);
-            } else {
-                return Yii::$app->controller->redirect($this->redirect_url);
-            }
+            return Yii::$app->controller->redirect($this->redirect_url);
         }
         
         $render_type = (Yii::$app->request->isPost && Yii::$app->request->isAjax) ? 'renderAjax' : 'render';
@@ -56,7 +52,7 @@ class Record
     public function getStaticPage($location, $with_blocks = false)
     {
         if ($with_blocks) {
-            $result['page'] = StaticPage::find()->with(['blocks.translation', 'blocks.images'])->where(['location' => $location])->one();
+            $result['page'] = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['location' => $location])->one();
             $result['blocks'] = ArrayHelper::index($result['page']->blocks, 'name');
         } else {
             $result['page'] = StaticPage::find()->where(['location' => $location])->one();

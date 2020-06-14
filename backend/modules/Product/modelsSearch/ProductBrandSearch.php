@@ -5,6 +5,8 @@ namespace backend\modules\Product\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+
 use backend\modules\Product\models\ProductBrand;
 
 
@@ -22,7 +24,7 @@ class ProductBrandSearch extends ProductBrand
     {
         return [
             [['id'], 'integer'],
-            [['name', 'description', 'url', 'created', 'updated'], 'safe'],
+            [['name', 'url', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -33,9 +35,7 @@ class ProductBrandSearch extends ProductBrand
 
     public function search($params)
     {
-        $query = ProductBrand::find()->alias('self')->joinWith([
-            'translation as translation',
-        ]);
+        $query = ProductBrand::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -47,13 +47,6 @@ class ProductBrandSearch extends ProductBrand
             ],
         ]);
         
-        foreach ($this->translation_attrs as $t_a) {
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ['translation.' . $t_a => SORT_ASC],
-                'desc' => ['translation.' . $t_a => SORT_DESC],
-            ];
-        }
-        
         $this->load($params);
 		$this->beforeSearch();
 
@@ -62,14 +55,26 @@ class ProductBrandSearch extends ProductBrand
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
+            'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'translation.name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'url', $this->url])
+        $query->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
+        
+        //        TRANSLATIONS
+        
+        $lang = Yii::$app->language;
+        
+        foreach ($this->translation_attrs as $t_a) {
+            $query->andFilterWhere(['like', new Expression("JSON_EXTRACT($t_a, '$.$lang')"), $this->{$t_a}]);
+            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
+            
+            $dataProvider->sort->attributes[$t_a] = [
+                'asc' => ["json_$t_a" => SORT_ASC],
+                'desc' => ["json_$t_a" => SORT_DESC],
+            ];
+        }
 
 		$this->afterSearch();
 		return $dataProvider;

@@ -5,6 +5,7 @@ namespace backend\modules\Blog\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+
 use backend\modules\Blog\models\BlogComment;
 
 
@@ -25,8 +26,7 @@ class BlogCommentSearch extends BlogComment
 
     public function search($params)
     {
-        $query = BlogComment::find()->alias('self')
-            ->with(['blog.translation', 'user']);
+        $query = BlogComment::find()->with(['blog', 'user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -46,14 +46,14 @@ class BlogCommentSearch extends BlogComment
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
-            'self.blog_id' => $this->blog_id,
-            'self.user_id' => $this->user_id,
-            'self.status' => $this->status,
+            'id' => $this->id,
+            'blog_id' => $this->blog_id,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'self.text', $this->text])
-            ->andFilterWhere(['like', 'self.created', $this->created]);
+        $query->andFilterWhere(['like', 'text', $this->text])
+            ->andFilterWhere(['like', 'created', $this->created]);
 
 		$this->afterSearch();
 		return $dataProvider;

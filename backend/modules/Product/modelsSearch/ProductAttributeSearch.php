@@ -5,6 +5,8 @@ namespace backend\modules\Product\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+
 use backend\modules\Product\models\ProductAttribute;
 
 
@@ -25,9 +27,7 @@ class ProductAttributeSearch extends ProductAttribute
 
     public function search($params)
     {
-        $query = ProductAttribute::find()->alias('self')->joinWith([
-            'translation as translation',
-        ]);
+        $query = ProductAttribute::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -38,13 +38,6 @@ class ProductAttributeSearch extends ProductAttribute
                 'defaultOrder' => ['id' => SORT_DESC]
             ],
         ]);
-        
-        foreach ($this->translation_attrs as $t_a) {
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ['translation.' . $t_a => SORT_ASC],
-                'desc' => ['translation.' . $t_a => SORT_DESC],
-            ];
-        }
 
         $this->load($params);
 		$this->beforeSearch();
@@ -54,15 +47,28 @@ class ProductAttributeSearch extends ProductAttribute
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
+            'id' => $this->id,
             'type' => $this->type,
             'use_filter' => $this->use_filter,
             'use_compare' => $this->use_compare,
             'use_detail' => $this->use_detail,
         ]);
 
-        $query->andFilterWhere(['like', 'translation.name', $this->name])
-            ->andFilterWhere(['like', 'code', $this->code]);
+        $query->andFilterWhere(['like', 'code', $this->code]);
+        
+        //        TRANSLATIONS
+        
+        $lang = Yii::$app->language;
+        
+        foreach ($this->translation_attrs as $t_a) {
+            $query->andFilterWhere(['like', new Expression("JSON_EXTRACT($t_a, '$.$lang')"), $this->{$t_a}]);
+            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
+            
+            $dataProvider->sort->attributes[$t_a] = [
+                'asc' => ["json_$t_a" => SORT_ASC],
+                'desc' => ["json_$t_a" => SORT_DESC],
+            ];
+        }
 
 		$this->afterSearch();
 		return $dataProvider;

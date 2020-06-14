@@ -68,11 +68,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    static function getItemsList()
-    {
-        return self::find()->select(['id', 'username'])->asArray()->all();
-    }
-    
     static function getRoles()
     {
         return [

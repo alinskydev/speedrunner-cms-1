@@ -29,7 +29,7 @@ class BlogController extends Controller
     
     public function actionIndex()
     {
-        $blogs = Blog::find()->with(['translation']);
+        $blogs = Blog::find();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $blogs,

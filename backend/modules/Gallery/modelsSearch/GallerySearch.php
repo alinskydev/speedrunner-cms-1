@@ -5,6 +5,7 @@ namespace backend\modules\Gallery\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+
 use backend\modules\Gallery\models\Gallery;
 
 

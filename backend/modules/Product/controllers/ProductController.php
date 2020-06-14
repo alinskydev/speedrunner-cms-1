@@ -6,12 +6,14 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\db\Expression;
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
 use backend\modules\Product\models\ProductImage;
 use backend\modules\Product\models\ProductCategory;
 use backend\modules\Product\models\ProductAttribute;
+use backend\modules\Product\models\ProductAttributeOption;
 use backend\modules\Product\modelsSearch\ProductCommentSearch;
 use backend\modules\Product\modelsSearch\ProductRateSearch;
 
@@ -37,7 +39,7 @@ class ProductController extends Controller
                 $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
                 $dataProvider[$key]->pagination->pageSize = 20;
                 $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
-                $dataProvider[$key]->query->andWhere(['self.product_id' => $id]);
+                $dataProvider[$key]->query->andWhere(['product_id' => $id]);
             }
             
             return $this->render('view', [
@@ -59,8 +61,8 @@ class ProductController extends Controller
     {
         $model = Product::find()
             ->with([
-                'brand.translation', 'cats.translation', 'images',
-                'related.translation', 'vars.attr', 'vars.option'
+                'brand', 'cats', 'images',
+                'related', 'vars.attr', 'vars.option'
             ])
             ->where(['id' => $id])
             ->one();
@@ -79,10 +81,10 @@ class ProductController extends Controller
         return Yii::$app->sr->record->deleteModel(new Product);
     }
     
-    public function actionGetSelectionList($q = '', $id = null)
+    public function actionItemsList($q = '', $id = null)
     {
-        $cond = $id ? ['!=', 'self.id', $id] : [];
-        $out['results'] = Product::getSelectionList($q, 'name', $cond);
+        $cond = $id ? ['!=', 'id', $id] : [];
+        $out['results'] = Product::itemsList('name', 'translation', 20, $q, $cond);
         return $this->asJson($out);
     }
     
@@ -122,24 +124,31 @@ class ProductController extends Controller
     {
         $model = Product::findOne($id) ?: new Product;
         $categories = json_decode($categories, false);
+        $lang = Yii::$app->language;
         
         $attributes = ProductAttribute::find()
             ->alias('self')
-            ->joinWith(['cats as cats'])
-            ->with([
-                'translation',
-                'options.translation',
+            ->joinWith([
+                'cats as cats',
+                'options as options' => function ($query) use ($lang) {
+                    $query->select(['*', new Expression("options.name->>'$.$lang' as name")]);
+                },
             ])
             ->where(['cats.id' => $categories])
+            ->select([
+                'self.*',
+                new Expression("self.name->>'$.$lang' as name"),
+                'options.sort',
+            ])
+            ->distinct()
             ->asArray()->all();
         
-        $result['attrs_html'] = $this->renderPartial('_attributes', [
+        $result['json'] = $attributes;
+        $result['html'] = $this->renderPartial('_attributes', [
             'model' => $model,
             'attributes' => $attributes,
         ]);
         
-        $result['attrs_json'] = $attributes;
-        
-        return json_encode($result, true);
+        return $this->asJson($result);
     }
 }

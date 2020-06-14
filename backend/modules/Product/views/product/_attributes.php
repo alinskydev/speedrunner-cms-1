@@ -6,14 +6,14 @@ use yii\helpers\ArrayHelper;
 $options = ArrayHelper::getColumn($model->options, 'id');
 
 foreach ($attributes as $key => $a) {
-    echo Html::tag('h5', $a['translation']['name']);
+    echo Html::tag('h5', $a['name']);
     
     switch ($a['type']) {
         case 'select':
             echo Html::dropDownList(
                 'Product[options_tmp][' . $a['id'] . '][]',
                 $options,
-                ArrayHelper::map($a['options'], 'id', 'translation.value'),
+                ArrayHelper::map($a['options'], 'id', 'name'),
                 [
                     'class' => 'form-control',
                 ]
@@ -24,12 +24,11 @@ foreach ($attributes as $key => $a) {
             echo Html::checkboxList(
                 'Product[options_tmp][' . $a['id'] . '][]',
                 $options,
-                ArrayHelper::map($a['options'], 'id', 'translation.value'),
+                ArrayHelper::map($a['options'], 'id', 'name'),
                 [
                     'separator' => Html::tag('div', null, ['class' => 'mb-2']),
                     'item' => function ($index, $label, $name, $checked, $value) use ($a) {
                         $result = Html::checkbox('Product[options_tmp][' . $a['id'] . '][]', $checked, [
-                            'uncheck' => 0,
                             'id' => "productoption-$value",
                             'class' => 'custom-control-input',
                             'value' => $value

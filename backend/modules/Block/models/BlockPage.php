@@ -6,17 +6,13 @@ use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Block\modelsTranslation\BlockPageTranslation;
 
 
 class BlockPage extends ActiveRecord
 {
-    public $translation_table = 'BlockPageTranslation';
     public $translation_attrs = [
         'name',
     ];
-    
-    public $name;
     
     public $blocks_tmp;
     
@@ -34,6 +30,7 @@ class BlockPage extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -59,11 +56,6 @@ class BlockPage extends ActiveRecord
             'updated' => Yii::t('app', 'Updated'),
             'blocks_tmp' => Yii::t('app', 'Blocks'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(BlockPageTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getBlocks()

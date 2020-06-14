@@ -5,18 +5,13 @@ namespace backend\modules\Product\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use backend\modules\Product\modelsTranslation\ProductAttributeTranslation;
-use backend\modules\Product\modelsTranslation\ProductAttributeOptionTranslation;
 
 
 class ProductAttribute extends ActiveRecord
 {
-    public $translation_table = 'ProductAttributeTranslation';
     public $translation_attrs = [
         'name',
     ];
-    
-    public $name;
     
     public $options_tmp;
     
@@ -60,11 +55,6 @@ class ProductAttribute extends ActiveRecord
         ];
     }
     
-    public function getTranslation()
-    {
-        return $this->hasOne(ProductAttributeTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
-    }
-    
     public function getOptions()
     {
         return $this->hasMany(ProductAttributeOption::className(), ['item_id' => 'id'])->orderBy('sort');
@@ -88,7 +78,7 @@ class ProductAttribute extends ActiveRecord
             foreach ($this->options_tmp as $key => $o) {
                 $attr_option_mdl = ProductAttributeOption::findOne($key) ?: new ProductAttributeOption;
                 $attr_option_mdl->item_id = $this->id;
-                $attr_option_mdl->value = ArrayHelper::getValue($o, 'value');
+                $attr_option_mdl->name = ArrayHelper::getValue($o, 'name');
                 $attr_option_mdl->sort = $counter;
                 $attr_option_mdl->save();
                 

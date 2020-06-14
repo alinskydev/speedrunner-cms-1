@@ -34,7 +34,7 @@ class BlogController extends Controller
                 $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
                 $dataProvider[$key]->pagination->pageSize = 20;
                 $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
-                $dataProvider[$key]->query->andWhere(['self.blog_id' => $id]);
+                $dataProvider[$key]->query->andWhere(['blog_id' => $id]);
             }
             
             return $this->render('view', [
@@ -70,9 +70,9 @@ class BlogController extends Controller
         return Yii::$app->sr->record->deleteModel(new Blog);
     }
     
-    public function actionGetSelectionList($q = '')
+    public function actionItemsList($q = '')
     {
-        $out['results'] = Blog::getSelectionList($q, 'name');
+        $out['results'] = Blog::itemsList('name', 'translation', 20, $q);
         return $this->asJson($out);
     }
     

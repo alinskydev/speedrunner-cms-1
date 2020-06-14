@@ -14,7 +14,7 @@ $options = ArrayHelper::merge($model->options, [new ProductAttributeOption]);
     <thead>
         <tr>
             <th></th>
-            <th style="width: 100%;"><?= $options[0]->getAttributeLabel('value') ?></th>
+            <th style="width: 100%;"><?= $options[0]->getAttributeLabel('name') ?></th>
             <th></th>
         </tr>
     </thead>
@@ -28,8 +28,8 @@ $options = ArrayHelper::merge($model->options, [new ProductAttributeOption]);
                     <i class="fas fa-arrows-alt"></i>
                 </td>
                 <td>
-                    <?= $form->field($o, 'value', ['template' => '{input}'])->textInput([
-                        'name' => "ProductAttribute[options_tmp][$o_id][value]",
+                    <?= $form->field($o, 'name', ['template' => '{input}'])->textInput([
+                        'name' => "ProductAttribute[options_tmp][$o_id][name]",
                         'class' => 'form-control',
                     ]) ?>
                 </td>

@@ -18,7 +18,7 @@ or download as [zip file](https://github.com/sr-projects/speedrunner-cms/archive
 Create database and fill config in `/common/config/main-local.php`.  
 Run console command
 ```
-yii speedrunner/db-import main.sql
+yii speedrunner/db/import main.sql
 ```
 or import SQL file `/console/db/main.sql` using MySQL manager.
 

@@ -7,21 +7,15 @@ use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
-use backend\modules\Zzz\modelsTranslation\ZzzTranslation;
 
 
 class Zzz extends ActiveRecord
 {
-    public $translation_table = 'ZzzTranslation';
     public $translation_attrs = [
         'name',
         'short_description',
         'full_description',
     ];
-    
-    public $name;
-    public $short_description;
-    public $full_description;
     
     public $images_tmp;
     
@@ -37,6 +31,7 @@ class Zzz extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -59,21 +54,16 @@ class Zzz extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'category_id' => Yii::t('app', 'Category'),
             'name' => Yii::t('app', 'Name'),
+            'url' => Yii::t('app', 'Url'),
+            'category_id' => Yii::t('app', 'Category'),
+            'image' => Yii::t('app', 'Image'),
             'short_description' => Yii::t('app', 'Short Description'),
             'full_description' => Yii::t('app', 'Full Description'),
-            'url' => Yii::t('app', 'Url'),
-            'image' => Yii::t('app', 'Image'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'images_tmp' => Yii::t('app', 'Images'),
         ];
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ZzzTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
     }
     
     public function getCategory()

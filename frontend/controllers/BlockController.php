@@ -13,10 +13,10 @@ class BlockController extends Controller
 {
     public function actionView($url)
     {
-        if ($model = BlockPage::find()->with(['translation'])->where(['url' => $url])->one()) {
+        if ($model = BlockPage::find()->where(['url' => $url])->one()) {
             $blocks = Block::find()
                 ->with([
-                    'translation', 'type', 'images'
+                    'type', 'images'
                 ])
                 ->where(['page_id' => $model->id])
                 ->orderBy('sort')

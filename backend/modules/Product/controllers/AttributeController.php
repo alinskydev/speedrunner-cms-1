@@ -24,7 +24,7 @@ class AttributeController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = ProductAttribute::find()->with(['options.translation'])->where(['id' => $id])->one();
+        $model = ProductAttribute::find()->with(['options'])->where(['id' => $id])->one();
         return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
     
@@ -33,9 +33,9 @@ class AttributeController extends Controller
         return Yii::$app->sr->record->deleteModel(new ProductAttribute);
     }
     
-    public function actionGetSelectionList($q = '')
+    public function actionItemsList($q = '')
     {
-        $out['results'] = ProductAttribute::getSelectionList($q, 'name');
+        $out['results'] = ProductAttribute::itemsList('name', 'translation', 20, $q);
         return $this->asJson($out);
     }
 }

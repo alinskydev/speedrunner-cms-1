@@ -8,20 +8,15 @@ use yii\helpers\ArrayHelper;
 use yii\behaviors\SluggableBehavior;
 use creocoder\nestedsets\NestedSetsBehavior;
 use wokster\treebehavior\NestedSetsTreeBehavior;
-
-use backend\modules\Product\modelsTranslation\ProductCategoryTranslation;
+use yii\db\Expression;
 
 
 class ProductCategory extends ActiveRecord
 {
-    public $translation_table = 'ProductCategoryTranslation';
     public $translation_attrs = [
         'name',
         'description',
     ];
-    
-    public $name;
-    public $description;
     
     public $parent_id;
     public $attrs_tmp;
@@ -47,6 +42,7 @@ class ProductCategory extends ActiveRecord
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'name',
                 'slugAttribute' => 'url',
+                'immutable' => true,
             ],
         ];
     }
@@ -67,7 +63,11 @@ class ProductCategory extends ActiveRecord
             [['description'], 'string'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['full_url'], 'unique', 'message' => Yii::t('app', 'Url must be unique')],
-            [['parent_id', 'attrs_tmp'], 'safe'],
+            [['parent_id'], 'required', 'when' => function ($model) {
+                return $model->isNewRecord;
+            }],
+            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            [['attrs_tmp'], 'safe'],
         ];
     }
     
@@ -75,37 +75,35 @@ class ProductCategory extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
-            'full_url' => Yii::t('app', 'Full url'),
-            'description' => Yii::t('app', 'Description'),
-            'image' => Yii::t('app', 'Image'),
             'tree' => Yii::t('app', 'Tree'),
             'lft' => Yii::t('app', 'Lft'),
             'rgt' => Yii::t('app', 'Rgt'),
             'depth' => Yii::t('app', 'Depth'),
             'expanded' => Yii::t('app', 'Expanded'),
+            'name' => Yii::t('app', 'Name'),
+            'url' => Yii::t('app', 'Url'),
+            'full_url' => Yii::t('app', 'Full url'),
+            'image' => Yii::t('app', 'Image'),
+            'description' => Yii::t('app', 'Description'),
             'parent_id' => Yii::t('app', 'Parent'),
             'attrs_tmp' => Yii::t('app', 'Attributes'),
         ];
     }
     
-    static function getItemsList($excepts = [])
+    static function itemsTree($excepts = [])
     {
-        $items = self::find()->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])->with(['translation'])->asArray()->all();
+        $lang = Yii::$app->language;
         
-        foreach ($items as $item) {
-            if (!in_array($item['id'], $excepts)) {
-                $result[$item['id']] = str_repeat('- ', $item['depth']) . $item['translation']['name'];
-            }
-        }
+        $result = self::find()
+            ->select([
+                'id',
+                new Expression("CONCAT(REPEAT(('- '), depth), name->>'$.$lang') as name")
+            ])
+            ->where(['not in', 'id', $excepts])
+            ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
+            ->asArray()->all();
         
-        return $result;
-    }
-    
-    public function getTranslation()
-    {
-        return $this->hasOne(ProductCategoryTranslation::className(), ['item_id' => 'id'])->andWhere(['lang' => Yii::$app->language]);
+        return ArrayHelper::map($result, 'id', 'name');
     }
     
     public function getProducts()

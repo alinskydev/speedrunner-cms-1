@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'options' => [
                                             'accept' => 'image/*',
                                             'multiple' => true,
-                                            'name' => "Block[$b->id][value]",
+                                            'name' => "Block[$b->id][value][]",
                                             'id' => "block-$b->id",
                                         ],
                                         'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [

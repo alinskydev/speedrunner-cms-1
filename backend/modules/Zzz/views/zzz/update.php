@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-images" class="tab-pane fade">
-                <?= $form->field($model, 'images_tmp', [
+                <?= $form->field($model, 'images', [
                     'template' => '{label}{error}{hint}{input}',
                 ])->widget(FileInput::classname(), [
                     'options' => [
@@ -79,16 +79,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'multiple' => true,
                     ],
                     'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                        'deleteUrl' => Yii::$app->urlManager->createUrl(['Zzz/Zzz/image-delete']),
-                        'initialPreview' => ArrayHelper::getColumn($model->images, 'image'),
-                        'initialPreviewConfig' => ArrayHelper::getColumn($model->images, function ($model) {
-                            return ['key' => $model['id'], 'downloadUrl' => $model['image']];
+                        'deleteUrl' => Yii::$app->urlManager->createUrl(['zzz/zzz/image-delete', 'id' => $model->id]),
+                        'initialPreview' => $model->images ?: [],
+                        'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?: [], function ($value) {
+                            return ['key' => $value, 'downloadUrl' => $value];
                         }),
                     ]),
                     'pluginEvents' => [
-                        'filesorted' => new JsExpression('function(event, params){
-                            $.post("'.Yii::$app->urlManager->createUrl(["Zzz/Zzz/image-sort", "id" => $model->id]).'", {sort: params});
-                        }')
+                        'filesorted' => new JsExpression("function(event, params) {
+                            $.post('".Yii::$app->urlManager->createUrl(['zzz/zzz/image-sort', 'id' => $model->id])."', {sort: params});
+                        }")
                     ],
                 ]); ?>
             </div>

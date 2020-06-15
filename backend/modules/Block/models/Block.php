@@ -11,8 +11,6 @@ use yii\db\JsonExpression;
 
 class Block extends ActiveRecord
 {
-    public $images_tmp;
-    
     public static function tableName()
     {
         return 'Block';
@@ -21,19 +19,18 @@ class Block extends ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'sort'], 'required'],
-            [['sort'], 'integer'],
-            [['type_id'], 'exist', 'targetClass' => BlockType::className(), 'targetAttribute' => 'id'],
             [['value'], 'string', 'when' => function ($model) {
                 return in_array($model->type->type, ['textInput', 'textArea', 'CKEditor', 'ElFinder']);
             }],
             [['value'], 'boolean', 'when' => function ($model) {
                 return in_array($model->type->type, ['checkbox']);
             }],
+            [['value'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
+                return in_array($model->type->type, ['images']);
+            }],
             [['value'], 'valueValidation', 'when' => function ($model) {
                 return in_array($model->type->type, ['groups']);
             }],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
         ];
     }
     
@@ -69,23 +66,21 @@ class Block extends ActiveRecord
         return $this->hasOne(BlockType::className(), ['id' => 'type_id']);
     }
     
-    public function getImages()
-    {
-        return $this->hasMany(BlockImage::className(), ['item_id' => 'id'])->orderBy('sort');
-    }
-    
     public function afterFind()
     {
         $this->value = $this->type->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;
+        
+        if (!$this->value && in_array($this->type->type, ['images', 'groups'])) {
+            $this->value = [];
+        }
+        
         return parent::afterFind();
     }
     
     public function beforeValidate()
     {
-        if (!$this->isNewRecord) {
-            if ($images_tmp = UploadedFile::getInstances($this, $this->id)) {
-                $this->images_tmp = $images_tmp;
-            }
+        if (!$this->isNewRecord && $this->type->type == 'images' && $images = UploadedFile::getInstances($this, $this->id)) {
+            $this->value = $images;
         }
         
         if ($this->type->type == 'groups' && !is_array($this->value)) {
@@ -97,33 +92,55 @@ class Block extends ActiveRecord
     
     public function beforeSave($insert)
     {
+        //        TRANSLATION
+        
         if ($this->type->has_translation) {
-            if ($json = ArrayHelper::getValue($this->oldAttributes, 'value')) {
-                $json[Yii::$app->language] = $this->value;
-            } else {
-                $langs = Yii::$app->i18n->getLanguages(true);
-                
-                foreach ($langs as $l) {
-                    $json[$l['code']] = $this->value;
-                } 
-            }
-            
+            $json[Yii::$app->language] = $this->value;
             $this->value = new JsonExpression($json);
         }
         
-        if ($this->type == 'groups') {
+        //        IMAGES
+        
+        if ($insert) {
+            $this->value = in_array($this->type->type, ['images', 'groups']) ? [] : '';
+        } else {
+            if ($this->type->type == 'images') {
+                $old_images = ArrayHelper::getValue($this->oldAttributes, 'value', []);
+                
+                if ($images = UploadedFile::getInstances($this, $this->id)) {
+                    foreach ($images as $img) {
+                        if ($this->type->has_translation) {
+                            $images_arr[Yii::$app->language][] = Yii::$app->sr->image->save($img);
+                        } else {
+                            $images_arr[] = Yii::$app->sr->image->save($img);
+                        }
+                    }
+                    
+                    $this->value = ArrayHelper::merge($old_images, $images_arr);
+                } else {
+                    $this->value = $old_images;
+                }
+            }
+        }
+        
+        //        GROUPS
+        
+        
+        if ($this->type->type == 'groups') {
             $this->value = new JsonExpression($this->value);
         }
         
         return parent::beforeSave($insert);
     }
     
-    public function afterSave($insert, $changedAttributes)
+    public function afterDelete()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, $this->id)) {
-            Yii::$app->sr->image->save($images_tmp, new BlockImage(['item_id' => $this->id]));
+        if ($this->type->type == 'images') {
+            foreach ($this->value as $v) {
+                Yii::$app->sr->file->delete($v);
+            }
         }
         
-        return parent::afterSave($insert, $changedAttributes);
+        return parent::afterDelete();
     }
 }

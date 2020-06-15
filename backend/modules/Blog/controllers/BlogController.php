@@ -5,10 +5,10 @@ namespace backend\modules\Blog\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\Blog;
 use backend\modules\Blog\modelsSearch\BlogSearch;
-use backend\modules\Blog\models\BlogImage;
 use backend\modules\Blog\modelsSearch\BlogCommentSearch;
 use backend\modules\Blog\modelsSearch\BlogRateSearch;
 
@@ -54,7 +54,7 @@ class BlogController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = Blog::find()->with(['tags', 'images'])->where(['id' => $id])->one();
+        $model = Blog::find()->with(['tags'])->where(['id' => $id])->one();
         
         if ($model) {
             $model->tags_tmp = $model->tags;
@@ -76,35 +76,33 @@ class BlogController extends Controller
         return $this->asJson($out);
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = BlogImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = Blog::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->images;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            return $model->updateAttributes(['images' => array_values($images)]);
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post('sort');
-            
-            if ($post['oldIndex'] > $post['newIndex']){
-                $params = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $params = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            BlogImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $params
-            ]);
-            
-            BlogImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+        if (!($model = Blog::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        $images = $model->images;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes(['images' => array_values($images)]);
     }
 }

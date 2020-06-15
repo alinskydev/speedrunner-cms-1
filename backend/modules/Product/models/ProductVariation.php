@@ -10,8 +10,6 @@ use yii\web\UploadedFile;
 
 class ProductVariation extends ActiveRecord
 {
-    public $images_tmp;
-    
     public static function tableName()
     {
         return 'ProductVariation';
@@ -25,7 +23,7 @@ class ProductVariation extends ActiveRecord
             [['option_id'], 'exist', 'targetClass' => ProductAttributeOption::className(), 'targetAttribute' => 'id'],
             [['price'], 'number'],
             [['sku'], 'string', 'max' => 100],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
         ];
     }
     
@@ -38,13 +36,8 @@ class ProductVariation extends ActiveRecord
             'option_id' => Yii::t('app', 'Option ID'),
             'price' => Yii::t('app', 'Price'),
             'sku' => Yii::t('app', 'Sku'),
-            'images_tmp' => Yii::t('app', 'Images'),
+            'images' => Yii::t('app', 'Images'),
         ];
-    }
-    
-    public function getImages()
-    {
-        return $this->hasMany(ProductVariationImage::className(), ['item_id' => 'id'])->orderBy('sort');
     }
     
     public function getAttr()
@@ -59,21 +52,38 @@ class ProductVariation extends ActiveRecord
     
     public function beforeValidate()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            $this->images_tmp = $images_tmp;
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            $this->images = $images;
         }
         
         return parent::beforeValidate();
     }
     
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        //      IMAGES
+        //        IMAGES
         
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            Yii::$app->sr->image->save($images_tmp, new ProductVariationImage(['item_id' => $this->id]));
+        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
+        
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            foreach ($images as $img) {
+                $images_arr[] = Yii::$app->sr->image->save($img);
+            }
+            
+            $this->images = array_merge($old_images, $images_arr);
+        } else {
+            $this->images = $old_images;
         }
         
-        return parent::afterSave($insert, $changedAttributes);
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterDelete()
+    {
+        foreach ($this->images as $img) {
+            Yii::$app->sr->file->delete($img);
+        }
+        
+        return parent::afterDelete();
     }
 }

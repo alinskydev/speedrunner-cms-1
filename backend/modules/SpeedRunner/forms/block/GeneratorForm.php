@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Block\models\BlockType;
+use backend\modules\Block\models\BlockPage;
 
 
 class GeneratorForm extends Model
@@ -29,8 +30,8 @@ class GeneratorForm extends Model
     
     public function generate()
     {
-        $types = BlockType::find()->all();
-        foreach ($types as $t) { $t->delete(); };
+        BlockType::deleteAll();
+        BlockPage::deleteAll();
         
         $attrs = ['name', 'label', 'type', 'image', 'has_translation'];
         

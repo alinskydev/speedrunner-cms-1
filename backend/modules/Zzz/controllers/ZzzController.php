@@ -5,10 +5,10 @@ namespace backend\modules\Zzz\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Zzz\models\Zzz;
 use backend\modules\Zzz\modelsSearch\ZzzSearch;
-use backend\modules\Zzz\models\ZzzImage;
 
 
 class ZzzController extends Controller
@@ -34,35 +34,33 @@ class ZzzController extends Controller
         return Yii::$app->sr->record->deleteModel(new Zzz);
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = ZzzImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = Zzz::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->images;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            return $model->updateAttributes(['images' => array_values($images)]);
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax){
-            $post = Yii::$app->request->post('sort');
-            
-            if ($post['oldIndex'] > $post['newIndex']) {
-                $param = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $param = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            ZzzImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $param
-            ]);
-            
-            ZzzImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+        if (!($model = Zzz::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        $images = $model->images;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes(['images' => array_values($images)]);
     }
 }

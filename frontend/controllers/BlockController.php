@@ -15,9 +15,7 @@ class BlockController extends Controller
     {
         if ($model = BlockPage::find()->where(['url' => $url])->one()) {
             $blocks = Block::find()
-                ->with([
-                    'type', 'images'
-                ])
+                ->with(['type'])
                 ->where(['page_id' => $model->id])
                 ->orderBy('sort')
                 ->all();

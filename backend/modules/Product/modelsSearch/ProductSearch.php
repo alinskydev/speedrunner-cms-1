@@ -37,9 +37,7 @@ class ProductSearch extends Product
     public function search($params)
     {
         $query = Product::find()->with([
-            'brand',
-            'mainCat',
-            'images',
+            'brand', 'mainCat',
         ]);
         
         $dataProvider = new ActiveDataProvider([

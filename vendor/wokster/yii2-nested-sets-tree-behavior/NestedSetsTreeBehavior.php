@@ -44,14 +44,16 @@ class NestedSetsTreeBehavior extends Behavior
      * @var null|callable
      */
     public $makeLinkCallable = null;
+    /**
+     * @var array
+     */
+    public $jsonAttributes = [];
 
     public function tree()
     {
         $makeNode = function ($node) {
-            $newData = [
-                $this->labelOutAttribute => $node[$this->labelAttribute],
-                'expanded' => intval($node['expanded']),
-            ];
+            $newData = [];
+            
             if (is_callable($makeLink = $this->makeLinkCallable)) {
                 $newData += [
                     $this->hrefOutAttribute => $makeLink($node),
@@ -63,8 +65,19 @@ class NestedSetsTreeBehavior extends Behavior
         // Trees mapped
         $trees = array();
         $lang = \Yii::$app->language;
-        $collection = $this->owner->children()->addSelect(['*', new Expression("name->>'$.$lang' as name")])->asArray()->all();
-//        $collection = $this->owner->find()->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])->with(['translation'])->asArray()->all();
+        
+        $collection = $this->owner->children()
+            ->select([
+                '*',
+                new Expression("name->>'$.$lang' as name"),
+                new Expression("name->>'$.$lang' as title"),
+            ]);
+        
+        foreach ($this->jsonAttributes as $a) {
+            $collection->addSelect([new Expression("url->>'$.$lang' as url")]);
+        }
+        
+        $collection = $collection->asArray()->all();
 
         if (count($collection) > 0) {
             foreach ($collection as &$col) $col = $makeNode($col);
@@ -102,5 +115,11 @@ class NestedSetsTreeBehavior extends Behavior
         }
 
         return $trees;
+    }
+    
+    public function setJsonAttributes($attributes)
+    {
+        $this->jsonAttributes = $attributes;
+        return $this->owner;
     }
 }

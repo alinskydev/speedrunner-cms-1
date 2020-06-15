@@ -17,7 +17,6 @@ class Product extends ActiveRecord
         'full_description',
     ];
     
-    public $images_tmp;
     public $cats_tmp = '[]';
     public $options_tmp = [];
     public $related_tmp;
@@ -65,7 +64,7 @@ class Product extends ActiveRecord
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
             [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
             [['cats_tmp', 'options_tmp', 'related_tmp', 'vars_tmp'], 'safe'],
         ];
     }
@@ -78,6 +77,7 @@ class Product extends ActiveRecord
             'url' => Yii::t('app', 'Url'),
             'short_description' => Yii::t('app', 'Short Description'),
             'full_description' => Yii::t('app', 'Full Description'),
+            'images' => Yii::t('app', 'Images'),
             'brand_id' => Yii::t('app', 'Brand ID'),
             'main_category_id' => Yii::t('app', 'Main category'),
             'price' => Yii::t('app', 'Price'),
@@ -87,17 +87,11 @@ class Product extends ActiveRecord
             'is_active' => Yii::t('app', 'Is Active'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
-            'images_tmp' => Yii::t('app', 'Images'),
             'cats_tmp' => Yii::t('app', 'Categories'),
             'options_tmp' => Yii::t('app', 'Options'),
             'related_tmp' => Yii::t('app', 'Related'),
             'vars_tmp' => Yii::t('app', 'Variations'),
         ];
-    }
-    
-    public function getImages()
-    {
-        return $this->hasMany(ProductImage::className(), ['item_id' => 'id'])->orderBy('sort');
     }
     
     public function getBrand()
@@ -168,58 +162,36 @@ class Product extends ActiveRecord
         return $result;
     }
     
-    public function getRelatedByCats($limit = 4)
-    {
-        $result = self::find()
-            ->alias('self')
-            ->joinWith(['cats.products as cats_products'])
-            ->where([
-                'and',
-                ['=', 'self.id', $this->id],
-                ['!=', 'cats_products.id', $this->id]
-            ])
-            ->orderBy('RAND()')
-            ->limit($limit)
-            ->asArray()->all();
-        
-        return $result;
-    }
-    
-    public function getRelatedByMainCat($limit = 4)
-    {
-        $result = self::find()
-            ->with([
-                'cats',
-            ])
-            ->where([
-                'and',
-                ['!=', 'id', $this->id],
-                ['=', 'main_category_id', $this->main_category_id],
-            ])
-            ->orderBy('RAND()')
-            ->limit($limit)
-            ->asArray()->all();
-        
-        return $result;
-    }
-    
     public function beforeValidate()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            $this->images_tmp = $images_tmp;
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            $this->images = $images;
         }
         
         return parent::beforeValidate();
     }
     
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
         //        IMAGES
         
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            Yii::$app->sr->image->save($images_tmp, new ProductImage(['item_id' => $this->id]));
+        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
+        
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            foreach ($images as $img) {
+                $images_arr[] = Yii::$app->sr->image->save($img);
+            }
+            
+            $this->images = array_merge($old_images, $images_arr);
+        } else {
+            $this->images = $old_images;
         }
         
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
         //        CATEGORIES
         
         $cats = ArrayHelper::map($this->cats, 'id', 'id');
@@ -305,5 +277,14 @@ class Product extends ActiveRecord
         foreach ($vars as $v) { $v->delete(); };
         
         return parent::afterSave($insert, $changedAttributes);
+    }
+    
+    public function afterDelete()
+    {
+        foreach ($this->images as $img) {
+            Yii::$app->sr->file->delete($img);
+        }
+        
+        return parent::afterDelete();
     }
 }

@@ -14,8 +14,9 @@ echo '<?php';
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
-use kartik\file\FileInput;
+use zxbodya\yii2\elfinder\ElFinderInput;
 use vova07\imperavi\Widget;
+use kartik\file\FileInput;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];

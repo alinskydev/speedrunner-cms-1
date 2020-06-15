@@ -127,8 +127,8 @@ $(function() {
     //      ELFINDER
     
     $(document).on('click', '.btn-elfinder-remove', function() {
-        $(this).parent().find('*:not(input):not(button):not(i)').remove();
-        $(this).parent().find('input').val('');
+        $(this).parents('.elfinder-container').find('img').remove();
+        $(this).parents('.elfinder-container').find('input').val('');
     });
     
     //      DELETE ALL CONFIRM

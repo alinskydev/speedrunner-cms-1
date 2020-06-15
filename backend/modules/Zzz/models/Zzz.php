@@ -17,8 +17,6 @@ class Zzz extends ActiveRecord
         'full_description',
     ];
     
-    public $images_tmp;
-    
     public static function tableName()
     {
         return 'Zzz';
@@ -46,7 +44,7 @@ class Zzz extends ActiveRecord
             [['url'], 'unique'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['category_id'], 'exist', 'targetClass' => ZzzCategory::className(), 'targetAttribute' => 'id'],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
         ];
     }
     
@@ -60,9 +58,9 @@ class Zzz extends ActiveRecord
             'image' => Yii::t('app', 'Image'),
             'short_description' => Yii::t('app', 'Short Description'),
             'full_description' => Yii::t('app', 'Full Description'),
+            'images' => Yii::t('app', 'Images'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
-            'images_tmp' => Yii::t('app', 'Images'),
         ];
     }
     
@@ -71,26 +69,40 @@ class Zzz extends ActiveRecord
         return $this->hasOne(ZzzCategory::className(), ['id' => 'category_id']);
     }
     
-    public function getImages()
-    {
-        return $this->hasMany(ZzzImage::className(), ['item_id' => 'id'])->orderBy('sort');
-    }
-    
     public function beforeValidate()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            $this->images_tmp = $images_tmp;
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            $this->images = $images;
         }
         
         return parent::beforeValidate();
     }
     
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            Yii::$app->sr->image->save($images_tmp, new ZzzImage(['item_id' => $this->id]));
+        //        IMAGES
+        
+        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
+        
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            foreach ($images as $img) {
+                $images_arr[] = Yii::$app->sr->image->save($img);
+            }
+            
+            $this->images = array_merge($old_images, $images_arr);
+        } else {
+            $this->images = $old_images;
         }
         
-        return parent::afterSave($insert, $changedAttributes);
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterDelete()
+    {
+        foreach ($this->images as $img) {
+            Yii::$app->sr->file->delete($img);
+        }
+        
+        return parent::afterDelete();
     }
 }

@@ -11,8 +11,6 @@ use yii\behaviors\SluggableBehavior;
 
 class Gallery extends ActiveRecord
 {
-    public $images_tmp;
-    
     public $seo_meta = [];
     
     public static function tableName()
@@ -39,7 +37,7 @@ class Gallery extends ActiveRecord
             [['name', 'url'], 'string', 'max' => 100],
             [['url'], 'unique'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
         ];
     }
     
@@ -49,32 +47,46 @@ class Gallery extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
+            'images' => Yii::t('app', 'Images'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
-            'images_tmp' => Yii::t('app', 'Images'),
         ];
-    }
-    
-    public function getImages()
-    {
-        return $this->hasMany(GalleryImage::className(), ['item_id' => 'id'])->orderBy('sort');
     }
     
     public function beforeValidate()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            $this->images_tmp = $images_tmp;
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            $this->images = $images;
         }
         
         return parent::beforeValidate();
     }
     
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            Yii::$app->sr->image->save($images_tmp, new GalleryImage(['item_id' => $this->id]));
+        //        IMAGES
+        
+        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
+        
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            foreach ($images as $img) {
+                $images_arr[] = Yii::$app->sr->image->save($img);
+            }
+            
+            $this->images = array_merge($old_images, $images_arr);
+        } else {
+            $this->images = $old_images;
         }
         
-        return parent::afterSave($insert, $changedAttributes);
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterDelete()
+    {
+        foreach ($this->images as $img) {
+            Yii::$app->sr->file->delete($img);
+        }
+        
+        return parent::afterDelete();
     }
 }

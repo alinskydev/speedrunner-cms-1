@@ -14,12 +14,17 @@ foreach ($model->view_relations as $r) {
     $columns[$r['var_name']] = new ColumnSchema;
     $columns[$r['var_name']]->name = $r['var_name'];
     $columns[$r['var_name']]->allowNull = true;
-    $columns[$r['var_name']]->type = 'date';
-    $columns[$r['var_name']]->phpType = 'date';
-    $columns[$r['var_name']]->dbType = 'date';
+    $columns[$r['var_name']]->type = 'json';
+    $columns[$r['var_name']]->phpType = 'json';
+    $columns[$r['var_name']]->dbType = 'json';
 }
 
 $rules = $model->generateRules($columns);
+
+$attrs = $model->attrs_fields ?: [];
+$attrs_translation = array_filter($attrs, function ($value) {
+    return ArrayHelper::getValue($value, 'has_translation');
+});
 
 echo '<?php';
 
@@ -30,17 +35,18 @@ namespace backend\modules\<?= $model->module_name ?>\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
-<?php if(isset($columns['url'])) { ?>
+use yii\helpers\ArrayHelper;
+<?php if(isset($attrs['url'])) { ?>
 use yii\behaviors\SluggableBehavior;
 <?php } ?>
 
 
 class <?= $model->table_name ?> extends ActiveRecord
 {
-<?php if ($model->with_translation) { ?>
+<?php if ($attrs_translation) { ?>
     public $translation_attrs = [
-<?php foreach ($columns_translation as $c_t) { ?>
-        '<?= $c_t->name ?>',
+<?php foreach ($attrs_translation as $key => $a) { ?>
+        '<?= $key ?>',
 <?php } ?>
     ];
     
@@ -61,7 +67,7 @@ class <?= $model->table_name ?> extends ActiveRecord
         return '<?= $model->table_name ?>';
     }
     
-<?php if(isset($columns['url'])) { ?>
+<?php if(isset($attrs['url'])) { ?>
     public function behaviors()
     {
         return [
@@ -83,8 +89,8 @@ class <?= $model->table_name ?> extends ActiveRecord
     public function attributeLabels()
     {
         return [
-<?php foreach ($columns as $c) { ?>
-            '<?= $c->name ?>' => Yii::t('app', '<?= str_replace(['_'], [' '], ucfirst($c->name)) ?>'),
+<?php foreach ($attrs as $key => $a) { ?>
+            '<?= $key ?>' => Yii::t('app', '<?= str_replace(['_'], [' '], ucfirst($key)) ?>'),
 <?php } ?>
         ];
     }

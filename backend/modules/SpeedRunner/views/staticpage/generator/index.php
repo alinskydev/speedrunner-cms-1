@@ -57,10 +57,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $this->render('_parts') ?>
             </div>
         </div>
-        
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('speedrunner', 'GO'), ['class' => 'btn btn-primary btn-block', 'name' => 'contact-button']) ?>
-        </div>
     </div>
 </div>
 

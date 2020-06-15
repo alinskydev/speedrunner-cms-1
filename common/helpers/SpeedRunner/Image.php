@@ -11,33 +11,24 @@ use Yii\image\drivers\Image as ImageDriver;
 
 class Image
 {
-    public function save($images, $model = null, $width_height = [], $selected_dir = 'uploaded')
+    public function save($img, $width_height = [], $selected_dir = 'uploaded')
     {
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);
         
-        foreach ($images as $key => $img) {
-            $image_name = strtotime('now') . '_' . Yii::$app->getSecurity()->generateRandomString(16) . ".$img->extension";
-            $image = Yii::$app->image->load($img->tempName);
-            
-            if ($width_height) {
-                $opacity = in_array($image->mime, ['image/png']) ? 0 : 100;
-                $image->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
-                $image->background('#fff', $opacity);
-                $image->crop($width_height[0], $width_height[1]);
-            }
-            
-            $image->save("$dir/$image_name", 90);
-            
-            if ($model) {
-                $image_mdl = clone($model);
-                $image_mdl->image = "/$selected_dir/$image_name";
-                $image_mdl->sort = $key;
-                $image_mdl->save();
-            } else {
-                return "/$selected_dir/$image_name";
-            }
+        $image_name = strtotime('now') . '_' . Yii::$app->getSecurity()->generateRandomString(16) . ".$img->extension";
+        $image = Yii::$app->image->load($img->tempName);
+        
+        if ($width_height) {
+            $opacity = in_array($image->mime, ['image/png']) ? 0 : 100;
+            $image->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
+            $image->background('#fff', $opacity);
+            $image->crop($width_height[0], $width_height[1]);
         }
+        
+        $image->save("$dir/$image_name", 90);
+        
+        return "/$selected_dir/$image_name";
     }
     
     public function thumb($image_url, $width_height, $type = 'crop')

@@ -10,7 +10,6 @@ use yii\db\Expression;
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
-use backend\modules\Product\models\ProductImage;
 use backend\modules\Product\models\ProductCategory;
 use backend\modules\Product\models\ProductAttribute;
 use backend\modules\Product\models\ProductAttributeOption;
@@ -61,8 +60,8 @@ class ProductController extends Controller
     {
         $model = Product::find()
             ->with([
-                'brand', 'cats', 'images',
-                'related', 'vars.attr', 'vars.option'
+                'brand', 'cats',
+                'vars.attr', 'vars.option'
             ])
             ->where(['id' => $id])
             ->one();
@@ -88,36 +87,34 @@ class ProductController extends Controller
         return $this->asJson($out);
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = ProductImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = Product::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->images;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            return $model->updateAttributes(['images' => array_values($images)]);
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post('sort');
-            
-            if ($post['oldIndex'] > $post['newIndex']){
-                $params = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $params = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            ProductImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $params
-            ]);
-            
-            ProductImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+        if (!($model = Product::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        $images = $model->images;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes(['images' => array_values($images)]);
     }
     
     public function actionGetAttributes($id, $categories)

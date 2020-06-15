@@ -21,11 +21,11 @@ class File
         return "/$selected_dir/$file_name";
     }
     
-    public function delete($model, $attr)
+    public function delete($file)
     {
-        if (Yii::$app->settings->delete_model_file && $model->{$attr}) {
-            $image = Yii::getAlias('@frontend/web') . $model->{$attr};
-            is_file($image) ? unlink($image) : null;
+        if (Yii::$app->settings->delete_model_file) {
+            $file = Yii::getAlias("@frontend/web/$file");
+            is_file($file) ? unlink($file) : null;
         }
     }
 }

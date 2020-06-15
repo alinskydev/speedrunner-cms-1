@@ -1,9 +1,9 @@
 # Speedrunner CMS
-Yii 2 CMS aims to speed up and simplify development of small/medium web-projects.
+Speedrunner CMS, based on Yii2 framework, aims to speed up and simplify development of small/medium web-projects.
 
 ## Requirements
-* PHP version >= PHP 7.0
-* MySQL version >= 5.6
+* PHP version >= PHP 7.1
+* MySQL version >= 5.7
 
 ## Installation
 

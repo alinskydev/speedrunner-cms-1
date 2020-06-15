@@ -109,16 +109,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                             'id' => "block-$b->id",
                                         ],
                                         'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['block/block/image-delete']),
-                                            'initialPreview' => ArrayHelper::getColumn($b->images, 'image'),
-                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->images, function ($model) {
-                                                return ['key' => $model['id'], 'downloadUrl' => $model['image']];
+                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['block/page/image-delete', 'id' => $b->id]),
+                                            'initialPreview' => $b->value ?: [],
+                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?: [], function ($value) {
+                                                return ['key' => $value, 'downloadUrl' => $value];
                                             }),
                                         ]),
                                         'pluginEvents' => [
-                                            'filesorted' => new JsExpression('function(event, params){
-                                                $.post("'.Yii::$app->urlManager->createUrl(["block/block/image-sort", "id" => $b->id]).'",{sort: params});
-                                            }')
+                                            'filesorted' => new JsExpression("function(event, params) {
+                                                $.post('".Yii::$app->urlManager->createUrl(['block/page/image-sort', 'id' => $b->id])."', {sort: params});
+                                            }")
                                         ],
                                     ])->label($b->type->label);
                                     

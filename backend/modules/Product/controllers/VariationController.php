@@ -4,9 +4,9 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductVariation;
-use backend\modules\Product\models\ProductVariationImage;
 
 
 class VariationController extends Controller
@@ -26,35 +26,33 @@ class VariationController extends Controller
         }
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = ProductVariationImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = ProductVariation::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->images;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            return $model->updateAttributes(['images' => array_values($images)]);
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post('sort');
-            
-            if ($post['oldIndex'] > $post['newIndex']){
-                $params = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $params = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            ProductVariationImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $params
-            ]);
-            
-            ProductVariationImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+        if (!($model = ProductVariation::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        $images = $model->images;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes(['images' => array_values($images)]);
     }
 }

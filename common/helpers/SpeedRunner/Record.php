@@ -52,7 +52,7 @@ class Record
     public function getStaticPage($location, $with_blocks = false)
     {
         if ($with_blocks) {
-            $result['page'] = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['location' => $location])->one();
+            $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
             $result['blocks'] = ArrayHelper::index($result['page']->blocks, 'name');
         } else {
             $result['page'] = StaticPage::find()->where(['location' => $location])->one();

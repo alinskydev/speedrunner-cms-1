@@ -8,7 +8,7 @@ $title = ($model->module_name == $model->controller_name) ? $model->module_name 
 
 $attrs = $model->attrs_fields ?: [];
 $attrs = array_filter($attrs, function ($value) {
-    return isset($value['grid_view']);
+    return ArrayHelper::getValue($value, 'grid_view');
 });
 
 $template = in_array('view', $model->controller_actions) ? '{view} ' : null;

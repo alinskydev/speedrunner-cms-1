@@ -5,10 +5,10 @@ namespace backend\modules\Gallery\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Gallery\models\Gallery;
 use backend\modules\Gallery\modelsSearch\GallerySearch;
-use backend\modules\Gallery\models\GalleryImage;
 
 
 class GalleryController extends Controller
@@ -34,35 +34,33 @@ class GalleryController extends Controller
         return Yii::$app->sr->record->deleteModel(new Gallery);
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = GalleryImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = Gallery::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->images;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            return $model->updateAttributes(['images' => array_values($images)]);
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax){
-            $post = Yii::$app->request->post('sort');
-            
-            if ($post['oldIndex'] > $post['newIndex']) {
-                $param = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $param = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            GalleryImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $param
-            ]);
-            
-            GalleryImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+        if (!($model = Gallery::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        $images = $model->images;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes(['images' => array_values($images)]);
     }
 }

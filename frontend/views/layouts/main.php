@@ -14,7 +14,7 @@ AppAsset::register($this);
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 $langs = Yii::$app->i18n->getLanguages(true);
-$menu = Menu::findOne(1)->tree();
+$menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
 
 foreach ($langs as $l) {
     $langs_nav[] = ['label' => strtoupper($l['code']), 'url' => $l['url']];
@@ -57,7 +57,6 @@ $flashes = Yii::$app->session->getAllFlashes();
     $menuItems = [
         ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog/index']],
-        ['label' => Yii::t('app', 'Block page'), 'url' => ['/block/view', 'url' => 'block-page-1']],
         ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {

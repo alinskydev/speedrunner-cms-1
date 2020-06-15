@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => false,
                 'header' => '&nbsp;',
                 'value' => function ($model) {
-                    return $model->images ? Html::img(Yii::$app->sr->image->thumb($model->images[0]->image, [50, 50], 'resize')) : null;
+                    return $model->images ? Html::img(Yii::$app->sr->image->thumb($model->images[0], [40, 40], 'resize')) : null;
                 },
                 'headerOptions' => [
                     'style' => 'width: 90px;'

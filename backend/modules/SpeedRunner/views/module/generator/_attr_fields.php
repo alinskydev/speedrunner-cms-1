@@ -19,6 +19,7 @@ unset($attr_types['images'], $attr_types['groups']);
             <th style="width: 2%;"></th>
             <th style="width: 20%;"><?= Yii::t('speedrunner', 'Attribute') ?></th>
             <th style="width: 3%;"><?= Yii::t('speedrunner', 'GridView') ?></th>
+            <th style="width: 3%;"><?= Yii::t('speedrunner', 'I18N') ?></th>
             <th style="width: 65%;"><?= Yii::t('speedrunner', 'Type') ?></th>
         </tr>
     </thead>
@@ -28,21 +29,39 @@ unset($attr_types['images'], $attr_types['groups']);
                 <td class="table-sorter">
                     <i class="fas fa-arrows-alt"></i>
                 </td>
+                
                 <td>
                     <?= $c->name ?>
                 </td>
+                
                 <td>
                     <div class="custom-control custom-switch">
                         <?php
                             echo Html::checkbox("GeneratorForm[attrs_fields][$c->name][grid_view]", null, [
-                                'id' => "generatorform-attr-$c->name",
+                                'uncheck' => 0,
+                                'id' => "generatorform-attr-grid_view-$c->name",
                                 'class' => 'custom-control-input',
                             ]);
                             
-                            echo Html::label(null, "generatorform-attr-$c->name", ['class' => 'custom-control-label']);
+                            echo Html::label(null, "generatorform-attr-grid_view-$c->name", ['class' => 'custom-control-label']);
                         ?>
                     </div>
                 </td>
+                
+                <td>
+                    <div class="custom-control custom-switch">
+                        <?php
+                            echo Html::checkbox("GeneratorForm[attrs_fields][$c->name][has_translation]", null, [
+                                'uncheck' => 0,
+                                'id' => "generatorform-attr-has_translation-$c->name",
+                                'class' => 'custom-control-input',
+                            ]);
+                            
+                            echo Html::label(null, "generatorform-attr-has_translation-$c->name", ['class' => 'custom-control-label']);
+                        ?>
+                    </div>
+                </td>
+                
                 <td>
                     <?= Html::dropdownList("GeneratorForm[attrs_fields][$c->name][type]", null, $attr_types, [
                         'class' => 'form-control',

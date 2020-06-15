@@ -1,3 +1,3 @@
-<?php foreach ($block->images as $img) { ?>
-    <img src="<?= Yii::$app->sr->image->thumb($img->image, [150, 150], 'resize') ?>">
+<?php foreach ($block->value as $v) { ?>
+    <img src="<?= Yii::$app->sr->image->thumb($v, [150, 150], 'resize') ?>">
 <?php } ?>

@@ -9,14 +9,13 @@ use yii\helpers\ArrayHelper;
 
 use backend\modules\StaticPage\models\StaticPage;
 use backend\modules\StaticPage\models\StaticPageBlock;
-use backend\modules\StaticPage\models\StaticPageBlockImage;
 
 
 class StaticPageController extends Controller
 {
     public function actionUpdate($location)
     {
-        $model = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['location' => $location])->one();
+        $model = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
         
         if ($post_data = Yii::$app->request->post('StaticPageBlock')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
@@ -26,10 +25,6 @@ class StaticPageController extends Controller
                 
                 if (isset($p_d['value'])) {
                     $block_mdl->value = $p_d['value'];
-                }
-                
-                if (isset($p_d['images_tmp'])) {
-                    $block_mdl->images_tmp = $p_d['images_tmp'];
                 }
                 
                 $block_mdl->save();
@@ -49,35 +44,47 @@ class StaticPageController extends Controller
         }
     }
     
-    public function actionImageDelete()
+    public function actionImageDelete($id)
     {
-        if (($model = StaticPageBlockImage::findOne(Yii::$app->request->post('key'))) && $model->delete()) {
-            return true;
+        if (!($model = StaticPageBlock::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->value;
+        $key = array_search(Yii::$app->request->post('key'), $images);
+        
+        if ($key !== false) {
+            Yii::$app->sr->file->delete($images[$key]);
+            unset($images[$key]);
+            
+            if ($model->has_translation) {
+                $json = ArrayHelper::getValue($model->oldAttributes, 'value');
+                $json[Yii::$app->language] = array_values($images);
+                
+                return $model->updateAttributes(['value' => $json]);
+            } else {
+                return $model->updateAttributes(['value' => array_values($images)]);
+            }
         }
     }
     
     public function actionImageSort($id)
     {
-        if (Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post('sort');
+        if (!($model = StaticPageBlock::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->value;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        if ($model->has_translation) {
+            $json = ArrayHelper::getValue($model->oldAttributes, 'value');
+            $json[Yii::$app->language] = array_values($images);
             
-            if ($post['oldIndex'] > $post['newIndex']){
-                $params = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-                $counter = 1;
-            } else {
-                $params = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-                $counter = -1;
-            }
-            
-            StaticPageBlockImage::updateAllCounters(['sort' => $counter], [
-               'and', ['item_id' => $id], $params
-            ]);
-            
-            StaticPageBlockImage::updateAll(['sort' => $post['newIndex']], [
-                'id' => $post['stack'][$post['newIndex']]['key']
-            ]);
-            
-            return true;
+            return $model->updateAttributes(['value' => $json]);
+        } else {
+            return $model->updateAttributes(['value' => array_values($images)]);
         }
     }
 }

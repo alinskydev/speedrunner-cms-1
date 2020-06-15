@@ -18,7 +18,6 @@ class Blog extends ActiveRecord
     ];
     
     public $tags_tmp;
-    public $images_tmp;
     
     public $seo_meta = [];
     
@@ -51,7 +50,7 @@ class Blog extends ActiveRecord
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['published'], 'date', 'format' => 'php: d.m.Y H:i'],
             [['category_id'], 'exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
-            [['images_tmp'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
         ];
     }
@@ -64,13 +63,13 @@ class Blog extends ActiveRecord
             'url' => Yii::t('app', 'Url'),
             'category_id' => Yii::t('app', 'Category'),
             'image' => Yii::t('app', 'Image'),
-            'published' => Yii::t('app', 'Published'),
             'short_description' => Yii::t('app', 'Short Description'),
             'full_description' => Yii::t('app', 'Full Description'),
+            'images' => Yii::t('app', 'Images'),
+            'published' => Yii::t('app', 'Published'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'tags_tmp' => Yii::t('app', 'Tags'),
-            'images_tmp' => Yii::t('app', 'Images'),
         ];
     }
     
@@ -89,12 +88,7 @@ class Blog extends ActiveRecord
     
     public function getTagsColumn()
     {
-        return implode(', ', ArrayHelper::map($this->tags, 'id', 'name'));
-    }
-    
-    public function getImages()
-    {
-        return $this->hasMany(BlogImage::className(), ['item_id' => 'id'])->orderBy('sort');
+        return implode(', ', ArrayHelper::getColumn($this->tags, 'name'));
     }
     
     public function getComments()
@@ -109,8 +103,8 @@ class Blog extends ActiveRecord
     
     public function beforeValidate()
     {
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            $this->images_tmp = $images_tmp;
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            $this->images = $images;
         }
         
         return parent::beforeValidate();
@@ -118,18 +112,27 @@ class Blog extends ActiveRecord
     
     public function beforeSave($insert)
     {
+        //        IMAGES
+        
+        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
+        
+        if ($images = UploadedFile::getInstances($this, 'images')) {
+            foreach ($images as $img) {
+                $images_arr[] = Yii::$app->sr->image->save($img);
+            }
+            
+            $this->images = array_merge($old_images, $images_arr);
+        } else {
+            $this->images = $old_images;
+        }
+        
         $this->published = $this->published ?: date('Y-m-d H:i:s');
+        
         return parent::beforeSave($insert);
     }
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        IMAGES
-        
-        if ($images_tmp = UploadedFile::getInstances($this, 'images_tmp')) {
-            Yii::$app->sr->image->save($images_tmp, new BlogImage(['item_id' => $this->id]));
-        }
-        
         //        TAGS
         
         $tags = ArrayHelper::map($this->tags, 'id', 'id');
@@ -159,5 +162,14 @@ class Blog extends ActiveRecord
         BlogTagRef::deleteAll(['blog_id' => $this->id, 'tag_id' => $tags, 'lang' => Yii::$app->language]);
         
         return parent::afterSave($insert, $changedAttributes);
+    }
+    
+    public function afterDelete()
+    {
+        foreach ($this->images as $img) {
+            Yii::$app->sr->file->delete($img);
+        }
+        
+        return parent::afterDelete();
     }
 }

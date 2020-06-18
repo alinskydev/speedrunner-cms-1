@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <div class="main-shadow p-3">
     <?= Html::beginForm(['delete'], 'post', ['id' => 'table-edit-form']); ?>
-    
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $modelSearch,
@@ -43,6 +43,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
         ],
     ]); ?>
-    
+
     <?= Html::endForm(); ?>
 </div>

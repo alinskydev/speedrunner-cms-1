@@ -36,6 +36,7 @@ $breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);
         <div class="header-left">
             <?= Breadcrumbs::widget([
                 'links' => $breadcrumbs,
+                'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
                 'options' => ['class' => 'breadcrumbs'],
                 'activeItemTemplate' => '<li><span>{link}</span></li>'
             ]) ?>

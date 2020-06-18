@@ -15,6 +15,4 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="alert alert-danger">
         <?= nl2br(Html::encode($exception->getMessage())) ?>
     </div>
-    
-    <p>The above error occurred while the Web server was processing your request.</p>
 </div>

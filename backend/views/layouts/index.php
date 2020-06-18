@@ -21,7 +21,7 @@ $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action-
 $user = Yii::$app->user->identity;
 
 $langs = Yii::$app->i18n->getLanguages(true);
-$lang_curr = $langs[Yii::$app->language];
+$lang_curr = Yii::$app->i18n->getLanguage();
 
 $flashes = Yii::$app->session->getAllFlashes();
 $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);

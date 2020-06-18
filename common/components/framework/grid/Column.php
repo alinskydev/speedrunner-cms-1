@@ -74,7 +74,7 @@ class Column extends BaseObject
      * @var array the HTML attributes for the filter cell tag.
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
-    public $filterOptions = ['class' => 'width-sm-auto col-xs-12'];
+    public $filterOptions = [];
 
 
     /**

@@ -1,5 +1,4 @@
 # yii console commands
-/yii
 /yii_test
 /yii_test.bat
 
@@ -33,21 +32,21 @@ phpunit.phar
 
 
 # api
-/api/runtime
+/api/runtime/*
 
 # backend
-/backend/runtime
-/backend/tests
-/backend/web/assets
-/backend/web/uploaded
-/backend/web/uploads
+/backend/runtime/*
+/backend/tests/*
+/backend/web/assets/*
+/backend/web/uploaded/*
+/backend/web/uploads/*
 
 # console
-/console/runtime
+/console/runtime/*
 
 # frontend
-/frontend/runtime
-/frontend/tests
-/frontend/web/assets
-/frontend/web/uploaded
-/frontend/web/uploads
+/frontend/runtime/*
+/frontend/tests/*
+/frontend/web/assets/*
+/frontend/web/uploaded/*
+/frontend/web/uploads/*

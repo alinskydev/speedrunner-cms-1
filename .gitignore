@@ -30,23 +30,3 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-
-# api
-/api/runtime/*
-
-# backend
-/backend/runtime/*
-/backend/tests/*
-/backend/web/assets/*
-/backend/web/uploaded/*
-/backend/web/uploads/*
-
-# console
-/console/runtime/*
-
-# frontend
-/frontend/runtime/*
-/frontend/tests/*
-/frontend/web/assets/*
-/frontend/web/uploaded/*
-/frontend/web/uploads/*

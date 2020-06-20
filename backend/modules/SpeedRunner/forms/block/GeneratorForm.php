@@ -42,7 +42,7 @@ class GeneratorForm extends Model
                 $block->{$a} = $b[$a];
             }
             
-            $block->attrs = ArrayHelper::getValue($b, 'attrs', []);
+            $block->attrs = array_values(ArrayHelper::getValue($b, 'attrs', []));
             $block->save();
         }
         

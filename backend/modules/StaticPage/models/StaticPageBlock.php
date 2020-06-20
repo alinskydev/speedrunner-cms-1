@@ -88,15 +88,30 @@ class StaticPageBlock extends ActiveRecord
     {
         //        TRANSLATION
         
-        if ($this->has_translation) {
-            $json[Yii::$app->language] = $this->value;
-            $this->value = new JsonExpression($json);
+        $lang = Yii::$app->language;
+        
+        if ($this->type == 'groups') {
+            if ($this->has_translation) {
+                $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
+                $json[$lang] = array_values($this->value);
+                $this->value = new JsonExpression($json);
+            } else {
+                $this->value = new JsonExpression(array_values($this->value));
+            }
+        } else {
+            if ($this->has_translation) {
+                $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
+                $json[$lang] = $this->value;
+                $this->value = new JsonExpression($json);
+            }
         }
         
         //        IMAGES
         
         if ($insert) {
-            $this->value = in_array($this->type, ['images', 'groups']) ? [] : '';
+            if (in_array($this->type, ['images', 'groups'])) {
+                $this->value = [];
+            }
         } else {
             if ($this->type == 'images') {
                 $old_images = ArrayHelper::getValue($this->oldAttributes, 'value', []);
@@ -104,7 +119,7 @@ class StaticPageBlock extends ActiveRecord
                 if ($images = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($images as $img) {
                         if ($this->has_translation) {
-                            $images_arr[Yii::$app->language][] = Yii::$app->sr->image->save($img);
+                            $images_arr[$lang][] = Yii::$app->sr->image->save($img);
                         } else {
                             $images_arr[] = Yii::$app->sr->image->save($img);
                         }
@@ -115,12 +130,6 @@ class StaticPageBlock extends ActiveRecord
                     $this->value = $old_images;
                 }
             }
-        }
-        
-        //        GROUPS
-        
-        if ($this->type == 'groups') {
-            $this->value = new JsonExpression($this->value);
         }
         
         return parent::beforeSave($insert);

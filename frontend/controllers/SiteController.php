@@ -79,7 +79,7 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $page = Yii::$app->sr->record->getStaticPage('home', true);
+        $page = Yii::$app->sr->record->staticPage('home', true);
         
         $cats = ProductCategory::find()->all();
         
@@ -144,11 +144,13 @@ class SiteController extends Controller
         $model = new SignupForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+            if ($model->signup()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'You have been registered successfully'));
+            } else {
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
             }
+            
+            return $this->goHome();
         }
         
         return $this->render('signup', [
@@ -165,7 +167,7 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'Error'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
             }
         }
         

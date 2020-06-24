@@ -13,9 +13,6 @@ $rules = $model->generateSearchRules($columns);
 $searchConditions = $model->generateSearchConditions($columns);
 
 $attrs = $model->attrs_fields ?: [];
-$attrs_translation = array_filter($attrs, function ($value) {
-    return ArrayHelper::getValue($value, 'has_translation');
-});
 
 echo '<?php';
 
@@ -27,7 +24,7 @@ namespace backend\modules\<?= $model->module_name ?>\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-<?php if ($attrs_translation) { ?>
+<?php if ($model->attrs_translation) { ?>
 use yii\db\Expression;
 <?php } ?>
 
@@ -81,7 +78,7 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
         
         <?= implode("\n        ", $searchConditions) ?>
         
-<?php if ($attrs_translation) { ?>
+<?php if ($model->attrs_translation) { ?>
         //        TRANSLATIONS
         
         $lang = Yii::$app->language;
@@ -95,8 +92,8 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
                 'desc' => ["json_$t_a" => SORT_DESC],
             ];
         }
-<?php } ?>
         
+<?php } ?>
 		$this->afterSearch();
 		return $dataProvider;
     }

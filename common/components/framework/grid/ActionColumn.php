@@ -37,7 +37,7 @@ class ActionColumn extends Column
      * {@inheritdoc}
      */
     public $headerOptions = ['style' => 'width: 65px;'];
-    public $contentOptions = ['class' => 'action-column'];
+    public $contentOptions = [];
     /**
      * @var string the ID of the controller that should handle the actions specified here.
      * If not set, it will use the currently active controller. This property is mainly used by
@@ -235,7 +235,7 @@ class ActionColumn extends Column
         }, $this->template);
         
         $buttons = Html::tag('div', $buttons, ['class' => 'action-buttons']);
-        $toggle_button = Html::button(Html::tag('i', null, ['class' => 'fas fa-ellipsis-v']), ['class' => 'btn btn-primary btn-square action-toggle']);
+        $toggle_button = Html::button(Html::tag('i', null, ['class' => 'fas fa-ellipsis-v']), ['class' => 'btn btn-primary action-toggle']);
         
         return Html::tag('div', $toggle_button . $buttons, ['class' => 'action-content']);
     }

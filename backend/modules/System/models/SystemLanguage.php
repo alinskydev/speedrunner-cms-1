@@ -17,7 +17,7 @@ class SystemLanguage extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code'], 'required'],
+            [['name', 'code', 'image'], 'required'],
             [['name', 'image'], 'string', 'max' => 100],
             [['code'], 'string', 'max' => 20],
             [['weight', 'active'], 'boolean'],

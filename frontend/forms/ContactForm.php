@@ -12,7 +12,6 @@ class ContactForm extends Model
     public $email;
     public $phone;
     public $message;
-    public $verify_code;
     
     public function rules()
     {
@@ -21,7 +20,6 @@ class ContactForm extends Model
             [['name', 'email', 'phone'], 'string', 'max' => 100],
             [['message'], 'string', 'max' => 1000],
             [['email'], 'email'],
-            [['verify_code'], 'captcha'],
         ];
     }
     
@@ -32,7 +30,6 @@ class ContactForm extends Model
             'email' => Yii::t('app', 'E-mail'),
             'phone' => Yii::t('app', 'Phone'),
             'message' => Yii::t('app', 'Message'),
-            'verify_code' => Yii::t('app', 'Verify code'),
         ];
     }
     

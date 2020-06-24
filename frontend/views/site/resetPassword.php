@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="site-reset-password">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1><?= Html::encode($this->title) ?></h1>
+            <h1><?= $this->title ?></h1>
             
             <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
                 <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>

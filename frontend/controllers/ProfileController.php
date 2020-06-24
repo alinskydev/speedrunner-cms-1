@@ -41,12 +41,12 @@ class ProfileController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->update()) {
-                Yii::$app->session->setFlash('success', 'Profile saved');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Profile saved'));
             } else {
-                Yii::$app->session->setFlash('danger', 'An error occured');
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
             }
             
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->refresh();
         }
         
         return $this->render('update', [

@@ -47,11 +47,7 @@ class PageController extends Controller
                 $block_mdl->save();
             }
             
-            if (Yii::$app->request->isAjax) {
-                return $this->redirect(['update', 'id' => $model->id]);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->redirect(['index']);
         }
         
         $blocks = $model->blocks;

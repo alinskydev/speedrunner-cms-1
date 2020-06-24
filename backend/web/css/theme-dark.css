@@ -109,7 +109,8 @@ body .select2-container.select2-container--focus .select2-selection--multiple {
     border-color: #7fa3a5;
 }
 
-.ui-sortable-helper {
+.ui-sortable-helper,
+.grid-view .common-buttons {
     background: #133C3D;
 }
 

@@ -11,7 +11,7 @@ use Yii\image\drivers\Image as ImageDriver;
 
 class Image
 {
-    public function save($img, $width_height = [], $selected_dir = 'uploaded')
+    public function save($img, $selected_dir = 'uploaded', $width_height = [])
     {
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);

@@ -22,9 +22,6 @@ foreach ($model->view_relations as $r) {
 $rules = $model->generateRules($columns);
 
 $attrs = $model->attrs_fields ?: [];
-$attrs_translation = array_filter($attrs, function ($value) {
-    return ArrayHelper::getValue($value, 'has_translation');
-});
 
 echo '<?php';
 
@@ -43,9 +40,9 @@ use yii\behaviors\SluggableBehavior;
 
 class <?= $model->table_name ?> extends ActiveRecord
 {
-<?php if ($attrs_translation) { ?>
+<?php if ($model->attrs_translation) { ?>
     public $translation_attrs = [
-<?php foreach ($attrs_translation as $key => $a) { ?>
+<?php foreach ($model->attrs_translation as $key => $a) { ?>
         '<?= $key ?>',
 <?php } ?>
     ];

@@ -22,6 +22,7 @@ return [
         'page' => ['class' => 'backend\modules\Page\Module'],
         'product' => ['class' => 'backend\modules\Product\Module'],
         'seo' => ['class' => 'backend\modules\Seo\Module'],
+        'speedrunner' => ['class' => 'backend\modules\Speedrunner\Module'],
         'static-page' => ['class' => 'backend\modules\StaticPage\Module'],
         'system' => ['class' => 'backend\modules\System\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],

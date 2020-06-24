@@ -48,7 +48,8 @@ class ProfileForm extends Model
         $user = User::find()->where(['username' => $this->username])->one();
         
         if ($user && $user->id != $this->user->id) {
-            $this->addError($attribute, Yii::t('app', 'This e-mail has already been taken'));
+            $label = $this->getAttributeLabel($attribute);
+            $this->addError($attribute, Yii::t('app', "This $label has already been taken"));
         }
     }
     
@@ -64,7 +65,6 @@ class ProfileForm extends Model
             'address' => Yii::t('app', 'Address'),
         ];
     }
-    
     
     public function update()
     {

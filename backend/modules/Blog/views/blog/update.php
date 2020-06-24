@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $form->field($model, 'image')->widget(ElFinderInput::className(), [
                     'connectorRoute' => '/connection/elfinder-file-upload',
                 ]) ?>
-               
+                
                 <?= $form->field($model, 'tags_tmp')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map($model->tags, 'id', 'name'),
                     'options' => [

@@ -53,7 +53,7 @@ class DuplicatorForm extends Model
         return $result;
     }
     
-    public function duplicate()
+    public function process()
     {
         //        FILES
         

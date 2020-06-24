@@ -47,9 +47,12 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
             <?= "<?php \$value_id = \$value->isNewRecord ? '__key__' : \$value->id ?>\n" ?>
             
             <tr class="<?= "<?= \$value->isNewRecord ? 'table-new-relation' : null ?>" ?>" data-table="<?= $var_name_relation ?>">
-                <td class="table-sorter">
-                    <i class="fas fa-arrows-alt"></i>
+                <td>
+                    <div class="btn btn-primary table-sorter">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
                 </td>
+                
 <?php foreach ($columns as $key => $c) { ?>
                 <td>
                     <?= '<?= ' ?>$form->field($value, '<?= $key ?>', ['template' => '{input}'])->textArea([
@@ -58,6 +61,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
+                
 <?php } ?>
                 <td>
                     <button type="button" class="btn btn-danger btn-remove">

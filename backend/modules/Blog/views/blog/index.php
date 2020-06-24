@@ -20,8 +20,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 </h2>
 
 <div class="main-shadow p-3">
-    <?= Html::beginForm(['delete'], 'post', ['id' => 'table-edit-form']); ?>
-    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $modelSearch,
@@ -90,9 +88,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
+                'buttons' => [],
             ],
         ],
     ]); ?>
-    
-    <?= Html::endForm(); ?>
 </div>

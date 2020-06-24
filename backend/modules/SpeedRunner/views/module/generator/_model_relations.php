@@ -33,8 +33,10 @@ $types = [
                 ?>
                 
                 <tr>
-                    <td class="table-sorter">
-                        <i class="fas fa-arrows-alt"></i>
+                    <td>
+                        <div class="btn btn-primary table-sorter">
+                            <i class="fas fa-arrows-alt"></i>
+                        </div>
                     </td>
                     
                     <td>

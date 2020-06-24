@@ -30,7 +30,7 @@ class DestroyerForm extends Model
     static function getModulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
-            if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner', 'system', 'user', 'seo'])) {
+            if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner', 'static-page', 'system', 'user', 'seo'])) {
                 $result[ucfirst($key)] = ucfirst($key);
             }
         }
@@ -38,7 +38,7 @@ class DestroyerForm extends Model
         return $result;
     }
     
-    public function destroy()
+    public function process()
     {
         foreach ($this->modules as $m) {
             $module = strtolower($m);
@@ -52,7 +52,7 @@ class DestroyerForm extends Model
             //        DB
             
             $tables = Yii::$app->db->schema->getTableNames();
-            $sql = null;
+            $sql = 'SET FOREIGN_KEY_CHECKS = 0;';
             
             foreach ($tables as $t) {
                 if (strpos($t, $m) === 0) {
@@ -60,6 +60,7 @@ class DestroyerForm extends Model
                 }
             }
             
+            $sql .= 'SET FOREIGN_KEY_CHECKS = 1;';
             Yii::$app->db->createCommand($sql)->execute();
         }
         

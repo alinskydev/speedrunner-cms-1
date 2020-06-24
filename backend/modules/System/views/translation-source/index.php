@@ -25,6 +25,7 @@ $active_langs = SystemLanguage::find()->where(['active' => 1])->column();
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $modelSearch,
+        'buttons' => [],
         'columns' => [
             [
                 'attribute' => 'id',
@@ -51,6 +52,4 @@ $active_langs = SystemLanguage::find()->where(['active' => 1])->column();
             ],
         ],
     ]); ?>
-    
-    <?= Html::endForm(); ?>
 </div>

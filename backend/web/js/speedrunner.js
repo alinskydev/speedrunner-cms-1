@@ -123,27 +123,30 @@ $(function() {
         dateTimePickFunc();
         selectFunc();
     });
-
+    
+    //      GRID VIEW FOOTER BUTTONS
+    
+    var selection = $('.grid-view [name="selection[]"]');
+    
+    $(document).on('change', '.grid-view [name="selection[]"]', function() {
+        $('.grid-view .common-buttons').addClass('d-none');
+        
+        selection.each(function() {
+            if ($(this).prop('checked')) {
+                $('.grid-view .common-buttons').removeClass('d-none');
+            }
+        });
+    });
+    
     //      ELFINDER
-
+    
     $(document).on('click', '.btn-elfinder-remove', function() {
         $(this).parents('.elfinder-container').find('img').remove();
         $(this).parents('.elfinder-container').find('input').val('');
     });
-
-    //      DELETE ALL CONFIRM
-
-    $(document).on('click', '.btn-delete-all', function(e) {
-        e.preventDefault();
-        el = $(this);
-
-        if (confirm('Are you sure you want to delete these items?')) {
-            $(el[0].form).submit();
-        }
-    })
-
+    
     //      TABLE RELATIONS
-
+    
     var el, rand,
         relHtml, relHtmlTmp = [],
         elFinderUrl = $('meta[name="elfinder-connection-url"]').attr('content'),

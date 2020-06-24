@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'System Settings');
                         <li class="d-flex mb-2" data-id="<?= $s->id ?>">
                             <div>
                                 <label>&nbsp;</label><br>
-                                <div class="btn btn-light table-sorter">
+                                <div class="btn btn-primary table-sorter">
                                     <i class="fas fa-arrows-alt"></i>
                                 </div>
                             </div>

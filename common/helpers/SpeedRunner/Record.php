@@ -3,6 +3,7 @@
 namespace common\helpers\SpeedRunner;
 
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use backend\modules\StaticPage\models\StaticPage;
 
@@ -49,7 +50,7 @@ class Record
         return Yii::$app->controller->redirect($this->redirect_url);
     }
     
-    public function getStaticPage($location, $with_blocks = false)
+    public function staticPage($location, $with_blocks = false)
     {
         if ($with_blocks) {
             $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();

@@ -17,10 +17,10 @@ class DuplicatorController extends Controller
         $model = new DuplicatorForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->duplicate()) {
+            if ($model->process()) {
                 Yii::$app->session->setFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'Error');
+                Yii::$app->session->setFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

@@ -18,10 +18,10 @@ class GeneratorController extends Controller
         $model = new GeneratorForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->generate()) {
+            if ($model->process()) {
                 Yii::$app->session->setFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'Error');
+                Yii::$app->session->setFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

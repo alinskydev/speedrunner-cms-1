@@ -59,12 +59,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     <div class="btn btn-light table-sorter">
                                         <i class="fas fa-arrows-alt"></i>
                                     </div>
+                                    
                                     <button class="btn btn-primary btn-block"
                                             type="button"
                                             title="<img src='<?= $t['image'] ?>' width='100%'>"
                                     >
                                         <?= $t->label ?>
                                     </button>
+                                    
                                     <button class="btn btn-danger btn-remove d-none" type="button">
                                         <span class="fa fa-times"></span>
                                     </button>
@@ -82,12 +84,15 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         <div class="btn btn-light table-sorter">
                                             <i class="fas fa-arrows-alt"></i>
                                         </div>
+                                        
                                         <button class="btn btn-primary btn-block" type="button">
                                             <?= $b->type->label ?>
                                         </button>
+                                        
                                         <button class="btn btn-danger btn-remove" type="button">
                                             <span class="fa fa-times"></span>
                                         </button>
+                                        
                                         <input type="hidden" name="BlockPage[blocks_tmp][<?= $b->id ?>][type_id]" value="<?= $b->type_id ?>">
                                     </li>
                                 <?php } ?>

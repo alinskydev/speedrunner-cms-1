@@ -24,15 +24,19 @@ $options = ArrayHelper::merge($model->options, [new ProductAttributeOption]);
             <?php $o_id = $o->isNewRecord ? '__key__' : $o->id ?>
             
             <tr class="<?= $o->isNewRecord ? 'table-new-relation' : null ?>" data-table="options">
-                <td class="table-sorter">
-                    <i class="fas fa-arrows-alt"></i>
+                <td>
+                    <div class="btn btn-primary table-sorter">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
                 </td>
+                
                 <td>
                     <?= $form->field($o, 'name', ['template' => '{input}'])->textInput([
                         'name' => "ProductAttribute[options_tmp][$o_id][name]",
                         'class' => 'form-control',
                     ]) ?>
                 </td>
+                
                 <td>
                     <button type="button" class="btn btn-danger btn-remove">
                         <i class="fa fa-times"></i>

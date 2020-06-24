@@ -28,9 +28,12 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
             <?php $g_id = $g->isNewRecord ? '__key__' : $g->id ?>
             
             <tr class="<?= $g->isNewRecord ? 'table-new-relation' : null ?>" data-table="groups">
-                <td class="table-sorter">
-                    <i class="fas fa-arrows-alt"></i>
+                <td>
+                    <div class="btn btn-primary table-sorter">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
                 </td>
+                
                 <td>
                     <?= $form->field($g, 'text_1', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_1]",

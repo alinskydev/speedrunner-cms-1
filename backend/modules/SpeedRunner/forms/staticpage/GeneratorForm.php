@@ -36,7 +36,7 @@ class GeneratorForm extends Model
         ];
     }
     
-    public function generate()
+    public function process()
     {
         if ($page = StaticPage::find()->where(['location' => $this->page_name])->one()) {
             $page->delete();
@@ -58,6 +58,7 @@ class GeneratorForm extends Model
                 }
                 
                 $block->attrs = array_values(ArrayHelper::getValue($b, 'attrs', []));
+                $block->value = '';
                 $block->save();
             }
         } else {

@@ -28,7 +28,7 @@ class GeneratorForm extends Model
         ];
     }
     
-    public function generate()
+    public function process()
     {
         BlockType::deleteAll();
         BlockPage::deleteAll();

@@ -15,9 +15,5 @@ return [
             'class' => 'yii\gii\Module',
             'allowedIPs' => ['127.0.0.1', '::1'],
         ],
-        'speedrunner' => [
-            'class' => 'backend\modules\SpeedRunner\Module',
-            'allowedIPs' => ['127.0.0.1', '::1'],
-        ],
     ],
 ];

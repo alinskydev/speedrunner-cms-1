@@ -17,10 +17,10 @@ class DestroyerController extends Controller
         $model = new DestroyerForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->destroy()) {
+            if ($model->process()) {
                 Yii::$app->session->setFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'Error');
+                Yii::$app->session->setFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

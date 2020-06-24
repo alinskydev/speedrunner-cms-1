@@ -30,12 +30,14 @@ class CacheController extends Controller
     
     public function actionClear()
     {
-        $dirs = ['@backend/runtime', '@frontend/runtime'];
+        $dirs = ['@api/runtime', '@backend/runtime', '@frontend/runtime'];
         
         foreach ($dirs as $d) {
-            $dir = Yii::getAlias($d);
-            FileHelper::removeDirectory($dir);
-            FileHelper::createDirectory($dir);
+            $sub_dirs = FileHelper::findDirectories(Yii::getAlias($d));
+            
+            foreach ($sub_dirs as $s) {
+                FileHelper::removeDirectory($s);
+            }
         }
         
         Yii::$app->session->setFlash('success', Yii::t('app', 'Process has been completed'));

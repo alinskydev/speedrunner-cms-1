@@ -8,6 +8,7 @@
 namespace common\components\framework\grid;
 
 use Closure;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Json;

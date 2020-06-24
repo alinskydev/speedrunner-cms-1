@@ -5,9 +5,7 @@ namespace backend\assets;
 use Yii;
 use yii\web\AssetBundle;
 
-/**
- * Main backend application asset bundle.
- */
+
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
@@ -16,8 +14,8 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/all.min.css',
         'css/bootstrap.min.css',
-        'css/bootstrap-datepicker3.min.css',
-        'css/bootstrap-datetimepicker3.min.css',
+        'css/bootstrap-datepicker.min.css',
+        'css/bootstrap-datetimepicker.min.css',
         'css/select2.min.css',
         'css/jquery.toast.css',
         'css/speedrunner.css',

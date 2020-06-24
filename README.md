@@ -25,7 +25,7 @@ or import SQL file `/console/db/main.sql` using MySQL manager.
 ## Running
 Use following urls to get application you need:
 * `<your-domain>/api` for **api**
-* `<your-domain>/admin` for **backend**
+* `<your-domain>/admin` for **backend** (login: admin, password: admin123)
 * `<your-domain>/` for **frontend**
 
 ## Important notes

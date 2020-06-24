@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-profile">
-                    <?= Yii::t('app', 'Prodile') ?>
+                    <?= Yii::t('app', 'Profile') ?>
                 </a>
             </li>
         </ul>

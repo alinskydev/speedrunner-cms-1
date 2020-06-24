@@ -38,7 +38,7 @@ $flashes = Yii::$app->session->getAllFlashes();
     <meta property="og:locale" content="<?= Yii::$app->language ?>">
     <meta property="og:type" content="website">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $this->title ?></title>
     <?php $this->head() ?>
 </head>
 
@@ -47,40 +47,41 @@ $flashes = Yii::$app->session->getAllFlashes();
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => 'FRONT',
-        'brandUrl' => Yii::$app->urlManager->createUrl(['site/index']),
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-        ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog/index']],
-        ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = ['label' => Yii::t('app', 'Logout'), 'url' => ['/site/logout']];
-    }
-    $menuItems[] = ['label' => strtoupper($langs[Yii::$app->language]['code']), 'url' => ['/site/contact'], 'items' => $langs_nav];
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
+        NavBar::begin([
+            'brandLabel' => 'FRONT',
+            'brandUrl' => Yii::$app->urlManager->createUrl(['site/index']),
+            'options' => [
+                'class' => 'navbar-inverse navbar-fixed-top',
+            ],
+        ]);
+        
+        $menuItems = [
+            ['label' => Yii::t('app', 'Home'), 'url' => ['site/index']],
+            ['label' => Yii::t('app', 'Blog'), 'url' => ['blog/index']],
+            ['label' => Yii::t('app', 'Contact'), 'url' => ['site/contact']],
+        ];
+        
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['site/signup']];
+            $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['site/login']];
+        } else {
+            $menuItems[] = ['label' => Yii::t('app', 'Logout'), 'url' => ['site/logout']];
+        }
+        
+        $menuItems[] = ['label' => strtoupper($langs[Yii::$app->language]['code']), 'url' => '#', 'items' => $langs_nav];
+        
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => $menuItems,
+        ]);
+        
+        NavBar::end();
     ?>
     
-    <br><br><br><br><br>
-    
-    <div class="container">
+    <div class="container" style="margin-top: 70px;">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        
-        <?= $content ?>
         
         <div class="alert-wrapper">
             <?php
@@ -94,6 +95,8 @@ $flashes = Yii::$app->session->getAllFlashes();
                 }
             ?>
         </div>
+        
+        <?= $content ?>
     </div>
 </div>
 

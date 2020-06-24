@@ -112,6 +112,8 @@ class Blog extends ActiveRecord
     
     public function beforeSave($insert)
     {
+        $this->published = $this->published ?: date('Y-m-d H:i:s');
+        
         //        IMAGES
         
         $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
@@ -125,8 +127,6 @@ class Blog extends ActiveRecord
         } else {
             $this->images = $old_images;
         }
-        
-        $this->published = $this->published ?: date('Y-m-d H:i:s');
         
         return parent::beforeSave($insert);
     }

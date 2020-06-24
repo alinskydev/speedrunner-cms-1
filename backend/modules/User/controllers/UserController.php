@@ -36,7 +36,7 @@ class UserController extends Controller
     public function actionItemsList($q = '', $role = null)
     {
         $cond = $role ? ['role' => $role] : [];
-        $out['results'] = User::itemsList('username', 'self', 20, $q);
+        $out['results'] = User::itemsList('username', 'self', 20, $q, $cond);
         return $this->asJson($out);
     }
 }

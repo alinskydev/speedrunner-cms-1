@@ -24,8 +24,10 @@ $groups = ArrayHelper::merge($model->value, $new_group);
         <tbody>
             <?php foreach ($groups as $key => $group) { ?>
                 <tr class="<?= strval($key) == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= "groups-$model->id" ?>">
-                    <td class="table-sorter">
-                        <i class="fas fa-arrows-alt"></i>
+                    <td>
+                        <div class="btn btn-primary table-sorter">
+                            <i class="fas fa-arrows-alt"></i>
+                        </div>
                     </td>
                     
                     <td style="width: 100%;">

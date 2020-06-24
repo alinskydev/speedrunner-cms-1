@@ -22,7 +22,8 @@ class GeneratorForm extends Model
     public $model_relations = [];
     public $view_relations = [];
     
-    public $attrs_fields;
+    public $attrs_fields = [];
+    public $attrs_translation = [];
     
     public function rules()
     {
@@ -72,13 +73,19 @@ class GeneratorForm extends Model
         return $result;
     }
     
-    public function generate()
+    public function process()
     {
+        //        PREPARE
+        
         $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/module/generator');
         $folder_template_render = '@backend/modules/SpeedRunner/templates/module/generator';
         $folder_module = Yii::getAlias("@backend/modules/$this->module_name/");
         
         FileHelper::createDirectory($folder_module, $mode = 0644);
+        
+        $this->attrs_translation = array_filter($this->attrs_fields, function ($value) {
+            return ArrayHelper::getValue($value, 'has_translation');
+        }) ?: [];
         
         //        MODULE
         
@@ -281,11 +288,16 @@ class GeneratorForm extends Model
     public function generateSearchConditions($columns)
     {
         $columns = ArrayHelper::map($columns, 'name', 'type');
+        $attrs_translation = array_keys($this->attrs_translation);
         $conditions = [];
         $likeConditions = [];
         $hashConditions = [];
         
         foreach ($columns as $column => $type) {
+            if (in_array($column, $attrs_translation)) {
+                continue;
+            }
+            
             switch ($type) {
                 case Schema::TYPE_TINYINT:
                 case Schema::TYPE_SMALLINT:
@@ -301,6 +313,7 @@ class GeneratorForm extends Model
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 case Schema::TYPE_TEXT:
+                case Schema::TYPE_JSON:
                     break;
                 default:
                     $likeKeyword = 'like';

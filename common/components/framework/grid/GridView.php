@@ -259,6 +259,15 @@ class GridView extends BaseListView
      * - `{pager}`: the pager. See [[renderPager()]].
      */
     public $layout = "{items}{pager}{summary}";
+    
+    public $buttons = [
+        'delete' => [
+            'label' => 'Delete all',
+            'icon' => 'fas fa-trash',
+            'url' => ['delete'],
+            'css_class' => 'danger'
+        ],
+    ];
 
 
     /**
@@ -373,8 +382,34 @@ class GridView extends BaseListView
             $tableBody,
             $tableFooterAfterBody,
         ]);
-
-        return Html::tag('table', implode("\n", $content), $this->tableOptions);
+        
+        $table = Html::tag('table', implode("\n", $content), $this->tableOptions);
+        
+        if ($this->buttons) {
+            $buttons = [];
+            
+            foreach ($this->buttons as $key => $b) {
+                $buttons[] = Html::submitButton(
+                    Html::tag('i', null, ['class' => $b['icon']]) . Yii::t('app', $b['label']),
+                    [
+                        'formaction' => Url::to($b['url']),
+                        'onclick' => 'return confirm("' . Yii::t('app', 'Are you sure?') . '")',
+                        'class' => 'btn btn-' . $b['css_class'] . ' btn-icon',
+                    ]
+                );
+            }
+            
+            $result = Html::beginForm();
+            $result .= $table;
+            $result .= Html::tag('div', implode(Html::tag('span', null, ['class' => 'mx-1']), $buttons), [
+                'class' => 'common-buttons main-shadow p-2 d-none'
+            ]);
+            
+            $result .= Html::endForm();
+            return $result;
+        } else {
+            return $table;
+        }
     }
 
     /**

@@ -29,6 +29,8 @@ class StaticPageController extends Controller
                 
                 $block_mdl->save();
             }
+            
+            return $this->refresh();
         }
         
         $blocks = $model->blocks ? ArrayHelper::index($model->blocks, null, 'part_name') : [];

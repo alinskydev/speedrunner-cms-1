@@ -53,15 +53,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     
                     <tbody>
                         <tr class="table-new-relation" data-table="blocks">
-                            <td class="table-sorter">
-                                <i class="fas fa-arrows-alt"></i>
+                            <td>
+                                <div class="btn btn-primary table-sorter">
+                                    <i class="fas fa-arrows-alt"></i>
+                                </div>
                             </td>
+                            
                             <td>
                                 <?= Html::input('text', 'GeneratorForm[blocks][__key__][name]', null, ['class' => 'form-control', 'required' => true]); ?>
                             </td>
+                            
                             <td>
                                 <?= Html::input('text', 'GeneratorForm[blocks][__key__][label]', null, ['class' => 'form-control', 'required' => true]); ?>
                             </td>
+                            
                             <td>
                                 <div class="custom-control custom-switch">
                                     <?php
@@ -75,6 +80,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ?>
                                 </div>
                             </td>
+                            
                             <td>
                                 <?= Html::dropdownList(
                                     'GeneratorForm[blocks][__key__][type]',
@@ -83,6 +89,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ['class' => 'form-control']
                                 ); ?>
                             </td>
+                            
                             <td>
                                 <div class="block-attrs-wrap"></div>
                                 
@@ -93,6 +100,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </td>
+                            
                             <td>
                                 <?= ElFinderInput::widget([
                                     'connectorRoute' => '/connection/elfinder-file-upload',
@@ -104,6 +112,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ]
                                 ]); ?>
                             </td>
+                            
                             <td>
                                 <button type="button" class="btn btn-danger btn-remove">
                                     <i class="fa fa-times"></i>

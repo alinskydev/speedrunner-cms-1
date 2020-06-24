@@ -42,7 +42,7 @@ class DocumentatorForm extends Model
         return $result;
     }
     
-    public function generate()
+    public function process()
     {
         $result = [];
         

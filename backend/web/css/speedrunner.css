@@ -398,18 +398,19 @@ header .dropdown-menu .flag-wrapper img {
     margin: 0;
 }
 
-.nav-wrapper nav ul li a {
+.nav-wrapper nav ul li > a {
     display: block;
     color: #ACD3D4;
     transition: all 0.15s;
     text-decoration: none;
 }
 
-.nav-wrapper nav ul li a:hover {
+.nav-wrapper nav ul li.active > a,
+.nav-wrapper nav ul li > a:hover {
     color: #fff;
 }
 
-.nav-wrapper nav ul li a:before {
+.nav-wrapper nav ul li > a:before {
     content: "\f105";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -422,7 +423,6 @@ header .dropdown-menu .flag-wrapper img {
 }
 
 .nav-wrapper nav ul.nav-items > li {
-    float: left;
     width: 16.666667%;
     padding: 15px;
 }
@@ -495,6 +495,13 @@ img.preview-elfinder {
 
 .el-finder-dialog .image p {
     background-size: contain !important;
+}
+
+.grid-view .common-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 32px;
+    background: #fff;
 }
 
 .grid-view .action-content {

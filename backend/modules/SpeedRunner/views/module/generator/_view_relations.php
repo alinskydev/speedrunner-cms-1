@@ -18,15 +18,20 @@ use yii\helpers\Html;
     </thead>
     <tbody>
         <tr class="table-new-relation" data-table="view_relations">
-            <td class="table-sorter">
-                <i class="fas fa-arrows-alt"></i>
+            <td>
+                <div class="btn btn-primary table-sorter">
+                    <i class="fas fa-arrows-alt"></i>
+                </div>
             </td>
+            
             <td>
                 <?= Html::dropDownList('GeneratorForm[view_relations][__key__][model]', null, $tables, ['class' => 'form-control', 'required' => true]); ?>
             </td>
+            
             <td>
                 <?= Html::input('text', 'GeneratorForm[view_relations][__key__][var_name]', null, ['class' => 'form-control', 'required' => true]); ?>
             </td>
+            
             <td class="text-right">
                 <button type="button" class="btn btn-danger btn-remove">
                     <span class="fa fa-times"></span>

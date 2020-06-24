@@ -20,9 +20,6 @@ return [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
         ],
-//        'speedrunner' => [
-//            'class' => 'console\controllers\SpeedrunnerController',
-//        ],
     ],
     'components' => [
         'log' => [

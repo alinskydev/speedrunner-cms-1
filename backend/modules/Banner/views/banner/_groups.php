@@ -10,7 +10,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
 
 ?>
 
-<table class="table table-relations">
+<table class="table table-bordered table-relations">
     <thead>
         <tr>
             <th></th>
@@ -38,7 +38,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     <?= $form->field($g, 'text_1', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_1]",
                         'class' => 'form-control',
-                        'rows' => 7,
+                        'rows' => 5,
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
@@ -46,7 +46,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     <?= $form->field($g, 'text_2', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_2]",
                         'class' => 'form-control',
-                        'rows' => 7,
+                        'rows' => 5,
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
@@ -54,7 +54,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     <?= $form->field($g, 'text_3', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_3]",
                         'class' => 'form-control',
-                        'rows' => 7,
+                        'rows' => 5,
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
@@ -62,7 +62,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     <?= $form->field($g, 'link', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][link]",
                         'class' => 'form-control',
-                        'rows' => 7,
+                        'rows' => 5,
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>

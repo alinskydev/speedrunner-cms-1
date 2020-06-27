@@ -468,6 +468,11 @@ header .dropdown-menu .flag-wrapper img {
     margin: 0;
 }
 
+.sortable-placeholder {
+    background-color: #83BDBE;
+    min-height: 40px;
+}
+
 .ui-dialog.ui-widget {
     z-index: 99999;
 }
@@ -500,7 +505,7 @@ img.preview-elfinder {
 .grid-view .common-buttons {
     position: fixed;
     bottom: 30px;
-    right: 32px;
+    left: 15px;
     background: #fff;
 }
 

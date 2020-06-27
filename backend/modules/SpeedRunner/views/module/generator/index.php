@@ -93,10 +93,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ])->label(null, [
                     'class' => 'custom-control-label'
                 ]) ?>
-                <hr>
                 
                 <div id="generatorform-relations-result"></div>
-                <hr>
                 
                 <?= $this->render('_view_relations', ['tables' => $tables]) ?>
             </div>

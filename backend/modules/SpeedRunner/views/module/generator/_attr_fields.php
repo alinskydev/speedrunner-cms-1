@@ -10,10 +10,11 @@ unset($attr_types['images'], $attr_types['groups']);
 
 ?>
 
-<h4 class="text-center text-bold"><?= $table_name ?></h4>
-<br>
+<h4 class="mb-3">
+    <?= Yii::t('app', 'Attributes') ?>
+</h4>
 
-<table class="table table-relations">
+<table class="table table-bordered table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -23,6 +24,7 @@ unset($attr_types['images'], $attr_types['groups']);
             <th style="width: 65%;"><?= Yii::t('speedrunner', 'Type') ?></th>
         </tr>
     </thead>
+    
     <tbody>
         <?php foreach ($columns as $c) { ?>
             <tr>
@@ -86,4 +88,8 @@ unset($attr_types['images'], $attr_types['groups']);
     $('.selectpicker-type-2').on('select2:select', function(e) {
         $(e.target).data('select2').dropdown.$search.val(e.params.data.text).focus();
     });
+    
+//    ----------------------------------------------------------------
+    
+    
 </script>

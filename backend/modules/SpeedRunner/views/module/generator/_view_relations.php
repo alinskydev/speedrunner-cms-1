@@ -4,10 +4,11 @@ use yii\helpers\Html;
 
 ?>
 
-<h4 class="text-center text-bold"><?= Yii::t('speedrunner', 'View relations') ?></h4>
-<br>
+<h4 class="mt-4 mb-3">
+    <?= Yii::t('speedrunner', 'View relations') ?>
+</h4>
 
-<table class="table table-relations">
+<table class="table table-bordered table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -16,6 +17,7 @@ use yii\helpers\Html;
             <th style="width: 3%;"></th>
         </tr>
     </thead>
+    
     <tbody>
         <tr class="table-new-relation" data-table="view_relations">
             <td>

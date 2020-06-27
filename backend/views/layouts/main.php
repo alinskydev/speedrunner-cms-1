@@ -51,13 +51,13 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
         <div class="header-right">
             <div class="item dropdown">
                 <button type="button" class="btn btn-link dropdown-toggle flag-wrapper" data-toggle="dropdown">
-                    <img src="<?= Yii::$app->sr->image->thumb($lang_curr['image'], [30, 15], 'resize') ?>">
+                    <img src="<?= Yii::$app->sr->image->thumb($lang_curr['image'], [30, 20]) ?>">
                 </button>
                 
                 <div class="dropdown-menu dropdown-menu-right">
                     <?php foreach ($langs as $l) { ?>
                         <a class="dropdown-item flag-wrapper" href="<?= $l['url'] ?>">
-                            <img src="<?= Yii::$app->sr->image->thumb($l['image'], [30, 15], 'resize') ?>">
+                            <img src="<?= Yii::$app->sr->image->thumb($l['image'], [30, 20]) ?>">
                             <?= $l['name'] ?>
                         </a>
                     <?php } ?>

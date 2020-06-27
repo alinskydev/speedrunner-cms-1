@@ -6,7 +6,7 @@
             <?= Yii::t('app', 'Delete') ?>
         </button>
     </h4>
-    <table class="table table-relations">
+    <table class="table table-bordered table-relations">
         <thead>
             <tr>
                 <th style="width: 3%;"></th>

@@ -31,7 +31,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
 
 ?>
 
-<table class="table table-relations">
+<table class="table table-bordered table-relations">
     <thead>
         <tr>
             <th></th>

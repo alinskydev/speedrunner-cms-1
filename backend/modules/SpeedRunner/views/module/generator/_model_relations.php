@@ -10,10 +10,11 @@ $types = [
 
 ?>
 
-<h4 class="text-center text-bold"><?= Yii::t('speedrunner', 'Model relations') ?></h4>
-<br>
+<h4 class="mt-4 mb-3">
+    <?= Yii::t('speedrunner', 'Model relations') ?>
+</h4>
 
-<table class="table table-relations">
+<table class="table table-bordered table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -24,6 +25,7 @@ $types = [
             <th style="width: 20%;"><?= Yii::t('speedrunner', 'Condition (to)') ?></th>
         </tr>
     </thead>
+    
     <tbody>
         <?php foreach ($foreign_keys as $fks_key => $fks) { ?>
             <?php foreach ($fks as $key => $fk) { ?>

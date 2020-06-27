@@ -20,7 +20,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
     <?= Html::label($model->label) ?>
     <?= Html::hiddenInput("StaticPageBlock[$model->id][value]", null); ?>
     
-    <table class="table table-relations">
+    <table class="table table-bordered table-relations">
         <tbody>
             <?php foreach ($groups as $key => $group) { ?>
                 <tr class="<?= strval($key) == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= "groups-$model->id" ?>">

@@ -134,6 +134,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         
         $('#sortable-from').sortable({
             handle: '.table-sorter',
+            placeholder: 'sortable-placeholder mb-2',
             connectWith: '#sortable-to',
             helper: 'clone',
             start: function (event, ui) {
@@ -157,7 +158,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             }
         }).disableSelection();
         
-        $('#sortable-to').sortable({handle: '.table-sorter'}).disableSelection();
+        $('#sortable-to').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder mb-2'}).disableSelection();
     };
 </script>
 

@@ -23,7 +23,7 @@ class GeneratorForm extends Model
     public $view_relations = [];
     
     public $attrs_fields = [];
-    public $attrs_translation = [];
+    public $attrs_translation;
     
     public function rules()
     {
@@ -193,7 +193,7 @@ class GeneratorForm extends Model
         $rules = [];
         
         foreach ($columns as $column) {
-            if ($column->autoIncrement || in_array($column->name, ['item_id', 'created', 'updated'])) {
+            if ($column->autoIncrement || in_array($column->name, ['created', 'updated'])) {
                 continue;
             }
             
@@ -221,8 +221,14 @@ class GeneratorForm extends Model
                 case Schema::TYPE_TIME:
                 case Schema::TYPE_DATETIME:
                 case Schema::TYPE_TIMESTAMP:
-                case Schema::TYPE_JSON:
                     $types['safe'][] = $column->name;
+                    break;
+                case Schema::TYPE_JSON:
+                    if (in_array($column->name, array_keys($this->attrs_translation))) {
+                        $types['string'][] = $column->name;
+                    } else {
+                        $types['safe'][] = $column->name;
+                    }
                     break;
                 default: // strings
                     if ($column->size > 0) {
@@ -268,10 +274,6 @@ class GeneratorForm extends Model
                     break;
                 case Schema::TYPE_TEXT:
                     break;
-                case Schema::TYPE_DATE:
-                case Schema::TYPE_TIME:
-                case Schema::TYPE_DATETIME:
-                case Schema::TYPE_TIMESTAMP:
                 default:
                     $types['safe'][] = $column->name;
                     break;
@@ -294,10 +296,6 @@ class GeneratorForm extends Model
         $hashConditions = [];
         
         foreach ($columns as $column => $type) {
-            if (in_array($column, $attrs_translation)) {
-                continue;
-            }
-            
             switch ($type) {
                 case Schema::TYPE_TINYINT:
                 case Schema::TYPE_SMALLINT:

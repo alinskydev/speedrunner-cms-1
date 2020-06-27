@@ -127,6 +127,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'System Settings');
         
         $('#sortable').sortable({
             handle: '.table-sorter',
+            placeholder: 'sortable-placeholder mb-2',
             start: function(event, ui) {
                 id = ui.item[0].dataset.id;
                 oldIndex = ui.item.index();

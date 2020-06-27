@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <table class="table table-relations">
+                <table class="table table-bordered table-relations">
                     <thead>
                         <tr>
                             <th style="width: 3%;"></th>

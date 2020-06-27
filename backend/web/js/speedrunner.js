@@ -107,7 +107,7 @@ $(function() {
 
     //      LAUNCH & AJAX_REBUILD
 
-    $('.table-relations tbody').sortable({handle: '.table-sorter'});
+    $('.table-relations tbody').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder'});
 
     dateTimePickFunc();
     selectFunc();
@@ -118,7 +118,7 @@ $(function() {
 
     $(document).ajaxComplete(function() {
         $('#ajax-mask').fadeOut(0);
-        $('.table-relations tbody').sortable({handle: '.table-sorter'});
+        $('.table-relations tbody').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder'});
 
         dateTimePickFunc();
         selectFunc();

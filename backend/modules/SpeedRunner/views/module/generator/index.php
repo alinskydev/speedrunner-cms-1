@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $this->title = 'Module Generator';
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('speedrunner', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

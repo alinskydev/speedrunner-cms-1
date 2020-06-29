@@ -6,8 +6,8 @@ use yii\helpers\Url;
 use vova07\imperavi\Widget;
 use zxbodya\yii2\elfinder\ElFinderInput;
 
-$this->title = Yii::t('app', 'System settings');
-$this->params['breadcrumbs'][] = Yii::t('app', 'System Settings');
+$this->title = Yii::t('app', 'System Settings');
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 

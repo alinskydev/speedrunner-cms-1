@@ -16,7 +16,6 @@ class Page extends ActiveRecord
     
     public $seo_meta = [];
     
-    
     public static function tableName()
     {
         return 'Page';

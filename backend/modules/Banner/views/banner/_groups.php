@@ -42,6 +42,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
+                
                 <td>
                     <?= $form->field($g, 'text_2', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_2]",
@@ -50,6 +51,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
+                
                 <td>
                     <?= $form->field($g, 'text_3', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][text_3]",
@@ -58,6 +60,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
+                
                 <td>
                     <?= $form->field($g, 'link', ['template' => '{input}'])->textArea([
                         'name' => "Banner[groups_tmp][$g_id][link]",
@@ -66,6 +69,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                     ]) ?>
                     <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
+                
                 <td>
                     <?= $form->field($g, 'image', [
                         'template' => '{input}'
@@ -75,6 +79,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                         'id' => "elfinder-$g_id",
                     ]) ?>
                 </td>
+                
                 <td>
                     <button type="button" class="btn btn-danger btn-remove">
                         <i class="fa fa-times"></i>

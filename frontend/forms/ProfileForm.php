@@ -48,8 +48,9 @@ class ProfileForm extends Model
         $user = User::find()->where(['username' => $this->username])->one();
         
         if ($user && $user->id != $this->user->id) {
-            $label = $this->getAttributeLabel($attribute);
-            $this->addError($attribute, Yii::t('app', "This $label has already been taken"));
+            $this->addError($attribute, Yii::t('app', 'This {label} has already been taken', [
+                'label' => $this->getAttributeLabel($attribute),
+            ]));
         }
     }
     

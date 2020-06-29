@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'assign' => function($url, $model, $key) {
                         return Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-th']) . Yii::t('app', 'Assign'),
-                            ['page/assign', 'id' => $model->id]
+                            ['assign', 'id' => $model->id]
                         );
                     },
                 ],

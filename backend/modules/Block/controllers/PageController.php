@@ -34,6 +34,10 @@ class PageController extends Controller
     {
         $model = BlockPage::find()->with(['blocks', 'blocks.type'])->where(['id' => $id])->one();
         
+        if (!$model) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
         if ($post_data = Yii::$app->request->post('Block')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
             
@@ -50,11 +54,9 @@ class PageController extends Controller
             return $this->redirect(['index']);
         }
         
-        $blocks = $model->blocks;
-        
         return $this->render('update', [
             'model' => $model,
-            'blocks' => $blocks,
+            'blocks' => $model->blocks,
         ]);
     }
     

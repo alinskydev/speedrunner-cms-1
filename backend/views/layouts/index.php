@@ -34,9 +34,6 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/elfinder-file-upload']) ?>">
-    <meta name="ckeditor-image_upload-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/editor-image-upload']) ?>">
-    <meta name="ckeditor-images-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/editor-images-get']) ?>">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

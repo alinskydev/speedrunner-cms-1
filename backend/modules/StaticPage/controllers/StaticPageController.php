@@ -17,6 +17,10 @@ class StaticPageController extends Controller
     {
         $model = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
         
+        if (!$model) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
         if ($post_data = Yii::$app->request->post('StaticPageBlock')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
             
@@ -33,15 +37,13 @@ class StaticPageController extends Controller
             return $this->refresh();
         }
         
-        $blocks = $model->blocks ? ArrayHelper::index($model->blocks, null, 'part_name') : [];
-        
         if (Yii::$app->request->post('SeoMeta')) {
             $model->save();
             return $this->refresh();
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'blocks' => $blocks,
+                'blocks' => ArrayHelper::index($model->blocks, null, 'part_name'),
             ]);
         }
     }

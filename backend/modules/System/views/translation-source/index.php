@@ -14,11 +14,6 @@ $active_langs = SystemLanguage::find()->where(['active' => 1])->column();
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Html::a(
-        Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
-        ['create'],
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
 </h2>
 
 <div class="main-shadow p-3">

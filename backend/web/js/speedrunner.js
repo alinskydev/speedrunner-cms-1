@@ -15,32 +15,30 @@ $(function() {
     //      DATETIME
 
     function dateTimePickFunc() {
-        $('[data-toggle="datepicker"]').datepicker({
+        $('[data-toggle="datepicker"], input[name*="Search[created]"], input[name*="Search[updated]"]').datepicker({
             format: 'dd.mm.yyyy',
-            minViewMode: 0,
             weekStart: 1,
             todayBtn: 'linked',
             todayHighlight: true,
-            constrainInput: false,
-            autoclose: true
-        });
-
-        $('input[name*="Search[created]"], input[name*="Search[updated]"]').datepicker({
-            format: 'dd.mm.yyyy',
-            minViewMode: 0,
-            weekStart: 1,
-            todayBtn: 'linked',
-            todayHighlight: true,
-            constrainInput: false,
             autoclose: true,
             fontAwesome: true
         });
-
+        
         $('[data-toggle="datetimepicker"]').datetimepicker({
             format: 'dd.mm.yyyy hh:ii',
             weekStart: 1,
             todayBtn: 'linked',
             todayHighlight: true,
+            autoclose: true,
+            fontAwesome: true
+        });
+        
+        $('[data-toggle="timepicker"]').datetimepicker({
+            format: 'hh:ii',
+            startView: 1,
+            maxView: 1,
+            formatViewType: 'time',
+            todayBtn: 'linked',
             autoclose: true,
             fontAwesome: true
         });

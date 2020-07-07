@@ -30,13 +30,18 @@ class CacheController extends Controller
     
     public function actionClear()
     {
-        $dirs = ['@api/runtime', '@backend/runtime', '@frontend/runtime'];
+        $dirs = [
+            '@api/runtime', '@backend/runtime', '@frontend/runtime',
+            '@backend/web/assets', '@frontend/web/assets',
+        ];
         
         foreach ($dirs as $d) {
-            $sub_dirs = FileHelper::findDirectories(Yii::getAlias($d));
-            
-            foreach ($sub_dirs as $s) {
-                FileHelper::removeDirectory($s);
+            if (is_dir(Yii::getAlias($d))) {
+                $sub_dirs = FileHelper::findDirectories(Yii::getAlias($d));
+                
+                foreach ($sub_dirs as $s) {
+                    FileHelper::removeDirectory($s);
+                }
             }
         }
         

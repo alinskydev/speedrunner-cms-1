@@ -30,14 +30,6 @@ class LanguageController extends Controller
     
     public function actionDelete($id)
     {
-        $model = SystemLanguage::findOne($id);
-        
-        if (!$model->weight) {
-            $model->delete();
-        } else {
-            Yii::$app->session->setFlash('danger', Yii::t('app', 'You cannot delete main language'));
-        }
-        
-        return Yii::$app->controller->redirect(Yii::$app->request->referrer);
+        return Yii::$app->sr->record->deleteModel(new SystemLanguage);
     }
 }

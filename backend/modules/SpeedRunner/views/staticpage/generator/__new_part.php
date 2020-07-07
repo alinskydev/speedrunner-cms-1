@@ -3,7 +3,7 @@
         <?= $part_name . ' (' . $part_index . ')' ?>
         <button type="button" class="btn btn-danger btn-icon float-right btn-part-remove">
             <i class="fas fa-trash"></i>
-            <?= Yii::t('app', 'Delete') ?>
+            <?= Yii::t('speedrunner', 'Delete') ?>
         </button>
     </h4>
     <table class="table table-bordered table-relations">

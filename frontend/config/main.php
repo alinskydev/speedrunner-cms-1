@@ -49,7 +49,7 @@ return [
 //                    ]
 //                ],
 //                'yii\bootstrap\BootstrapPluginAsset' => [
-//                    'js'=>[]
+//                    'js' => []
 //                ],
 //                'yii\bootstrap\BootstrapAsset' => [
 //                    'css' => [],

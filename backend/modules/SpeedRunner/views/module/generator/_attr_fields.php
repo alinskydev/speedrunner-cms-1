@@ -11,7 +11,7 @@ unset($attr_types['images'], $attr_types['groups']);
 ?>
 
 <h4 class="mb-3">
-    <?= Yii::t('app', 'Attributes') ?>
+    <?= Yii::t('speedrunner', 'Attributes') ?>
 </h4>
 
 <table class="table table-bordered table-relations">

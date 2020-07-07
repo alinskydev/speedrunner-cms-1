@@ -13,6 +13,8 @@ AppAsset::register($this);
 
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
+
+$user = Yii::$app->user->identity;
 $langs = Yii::$app->i18n->getLanguages(true);
 $menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
 
@@ -61,11 +63,11 @@ $flashes = Yii::$app->session->getAllFlashes();
             ['label' => Yii::t('app', 'Contact'), 'url' => ['site/contact']],
         ];
         
-        if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['site/signup']];
-            $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['site/login']];
-        } else {
+        if ($user) {
             $menuItems[] = ['label' => Yii::t('app', 'Logout'), 'url' => ['site/logout']];
+        } else {
+            $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['site/login']];
+            $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['site/signup']];
         }
         
         $menuItems[] = ['label' => strtoupper($langs[Yii::$app->language]['code']), 'url' => '#', 'items' => $langs_nav];

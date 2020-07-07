@@ -45,7 +45,7 @@ class ContactForm extends Model
                 ];
             }
             
-            return Yii::$app->sr->mail->send($admin_email, Yii::t('app', 'Feedback'), 'feedback', $data);
+            return Yii::$app->sr->mail->send($admin_email, Yii::t('email', 'Feedback'), 'feedback', $data);
         } else {
             return false;
         }

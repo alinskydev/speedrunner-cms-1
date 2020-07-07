@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use yii\web\JsExpression;
 use vova07\imperavi\Widget;
 use kartik\file\FileInput;
 use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 use backend\modules\Product\models\ProductCategory;
 

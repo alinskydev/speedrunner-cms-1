@@ -1,1 +1,1 @@
-<pre><?= $block->value ?></pre>
+<pre><?= $value ?></pre>

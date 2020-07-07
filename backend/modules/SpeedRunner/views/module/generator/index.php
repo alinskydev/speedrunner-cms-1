@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $this->title = 'Module Generator';
-$this->params['breadcrumbs'][] = ['label' => Yii::t('speedrunner', 'SpeedRunner'), 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <h2 class="main-title">
     <?= $this->title ?>
     <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('app', 'Generate'),
+        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('speedrunner', 'Generate'),
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>
 </h2>
@@ -28,22 +28,22 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= Yii::t('app', 'General') ?>
+                    <?= Yii::t('speedrunner', 'General') ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-controller">
-                    <?= Yii::t('app', 'Controller') ?>
+                    <?= Yii::t('speedrunner', 'Controller') ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-model">
-                    <?= Yii::t('app', 'Model') ?>
+                    <?= Yii::t('speedrunner', 'Model') ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-view">
-                    <?= Yii::t('app', 'View') ?>
+                    <?= Yii::t('speedrunner', 'View') ?>
                 </a>
             </li>
         </ul>

@@ -73,6 +73,16 @@ class SystemLanguage extends ActiveRecord
         return parent::afterSave($insert, $changedAttributes);
     }
     
+    public function beforeDelete()
+    {
+        if ($this->weight) {
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'You cannot delete main language'));
+            return false;
+        }
+        
+        return parent::beforeDelete();
+    }
+    
     public function afterDelete()
     {
         Yii::$app->sr->translation->fixMessages();

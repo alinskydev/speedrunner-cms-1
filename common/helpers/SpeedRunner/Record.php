@@ -54,7 +54,7 @@ class Record
     {
         if ($with_blocks) {
             $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
-            $result['blocks'] = ArrayHelper::index($result['page']->blocks, 'name');
+            $result['blocks'] = ArrayHelper::map($result['page']->blocks, 'name', 'value');
         } else {
             $result['page'] = StaticPage::find()->where(['location' => $location])->one();
             $result['blocks'] = [];

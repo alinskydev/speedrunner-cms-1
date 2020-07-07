@@ -24,7 +24,7 @@ class CommentController extends Controller
         }
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->refresh();
+            return $this->redirect(['index']);
         }
         
         return $this->render('view', [

@@ -35,8 +35,9 @@ class ZzzCategory extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['url'], 'unique'],
             [['name', 'url', 'image'], 'string', 'max' => 100],
+            [['url'], 'unique'],
+            [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['description'], 'string'],
         ];
     }

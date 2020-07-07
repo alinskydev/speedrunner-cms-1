@@ -55,13 +55,6 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
             'dot-translation' => [
                 'class' => 'pavlinter\translation\TranslationAction',
             ],
@@ -70,10 +63,6 @@ class SiteController extends Controller
     
     public function beforeAction($action)
     {
-//        if ($action->id == 'error') {
-//            $this->redirect(['index']);
-//            return false;
-//        }
         return parent::beforeAction($action);
     }
     
@@ -90,6 +79,13 @@ class SiteController extends Controller
         ]);
     }
     
+    public function actionError()
+    {
+        return $this->render('error', [
+            'exception' => Yii::$app->errorHandler->exception
+        ]);
+    }
+    
     public function actionAbout()
     {
         return $this->render('about');
@@ -101,9 +97,9 @@ class SiteController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Thank you for contacting us. We will respond to you as soon as possible.'));
             } else {
-                Yii::$app->session->setFlash('danger', 'There was an error sending your message.');
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'There was an error sending your message.'));
             }
             
             return $this->refresh();

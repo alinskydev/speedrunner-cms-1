@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 <div class="row">
     <div class="col-md-10">
-        <label><?= Yii::t('app', 'Part name') ?></label>
+        <label><?= Yii::t('speedrunner', 'Part name') ?></label>
         <?= Html::input('text', 'part_name', null, ['class' => 'form-control part-name']) ?>
     </div>
     
@@ -17,7 +17,7 @@ use yii\helpers\Html;
                 data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-part']) ?>"
         >
             <i class="fa fa-plus"></i>
-            <?= Yii::t('app', 'Add') ?>
+            <?= Yii::t('speedrunner', 'Add') ?>
         </button>
     </div>
 </div>

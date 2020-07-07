@@ -139,7 +139,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeDelete()
     {
         if ($this->id == 1) {
-            Yii::$app->session->setFlash('danger', 'You cannot delete this record');
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'You cannot delete this record'));
             return false;
         }
         

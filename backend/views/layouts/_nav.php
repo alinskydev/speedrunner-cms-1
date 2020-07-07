@@ -2,6 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\Menu;
+use backend\modules\StaticPage\models\StaticPage;
+
+
+$static_pages = StaticPage::find()->asArray()->all();
+$static_page_items = array_map(function($value) {
+    return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/static-page/static-page/update', 'location' => $value['location']]];
+}, $static_pages);
 
 $menuItems = [
     [
@@ -13,9 +20,7 @@ $menuItems = [
     ],
     [
         'label' => Yii::t('app', 'Static pages'),
-        'items' => [
-            ['label' => Yii::t('app', 'Home'), 'url' => ['/static-page/update/home']],
-        ],
+        'items' => $static_page_items,
     ],
     [
         'label' => Yii::t('app', 'Content'),

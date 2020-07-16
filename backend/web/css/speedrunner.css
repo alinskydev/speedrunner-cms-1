@@ -103,6 +103,7 @@ ul {
 
 .help-block {
     color: #067a7d;
+    margin: 0;
 }
 
 .help-block:empty {

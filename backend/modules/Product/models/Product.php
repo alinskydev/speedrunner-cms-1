@@ -65,7 +65,11 @@ class Product extends ActiveRecord
             [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
             [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
             [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
-            [['cats_tmp', 'options_tmp', 'related_tmp', 'vars_tmp'], 'safe'],
+            [['related_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id', 'filter' => function ($query) {
+                $query->andWhere(['!=', 'id', $this->id]);
+            }]],
+            
+            [['cats_tmp', 'options_tmp', 'vars_tmp'], 'safe'],
         ];
     }
     

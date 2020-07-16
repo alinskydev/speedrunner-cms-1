@@ -89,8 +89,6 @@ class MenuController extends Controller
                     break;
             }
             
-            $item_model->save();
-            
             return true;
         } else {
             return false;

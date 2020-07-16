@@ -86,8 +86,6 @@ class CategoryController extends Controller
                     break;
             }
             
-            $item_model->save(false);
-            
             return true;
         } else {
             return false;

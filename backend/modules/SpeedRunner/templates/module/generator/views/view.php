@@ -15,8 +15,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 
-$this->title = Yii::t('speedrunner', 'View: {name}', ['name' => $model->name]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('speedrunner', '<?= $index_title ?>s'), 'url' => ['index']];
+$this->title = Yii::t('app', 'View: {name}', ['name' => $model->name]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= "<?= Yii::t('speedrunner', 'General') ?>\n" ?>
+                    <?= "<?= Yii::t('app', 'General') ?>\n" ?>
                 </a>
             </li>
         </ul>

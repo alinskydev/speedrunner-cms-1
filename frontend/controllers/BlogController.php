@@ -46,12 +46,18 @@ class BlogController extends Controller
     
     public function actionView($url)
     {
-        if ($model = Blog::find()->where(['url' => $url])->one()) {
-            return $this->render('view', [
-                'model' => $model,
-            ]);
-        } else {
+        $model = Blog::find()->where([
+            'and',
+            ['url' => $url],
+            ['<=', 'published', date('Y-m-d H:i:s')],
+        ])->one();
+        
+        if (!$model) {
             return $this->redirect(['index']);
         }
+        
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 }

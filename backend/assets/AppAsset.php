@@ -13,7 +13,6 @@ class AppAsset extends AssetBundle
     
     public $css = [
         'css/all.min.css',
-        'css/bootstrap.min.css',
         'css/bootstrap-datepicker.min.css',
         'css/bootstrap-datetimepicker.min.css',
         'css/select2.min.css',
@@ -23,7 +22,6 @@ class AppAsset extends AssetBundle
     
     public $js = [
         'js/popper.min.js',
-        'js/bootstrap.min.js',
         'js/bootstrap-datepicker.min.js',
         'js/bootstrap-datetimepicker.min.js',
         'js/select2.full.min.js',

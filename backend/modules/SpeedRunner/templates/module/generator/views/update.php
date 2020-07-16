@@ -18,8 +18,8 @@ use zxbodya\yii2\elfinder\ElFinderInput;
 use vova07\imperavi\Widget;
 use kartik\file\FileInput;
 
-$this->title = $model->isNewRecord ? Yii::t('speedrunner', 'Create') : Yii::t('speedrunner', 'Update: {name}', ['name' => $model->name]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('speedrunner', '<?= $index_title ?>s'), 'url' => ['index']];
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= "<?= \$this->title ?>\n" ?>
 <?php
     echo "        <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('speedrunner', 'Save'),
+        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>\n";
 ?>
@@ -43,21 +43,21 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= "<?= Yii::t('speedrunner', 'General') ?>\n" ?>
+                    <?= "<?= Yii::t('app', 'General') ?>\n" ?>
                 </a>
             </li>
 <?php foreach ($model->view_relations as $r) { ?>
 <?php $var_name_rel = str_replace('_tmp', '', $r['var_name']); ?>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-<?= $var_name_rel ?>">
-                    <?= "<?= Yii::t('speedrunner', '" . ucfirst($var_name_rel) . "') ?>\n" ?>
+                    <?= "<?= Yii::t('app', '" . ucfirst($var_name_rel) . "') ?>\n" ?>
                 </a>
             </li>
 <?php } ?>
 <?php if ($model->has_seo_meta) { ?>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-seo-meta">
-                    <?= "<?= Yii::t('speedrunner', 'SEO meta') ?>\n" ?>
+                    <?= "<?= Yii::t('app', 'SEO meta') ?>\n" ?>
                 </a>
             </li>
 <?php } ?>

@@ -15,7 +15,7 @@ return [
     'page/<url>' => 'block/view',
     
     'product/catalog' => [
-        'class' => 'frontend\components\ProductCategoriesUrlRule',
+        'class' => 'frontend\components\ProductCategoryUrlRule',
         'route' => 'product/catalog'
     ],
 ];

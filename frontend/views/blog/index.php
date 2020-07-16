@@ -4,6 +4,7 @@ use yii\widgets\ListView;
 use yii\widgets\LinkPager;
 
 $this->title = Yii::t('app', 'Blogs');
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 

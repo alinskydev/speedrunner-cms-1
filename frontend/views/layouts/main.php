@@ -33,7 +33,7 @@ $flashes = Yii::$app->session->getAllFlashes();
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="<?= Yii::$app->settings->site_logo ?>">
+    <link rel="icon" href="<?= Yii::$app->settings->site_favicon ?>">
     <link rel="canonical" href="<?= $curr_url ?>">
     <meta property="og:site_name" content="<?= Yii::$app->settings->site_name ?>">
     <meta property="og:url" content="<?= $curr_url ?>">
@@ -83,6 +83,8 @@ $flashes = Yii::$app->session->getAllFlashes();
     <div class="container" style="margin-top: 70px;">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
+            'options' => ['class' => 'breadcrumbs'],
         ]) ?>
         
         <div class="alert-wrapper">

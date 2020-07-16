@@ -39,19 +39,11 @@ class ProfileForm extends Model
             [['username', 'address'], 'string', 'max' => 255],
             [['new_password'], 'string', 'min' => 6, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
-            [['username'], 'usernameValidation'],
+            
+            [['username'], 'unique', 'targetClass' => User::className(), 'filter' => function ($query) {
+                $query->andWhere(['!=', 'id', $this->user->id]);
+            }, 'message' => Yii::t('app', 'This username has already been taken')],
         ];
-    }
-    
-    public function usernameValidation($attribute, $params, $validator)
-    {
-        $user = User::find()->where(['username' => $this->username])->one();
-        
-        if ($user && $user->id != $this->user->id) {
-            $this->addError($attribute, Yii::t('app', 'This {label} has already been taken', [
-                'label' => $this->getAttributeLabel($attribute),
-            ]));
-        }
     }
     
     public function attributeLabels()

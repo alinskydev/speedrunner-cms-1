@@ -65,10 +65,20 @@ return [
         'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapPluginAsset' => [
-                    'js' => []
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'js/bootstrap.min.js',
+                    ]
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
-                    'css' => [],
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'css' => [
+                        'css/bootstrap.min.css',
+                    ]
                 ],
             ],
         ],

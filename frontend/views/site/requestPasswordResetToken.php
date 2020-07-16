@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <h1><?= $this->title ?></h1>
             
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
                 
                 <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-primary btn-block']) ?><hr>
                 <?= Html::a(Yii::t('app', 'Login'), ['site/login'], ['class' => 'btn btn-success btn-block']) ?>

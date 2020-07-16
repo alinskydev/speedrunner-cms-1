@@ -14,7 +14,12 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'edit-form', 'enctype' => 'multipart/form-data'],
+    'options' => [
+        'id' => 'edit-form',
+        'class' => 'ajax-form',
+        'data-el' => '#nav-item-content',
+        'enctype' => 'multipart/form-data',
+    ],
 ]); ?>
 
 <div class="row">

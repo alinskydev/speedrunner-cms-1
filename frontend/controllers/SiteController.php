@@ -27,7 +27,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'dot-translation'],
+                'only' => ['logout', 'signup', 'request-password-reset', 'reset-password', 'dot-translation'],
                 'rules' => [
                     [
                         'actions' => ['signup', 'request-password-reset', 'reset-password'],
@@ -160,7 +160,7 @@ class SiteController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions'));
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
@@ -180,8 +180,10 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved.'));
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->resetPassword();
+            Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved'));
+            
             return $this->goHome();
         }
         

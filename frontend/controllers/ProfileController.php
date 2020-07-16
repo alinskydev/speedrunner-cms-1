@@ -20,7 +20,6 @@ class ProfileController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

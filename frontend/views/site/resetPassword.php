@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
                 <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'confirm_password')->passwordInput() ?>
                 
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>

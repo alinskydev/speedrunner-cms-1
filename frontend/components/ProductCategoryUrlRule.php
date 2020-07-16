@@ -7,7 +7,7 @@ use yii\web\UrlRuleInterface;
 use yii\base\BaseObject;
 
 
-class ProductCategoriesUrlRule extends BaseObject implements UrlRuleInterface
+class ProductCategoryUrlRule extends BaseObject implements UrlRuleInterface
 {
     public $route;
     

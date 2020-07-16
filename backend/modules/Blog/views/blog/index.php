@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use common\components\framework\grid\GridView;
-use yii\web\JsExpression;
 use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 $this->title = Yii::t('app', 'Blogs');
 $this->params['breadcrumbs'][] = ['label' => $this->title];

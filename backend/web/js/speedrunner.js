@@ -220,6 +220,28 @@ $(function() {
         });
     });
 
+    //      AJAX FORM
+    
+    $(document).on('submit', '.ajax-form', function(e) {
+        e.preventDefault();
+        
+        el = $(this);
+        action = el.attr('action');
+        sendData = el.serialize();
+        sendData = new FormData(el[0]);
+        
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: sendData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                $(el.data('el')).html(data);
+            }
+        });
+    });
+
     //      HOTKEYS
 
     $(document).on('keydown', function(e) {

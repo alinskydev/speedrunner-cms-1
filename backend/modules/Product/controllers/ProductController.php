@@ -68,6 +68,7 @@ class ProductController extends Controller
         
         if ($model) {
             $model->cats_tmp = json_encode(ArrayHelper::getColumn($model->cats, 'id'));
+            $model->related_tmp = ArrayHelper::getColumn($model->related, 'id');
             
             return Yii::$app->sr->record->updateModel($model);
         } else {

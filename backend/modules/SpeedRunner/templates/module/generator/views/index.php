@@ -24,7 +24,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
-$this->title = Yii::t('speedrunner', '<?= $title ?>s');
+$this->title = Yii::t('app', '<?= $title ?>s');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <?php
     if (in_array('create', $model->controller_actions)) {
         echo "    <?= Html::a(
-        Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('speedrunner', 'Create'),
+        Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
         ['create'],
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>\n";

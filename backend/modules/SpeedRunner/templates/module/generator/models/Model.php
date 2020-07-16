@@ -87,7 +87,7 @@ class <?= $model->table_name ?> extends ActiveRecord
     {
         return [
 <?php foreach ($attrs as $key => $a) { ?>
-            '<?= $key ?>' => Yii::t('speedrunner', '<?= str_replace(['_'], [' '], ucfirst($key)) ?>'),
+            '<?= $key ?>' => Yii::t('app', '<?= str_replace(['_'], [' '], ucfirst($key)) ?>'),
 <?php } ?>
         ];
     }

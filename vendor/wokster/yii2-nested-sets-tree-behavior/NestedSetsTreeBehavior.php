@@ -55,9 +55,7 @@ class NestedSetsTreeBehavior extends Behavior
             $newData = [];
             
             if (is_callable($makeLink = $this->makeLinkCallable)) {
-                $newData += [
-                    $this->hrefOutAttribute => $makeLink($node),
-                ];
+                $newData[$this->hrefOutAttribute] = $makeLink($node);
             }
             return array_merge($node, $newData);
         };
@@ -69,12 +67,13 @@ class NestedSetsTreeBehavior extends Behavior
         $collection = $this->owner->children()
             ->select([
                 '*',
+                new Expression("IF(expanded, 1, null) as expanded"),
                 new Expression("name->>'$.$lang' as name"),
                 new Expression("name->>'$.$lang' as title"),
             ]);
         
         foreach ($this->jsonAttributes as $a) {
-            $collection->addSelect([new Expression("url->>'$.$lang' as url")]);
+            $collection->addSelect([new Expression("$a->>'$.$lang' as $a")]);
         }
         
         $collection = $collection->asArray()->all();

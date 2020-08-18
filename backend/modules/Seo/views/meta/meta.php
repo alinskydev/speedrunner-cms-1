@@ -8,7 +8,7 @@ use zxbodya\yii2\elfinder\ElFinderInput;
 
 use backend\modules\Seo\models\SeoMeta;
 
-$seo_meta_types = SeoMeta::getTypes();
+$seo_meta_types = SeoMeta::types();
 $meta_tag_exceptions = ['description', 'keywords'];
 
 ?>

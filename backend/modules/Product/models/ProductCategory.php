@@ -59,10 +59,8 @@ class ProductCategory extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name', 'url', 'image'], 'string', 'max' => 100],
-            [['full_url'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['full_url'], 'unique', 'message' => Yii::t('app', 'Url must be unique')],
             [['parent_id'], 'required', 'when' => function ($model) {
                 return $model->isNewRecord;
             }],
@@ -82,12 +80,19 @@ class ProductCategory extends ActiveRecord
             'expanded' => Yii::t('app', 'Expanded'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
-            'full_url' => Yii::t('app', 'Full url'),
             'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
             'parent_id' => Yii::t('app', 'Parent'),
             'attrs_tmp' => Yii::t('app', 'Attributes'),
         ];
+    }
+    
+    public function fullUrl()
+    {
+        $parents = $this->parents()->orderBy('lft')->andWhere(['>', 'depth', 0])->select(['url'])->asArray()->all();
+        $result = implode('/', ArrayHelper::getColumn($parents, 'url'));
+        
+        return $result ? "$result/$this->url" : $this->url;
     }
     
     static function itemsTree($excepts = [])
@@ -97,7 +102,7 @@ class ProductCategory extends ActiveRecord
         $result = self::find()
             ->select([
                 'id',
-                new Expression("CONCAT(REPEAT(('- '), depth), name->>'$.$lang') as name")
+                new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name")
             ])
             ->where(['not in', 'id', $excepts])
             ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
@@ -121,16 +126,6 @@ class ProductCategory extends ActiveRecord
     public static function find()
     {
         return new ProductCategoryQuery(get_called_class());
-    }
-    
-    public function beforeValidate()
-    {
-        if ($this->tree == 1) {
-            $urls = ArrayHelper::getColumn($this->parents()->orderBy('lft')->all(), 'url');
-            $this->full_url = count($urls) > 1 ? ltrim(implode('/', $urls), '/') . "/$this->url" : $this->url;
-        }
-        
-        return parent::beforeValidate();
     }
     
     public function afterSave($insert, $changedAttributes)

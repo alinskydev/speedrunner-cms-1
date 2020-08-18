@@ -22,8 +22,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $modelSearch,
-        'buttons' => [],
         'columns' => [
+            [
+                'format' => 'raw',
+                'filter' => false,
+                'header' => '&nbsp;',
+                'value' => function ($model) {
+                    return Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize'));
+                },
+                'headerOptions' => [
+                    'style' => 'width: 65px;'
+                ],
+            ],
             [
                 'attribute' => 'id',
                 'headerOptions' => [
@@ -33,9 +43,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'username',
             [
                 'attribute' => 'role',
-                'filter' => $modelSearch->roles,
+                'filter' => $modelSearch->roles(),
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->roles, $model->role);
+                    return ArrayHelper::getValue($model->roles(), $model->role);
                 },
             ],
             'email:email',

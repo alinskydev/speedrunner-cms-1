@@ -6,13 +6,14 @@ return [
     'signup' => 'site/signup',
     'logout' => 'site/logout',
     
-    'about' => 'site/about',
     'contact' => 'site/contact',
     
     'blog' => 'blog/index',
     'blog/<url>' => 'blog/view',
     
     'page/<url>' => 'block/view',
+    
+    'order/view/<key>' => 'order/view',
     
     'product/catalog' => [
         'class' => 'frontend\components\ProductCategoryUrlRule',

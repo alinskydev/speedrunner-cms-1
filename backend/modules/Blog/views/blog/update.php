@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
                     'data' => $model->category ? [$model->category_id => $model->category->name] : [],
                     'options' => [
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]) ?>
                 
-                <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'url')->textInput() ?>
                 <?= $form->field($model, 'published')->textInput(['data-toggle' => 'datetimepicker']) ?>
                 <?= $form->field($model, 'image')->widget(ElFinderInput::className(), [
                     'connectorRoute' => '/connection/elfinder-file-upload',

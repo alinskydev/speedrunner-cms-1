@@ -33,9 +33,6 @@ class SiteController extends Controller
                         'actions' => ['signup', 'request-password-reset', 'reset-password'],
                         'allow' => true,
                         'roles' => ['?'],
-                        'matchCallback' => function ($rule, $action) {
-                            return true;
-                        }
                     ],
                     [
                         'actions' => ['logout'],
@@ -68,14 +65,12 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $page = Yii::$app->sr->record->staticPage('home', true);
-        
-        $cats = ProductCategory::find()->all();
+        $page = Yii::$app->sr->record->staticPage('home');
         
         return $this->render('index', [
             'page' => $page['page'],
             'blocks' => $page['blocks'],
-            'cats' => $cats,
+            'cats' => ProductCategory::find()->all(),
         ]);
     }
     
@@ -86,11 +81,6 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-    
     public function actionContact()
     {
         $model = new ContactForm;
@@ -99,7 +89,7 @@ class SiteController extends Controller
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Thank you for contacting us. We will respond to you as soon as possible.'));
             } else {
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'There was an error sending your message.'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
             }
             
             return $this->refresh();

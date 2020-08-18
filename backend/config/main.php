@@ -19,6 +19,7 @@ return [
         'blog' => ['class' => 'backend\modules\Blog\Module'],
         'gallery' => ['class' => 'backend\modules\Gallery\Module'],
         'menu' => ['class' => 'backend\modules\Menu\Module'],
+        'order' => ['class' => 'backend\modules\Order\Module'],
         'page' => ['class' => 'backend\modules\Page\Module'],
         'product' => ['class' => 'backend\modules\Product\Module'],
         'seo' => ['class' => 'backend\modules\Seo\Module'],
@@ -27,7 +28,7 @@ return [
         'system' => ['class' => 'backend\modules\System\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],
         'zzz' => ['class' => 'backend\modules\Zzz\Module'],
-        
+
         'rbac' => ['class' => 'yii2mod\rbac\Module'],
     ],
     'as access' => [
@@ -65,20 +66,10 @@ return [
         'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapPluginAsset' => [
-                    'sourcePath' => null,
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    'js' => [
-                        'js/bootstrap.min.js',
-                    ]
+                    'js' => []
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
-                    'sourcePath' => null,
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    'css' => [
-                        'css/bootstrap.min.css',
-                    ]
+                    'css' => []
                 ],
             ],
         ],

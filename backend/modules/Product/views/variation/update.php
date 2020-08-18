@@ -41,8 +41,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
                     <div class="tab-content p-3">
                         <div id="tab-vars-general" class="tab-pane active">
-                            <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-                            <?= $form->field($model, 'sku')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'price')->textInput() ?>
+                            <?= $form->field($model, 'sku')->textInput() ?>
                         </div>
                         
                         <div id="tab-vars-images" class="tab-pane fade">

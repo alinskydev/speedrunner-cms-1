@@ -30,7 +30,7 @@ class BlogController extends Controller
     
     public function actionIndex()
     {
-        $blogs = Blog::find();
+        $blogs = Blog::find()->orderBy('published DESC');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $blogs,

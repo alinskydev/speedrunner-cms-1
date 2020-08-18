@@ -15,7 +15,7 @@ class File
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);
         
-        $file_name = strtotime('now') . '_' . Yii::$app->getSecurity()->generateRandomString(16) . ".$file->extension";
+        $file_name = strtotime('now') . '_' . Yii::$app->security->generateRandomString(16) . ".$file->extension";
         $file->saveAs("$dir/$file_name");
         
         return "/$selected_dir/$file_name";

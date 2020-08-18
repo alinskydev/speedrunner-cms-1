@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'modules')->widget(Select2::classname(), [
-                    'data' => $model->modulesList,
+                    'data' => $model->modulesList(),
                     'options' => [
                         'multiple' => true,
                     ],

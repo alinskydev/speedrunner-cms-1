@@ -16,7 +16,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <?php $form = ActiveForm::begin([
     'options' => [
         'id' => 'edit-form',
-        'class' => 'ajax-form',
+        'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
         'enctype' => 'multipart/form-data',
     ],
@@ -53,7 +53,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 <?php if (!$model->isNewRecord) { ?>
                     <?= Html::a(
                         Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . Yii::t('app', 'Link'),
-                        Yii::$app->urlManagerFrontend->createUrl(['product/catalog', 'full_url' => $model->full_url]),
+                        Yii::$app->urlManagerFrontend->createUrl(['product/catalog', 'full_url' => $model->fullUrl()]),
                         [
                             'class' => 'btn btn-info btn-icon float-right',
                             'target' => '_blank'
@@ -64,9 +64,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             
             <div class="tab-content p-3">
                 <div id="tab-general" class="tab-pane active">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'full_url', ['template' => '{error}'])->textInput() ?>
+                    <?= $form->field($model, 'name')->textInput() ?>
+                    <?= $form->field($model, 'url')->textInput() ?>
                     
                     <?= $form->field($model, 'image')->widget(ElFinderInput::className(), [
                         'connectorRoute' => '/connection/elfinder-file-upload',
@@ -121,19 +120,19 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 
                 <?php
                     if (!$model->isNewRecord) {
-                        $buttons = Html::a(
+                        $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete'),
                             ['category/delete', 'id' => $model->id],
                             ['class' => 'btn btn-warning btn-icon']
                         ) . ' ';
                         
-                        $buttons .= Html::a(
+                        $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete with children'),
                             ['category/delete-with-children', 'id' => $model->id],
                             ['class' => 'btn btn-danger btn-icon']
                         );
                         
-                        echo Html::tag('div', $buttons, ['class' => 'float-right']);
+                        echo Html::tag('div', implode('', $buttons), ['class' => 'float-right']);
                     }
                 ?>
             </div>

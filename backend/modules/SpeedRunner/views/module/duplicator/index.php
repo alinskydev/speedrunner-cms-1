@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'duplicate_types')->widget(Select2::classname(), [
-                    'data' => $model->duplicateTypes,
+                    'data' => $model->duplicateTypes(),
                     'options' => [
                         'multiple' => true,
                     ],
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                 ]); ?>
                 
-                <?= $form->field($model, 'module_name_from')->dropDownList($model->modulesList, [
+                <?= $form->field($model, 'module_name_from')->dropDownList($model->modulesList(), [
                     'data-toggle' => 'selectpicker',
                     'prompt' => ' '
                 ]) ?>

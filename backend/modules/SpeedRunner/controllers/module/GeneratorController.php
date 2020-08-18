@@ -56,8 +56,10 @@ class GeneratorController extends Controller
         
         $foreign_keys['internal'] = ArrayHelper::index($table_schema->foreignKeys, 0);
         $foreign_keys['external'] = ArrayHelper::map($table_schema_all, 'name', function ($value) use ($table_name) {
-            foreach (ArrayHelper::index($value->foreignKeys, 0) as $fk) {
-                return $fk[0] == $table_name ? $fk : null;
+            foreach ($value->foreignKeys as $fk) {
+                if ($fk[0] == $table_name) {
+                    return $fk;
+                }
             }
         });
         

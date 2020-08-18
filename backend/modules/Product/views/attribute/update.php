@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'code')->textInput() ?>
                 
                 <?= $form->field($model, 'use_filter', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-options" class="tab-pane fade">
-                <?= $form->field($model, 'type')->dropDownList($model->types) ?>
+                <?= $form->field($model, 'type')->dropDownList($model->types()) ?>
                 
                 <?= $this->render('_options', [
                     'model' => $model,

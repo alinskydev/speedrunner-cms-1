@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'code')->textInput() ?>
                 
                 <?= $form->field($model, 'active', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],

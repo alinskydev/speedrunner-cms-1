@@ -31,7 +31,7 @@ class GeneratorForm extends Model
             [['module_name', 'generate_files', 'controller_name', 'controller_actions', 'table_name'], 'required'],
             [['has_seo_meta'], 'boolean'],
             [['model_relations', 'view_relations', 'attrs_fields'], 'safe'],
-            [['module_name'], 'in', 'range' => $this->modulesList, 'not' => true, 'when' => function ($model) {
+            [['module_name'], 'in', 'range' => $this->modulesList(), 'not' => true, 'when' => function ($model) {
                 return in_array('module', $this->generate_files);
             }],
         ];
@@ -64,7 +64,7 @@ class GeneratorForm extends Model
         return array_combine($result, $result);
     }
     
-    static function getModulesList()
+    static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             $result[ucfirst($key)] = ucfirst($key);
@@ -155,8 +155,7 @@ class GeneratorForm extends Model
             }
             
             foreach ($view_files as $v_f) {
-                $dir = $folder_module . 'views/';
-                $dir .= strtolower($this->controller_name) . '/';
+                $dir = $folder_module . 'views/' . strtolower($this->controller_name) . '/';
                 FileHelper::createDirectory($dir, $mode = 0644);
                 
                 $file_content = Yii::$app->controller->renderPartial("$folder_template_render/views/$v_f.php", ['model' => $this]);
@@ -168,8 +167,7 @@ class GeneratorForm extends Model
             //        VIEW RELATIONS
             
             foreach ($this->view_relations as $r) {
-                $dir = $folder_module . 'views/';
-                $dir .= strtolower($this->controller_name) . '/';
+                $dir = $folder_module . 'views/' . strtolower($this->controller_name) . '/';
                 FileHelper::createDirectory($dir, $mode = 0644);
                 
                 $file_content = Yii::$app->controller->renderPartial("$folder_template_render/views/_relations.php", [

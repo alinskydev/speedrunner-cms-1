@@ -24,7 +24,7 @@ class SeoMeta extends ActiveRecord
         ];
     }
     
-    static function getTypes()
+    static function types()
     {
         return [
             'title' => [

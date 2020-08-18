@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'code',
             [
                 'attribute' => 'type',
-                'filter' => $modelSearch->types,
+                'filter' => $modelSearch->types(),
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->types, $model->type);
+                    return ArrayHelper::getValue($model->types(), $model->type);
                 },
             ],
             'use_filter:boolean',

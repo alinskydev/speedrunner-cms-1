@@ -35,7 +35,7 @@ class ConnectionController extends Controller
                         'text/x-'
                     ],
                     'disabled' => ['read', 'rename'],
-                    'tmbDir' => 'tmb',
+                    'tmbDir' => '../assets/elfinder',
                 ],
             ],
         ];

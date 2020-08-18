@@ -19,9 +19,9 @@ class DuplicatorForm extends Model
     {
         return [
             [['duplicate_types', 'module_name_from', 'module_name_to'], 'required'],
-            [['duplicate_types'], 'in', 'range' => array_keys($this->duplicateTypes), 'allowArray' => true],
-            [['module_name_from'], 'in', 'range' => array_keys($this->modulesList)],
-            [['module_name_to'], 'in', 'range' => $this->modulesList, 'not' => true],
+            [['duplicate_types'], 'in', 'range' => array_keys($this->duplicateTypes()), 'allowArray' => true],
+            [['module_name_from'], 'in', 'range' => array_keys($this->modulesList())],
+            [['module_name_to'], 'in', 'range' => array_keys($this->modulesList()), 'not' => true],
         ];
     }
     
@@ -34,7 +34,7 @@ class DuplicatorForm extends Model
         ];
     }
     
-    static function getDuplicateTypes()
+    static function duplicateTypes()
     {
         return [
             'files' => 'Files',
@@ -42,7 +42,7 @@ class DuplicatorForm extends Model
         ];
     }
     
-    static function getModulesList()
+    static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner'])) {

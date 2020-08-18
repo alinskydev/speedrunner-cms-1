@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use common\components\framework\grid\GridView;
 use yii\helpers\ArrayHelper;
+use common\components\framework\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     return $model->images ? Html::img(Yii::$app->sr->image->thumb($model->images[0], [40, 40], 'resize')) : null;
                 },
                 'headerOptions' => [
-                    'style' => 'width: 90px;'
+                    'style' => 'width: 65px;'
                 ],
             ],
             [

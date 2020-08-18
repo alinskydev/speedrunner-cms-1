@@ -47,7 +47,7 @@ class SystemLanguage extends ActiveRecord
         ];
     }
     
-    static function getActiveItem()
+    static function activeItem()
     {
         return self::find()->where(['weight' => 1])->asArray()->one();
     }

@@ -13,7 +13,16 @@ class ProductController extends Controller
 {
     public function actionCatalog($full_url)
     {
-        $cat = ProductCategory::find()->where(['full_url' => $full_url])->one();
+        $url = explode('/', $full_url);
+        $url = end($url);
+        
+        if (!($cat = ProductCategory::find()->where(['url' => $url])->one())) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        if ($cat->fullUrl() != $full_url) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         
         return $this->render('catalog', [
             'cat' => $cat,

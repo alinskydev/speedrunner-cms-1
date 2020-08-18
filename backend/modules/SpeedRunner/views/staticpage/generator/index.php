@@ -131,8 +131,4 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     table td {
         vertical-align: middle !important;
     }
-    
-    .attr-mover {
-        left: 7px;
-    }
 </style>

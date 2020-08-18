@@ -32,7 +32,7 @@ class elFinder {
 		'tmbCleanProb' => 1,            // how frequiently clean thumbnails dir (0 - never, 200 - every init request)
 		'tmbAtOnce'    => 5,            // number of thumbnails to generate per request
 		'tmbSize'      => 48,           // images thumbnails size (px)
-		'tmbCrop'      => true,         // crop thumbnails (true - crop, false - scale image to fit thumbnail size)
+		'tmbCrop'      => false,        // crop thumbnails (true - crop, false - scale image to fit thumbnail size)
 		'tmbBgColor'   => '#ffffff',    // thumbnail background color
 		'fileURL'      => true,         // display file URL in "get info"
 		'dateFormat'   => 'j M Y H:i',  // file modification date format
@@ -422,7 +422,15 @@ class elFinder {
 			exit();
 
 		} else { // enter directory
-			$path = $this->_options['root'];
+            $current_path = Yii::$app->session->get('elfinder_path');
+            
+            if ($current_path && is_dir($current_path)) {
+                $path = $current_path;
+            } else {
+                $path = $this->_options['root'];
+                Yii::$app->session->remove('elfinder_path');
+            }
+            
 			if (!empty($_GET['target'])) {
 				if (false == ($p = $this->_findDir(trim($_GET['target'])))) {
 					if (!isset($_GET['init'])) {
@@ -434,8 +442,11 @@ class elFinder {
 					}
 				} else {
 					$path = $p;
+                    Yii::$app->session->set('elfinder_path', $path);
 				}
 			}
+            
+            
 			$this->_content($path, isset($_GET['tree']));
 		}
 	}

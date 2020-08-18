@@ -1,48 +1,60 @@
 $(function() {
-
+    
     //      INIT
     
+    var fileName
+    
     $(document).on('change', '.custom-file-input', function() {
-        var fileName = $(this).val().split('\\').pop();
+        fileName = $(this).val().split('\\').pop();
         $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
     });
-
+    
     $(document).on('click', '.nav-toggle', function() {
         $('.nav-wrapper').toggleClass('active');
         $('body').toggleClass('overflow-hidden');
     });
-
+    
     //      DATETIME
-
-    function dateTimePickFunc() {
-        $('[data-toggle="datepicker"], input[name*="Search[created]"], input[name*="Search[updated]"]').datepicker({
-            format: 'dd.mm.yyyy',
-            weekStart: 1,
-            todayBtn: 'linked',
-            todayHighlight: true,
-            autoclose: true,
-            fontAwesome: true
-        });
-        
-        $('[data-toggle="datetimepicker"]').datetimepicker({
-            format: 'dd.mm.yyyy hh:ii',
-            weekStart: 1,
-            todayBtn: 'linked',
-            todayHighlight: true,
-            autoclose: true,
-            fontAwesome: true
-        });
-        
-        $('[data-toggle="timepicker"]').datetimepicker({
-            format: 'hh:ii',
-            startView: 1,
-            maxView: 1,
-            formatViewType: 'time',
-            todayBtn: 'linked',
-            autoclose: true,
-            fontAwesome: true
-        });
-    };
+    
+    $(document).on('click', '[data-toggle="datepicker"], input[name*="Search[created]"], input[name*="Search[updated]"]', function() {
+        if (!$(this).hasClass("hasDatepicker")) {
+            $(this).datepicker({
+                format: 'dd.mm.yyyy',
+                weekStart: 1,
+                todayBtn: 'linked',
+                todayHighlight: true,
+                autoclose: true,
+                fontAwesome: true
+            }).datepicker('show');
+        }
+    });
+    
+    $(document).on('click', '[data-toggle="datetimepicker"]', function() {
+        if (!$(this).hasClass("hasDatepicker")) {
+            $(this).datetimepicker({
+                format: 'dd.mm.yyyy hh:ii',
+                weekStart: 1,
+                todayBtn: 'linked',
+                todayHighlight: true,
+                autoclose: true,
+                fontAwesome: true
+            }).datetimepicker('show');
+        }
+    });
+    
+    $(document).on('click', '[data-toggle="timepicker"]', function() {
+        if (!$(this).hasClass("hasDatepicker")) {
+            $(this).datetimepicker({
+                format: 'hh:ii',
+                startView: 1,
+                maxView: 1,
+                formatViewType: 'time',
+                todayBtn: 'linked',
+                autoclose: true,
+                fontAwesome: true
+            }).datetimepicker('show');
+        }
+    });
 
     //      SELECTPICKER
 
@@ -103,11 +115,9 @@ $(function() {
         }
     }
 
-    //      LAUNCH & AJAX_REBUILD
+    //      LAUNCH & AJAX REBUILD
 
     $('.table-relations tbody').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder'});
-
-    dateTimePickFunc();
     selectFunc();
 
     $(document).ajaxStart(function() {
@@ -117,8 +127,6 @@ $(function() {
     $(document).ajaxComplete(function() {
         $('#ajax-mask').fadeOut(0);
         $('.table-relations tbody').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder'});
-
-        dateTimePickFunc();
         selectFunc();
     });
     
@@ -220,14 +228,34 @@ $(function() {
         });
     });
 
+    //      AJAX BUTTON
+    
+    $(document).on('click', '[data-toggle="ajax-button"]', function(e) {
+        e.preventDefault();
+        
+        el = $(this);
+        action = el.data('action');
+        sendData = {};
+        
+        $.get(action, sendData, function (data) {
+            switch (el.data('type')) {
+                case 'el':
+                    $(el.data('el')).html(data);
+                    break;
+                case 'modal':
+                    $('#main-modal').html(data).modal();
+                    break;
+            }
+        });
+    });
+
     //      AJAX FORM
     
-    $(document).on('submit', '.ajax-form', function(e) {
+    $(document).on('submit', '[data-toggle="ajax-form"]', function(e) {
         e.preventDefault();
         
         el = $(this);
         action = el.attr('action');
-        sendData = el.serialize();
         sendData = new FormData(el[0]);
         
         $.ajax({
@@ -249,8 +277,6 @@ $(function() {
             e.preventDefault();
 
             switch (e.keyCode) {
-                case 67:
-                    break;
                 case 83:
                     $('#edit-form').submit();
                     break;

@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'url')->textInput() ?>
             </div>
             
@@ -161,24 +161,3 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         $('#sortable-to').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder mb-2'}).disableSelection();
     };
 </script>
-
-<style>
-/*
-    .attr-mover {
-        left: 5px;
-    }
-    
-    #sortable-to {
-        padding: 0 0 30px;
-        border-bottom: 1px #e3e5e7 solid;
-        min-height: 0;
-    }
-    
-    #sortable-from .btn-danger,
-    #sortable-to .btn-danger {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-*/
-</style>

@@ -7,8 +7,10 @@ $rnd_number = round(microtime(true) * 1000);
 ?>
 
 <tr>
-    <td class="position-relative">
-        <span class="attr-mover fa fa-arrows"></span>
+    <td>
+        <div class="btn btn-primary table-sorter">
+            <i class="fas fa-arrows-alt"></i>
+        </div>
     </td>
     <td>
         <?= Html::input('text', "GeneratorForm[blocks][$rnd_number][name]", null, ['class' => 'form-control', 'required' => true]); ?>
@@ -24,7 +26,7 @@ $rnd_number = round(microtime(true) * 1000);
                     'id' => "generatorform-$rnd_number",
                     'class' => 'custom-control-input',
                 ]);
-                
+
                 echo Html::label(null, "generatorform-$rnd_number", ['class' => 'custom-control-label']);
             ?>
         </div>
@@ -34,7 +36,7 @@ $rnd_number = round(microtime(true) * 1000);
     </td>
     <td>
         <div class="page-attrs-wrap"></div>
-        
+
         <button type="button"
                 class="btn btn-success btn-block btn-attr-add"
                 data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-attr', 'block' => $rnd_number]) ?>"
@@ -45,7 +47,7 @@ $rnd_number = round(microtime(true) * 1000);
     <td class="text-right">
         <?= Html::hiddenInput('GeneratorForm[blocks]['.$rnd_number.'][part_name]', $part_name); ?>
         <?= Html::hiddenInput('GeneratorForm[blocks]['.$rnd_number.'][part_index]', $part_index); ?>
-        
+
         <button type="button" class="btn btn-danger btn-block-remove">
             <i class="fa fa-times"></i>
         </button>

@@ -28,7 +28,7 @@ class ProductAttribute extends ActiveRecord
             [['code'], 'unique'],
             [['code'], 'match', 'pattern' => '/^[a-zA-Z0-9\_-]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
             [['use_filter', 'use_compare', 'use_detail'], 'boolean'],
-            [['type'], 'in', 'range' => array_keys($this->types)],
+            [['type'], 'in', 'range' => array_keys($this->types())],
             [['options_tmp'], 'safe'],
         ];
     }
@@ -47,7 +47,7 @@ class ProductAttribute extends ActiveRecord
         ];
     }
     
-    static function getTypes()
+    static function types()
     {
         return [
             'select' => 'Select',

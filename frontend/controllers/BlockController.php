@@ -14,15 +14,9 @@ class BlockController extends Controller
     public function actionView($url)
     {
         if ($model = BlockPage::find()->where(['url' => $url])->one()) {
-            $blocks = Block::find()
-                ->with(['type'])
-                ->where(['page_id' => $model->id])
-                ->orderBy('sort')
-                ->all();
-            
             return $this->render('view', [
                 'model' => $model,
-                'blocks' => $blocks,
+                'blocks' => Block::find()->with(['type'])->where(['page_id' => $model->id])->orderBy('sort')->all(),
             ]);
         } else {
             $this->redirect(['site/index']);

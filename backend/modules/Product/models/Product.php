@@ -54,8 +54,7 @@ class Product extends ActiveRecord
     {
         return [
             [['name', 'main_category_id'], 'required'],
-            [['quantity'], 'integer'],
-            [['price', 'sale'], 'number'],
+            [['price', 'sale', 'quantity'], 'integer'],
             [['is_active'], 'boolean'],
             [['name', 'url', 'sku'], 'string', 'max' => 100],
             [['short_description'], 'string', 'max' => 255],

@@ -48,16 +48,15 @@ class TranslationSource extends ActiveRecord
     
     public function getTranslationsColumn($langs)
     {
-        $result = '';
+        $result = [];
         
         foreach ($this->translations as $t) {
             if ($t->translation && in_array($t->language_id, $langs)) {
-                $result .= '<b>' . $t->language->name . '</b>: ';
-                $result .= nl2br($t->translation) . '<br>';
+                $result[] = '<b>' . $t->language->name . '</b>: ' . nl2br($t->translation);
             }
         }
         
-        return $result;
+        return implode('<br>', $result);
     }
     
     public function afterSave($insert, $changedAttributes)

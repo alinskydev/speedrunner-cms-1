@@ -10,7 +10,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <?php $form = ActiveForm::begin([
     'options' => [
         'id' => 'edit-form',
-        'class' => 'ajax-form',
+        'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
         'enctype' => 'multipart/form-data',
     ],
@@ -37,8 +37,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             
             <div class="tab-content p-3">
                 <div id="tab-general" class="tab-pane active">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'name')->textInput() ?>
+                    <?= $form->field($model, 'url')->textInput() ?>
                     
                     <?php
                         if ($model->isNewRecord) {
@@ -58,19 +58,19 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 
                 <?php
                     if (!$model->isNewRecord) {
-                        $buttons = Html::a(
+                        $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete'),
                             ['menu/delete', 'id' => $model->id],
                             ['class' => 'btn btn-warning btn-icon']
                         ) . ' ';
                         
-                        $buttons .= Html::a(
+                        $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete with children'),
                             ['menu/delete-with-children', 'id' => $model->id],
                             ['class' => 'btn btn-danger btn-icon']
                         );
                         
-                        echo Html::tag('div', $buttons, ['class' => 'float-right']);
+                        echo Html::tag('div', implode('', $buttons), ['class' => 'float-right']);
                     }
                 ?>
             </div>

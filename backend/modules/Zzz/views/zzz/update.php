@@ -47,8 +47,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'url')->textInput() ?>
                 <?= $form->field($model, 'category_id')->dropDownList(
                     ArrayHelper::map(ZzzCategory::itemsList('name', 'translation'), 'id', 'text'),
                     [

@@ -11,9 +11,9 @@ $attrs = array_filter($attrs, function ($value) {
     return ArrayHelper::getValue($value, 'grid_view');
 });
 
-$template = in_array('view', $model->controller_actions) ? '{view} ' : null;
-$template .= in_array('update', $model->controller_actions) ? '{update} ' : null;
-$template .= in_array('delete', $model->controller_actions) ? '{delete}' : null;
+$buttons_template[] = in_array('view', $model->controller_actions) ? '{view} ' : null;
+$buttons_template[] = in_array('update', $model->controller_actions) ? '{update} ' : null;
+$buttons_template[] = in_array('delete', $model->controller_actions) ? '{delete}' : null;
 
 echo '<?php';
 
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => false,
                 'header' => '&nbsp;',
                 'value' => function(\$model) {
-                    return Html::img(Yii::\$app->sr->image->thumb(\$model->$key, [40, 40]));
+                    return Html::img(Yii::\$app->sr->image->thumb(\$model->$key, [40, 40], 'resize'));
                 },
                 'headerOptions' => [
                     'style' => 'width: 65px;'
@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '<?= $template ?>',
+                'template' => '<?= implode('', $buttons_template) ?>',
                 'buttons' => [],
             ],
         ],

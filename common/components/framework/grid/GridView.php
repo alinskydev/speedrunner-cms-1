@@ -259,7 +259,7 @@ class GridView extends BaseListView
      * - `{pager}`: the pager. See [[renderPager()]].
      */
     public $layout = "{items}{pager}{summary}";
-    
+
     public $buttons = [
         'delete' => [
             'label' => 'Delete all',
@@ -288,8 +288,8 @@ class GridView extends BaseListView
         if (!isset($this->filterRowOptions['id'])) {
             $this->filterRowOptions['id'] = $this->options['id'] . '-filters';
         }
-        
-        $this->pager = Yii::$app->params['pager_options'];
+
+        $this->pager = $this->pager ?: Yii::$app->params['pager_options'];
 
         $this->initColumns();
     }
@@ -365,13 +365,13 @@ class GridView extends BaseListView
 
         $tableFooter = false;
         $tableFooterAfterBody = false;
-        
+
         if ($this->showFooter) {
             if ($this->placeFooterAfterBody) {
                 $tableFooterAfterBody = $this->renderTableFooter();
             } else {
                 $tableFooter = $this->renderTableFooter();
-            }	        
+            }
         }
 
         $content = array_filter([
@@ -382,12 +382,12 @@ class GridView extends BaseListView
             $tableBody,
             $tableFooterAfterBody,
         ]);
-        
+
         $table = Html::tag('table', implode("\n", $content), $this->tableOptions);
-        
+
         if ($this->buttons) {
             $buttons = [];
-            
+
             foreach ($this->buttons as $key => $b) {
                 $buttons[] = Html::submitButton(
                     Html::tag('i', null, ['class' => $b['icon']]) . Yii::t('app', $b['label']),
@@ -398,13 +398,13 @@ class GridView extends BaseListView
                     ]
                 );
             }
-            
+
             $result = Html::beginForm();
             $result .= $table;
             $result .= Html::tag('div', implode(Html::tag('span', null, ['class' => 'mx-1']), $buttons), [
                 'class' => 'common-buttons main-shadow p-2 d-none'
             ]);
-            
+
             $result .= Html::endForm();
             return $result;
         } else {

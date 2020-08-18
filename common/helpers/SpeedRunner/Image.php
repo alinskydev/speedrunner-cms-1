@@ -16,7 +16,7 @@ class Image
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);
         
-        $image_name = strtotime('now') . '_' . Yii::$app->getSecurity()->generateRandomString(16) . ".$img->extension";
+        $image_name = strtotime('now') . '_' . Yii::$app->security->generateRandomString(16) . ".$img->extension";
         $image = Yii::$app->image->load($img->tempName);
         
         if ($width_height) {
@@ -41,7 +41,7 @@ class Image
         $image = Yii::getAlias('@frontend/web') . $image_url;
         
         if (is_file($image) && getimagesize($image)) {
-            $image_name = filemtime($image) . filesize($image) . '.' . pathinfo($image, PATHINFO_EXTENSION);
+            $image_name = md5(filemtime($image) . filesize($image)) . '.' . pathinfo($image, PATHINFO_EXTENSION);
             $thumb = "$dir/$width_height_string/$image_name";
             
             if (!is_file($thumb)) {

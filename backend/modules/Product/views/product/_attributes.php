@@ -35,7 +35,6 @@ foreach ($attributes as $key => $a) {
                         ]);
                         
                         $result .= Html::label($label, "productoption-$value", ['class' => 'custom-control-label']);
-                        
                         return Html::tag('div', $result, ['class' => 'custom-control custom-switch']);
                     }
                 ]

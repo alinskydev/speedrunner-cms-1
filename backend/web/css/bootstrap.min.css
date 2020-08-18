@@ -130,7 +130,7 @@ ul ul {
 }
 
 dt {
-    font-weight: 600
+    font-weight: 500
 }
 
 dd {
@@ -144,7 +144,7 @@ blockquote {
 
 b,
 strong {
-    font-weight: 600
+    font-weight: 500
 }
 
 small {
@@ -382,7 +382,7 @@ h4,
 h5,
 h6 {
     margin-bottom: .5rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.2
 }
 
@@ -551,7 +551,7 @@ kbd {
 kbd kbd {
     padding: 0;
     font-size: 100%;
-    font-weight: 600
+    font-weight: 500
 }
 
 pre {
@@ -1803,7 +1803,7 @@ pre code {
 }
 
 .table th {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .table td,
@@ -2657,7 +2657,7 @@ textarea.form-control.is-invalid {
 
 .btn {
     display: inline-block;
-    font-weight: 600;
+    font-weight: 500;
     color: #191d1d;
     text-align: center;
     vertical-align: middle;
@@ -4501,7 +4501,7 @@ input[type=submit].btn-block {
 }
 
 .nav-pills .nav-link {
-    font-weight: 600;
+    font-weight: 500;
     border-radius: .25rem
 }
 
@@ -5350,7 +5350,7 @@ input[type=submit].btn-block {
     display: inline-block;
     padding: .25em .4em;
     font-size: 75%;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
@@ -5553,7 +5553,7 @@ a.badge-dark:focus {
 }
 
 .alert-link {
-    font-weight: 600
+    font-weight: 500
 }
 
 .alert-dismissible {
@@ -6113,7 +6113,7 @@ a.badge-dark:focus {
 .close {
     float: right;
     font-size: 2.3rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1;
     color: #343a40;
     text-shadow: 0 1px 0 #fff;
@@ -10350,7 +10350,7 @@ button.bg-dark:hover {
 }
 
 .font-weight-bold {
-    font-weight: 600!important
+    font-weight: 500!important
 }
 
 .font-weight-bolder {

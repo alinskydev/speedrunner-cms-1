@@ -272,7 +272,7 @@ class I18N extends \yii\i18n\I18N
         if ($this->languages) {
             $language = null;
             if (!$langKey) {
-                $default_lang = SystemLanguage::getActiveItem();
+                $default_lang = SystemLanguage::activeItem();
                 $langKey = $default_lang[$this->langColCode];
             }
             if ($langKey) {

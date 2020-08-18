@@ -6,6 +6,8 @@ use Yii;
 use common\components\framework\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
+use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 
 class User extends ActiveRecord implements IdentityInterface
@@ -16,12 +18,14 @@ class User extends ActiveRecord implements IdentityInterface
     public $profile_attrs = [
         'full_name',
         'phone',
-        'address'
+        'address',
+        'image',
     ];
     
     public $full_name;
     public $phone;
     public $address;
+    public $image;
     
     public static function tableName()
     {
@@ -39,7 +43,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['email'], 'email'],
             [['full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 255],
-            [['role'], 'in', 'range' => array_keys($this->roles)],
+            [['role'], 'in', 'range' => array_keys($this->roles())],
+            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 6, 'max' => 50],
             [['role'], 'adminRoleValidation'],
         ];
@@ -63,12 +68,13 @@ class User extends ActiveRecord implements IdentityInterface
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
+            'image' => Yii::t('app', 'Image'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];
     }
     
-    static function getRoles()
+    static function roles()
     {
         return [
             'admin' => Yii::t('app', 'Admin'),
@@ -96,6 +102,15 @@ class User extends ActiveRecord implements IdentityInterface
         
         return parent::afterFind();
     }
+
+    public function beforeValidate()
+    {
+        if ($image = UploadedFile::getInstance($this, 'image')) {
+            $this->image = $image;
+        }
+        
+        return parent::beforeValidate();
+    }
     
     public function beforeSave($insert)
     {
@@ -109,6 +124,17 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterSave($insert, $changedAttributes)
     {
+        //        IMAGE
+        
+        $old_image = ArrayHelper::getValue($this->profile, 'image', null);
+        
+        if ($image = UploadedFile::getInstance($this, 'image')) {
+            $this->image = Yii::$app->sr->image->save($image, 'files/profile');
+            Yii::$app->sr->file->delete($old_image);
+        } else {
+            $this->image = $this->image ?: $old_image;
+        }
+        
         //        PROFILE
         
         $profile = $this->profile ?: new UserProfile;
@@ -150,6 +176,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
+
+        Yii::$app->sr->file->delete($this->image);
         
         return parent::afterDelete();
     }

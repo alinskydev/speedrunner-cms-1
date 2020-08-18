@@ -54,8 +54,10 @@
                             <input type="hidden" name="Product[vars_tmp][<?= $var->id ?>][attribute_id]" value="<?= $var->attr->id ?>">
                             <input type="hidden" name="Product[vars_tmp][<?= $var->id ?>][option_id]" value="<?= $var->option->id ?>">
                             <button type="button"
-                                    class="btn btn-primary btn-block btn-icon btn-vars-update"
-                                    data-action_edit="<?= Yii::$app->urlManager->createUrl(['product/variation/update', 'id' => $var->id]) ?>"
+                                    class="btn btn-primary btn-block btn-icon"
+                                    data-toggle="ajax-button"
+                                    data-action="<?= Yii::$app->urlManager->createUrl(['product/variation/update', 'id' => $var->id]) ?>"
+                                    data-type="modal"
                             >
                                 <i class="fas fa-edit"></i>
                                 <?= Yii::t('app', 'Update') ?>
@@ -103,12 +105,6 @@
         
         $(document).on('click', '.btn-vars-remove', function() {
             $(this).parents('tr').remove();
-        });
-        
-        $(document).on('click', '.btn-vars-update', function() {
-            var actionEdit = $(this).data('action_edit');
-            
-            $('#main-modal').load(actionEdit).modal();
         });
     };
 </script>

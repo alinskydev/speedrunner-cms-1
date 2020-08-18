@@ -8,17 +8,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
-<div class="site-request-password-reset">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h1><?= $this->title ?></h1>
-            
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-                
-                <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-primary btn-block']) ?><hr>
-                <?= Html::a(Yii::t('app', 'Login'), ['site/login'], ['class' => 'btn btn-success btn-block']) ?>
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-</div>
+<?= $this->title ?>
+
+<?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+    
+    <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-primary btn-block']) ?><hr>
+    <?= Html::a(Yii::t('app', 'Login'), ['site/login'], ['class' => 'btn btn-success btn-block']) ?>
+<?php ActiveForm::end(); ?>

@@ -37,7 +37,7 @@ class Banner extends ActiveRecord
         ];
     }
     
-    static function getLocations()
+    static function locations()
     {
         return [
             'slider_home' => Yii::t('app', 'Slider home'),

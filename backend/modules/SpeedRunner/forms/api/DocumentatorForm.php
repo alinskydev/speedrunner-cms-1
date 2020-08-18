@@ -20,7 +20,7 @@ class DocumentatorForm extends Model
     {
         return [
             [['module'], 'required'],
-            [['module'], 'in', 'range' => array_keys($this->modulesList)],
+            [['module'], 'in', 'range' => array_keys($this->modulesList())],
         ];
     }
     
@@ -31,7 +31,7 @@ class DocumentatorForm extends Model
         ];
     }
     
-    static function getModulesList()
+    static function modulesList()
     {
         $config = require(Yii::getAlias('@api/config/main.php'));
         
@@ -48,7 +48,7 @@ class DocumentatorForm extends Model
         
         //        MODULE
         
-        $module_name = $this->modulesList[$this->module];
+        $module_name = $this->modulesList()[$this->module];
         $module = new $this->module($module_name);
         $controller_files = FileHelper::findFiles($module->controllerPath);
         
@@ -108,7 +108,11 @@ class DocumentatorForm extends Model
                                 unset($rule_tmp[0], $rule_tmp[1]);
                                 
                                 array_walk($rule_tmp, function(&$value, $key) {
-                                    $value = "$key: $value";
+                                    if (is_callable($value)) {
+                                        $value = "$key: FUNCTION";
+                                    } else {
+                                        $value = "$key: $value";
+                                    }
                                 });
                                 
                                 $rule_string .= $rule_tmp ? ' (' . implode(', ', $rule_tmp) . ')' : null;
@@ -132,7 +136,7 @@ class DocumentatorForm extends Model
         
         //        ZIP ARCHIVE
         
-        $file = tempnam("tmp", "zip");
+        $file = tempnam(sys_get_temp_dir(), 'zip');
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
         

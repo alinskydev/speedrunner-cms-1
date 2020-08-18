@@ -16,7 +16,7 @@ class DestroyerForm extends Model
     {
         return [
             [['modules'], 'required'],
-            [['modules'], 'in', 'range' => array_keys($this->modulesList), 'allowArray' => true],
+            [['modules'], 'in', 'range' => array_keys($this->modulesList()), 'allowArray' => true],
         ];
     }
     
@@ -27,7 +27,7 @@ class DestroyerForm extends Model
         ];
     }
     
-    static function getModulesList()
+    static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner', 'static-page', 'system', 'user', 'seo'])) {

@@ -41,12 +41,24 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'username')->textInput() ?>
-                <?= $form->field($model, 'role')->dropDownList($model->roles) ?>
+                <?= $form->field($model, 'role')->dropDownList($model->roles()) ?>
                 <?= $form->field($model, 'email')->textInput() ?>
                 <?= $form->field($model, 'new_password', ['enableClientValidation' => false])->passwordInput() ?>
             </div>
             
             <div id="tab-profile" class="tab-pane fade">
+                <?php
+                    $img = $model->image ? Html::img(Yii::$app->sr->image->thumb($model->image, [300, 300], 'resize'), [
+                        'class' => 'img-fluid d-block my-3 image-placeholder'
+                    ]) : null;
+                    
+                    echo $form->field($model, 'image', [
+                        'template' => "{label}$img{input}{hint}{error}"
+                    ])->fileInput([
+                        'class' => 'form-control h-auto',
+                    ]);
+                ?>
+                
                 <?= $form->field($model, 'full_name')->textInput() ?>
                 <?= $form->field($model, 'phone')->textInput() ?>
                 <?= $form->field($model, 'address')->textArea(['rows' => 5]) ?>

@@ -96,13 +96,13 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
                     <div class="px-4">
                         <?php
                             foreach (Yii::$app->session->get('bookmarks', []) as $key => $b) {
-                                $buttons = Html::a(
+                                $buttons[] = Html::a(
                                     Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . $b,
                                     $key,
                                     ['class' => 'btn btn-primary btn-block btn-icon']
                                 );
                                 
-                                $buttons .= Html::a(
+                                $buttons[] = Html::a(
                                     Html::tag('i', null, ['class' => 'fas fa-times']),
                                     ['/session/remove'],
                                     [
@@ -115,7 +115,7 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
                                     ]
                                 );
                                 
-                                echo Html::tag('div', $buttons, ['class' => 'btn-group btn-block text-nowrap']);
+                                echo Html::tag('div', implode('', $buttons), ['class' => 'btn-group btn-block text-nowrap']);
                             }
                         ?>
                     </div>
@@ -152,7 +152,7 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
                             <?= $user->full_name ?>
                         </div>
                         <small>
-                            <?= $user->roles[$user->role] ?>
+                            <?= $user->roles()[$user->role] ?>
                         </small>
                     </div>
                     <div class="dropdown-divider"></div>

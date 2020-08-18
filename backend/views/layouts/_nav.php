@@ -58,6 +58,12 @@ $menuItems = [
         ],
     ],
     [
+        'label' => Yii::t('app', 'Orders'),
+        'items' => [
+            ['label' => Yii::t('app', 'Orders'), 'url' => ['/order/order/index']],
+        ],
+    ],
+    [
         'label' => Yii::t('app', 'Media'),
         'items' => [
             ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],

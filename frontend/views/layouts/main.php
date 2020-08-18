@@ -1,8 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use yii\bootstrap\Alert;
@@ -17,10 +15,6 @@ $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 $user = Yii::$app->user->identity;
 $langs = Yii::$app->i18n->getLanguages(true);
 $menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
-
-foreach ($langs as $l) {
-    $langs_nav[] = ['label' => strtoupper($l['code']), 'url' => $l['url']];
-}
 
 $flashes = Yii::$app->session->getAllFlashes();
 
@@ -47,61 +41,30 @@ $flashes = Yii::$app->session->getAllFlashes();
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<?php foreach ($langs as $l) { ?>
+    <?= $l['code'] ?>
+    <?= $l['url'] ?>
+<?php } ?>
+
+<?= Breadcrumbs::widget([
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
+    'options' => ['class' => 'breadcrumbs'],
+]) ?>
+
+<?= $content ?>
+
+<div class="alert-wrapper">
     <?php
-        NavBar::begin([
-            'brandLabel' => 'FRONT',
-            'brandUrl' => Yii::$app->urlManager->createUrl(['site/index']),
-            'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
-            ],
-        ]);
-        
-        $menuItems = [
-            ['label' => Yii::t('app', 'Home'), 'url' => ['site/index']],
-            ['label' => Yii::t('app', 'Blog'), 'url' => ['blog/index']],
-            ['label' => Yii::t('app', 'Contact'), 'url' => ['site/contact']],
-        ];
-        
-        if ($user) {
-            $menuItems[] = ['label' => Yii::t('app', 'Logout'), 'url' => ['site/logout']];
-        } else {
-            $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['site/login']];
-            $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['site/signup']];
+        foreach ($flashes as $key => $f) {
+            echo Alert::widget([
+                'options' => [
+                    'class' => "alert-$key",
+                ],
+                'body' => $f,
+            ]);
         }
-        
-        $menuItems[] = ['label' => strtoupper($langs[Yii::$app->language]['code']), 'url' => '#', 'items' => $langs_nav];
-        
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav navbar-right'],
-            'items' => $menuItems,
-        ]);
-        
-        NavBar::end();
     ?>
-    
-    <div class="container" style="margin-top: 70px;">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
-            'options' => ['class' => 'breadcrumbs'],
-        ]) ?>
-        
-        <div class="alert-wrapper">
-            <?php
-                foreach ($flashes as $key => $f) {
-                    echo Alert::widget([
-                        'options' => [
-                            'class' => "alert-$key",
-                        ],
-                        'body' => $f,
-                    ]);
-                }
-            ?>
-        </div>
-        
-        <?= $content ?>
-    </div>
 </div>
 
 <?php $this->endBody() ?>

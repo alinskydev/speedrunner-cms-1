@@ -1,48 +1,48 @@
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/Thin.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/Thin.ttf") format("truetype");
     font-weight: 100;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/ExtraLight.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/ExtraLight.ttf") format("truetype");
     font-weight: 200;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/Light.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/Light.ttf") format("truetype");
     font-weight: 300;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/Regular.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/Regular.ttf") format("truetype");
     font-weight: 400;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/Medium.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/Medium.ttf") format("truetype");
     font-weight: 500;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/SemiBold.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/SemiBold.ttf") format("truetype");
     font-weight: 600;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/Bold.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/Bold.ttf") format("truetype");
     font-weight: 700;
 }
 
 @font-face {
-    font-family: "Exo2";
-    src: url("../fonts/Exo2/ExtraBold.ttf") format("truetype");
+    font-family: "Oswald";
+    src: url("../fonts/Oswald/ExtraBold.ttf") format("truetype");
     font-weight: 800;
 }
 
@@ -58,7 +58,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #7fa3a5; 
+    background: #7fa3a5;
 }
 
 ::placeholder {
@@ -70,10 +70,11 @@
 
 * {
     border-radius: 0 !important;
+    letter-spacing: 1px;
 }
 
 body {
-    font-family: "Exo2", sans-serif;
+    font-family: "Oswald", sans-serif;
 }
 
 .btn:not(.btn-link):hover {
@@ -103,7 +104,7 @@ ul {
 
 .help-block {
     color: #067a7d;
-    margin: 0;
+    margin: 0.3rem 0 0;
 }
 
 .help-block:empty {
@@ -141,7 +142,7 @@ ul {
 
 label {
     color: #067a7d;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .color-square {
@@ -210,7 +211,7 @@ header .breadcrumbs {
     padding: 0;
     margin: 0;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 header .breadcrumbs li {
@@ -368,17 +369,17 @@ header .dropdown-menu .flag-wrapper img {
 }
 
 .nav-wrapper nav::-webkit-scrollbar-thumb {
-    background: #7fa3a5; 
+    background: #7fa3a5;
 }
 
 .nav-wrapper nav::-webkit-scrollbar-thumb:hover {
-    background: #067a7d; 
+    background: #067a7d;
 }
 
 .nav-wrapper nav .parent {
     font-size: 25px;
     margin-bottom: 7px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .nav-wrapper nav .parent i {
@@ -558,6 +559,8 @@ img.preview-elfinder {
     display: block;
     padding: 6px 12px;
     text-decoration: none;
+    background: transparent;
+    border: 0;
 }
 
 .grid-view .action-buttons > *:hover {
@@ -633,7 +636,7 @@ body .redactor-editor {
 
 body .redactor-editor b,
 body .redactor-editor strong {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 body .redactor-box textarea {
@@ -657,7 +660,7 @@ body .el-finder-dialog {
 
 body .el-finder-dialog label {
     color: #191d1d;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: normal;
 }
 
@@ -800,7 +803,7 @@ body .select2-container .select2-selection--multiple .select2-selection__clear {
 }
 
 .jq-toast-single h2 {
-    font-family: "Exo2";
+    font-family: "Oswald";
     letter-spacing: 1.5px;
     color: #fff;
     font-size: 16px;
@@ -869,7 +872,7 @@ span.fancytree-active span.fancytree-title,
     .nav-wrapper nav ul.nav-items > li {
         width: 50%;
     }
-    
+
     .main-title {
         font-size: 20px;
         line-height: 37px;
@@ -880,13 +883,13 @@ span.fancytree-active span.fancytree-title,
     .nav-wrapper nav ul.nav-items > li {
         width: 100%;
     }
-    
+
     .main-title > * {
         float: none;
         width: 100%;
         margin-top: 10px;
     }
-    
+
     header .header-left,
     header .header-right {
         float: none;
@@ -894,12 +897,12 @@ span.fancytree-active span.fancytree-title,
         width: 100%;
         vertical-align: top;
     }
-    
+
     header .header-right {
         text-align: right;
         border-bottom: 1px #ACD3D4 solid;
     }
-    
+
     header .breadcrumbs li + li::before {
         content: "\f105";
         font-family: "Font Awesome 5 Free";
@@ -914,14 +917,6 @@ span.fancytree-active span.fancytree-title,
 }
 
 /*--------------------------------------------------------------*/
-
-.attr-mover {
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: move;
-}
 
 .table-sorter {
     text-align: center;

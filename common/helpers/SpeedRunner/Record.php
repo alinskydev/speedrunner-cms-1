@@ -50,15 +50,10 @@ class Record
         return Yii::$app->controller->redirect($this->redirect_url);
     }
     
-    public function staticPage($location, $with_blocks = false)
+    public function staticPage($location)
     {
-        if ($with_blocks) {
-            $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
-            $result['blocks'] = ArrayHelper::map($result['page']->blocks, 'name', 'value');
-        } else {
-            $result['page'] = StaticPage::find()->where(['location' => $location])->one();
-            $result['blocks'] = [];
-        }
+        $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
+        $result['blocks'] = ArrayHelper::map($result['page']->blocks, 'name', 'value');
         
         return $result;
     }

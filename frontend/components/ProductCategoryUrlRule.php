@@ -19,8 +19,15 @@ class ProductCategoryUrlRule extends BaseObject implements UrlRuleInterface
             
             if ($params) {
                 $path .= '?';
-                foreach ($params as $key => $p) {
-                    $path .= $key . '=' . $p . '&';
+                
+                foreach ($params as $key => $value) {
+                    if (is_array($value)) {
+                        foreach ($value as $v) {
+                            $path .= $key . '[]=' . $v . '&';
+                        }
+                    } else {
+                        $path .= $key . '=' . $value . '&';
+                    }
                 }
             }
             

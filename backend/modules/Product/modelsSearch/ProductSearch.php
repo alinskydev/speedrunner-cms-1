@@ -23,9 +23,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'brand_id', 'main_category_id', 'quantity', 'is_active'], 'integer'],
-            [['name', 'url', 'sku', 'sale', 'created', 'updated'], 'safe'],
-            [['price'], 'number'],
+            [['id', 'price', 'sale', 'brand_id', 'main_category_id', 'quantity', 'is_active'], 'integer'],
+            [['name', 'url', 'sku', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -77,7 +76,7 @@ class ProductSearch extends Product
         $lang = Yii::$app->language;
         
         foreach ($this->translation_attrs as $t_a) {
-            $query->andFilterWhere(['like', new Expression("JSON_EXTRACT($t_a, '$.$lang')"), $this->{$t_a}]);
+            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
             $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
             
             $dataProvider->sort->attributes[$t_a] = [

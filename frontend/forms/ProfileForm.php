@@ -26,9 +26,11 @@ class ProfileForm extends Model
     
     public function init()
     {
-        foreach ($this->attrs as $a) {
-            $this->{$a} = $this->user->{$a};
-        }
+//        if ($this->user) {
+//            foreach ($this->attrs as $a) {
+//                $this->{$a} = $this->user->{$a};
+//            }
+//        }
     }
     
     public function rules()

@@ -97,8 +97,7 @@ class DocumentatorForm extends Model
                     $static_properties = $controller_reflection->getStaticProperties();
                     
                     if (isset($static_properties['forms'][$a_key])) {
-                        $form = $static_properties['forms'][$a_key];
-                        $form = new $form;
+                        $form = new $static_properties['forms'][$a_key];
                         
                         foreach ($form->rules() as $rule) {
                             foreach ($rule[0] as $r) {
@@ -110,6 +109,8 @@ class DocumentatorForm extends Model
                                 array_walk($rule_tmp, function(&$value, $key) {
                                     if (is_callable($value)) {
                                         $value = "$key: FUNCTION";
+                                    } elseif (is_array($value)) {
+                                        $value = "$key: [" . implode(', ', $value) . ']';
                                     } else {
                                         $value = "$key: $value";
                                     }

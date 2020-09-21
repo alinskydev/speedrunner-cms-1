@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers\staticpage;
+namespace backend\modules\Speedrunner\controllers\staticpage;
 
 use Yii;
 use yii\web\Controller;
@@ -8,7 +8,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\db\Schema;
 
-use backend\modules\SpeedRunner\forms\staticpage\GeneratorForm;
+use backend\modules\Speedrunner\forms\staticpage\GeneratorForm;
 
 
 class GeneratorController extends Controller
@@ -19,9 +19,9 @@ class GeneratorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->setFlash('success', 'Succeccfully done');
+                Yii::$app->session->addFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'An error occured');
+                Yii::$app->session->addFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

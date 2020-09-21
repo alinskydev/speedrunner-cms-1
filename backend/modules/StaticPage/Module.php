@@ -1,12 +1,12 @@
 <?php
 
-namespace backend\modules\StaticPage;
+namespace backend\modules\Staticpage;
 
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'backend\modules\StaticPage\controllers';
-    public $defaultRoute = 'static-page';
+    public $controllerNamespace = 'backend\modules\Staticpage\controllers';
+    public $defaultRoute = 'staticpage';
     
     public function init()
     {

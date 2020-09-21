@@ -8,7 +8,8 @@ use creocoder\nestedsets\NestedSetsQueryBehavior;
 
 class ProductCategoryQuery extends \yii\db\ActiveQuery
 {
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             NestedSetsQueryBehavior::className(),
         ];

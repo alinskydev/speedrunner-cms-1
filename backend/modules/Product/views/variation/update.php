@@ -13,7 +13,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <?php $form = ActiveForm::begin([
-            'options' => ['id' => 'vars-edit-form', 'enctype' => 'multipart/form-data'],
+            'options' => ['id' => 'variation-edit-form', 'enctype' => 'multipart/form-data'],
         ]); ?>
         
         <div class="modal-header">
@@ -26,12 +26,12 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 <div class="col-lg-2 col-md-3">
                     <ul class="nav flex-column nav-pills" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#tab-vars-general">
+                            <a class="nav-link active" data-toggle="pill" href="#tab-variations-general">
                                 <?= Yii::t('app', 'General') ?>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#tab-vars-images">
+                            <a class="nav-link" data-toggle="pill" href="#tab-variations-images">
                                 <?= Yii::t('app', 'Images') ?>
                             </a>
                         </li>
@@ -40,12 +40,13 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 
                 <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
                     <div class="tab-content p-3">
-                        <div id="tab-vars-general" class="tab-pane active">
+                        <div id="tab-variations-general" class="tab-pane active">
                             <?= $form->field($model, 'price')->textInput() ?>
+                            <?= $form->field($model, 'quantity')->textInput() ?>
                             <?= $form->field($model, 'sku')->textInput() ?>
                         </div>
                         
-                        <div id="tab-vars-images" class="tab-pane fade">
+                        <div id="tab-variations-images" class="tab-pane fade">
                             <?= $form->field($model, 'images', [
                                 'template' => '{label}{error}{hint}{input}',
                             ])->widget(FileInput::classname(), [
@@ -82,3 +83,31 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+
+<script>
+    var el, action, sendData;
+    
+    $('#variation-edit-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        el = $(this);
+        action = el.attr('action');
+        sendData = new FormData(el[0]);
+        
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: sendData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data === '1') {
+                    $('#main-modal').modal('hide');
+                } else {
+                    $('#main-modal').html(data);
+                }
+            }
+        });
+    });
+</script>

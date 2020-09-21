@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'product_id',
-                    'data' => isset($modelSearch->product) ? [$modelSearch->product_id => $modelSearch->product->name] : [],
+                    'data' => [$modelSearch->product_id => ArrayHelper::getValue($modelSearch->product, 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]),
                 'value' => function ($model) {
-                    return $model->product ? $model->product->name : null;
+                    return ArrayHelper::getValue($model->product, 'name');
                 },
             ],
             [
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'user_id',
-                    'data' => isset($modelSearch->user) ? [$modelSearch->user_id => $modelSearch->user->username] : [],
+                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'username')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]),
                 'value' => function ($model) {
-                    return $model->user ? $model->user->username : null;
+                    return ArrayHelper::getValue($model->user, 'username');
                 },
             ],
             'text:ntext',

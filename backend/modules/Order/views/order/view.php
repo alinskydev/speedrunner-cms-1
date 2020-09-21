@@ -19,11 +19,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -43,85 +52,92 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     </div>
     
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
-        <div class="tab-content main-shadow p-3">
+        <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
-                <?= DetailView::widget([
-                    'model' => $model,
-                    'options' => ['class' => 'table table-bordered m-0'],
-                    'attributes' => [
-                        [
-                            'label' => Yii::t('app', 'Total'),
-                            'value' => null,
-                            'captionOptions' => ['class' => 'bg-primary text-white', 'colspan' => 2],
-                            'contentOptions' => ['class' => 'd-none'],
+                <div class="main-shadow p-3">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'options' => ['class' => 'table table-bordered m-0'],
+                        'attributes' => [
+                            [
+                                'label' => Yii::t('app', 'Total'),
+                                'value' => null,
+                                'captionOptions' => ['class' => 'bg-primary text-white', 'colspan' => 2],
+                                'contentOptions' => ['class' => 'd-none'],
+                            ],
+                            'id',
+                            [
+                                'attribute' => 'delivery_type',
+                                'format' => 'raw',
+                                'value' => function ($model) use ($form) {
+                                    return $form->field($model, 'delivery_type', [
+                                        'template' => '{input}{hint}{error}',
+                                        'options' => ['class' => 'm-0'],
+                                    ])->dropDownList($model->deliveryTypes());
+                                }
+                            ],
+                            [
+                                'attribute' => 'delivery_price',
+                                'format' => 'raw',
+                                'value' => function ($model) use ($form) {
+                                    return $form->field($model, 'delivery_price', [
+                                        'template' => '{input}{hint}{error}',
+                                        'options' => ['class' => 'm-0'],
+                                    ])->textInput();
+                                }
+                            ],
+                            [
+                                'attribute' => 'payment_type',
+                                'format' => 'raw',
+                                'value' => function ($model) use ($form) {
+                                    return $form->field($model, 'payment_type', [
+                                        'template' => '{input}{hint}{error}',
+                                        'options' => ['class' => 'm-0'],
+                                    ])->dropDownList($model->paymentTypes());
+                                }
+                            ],
+                            [
+                                'attribute' => 'status',
+                                'format' => 'raw',
+                                'value' => function ($model) use ($form) {
+                                    return $form->field($model, 'status', [
+                                        'template' => '{input}{hint}{error}',
+                                        'options' => ['class' => 'm-0'],
+                                    ])->dropDownList(ArrayHelper::getColumn($model->statuses(), 'label'));
+                                }
+                            ],
+                            'total_quantity',
+                            'total_price',
+                            'created',
+                            'updated',
                         ],
-                        'id',
-                        [
-                            'attribute' => 'delivery_type',
-                            'format' => 'raw',
-                            'value' => function ($model) use ($form) {
-                                return $form->field($model, 'delivery_type', [
-                                    'template' => '{input}{hint}{error}',
-                                    'options' => ['class' => 'm-0'],
-                                ])->dropDownList($model->deliveryTypes());
-                            }
+                    ]) ?>
+                </div>
+                
+                <div class="main-shadow p-3 mt-3">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'options' => ['class' => 'table table-bordered m-0'],
+                        'attributes' => [
+                            [
+                                'label' => Yii::t('app', 'Person'),
+                                'value' => null,
+                                'captionOptions' => ['class' => 'bg-primary text-white', 'colspan' => 2],
+                                'contentOptions' => ['class' => 'd-none'],
+                            ],
+                            [
+                                'attribute' => 'user_id',
+                                'value' => function ($model) {
+                                    return ArrayHelper::getValue($model->user, 'username');
+                                }
+                            ],
+                            'full_name',
+                            'phone',
+                            'email',
+                            'address:ntext',
                         ],
-                        [
-                            'attribute' => 'delivery_price',
-                            'format' => 'raw',
-                            'value' => function ($model) use ($form) {
-                                return $form->field($model, 'delivery_price', [
-                                    'template' => '{input}{hint}{error}',
-                                    'options' => ['class' => 'm-0'],
-                                ])->textInput();
-                            }
-                        ],
-                        [
-                            'attribute' => 'payment_type',
-                            'format' => 'raw',
-                            'value' => function ($model) use ($form) {
-                                return $form->field($model, 'payment_type', [
-                                    'template' => '{input}{hint}{error}',
-                                    'options' => ['class' => 'm-0'],
-                                ])->dropDownList($model->paymentTypes());
-                            }
-                        ],
-                        [
-                            'attribute' => 'status',
-                            'format' => 'raw',
-                            'value' => function ($model) use ($form) {
-                                return $form->field($model, 'status', [
-                                    'template' => '{input}{hint}{error}',
-                                    'options' => ['class' => 'm-0'],
-                                ])->dropDownList(ArrayHelper::getColumn($model->statuses(), function ($value) {
-                                    return $value['label'];
-                                }));
-                            }
-                        ],
-                        'total_quantity',
-                        'total_price',
-                        'created',
-                        'updated',
-
-                        [
-                            'label' => Yii::t('app', 'Person'),
-                            'value' => null,
-                            'captionOptions' => ['class' => 'bg-primary text-white', 'colspan' => 2],
-                            'contentOptions' => ['class' => 'd-none'],
-                        ],
-                        [
-                            'attribute' => 'user_id',
-                            'value' => function ($model) {
-                                return $model->user ? $model->user->username : null;
-                            }
-                        ],
-                        'full_name',
-                        'phone',
-                        'email',
-                        'address:ntext',
-                        'city',
-                    ],
-                ]) ?>
+                    ]) ?>
+                </div>
             </div>
             
             <div id="tab-products" class="tab-pane fade">

@@ -48,22 +48,21 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             'name',
-            'price',
             [
-                'attribute' => 'url',
+                'attribute' => 'slug',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::a($model->url, Yii::$app->urlManagerFrontend->createUrl(['product/view', 'url' => $model->url]), ['target' => '_blank']);
+                    return Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]), ['target' => '_blank']);
                 }
             ],
-            'is_active:boolean',
+            'price',
             [
                 'attribute' => 'brand_id',
                 'format' => 'raw',
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'brand_id',
-                    'data' => isset($modelSearch->brand) ? [$modelSearch->brand_id => $modelSearch->brand->name] : [],
+                    'data' => [$modelSearch->brand_id => ArrayHelper::getValue($modelSearch->brand, 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -76,7 +75,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]),
                 'value' => function ($model) {
-                    return $model->brand ? $model->brand->name : null;
+                    return ArrayHelper::getValue($model->brand, 'name');
                 },
             ],
             [
@@ -84,7 +83,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'filter' => ProductCategory::itemsTree([1]),
                 'value' => function ($model) {
-                    return $model->mainCat ? $model->mainCat->name : null;
+                    return ArrayHelper::getValue($model->mainCategory, 'name');
                 },
                 'filterInputOptions' => [
                     'data-toggle' => 'selectpicker'

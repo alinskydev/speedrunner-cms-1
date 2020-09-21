@@ -5,14 +5,13 @@ namespace backend\modules\Product\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
-use backend\modules\Product\models\ProductCategory;
-use backend\modules\Product\models\ProductAttribute;
-use backend\modules\Product\models\ProductAttributeOption;
+use backend\modules\Product\models\ProductSpecification;
 use backend\modules\Product\modelsSearch\ProductCommentSearch;
 use backend\modules\Product\modelsSearch\ProductRateSearch;
 
@@ -60,14 +59,14 @@ class ProductController extends Controller
     {
         $model = Product::find()
             ->with([
-                'brand', 'cats',
-                'vars.attr', 'vars.option'
+                'brand', 'categories',
+                'variations.specification', 'variations.option'
             ])
             ->where(['id' => $id])
             ->one();
         
         if ($model) {
-            $model->cats_tmp = json_encode(ArrayHelper::getColumn($model->cats, 'id'));
+            $model->categories_tmp = json_encode(ArrayHelper::getColumn($model->categories, 'id'));
             $model->related_tmp = ArrayHelper::getColumn($model->related, 'id');
             
             return Yii::$app->sr->record->updateModel($model);
@@ -81,10 +80,9 @@ class ProductController extends Controller
         return Yii::$app->sr->record->deleteModel(new Product);
     }
     
-    public function actionItemsList($q = '', $id = null)
+    public function actionItemsList($q = null, $id = null)
     {
-        $cond = $id ? ['!=', 'id', $id] : [];
-        $out['results'] = Product::itemsList('name', 'translation', 20, $q, $cond);
+        $out['results'] = Product::itemsList('name', 'translation', $q)->andFilterWhere(['!=', 'id', $id])->asArray()->all();
         return $this->asJson($out);
     }
     
@@ -118,35 +116,46 @@ class ProductController extends Controller
         return $model->updateAttributes(['images' => array_values($images)]);
     }
     
-    public function actionGetAttributes($id, $categories)
+    public function actionSpecifications($id, $categories)
     {
         $model = Product::findOne($id) ?: new Product;
-        $categories = json_decode($categories, false);
+        $categories = json_decode($categories, JSON_UNESCAPED_UNICODE);
         $lang = Yii::$app->language;
         
-        $attributes = ProductAttribute::find()
-            ->alias('self')
+        $specifications = ProductSpecification::find()
             ->joinWith([
-                'cats as cats',
-                'options as options' => function ($query) use ($lang) {
-                    $query->select(['*', new Expression("options.name->>'$.$lang' as name")]);
+                'categories',
+                'options' => function ($query) use ($lang) {
+                    $query->select(['*', new Expression("ProductSpecificationOption.name->>'$.$lang' as name")]);
                 },
             ])
-            ->where(['cats.id' => $categories])
+            ->where(['ProductCategory.id' => $categories])
             ->select([
-                'self.*',
-                new Expression("self.name->>'$.$lang' as name"),
-                'options.sort',
+                'ProductSpecification.*',
+                new Expression("ProductSpecification.name->>'$.$lang' as name"),
+                'ProductSpecificationOption.sort',
             ])
             ->distinct()
             ->asArray()->all();
         
-        $result['json'] = $attributes;
-        $result['html'] = $this->renderPartial('_attributes', [
-            'model' => $model,
-            'attributes' => $attributes,
-        ]);
+        $variations = [
+            'items' => ArrayHelper::map($specifications, 'id', 'name'),
+            'data_options' => [],
+        ];
         
-        return $this->asJson($result);
+        foreach ($specifications as $s) {
+            $options = Html::renderSelectOptions(null, ArrayHelper::map($s['options'], 'id', 'name'));
+            $variations['data_options']['options'][$s['id']] = [
+                'data-options' => Html::renderSelectOptions(null, ArrayHelper::map($s['options'], 'id', 'name')),
+            ];
+        }
+        
+        return $this->asJson([
+            'specifications' => $this->renderPartial('_specifications', [
+                'specifications' => $specifications,
+                'options' => ArrayHelper::getColumn($model->options, 'id'),
+            ]),
+            'variations' => Html::renderSelectOptions(null, $variations['items'], $variations['data_options']),
+        ]);
     }
 }

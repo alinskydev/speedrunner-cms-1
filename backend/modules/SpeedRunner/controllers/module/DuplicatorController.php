@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers\module;
+namespace backend\modules\Speedrunner\controllers\module;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\SpeedRunner\forms\module\DuplicatorForm;
+use backend\modules\Speedrunner\forms\module\DuplicatorForm;
 
 
 class DuplicatorController extends Controller
@@ -18,9 +18,9 @@ class DuplicatorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->setFlash('success', 'Succeccfully done');
+                Yii::$app->session->addFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'An error occured');
+                Yii::$app->session->addFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

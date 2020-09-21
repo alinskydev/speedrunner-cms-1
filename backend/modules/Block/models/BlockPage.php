@@ -5,7 +5,6 @@ namespace backend\modules\Block\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\behaviors\SluggableBehavior;
 
 
 class BlockPage extends ActiveRecord
@@ -27,10 +26,25 @@ class BlockPage extends ActiveRecord
     {
         return [
             'sluggable' => [
-                'class' => SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'url',
+                'slugAttribute' => 'slug',
                 'immutable' => true,
+            ],
+            'relations_one_many' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'oneMany',
+                'attributes' => [
+                    [
+                        'model' => new Block,
+                        'relation' => 'blocks',
+                        'attribute' => 'blocks_tmp',
+                        'properties' => [
+                            'main' => 'page_id',
+                            'relational' => ['type_id'],
+                        ],
+                    ],
+                ],
             ],
         ];
     }
@@ -39,9 +53,9 @@ class BlockPage extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'url'], 'string', 'max' => 100],
-            [['url'], 'unique'],
-            [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['name', 'slug'], 'string', 'max' => 100],
+            [['slug'], 'unique'],
+            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['blocks_tmp'], 'safe'],
         ];
     }
@@ -51,7 +65,7 @@ class BlockPage extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
+            'slug' => Yii::t('app', 'Slug'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'blocks_tmp' => Yii::t('app', 'Blocks'),
@@ -61,32 +75,5 @@ class BlockPage extends ActiveRecord
     public function getBlocks()
     {
         return $this->hasMany(Block::className(), ['page_id' => 'id'])->orderBy('sort');
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        BLOCKS
-        
-        $blocks = ArrayHelper::map($this->blocks, 'id', 'id');
-        $counter = 0;
-        
-        if ($this->blocks_tmp) {
-            foreach ($this->blocks_tmp as $key => $b) {
-                $block_mdl = Block::findOne($key) ?: new Block;
-                $block_mdl->page_id = $this->id;
-                $block_mdl->type_id = $b['type_id'];
-                $block_mdl->sort = $counter;
-                $block_mdl->save();
-                
-                ArrayHelper::remove($blocks, $key);
-                $counter++;
-            }
-        }
-        
-        if ($blocks = Block::find()->where(['id' => $blocks])->all()) {
-            foreach ($blocks as $b) { $b->delete(); }
-        }
-        
-        return parent::afterSave($insert, $changedAttributes);
     }
 }

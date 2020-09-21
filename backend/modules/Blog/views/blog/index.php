@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
@@ -46,10 +47,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'name',
             [
-                'attribute' => 'url',
+                'attribute' => 'slug',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::a($model->url, Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'url' => $model->url]), ['target' => '_blank']);
+                    return Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'slug' => $model->slug]), ['target' => '_blank']);
                 }
             ],
             [
@@ -58,7 +59,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'category_id',
-                    'data' => isset($modelSearch->category) ? [$modelSearch->category_id => $modelSearch->category->name] : [],
+                    'data' => [$modelSearch->category_id => ArrayHelper::getValue($modelSearch->category, 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -71,7 +72,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]),
                 'value' => function ($model) {
-                    return $model->category ? $model->category->name : null;
+                    return ArrayHelper::getValue($model->category, 'name');
                 },
             ],
             [

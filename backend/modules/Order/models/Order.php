@@ -119,14 +119,14 @@ class Order extends ActiveRecord
             $old_status_action = $this->statuses()[$this->oldAttributes['status']]['save_action'];
             
             if ($new_status_action != $old_status_action) {
-                $transaction = self::getDb()->beginTransaction();
+                $transaction = Yii::$app->db->beginTransaction();
                 
                 foreach ($this->products as $p) {
                     $product = $p->product;
                     $product->quantity += $new_status_action == 'plus' ? $p->quantity : (0 - $p->quantity);
                     
                     if ($product->quantity < 0) {
-                        Yii::$app->session->setFlash('danger', Yii::t('app', 'Not enough quantity for {product}', [
+                        Yii::$app->session->addFlash('danger', Yii::t('app', 'Not enough quantity for {product}', [
                             'product' => $product->name,
                         ]));
                         

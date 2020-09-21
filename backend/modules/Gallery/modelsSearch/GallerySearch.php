@@ -23,7 +23,7 @@ class GallerySearch extends Gallery
     {
         return [
             [['id'], 'integer'],
-            [['name', 'url', 'created', 'updated'], 'safe'],
+            [['name', 'slug', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -58,7 +58,7 @@ class GallerySearch extends Gallery
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'url', $this->url])
+            ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
 

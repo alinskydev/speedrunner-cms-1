@@ -1,22 +1,22 @@
 <?php
 
-namespace backend\modules\StaticPage\models;
+namespace backend\modules\Staticpage\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
 
 
-class StaticPage extends ActiveRecord
+class Staticpage extends ActiveRecord
 {
     public $seo_meta = [];
     
     public static function tableName()
     {
-        return 'StaticPage';
+        return 'Staticpage';
     }
     
     public function getBlocks()
     {
-        return $this->hasMany(StaticPageBlock::className(), ['item_id' => 'id'])->orderBy('part_index');
+        return $this->hasMany(StaticpageBlock::className(), ['item_id' => 'id'])->orderBy('part_index');
     }
 }

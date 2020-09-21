@@ -15,7 +15,7 @@ $meta_tag_exceptions = ['description', 'keywords'];
 
 <?php foreach ($seo_meta_types as $key => $s_m_t) { ?>
     <?php $meta_tag_name = in_array($key, $meta_tag_exceptions) ? 'name' : 'property'; ?>
-    <?php $seo_meta_key = isset($seo_meta[$key]) ? $seo_meta[$key] : ['content' => null] ?>
+    <?php $seo_meta_key = ArrayHelper::getValue($seo_meta, $key, ['content' => null]); ?>
     
     <div class="form-group">
         <label><?= $s_m_t['label'] ?></label>

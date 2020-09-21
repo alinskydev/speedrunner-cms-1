@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
 $this->title = Yii::t('app', 'Zzz Categories');
@@ -43,11 +44,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             'name',
+            'slug',
             'created',
             'updated',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update} {delete}',
                 'buttons' => [],
             ],
         ],

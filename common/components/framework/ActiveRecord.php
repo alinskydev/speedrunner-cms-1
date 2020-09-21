@@ -26,7 +26,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
             foreach ($d_f_a['attrs'] as $a) {
-                if (isset($this->attributes[$a])) {
+                if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['afterFind'], strtotime($this->{$a})) : null;
                 }
             }
@@ -59,7 +59,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
             foreach ($d_f_a['attrs'] as $a) {
-                if (isset($this->attributes[$a])) {
+                if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['beforeSave'], strtotime($this->{$a})) : null;
                 }
             }
@@ -77,7 +77,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML PURIFIER
         
-        $class_name = StringHelper::basename($this->className());
+        $class_name = basename($this->className());
         
         if (in_array($class_name, ['User', 'UserProfile'])) {
             foreach ($this->attributes as $key => $a) {
@@ -99,8 +99,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            $msg = $insert ? 'Record has been created' : 'Record has been updated';
-            Yii::$app->session->setFlash('success', Yii::t('app', $msg));
+            $class_name = basename($this->className());
+            
+            if (!in_array($class_name, ['LogAction', 'LogActionAttr'])) {
+                if (!Yii::$app->session->hasFlash('success')) {
+                    Yii::$app->session->addFlash('success', Yii::t('app', 'Record has been saved'), false);
+                }
+            }
         }
         
         return parent::afterSave($insert, $changedAttributes);
@@ -117,7 +122,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Record has been deleted'));
+            Yii::$app->session->addFlash('success', Yii::t('app', 'Record has been deleted'));
         }
         
         return parent::afterDelete();
@@ -129,7 +134,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
             foreach ($d_f_a['attrs'] as $a) {
-                if (isset($this->attributes[$a])) {
+                if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['beforeSearch'], strtotime($this->{$a})) : null;
                 }
             }
@@ -142,16 +147,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
             foreach ($d_f_a['attrs'] as $a) {
-                if (isset($this->attributes[$a])) {
+                if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['afterSearch'], strtotime($this->{$a})) : null;
                 }
             }
         }
     }
     
-    static function itemsList($attr, $type, $limit = null, $q = null, $cond = [])
+    static function itemsList($attr, $type, $q = null, $limit = 20)
     {
-        $query = self::find();
+        $query = static::find()->limit($limit);
         $lang = Yii::$app->language;
         
         switch ($type) {
@@ -162,11 +167,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 break;
             case 'translation':
                 $query->select(['id', new Expression("$attr->>'$.$lang' as text")])
-                    ->andFilterWhere(['like', new Expression("JSON_EXTRACT($attr, '$.$lang')"), $q]);
+                    ->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($attr, '$.$lang'))"), strtolower($q)]);
                 
                 break;
         }
         
-        return $query->andWhere($cond)->limit($limit)->asArray()->all();
+        return $query;
     }
 }

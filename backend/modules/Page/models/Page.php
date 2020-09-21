@@ -4,7 +4,6 @@ namespace backend\modules\Page\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
-use yii\behaviors\SluggableBehavior;
 
 
 class Page extends ActiveRecord
@@ -25,9 +24,9 @@ class Page extends ActiveRecord
     {
         return [
             'sluggable' => [
-                'class' => SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'url',
+                'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
         ];
@@ -37,10 +36,10 @@ class Page extends ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['name', 'slug'], 'string', 'max' => 100],
+            [['slug'], 'unique'],
+            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['description'], 'string'],
-            [['name', 'url'], 'string', 'max' => 100],
-            [['url'], 'unique'],
-            [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
         ];
     }
     
@@ -49,7 +48,7 @@ class Page extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
+            'slug' => Yii::t('app', 'Slug'),
             'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),

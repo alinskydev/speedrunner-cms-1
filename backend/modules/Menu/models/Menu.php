@@ -5,8 +5,6 @@ namespace backend\modules\Menu\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use creocoder\nestedsets\NestedSetsBehavior;
-use wokster\treebehavior\NestedSetsTreeBehavior;
 use yii\db\Expression;
 
 
@@ -27,12 +25,12 @@ class Menu extends ActiveRecord
     public function behaviors() {
         return [
             'tree' => [
-                'class' => NestedSetsBehavior::className(),
+                'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
                 'treeAttribute' => 'tree',
             ],
             'htmlTree'=>[
-                'class' => NestedSetsTreeBehavior::className(),
-            ]
+                'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
+            ],
         ];
     }
     
@@ -51,7 +49,7 @@ class Menu extends ActiveRecord
             [['parent_id'], 'required', 'when' => function ($model) {
                 return $model->isNewRecord;
             }],
-            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -74,10 +72,10 @@ class Menu extends ActiveRecord
     {
         $lang = Yii::$app->language;
         
-        $result = self::find()
+        $result = static::find()
             ->select([
                 'id',
-                new Expression("CONCAT(REPEAT(('- '), depth), name->>'$.$lang') as name"),
+                new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name"),
             ])
             ->where(['not in', 'id', $excepts])
             ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])

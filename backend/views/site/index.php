@@ -1,5 +1,5 @@
 <?php
 
-$this->title = 'SpeedRunner CMS';
+$this->title = 'Speedrunner CMS';
 
 ?>

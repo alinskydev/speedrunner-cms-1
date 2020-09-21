@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Attributes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Specifications'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -15,11 +15,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -42,7 +51,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput() ?>
-                <?= $form->field($model, 'code')->textInput() ?>
                 
                 <?= $form->field($model, 'use_filter', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],
@@ -70,8 +78,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-options" class="tab-pane fade">
-                <?= $form->field($model, 'type')->dropDownList($model->types()) ?>
-                
                 <?= $this->render('_options', [
                     'model' => $model,
                     'form' => $form,

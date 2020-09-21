@@ -26,9 +26,8 @@ class UserSearch extends User
 
     public function search($params)
     {
-        $query = User::find()->alias('self')->joinWith([
-            'profile as profile',
-        ]);
+        $query = User::find()
+            ->joinWith(['profile']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,22 +47,22 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
-            'self.role' => $this->role,
+            'User.id' => $this->id,
+            'User.role' => $this->role,
         ]);
 
-        $query->andFilterWhere(['like', 'self.username', $this->username])
-            ->andFilterWhere(['like', 'self.email', $this->email])
-            ->andFilterWhere(['like', 'profile.full_name', $this->full_name])
-            ->andFilterWhere(['like', 'profile.phone', $this->phone])
-            ->andFilterWhere(['like', 'profile.address', $this->address])
-            ->andFilterWhere(['like', 'self.created', $this->created])
-            ->andFilterWhere(['like', 'self.updated', $this->updated]);
+        $query->andFilterWhere(['like', 'User.username', $this->username])
+            ->andFilterWhere(['like', 'User.email', $this->email])
+            ->andFilterWhere(['like', 'UserProfile.full_name', $this->full_name])
+            ->andFilterWhere(['like', 'UserProfile.phone', $this->phone])
+            ->andFilterWhere(['like', 'UserProfile.address', $this->address])
+            ->andFilterWhere(['like', 'User.created', $this->created])
+            ->andFilterWhere(['like', 'User.updated', $this->updated]);
         
         foreach ($this->profile_attrs as $p_a) {
             $dataProvider->sort->attributes[$p_a] = [
-                'asc' => ['profile.'.$p_a => SORT_ASC],
-                'desc' => ['profile.'.$p_a => SORT_DESC],
+                'asc' => ["UserProfile.$p_a" => SORT_ASC],
+                'desc' => ["UserProfile.$p_a" => SORT_DESC],
             ];
         }
 

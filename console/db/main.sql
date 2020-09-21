@@ -39,7 +39,7 @@ CREATE TABLE `Banner` (
 
 LOCK TABLES `Banner` WRITE;
 /*!40000 ALTER TABLE `Banner` DISABLE KEYS */;
-INSERT INTO `Banner` VALUES (2,'r','slider_home','2019-09-22 10:30:00','2020-06-14 14:10:51'),(3,'qwe','slider_about','2019-09-22 10:30:00','2020-06-14 23:06:15');
+INSERT INTO `Banner` VALUES (2,'r','slider_home','2019-09-22 10:30:00','2020-06-14 14:10:51'),(3,'qwe','slider_about','2019-09-22 10:30:00','2020-09-21 07:12:24');
 /*!40000 ALTER TABLE `Banner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `BannerGroup` (
   PRIMARY KEY (`id`),
   KEY `bannerimage_ibfk_1` (`item_id`),
   CONSTRAINT `bannergroup_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `Banner` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `Block` (
   KEY `block_ibfk_1` (`page_id`),
   CONSTRAINT `block_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `BlockPage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `block_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `BlockType` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,11 +116,11 @@ DROP TABLE IF EXISTS `BlockPage`;
 CREATE TABLE `BlockPage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -130,7 +130,7 @@ CREATE TABLE `BlockPage` (
 
 LOCK TABLES `BlockPage` WRITE;
 /*!40000 ALTER TABLE `BlockPage` DISABLE KEYS */;
-INSERT INTO `BlockPage` VALUES (3,'{\"de\": \"Page 1\", \"en\": \"Page 1\", \"ru\": \"Page 1\"}','page-1','2020-06-15 22:20:00','2020-06-20 19:44:34');
+INSERT INTO `BlockPage` VALUES (3,'{\"de\": \"Page 1\", \"en\": \"Page 1\", \"ru\": \"Page 1\"}','page-1','2020-06-15 22:20:00','2020-09-21 07:35:54');
 /*!40000 ALTER TABLE `BlockPage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,6 +149,8 @@ CREATE TABLE `BlockType` (
   `attrs` json NOT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `has_translation` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -159,7 +161,7 @@ CREATE TABLE `BlockType` (
 
 LOCK TABLES `BlockType` WRITE;
 /*!40000 ALTER TABLE `BlockType` DISABLE KEYS */;
-INSERT INTO `BlockType` VALUES (8,'title_1','Title 1','textInput','[]','/uploads/media/image.png',0),(9,'title_2','Title 2','textInput','[]','/uploads/media/svg_image.svg',1),(10,'description_1','Description 1','textArea','[]','/uploads/media/jpg.jpg',0),(11,'description_2','Description 2','CKEditor','[]','/uploads/images/logo.png',1),(12,'images_1','Images 1','images','[]','/uploads/images/editor/5ba26895f4021.png',0),(13,'images_2','Images 2','images','[]','/uploads/images/editor/5bc44f0c699b4.png',1),(14,'groups_1','Groups 1','groups','[{\"name\": \"is_available\", \"type\": \"checkbox\", \"label\": \"Available\"}, {\"name\": \"image\", \"type\": \"ElFinder\", \"label\": \"Image\"}]','/uploads/images/flags/au.png',0),(15,'groups_2','Groups 2','groups','[{\"name\": \"title\", \"type\": \"textInput\", \"label\": \"Title\"}, {\"name\": \"description\", \"type\": \"CKEditor\", \"label\": \"Description\"}]','/uploads/images/flags/br.png',1);
+INSERT INTO `BlockType` VALUES (8,'title_1','Title 1','textInput','[]','/uploads/media/image.png',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(9,'title_2','Title 2','textInput','[]','/uploads/media/svg_image.svg',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(10,'description_1','Description 1','textArea','[]','/uploads/media/jpg.jpg',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(11,'description_2','Description 2','CKEditor','[]','/uploads/images/logo.png',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(12,'images_1','Images 1','images','[]','/uploads/images/editor/5ba26895f4021.png',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(13,'images_2','Images 2','images','[]','/uploads/images/editor/5bc44f0c699b4.png',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(14,'groups_1','Groups 1','groups','[{\"name\": \"is_available\", \"type\": \"checkbox\", \"label\": \"Available\"}, {\"name\": \"image\", \"type\": \"ElFinder\", \"label\": \"Image\"}]','/uploads/images/flags/au.png',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(15,'groups_2','Groups 2','groups','[{\"name\": \"title\", \"type\": \"textInput\", \"label\": \"Title\"}, {\"name\": \"description\", \"type\": \"CKEditor\", \"label\": \"Description\"}]','/uploads/images/flags/br.png',1,'2020-09-12 15:00:00','2020-09-13 02:55:52');
 /*!40000 ALTER TABLE `BlockType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +175,7 @@ DROP TABLE IF EXISTS `Blog`;
 CREATE TABLE `Blog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) DEFAULT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `short_description` json NOT NULL,
@@ -183,7 +185,7 @@ CREATE TABLE `Blog` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`),
+  UNIQUE KEY `slug` (`slug`),
   KEY `blog_ibfk_1` (`category_id`),
   CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `BlogCategory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -195,7 +197,7 @@ CREATE TABLE `Blog` (
 
 LOCK TABLES `Blog` WRITE;
 /*!40000 ALTER TABLE `Blog` DISABLE KEYS */;
-INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-06-24 14:04:23'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',3,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-07-16 07:40:54');
+INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-06-24 14:04:23'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',3,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-09-12 21:05:30');
 /*!40000 ALTER TABLE `Blog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,13 +211,13 @@ DROP TABLE IF EXISTS `BlogCategory`;
 CREATE TABLE `BlogCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` json NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,7 +227,7 @@ CREATE TABLE `BlogCategory` (
 
 LOCK TABLES `BlogCategory` WRITE;
 /*!40000 ALTER TABLE `BlogCategory` DISABLE KEYS */;
-INSERT INTO `BlogCategory` VALUES (1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/Blog/1537547338_I9HiIO.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:14'),(2,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:24'),(3,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','/uploads/media/image-1.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:29');
+INSERT INTO `BlogCategory` VALUES (1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/Blog/1537547338_I9HiIO.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:14'),(2,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:24'),(3,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','/uploads/media/image-1.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-09-21 07:36:07');
 /*!40000 ALTER TABLE `BlogCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,6 +304,7 @@ CREATE TABLE `BlogTag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -312,7 +315,7 @@ CREATE TABLE `BlogTag` (
 
 LOCK TABLES `BlogTag` WRITE;
 /*!40000 ALTER TABLE `BlogTag` DISABLE KEYS */;
-INSERT INTO `BlogTag` VALUES (4,'йцууй йу','2020-06-14 22:58:38'),(5,'уйцу','2020-06-14 22:58:38'),(6,'dqwd','2020-06-14 22:58:38'),(10,'vvcx','2020-06-14 22:58:38'),(12,'qw','2020-06-14 22:58:38'),(14,'2rr','2020-06-14 22:58:38'),(15,'1ferf','2020-06-14 22:58:38'),(16,'ferf4','2020-06-14 22:58:38'),(17,'ff3f3','2020-06-14 22:58:38'),(18,'wfw','2020-06-14 22:58:38'),(19,'wefz3','2020-06-14 22:58:38'),(20,'tag 1 en','2020-06-14 22:58:38'),(21,'tag 2 en','2020-06-14 22:58:38'),(22,'tag 1 ru','2020-06-14 22:58:38'),(23,'tag 2 ru','2020-06-14 22:58:38'),(24,'one','2020-06-14 22:58:38'),(25,'zzze','2020-06-14 22:58:38'),(26,'уйц','2020-06-14 22:58:38'),(27,'вфвф','2020-06-14 22:58:38'),(28,'eeee','2020-06-14 22:58:38'),(29,'awdwda','2020-06-14 22:58:38'),(30,'zczcdzc','2020-06-14 22:58:38');
+INSERT INTO `BlogTag` VALUES (4,'йцууй йу','2020-06-14 22:58:38','2020-09-12 15:00:00'),(5,'уйцу','2020-06-14 22:58:38','2020-09-12 15:00:00'),(6,'dqwd','2020-06-14 22:58:38','2020-09-12 15:00:00'),(10,'vvcx','2020-06-14 22:58:38','2020-09-12 15:00:00'),(12,'qw','2020-06-14 22:58:38','2020-09-12 15:00:00'),(14,'2rr','2020-06-14 22:58:38','2020-09-12 15:00:00'),(15,'1ferf','2020-06-14 22:58:38','2020-09-12 15:00:00'),(16,'ferf4','2020-06-14 22:58:38','2020-09-12 15:00:00'),(17,'ff3f3','2020-06-14 22:58:38','2020-09-12 15:00:00'),(18,'wfw','2020-06-14 22:58:38','2020-09-12 15:00:00'),(19,'wefz3','2020-06-14 22:58:38','2020-09-12 15:00:00'),(20,'tag 1 en','2020-06-14 22:58:38','2020-09-12 15:00:00'),(21,'tag 2 en','2020-06-14 22:58:38','2020-09-12 15:00:00'),(22,'tag 1 ru','2020-06-14 22:58:38','2020-09-12 15:00:00'),(23,'tag 2 ru','2020-06-14 22:58:38','2020-09-12 15:00:00'),(24,'one','2020-06-14 22:58:38','2020-09-12 15:00:00'),(25,'zzze','2020-06-14 22:58:38','2020-09-12 15:00:00'),(26,'уйц','2020-06-14 22:58:38','2020-09-12 15:00:00'),(27,'вфвф','2020-06-14 22:58:38','2020-09-12 15:00:00'),(28,'eeee','2020-06-14 22:58:38','2020-09-12 15:00:00'),(29,'awdwda','2020-06-14 22:58:38','2020-09-12 15:00:00'),(30,'zczcdzc','2020-06-14 22:58:38','2020-09-12 15:00:00');
 /*!40000 ALTER TABLE `BlogTag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,16 +327,14 @@ DROP TABLE IF EXISTS `BlogTagRef`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `BlogTagRef` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `blog_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   `lang` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `blogtagref_ibfk_2` (`tag_id`),
   KEY `blogtagref_ibfk_1` (`blog_id`),
   CONSTRAINT `blogtagref_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `Blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `blogtagref_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `BlogTag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +343,7 @@ CREATE TABLE `BlogTagRef` (
 
 LOCK TABLES `BlogTagRef` WRITE;
 /*!40000 ALTER TABLE `BlogTagRef` DISABLE KEYS */;
-INSERT INTO `BlogTagRef` VALUES (82,8,4,'en'),(83,8,6,'en'),(85,8,5,'ru');
+INSERT INTO `BlogTagRef` VALUES (8,4,'en'),(8,6,'en'),(8,5,'ru');
 /*!40000 ALTER TABLE `BlogTagRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,12 +357,12 @@ DROP TABLE IF EXISTS `Gallery`;
 CREATE TABLE `Gallery` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `images` json NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -391,6 +392,8 @@ CREATE TABLE `Menu` (
   `expanded` tinyint(1) NOT NULL DEFAULT '1',
   `name` json NOT NULL,
   `url` json NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tree` (`tree`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -402,7 +405,7 @@ CREATE TABLE `Menu` (
 
 LOCK TABLES `Menu` WRITE;
 /*!40000 ALTER TABLE `Menu` DISABLE KEYS */;
-INSERT INTO `Menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Root\"}','null'),(2,1,2,7,1,0,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}'),(5,1,8,9,1,0,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}');
+INSERT INTO `Menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,1,2,7,1,0,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(5,1,8,9,1,1,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}','2020-09-12 15:00:00','2020-09-12 15:00:00');
 /*!40000 ALTER TABLE `Menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,8 +426,8 @@ CREATE TABLE `Order` (
   `delivery_type` enum('pickup','delivery') COLLATE utf8mb4_unicode_ci NOT NULL,
   `payment_type` enum('cash','bank_card') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_quantity` int(11) NOT NULL DEFAULT '0',
-  `total_price` int(11) NOT NULL DEFAULT '0',
-  `delivery_price` int(11) DEFAULT NULL,
+  `total_price` bigint(20) NOT NULL DEFAULT '0',
+  `delivery_price` bigint(20) DEFAULT NULL,
   `status` enum('new','confirmed','payed','completed','canceled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new',
   `key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
@@ -433,7 +436,7 @@ CREATE TABLE `Order` (
   UNIQUE KEY `key` (`key`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,6 +445,7 @@ CREATE TABLE `Order` (
 
 LOCK TABLES `Order` WRITE;
 /*!40000 ALTER TABLE `Order` DISABLE KEYS */;
+INSERT INTO `Order` VALUES (1,1,'qweq','qdqwd','dqwd','dqwdq','pickup','cash',2,3,NULL,'new','weqwe','2020-09-17 13:58:00','2020-09-13 02:45:32');
 /*!40000 ALTER TABLE `Order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -457,9 +461,9 @@ CREATE TABLE `OrderProduct` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `product_json` json NOT NULL,
-  `price` int(11) NOT NULL,
+  `price` bigint(20) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `total_price` int(11) NOT NULL,
+  `total_price` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`),
@@ -487,12 +491,12 @@ DROP TABLE IF EXISTS `Page`;
 CREATE TABLE `Page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` json NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -515,27 +519,25 @@ DROP TABLE IF EXISTS `Product`;
 CREATE TABLE `Product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `short_description` json NOT NULL,
   `full_description` json NOT NULL,
   `images` json NOT NULL,
   `brand_id` int(11) DEFAULT NULL,
   `main_category_id` int(11) DEFAULT NULL,
-  `price` int(11) NOT NULL,
-  `sale` int(11) DEFAULT NULL,
+  `price` bigint(20) DEFAULT NULL,
+  `sale` bigint(20) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `sku` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`),
-  KEY `is_active` (`is_active`),
+  UNIQUE KEY `slug` (`slug`),
   KEY `product_ibfk_1` (`brand_id`),
   KEY `product_ibfk_2` (`main_category_id`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`main_category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`brand_id`) REFERENCES `ProductBrand` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,66 +546,8 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[\"/uploaded/1592254031_TFz0nStTL0lN4ul1.png\"]',NULL,121,23,NULL,NULL,'',1,'2020-06-14 20:19:00','2020-06-15 20:47:11');
+INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[]',NULL,121,23,NULL,NULL,'','2020-06-14 20:19:00','2020-09-12 09:50:49'),(3,'{\"de\": \"das\", \"en\": \"das\", \"ru\": \"das\"}','das','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','[]',NULL,123,NULL,NULL,NULL,'','2020-08-31 15:48:00','2020-09-21 07:53:29');
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ProductAttribute`
---
-
-DROP TABLE IF EXISTS `ProductAttribute`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ProductAttribute` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` json NOT NULL,
-  `code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('select','checkbox') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `use_filter` tinyint(1) NOT NULL DEFAULT '0',
-  `use_compare` tinyint(1) NOT NULL DEFAULT '0',
-  `use_detail` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ProductAttribute`
---
-
-LOCK TABLES `ProductAttribute` WRITE;
-/*!40000 ALTER TABLE `ProductAttribute` DISABLE KEYS */;
-INSERT INTO `ProductAttribute` VALUES (1,'{\"de\": \"Attr 1\", \"en\": \"Attr 1\", \"ru\": \"Attr 1\"}','attr-1','select',1,0,1),(2,'{\"de\": \"Attr 2\", \"en\": \"Attr 2\", \"ru\": \"Attr 2\"}','attr-2','checkbox',1,1,0),(3,'{\"de\": \"Attr 3\", \"en\": \"Attr 3\", \"ru\": \"Attr 3\"}','attr-3','select',0,0,1);
-/*!40000 ALTER TABLE `ProductAttribute` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ProductAttributeOption`
---
-
-DROP TABLE IF EXISTS `ProductAttributeOption`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ProductAttributeOption` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `item_id` int(11) NOT NULL,
-  `name` json NOT NULL,
-  `sort` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `productattributeoption_ibfk_1` (`item_id`),
-  CONSTRAINT `productattributeoption_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `ProductAttribute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ProductAttributeOption`
---
-
-LOCK TABLES `ProductAttributeOption` WRITE;
-/*!40000 ALTER TABLE `ProductAttributeOption` DISABLE KEYS */;
-INSERT INTO `ProductAttributeOption` VALUES (1,1,'{\"de\": \"Opt 1 de\", \"en\": \"Opt 1 en\", \"ru\": \"Opt 1 ru\"}',0),(2,1,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(3,1,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(4,2,'{\"de\": \"Opt 1\", \"en\": \"Opt 1\", \"ru\": \"Opt 1\"}',0),(5,2,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(6,2,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(7,3,'{\"de\": \"Opt 1\", \"en\": \"Opt 1\", \"ru\": \"Opt 1\"}',0),(8,3,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(9,3,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(10,3,'{\"de\": \"Opt 4\", \"en\": \"Opt 4\", \"ru\": \"Opt 4\"}',3);
-/*!40000 ALTER TABLE `ProductAttributeOption` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -616,13 +560,13 @@ DROP TABLE IF EXISTS `ProductBrand`;
 CREATE TABLE `ProductBrand` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` json NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -651,12 +595,14 @@ CREATE TABLE `ProductCategory` (
   `depth` int(11) NOT NULL,
   `expanded` tinyint(1) NOT NULL DEFAULT '1',
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` json NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `tree` (`tree`),
-  KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`),
+  KEY `tree` (`tree`)
 ) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -666,37 +612,8 @@ CREATE TABLE `ProductCategory` (
 
 LOCK TABLES `ProductCategory` WRITE;
 /*!40000 ALTER TABLE `ProductCategory` DISABLE KEYS */;
-INSERT INTO `ProductCategory` VALUES (1,1,1,10,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Root\"}','',NULL,'null'),(120,1,2,5,1,1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/media/jpg.jpg','{\"de\": \"dawda<p>da</p>\", \"en\": \"dawda<p>da</p>\", \"ru\": \"dawda<p>da</p>\"}'),(121,1,6,7,1,1,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"fsefs<p>efsefs</p>\", \"en\": \"fsefs<p>efsefs</p>\", \"ru\": \"fsefs<p>efsefs</p>\"}'),(122,1,8,9,1,1,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}'),(123,1,3,4,2,1,'{\"de\": \"Cat 1-1\", \"en\": \"Cat 1-1\", \"ru\": \"Cat 1-1\"}','cat-1-1','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}');
+INSERT INTO `ProductCategory` VALUES (1,1,1,10,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','',NULL,'null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(120,1,2,5,1,1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/media/jpg.jpg','{\"de\": \"dawda<p>da</p>\", \"en\": \"dawda<p>da</p>\", \"ru\": \"dawda<p>da</p>\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(121,1,6,7,1,1,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"fsefs<p>efsefs</p>\", \"en\": \"fsefs<p>efsefs</p>\", \"ru\": \"fsefs<p>efsefs</p>\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(122,1,8,9,1,1,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(123,1,3,4,2,1,'{\"de\": \"Cat 1-1\", \"en\": \"Cat 1-1\", \"ru\": \"Cat 1-1\"}','cat-1-1','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00');
 /*!40000 ALTER TABLE `ProductCategory` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ProductCategoryAttributeRef`
---
-
-DROP TABLE IF EXISTS `ProductCategoryAttributeRef`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ProductCategoryAttributeRef` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) NOT NULL,
-  `attribute_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `productcategoryattributeref_ibfk_1` (`attribute_id`),
-  KEY `productcategoryattributeref_ibfk_2` (`category_id`),
-  CONSTRAINT `productcategoryattributeref_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `ProductAttribute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productcategoryattributeref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ProductCategoryAttributeRef`
---
-
-LOCK TABLES `ProductCategoryAttributeRef` WRITE;
-/*!40000 ALTER TABLE `ProductCategoryAttributeRef` DISABLE KEYS */;
-INSERT INTO `ProductCategoryAttributeRef` VALUES (4,122,3);
-/*!40000 ALTER TABLE `ProductCategoryAttributeRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -715,7 +632,7 @@ CREATE TABLE `ProductCategoryRef` (
   KEY `productcategoryref_ibfk_2` (`category_id`),
   CONSTRAINT `productcategoryref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `productcategoryref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -724,8 +641,35 @@ CREATE TABLE `ProductCategoryRef` (
 
 LOCK TABLES `ProductCategoryRef` WRITE;
 /*!40000 ALTER TABLE `ProductCategoryRef` DISABLE KEYS */;
-INSERT INTO `ProductCategoryRef` VALUES (4,2,121),(5,2,122),(6,2,120);
+INSERT INTO `ProductCategoryRef` VALUES (4,2,121),(5,2,122),(6,2,120),(14,3,123),(16,3,120);
 /*!40000 ALTER TABLE `ProductCategoryRef` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ProductCategorySpecificationRef`
+--
+
+DROP TABLE IF EXISTS `ProductCategorySpecificationRef`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ProductCategorySpecificationRef` (
+  `category_id` int(11) NOT NULL,
+  `specification_id` int(11) NOT NULL,
+  KEY `productcategoryattributeref_ibfk_1` (`specification_id`),
+  KEY `productcategoryattributeref_ibfk_2` (`category_id`),
+  CONSTRAINT `productcategoryspecificationref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `productcategoryspecificationref_ibfk_3` FOREIGN KEY (`specification_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ProductCategorySpecificationRef`
+--
+
+LOCK TABLES `ProductCategorySpecificationRef` WRITE;
+/*!40000 ALTER TABLE `ProductCategorySpecificationRef` DISABLE KEYS */;
+INSERT INTO `ProductCategorySpecificationRef` VALUES (122,3),(123,2),(123,1),(123,3);
+/*!40000 ALTER TABLE `ProductCategorySpecificationRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -767,18 +711,13 @@ DROP TABLE IF EXISTS `ProductOptionRef`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ProductOptionRef` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `attribute_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `productoptionref_ibfk_1` (`product_id`),
-  KEY `productoptionref_ibfk_2` (`attribute_id`),
   KEY `productoptionref_ibfk_3` (`option_id`),
   CONSTRAINT `productoptionref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productoptionref_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `ProductAttribute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productoptionref_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductAttributeOption` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `productoptionref_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductSpecificationOption` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -787,7 +726,7 @@ CREATE TABLE `ProductOptionRef` (
 
 LOCK TABLES `ProductOptionRef` WRITE;
 /*!40000 ALTER TABLE `ProductOptionRef` DISABLE KEYS */;
-INSERT INTO `ProductOptionRef` VALUES (3,2,1,1),(7,2,2,4),(8,2,2,6),(9,2,3,10);
+INSERT INTO `ProductOptionRef` VALUES (2,10),(3,7),(3,1),(3,4),(3,5);
 /*!40000 ALTER TABLE `ProductOptionRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -829,10 +768,8 @@ DROP TABLE IF EXISTS `ProductRelatedRef`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ProductRelatedRef` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `related_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `productrelatedref_ibfk_1` (`product_id`),
   KEY `productrelatedref_ibfk_2` (`related_id`),
   CONSTRAINT `productrelatedref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -850,6 +787,63 @@ LOCK TABLES `ProductRelatedRef` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ProductSpecification`
+--
+
+DROP TABLE IF EXISTS `ProductSpecification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ProductSpecification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` json NOT NULL,
+  `use_filter` tinyint(1) NOT NULL DEFAULT '0',
+  `use_compare` tinyint(1) NOT NULL DEFAULT '0',
+  `use_detail` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ProductSpecification`
+--
+
+LOCK TABLES `ProductSpecification` WRITE;
+/*!40000 ALTER TABLE `ProductSpecification` DISABLE KEYS */;
+INSERT INTO `ProductSpecification` VALUES (1,'{\"de\": \"Attr 1\", \"en\": \"Attr 1\", \"ru\": \"Attr 1\"}',1,0,1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,'{\"de\": \"Attr 2\", \"en\": \"Attr 2\", \"ru\": \"Attr 2\"}',1,1,0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,'{\"de\": \"Attr 3\", \"en\": \"Attr 3\", \"ru\": \"Attr 3\"}',0,0,1,'2020-09-12 15:00:00','2020-09-12 15:00:00');
+/*!40000 ALTER TABLE `ProductSpecification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ProductSpecificationOption`
+--
+
+DROP TABLE IF EXISTS `ProductSpecificationOption`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ProductSpecificationOption` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `name` json NOT NULL,
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `productattributeoption_ibfk_1` (`item_id`),
+  CONSTRAINT `productspecificationoption_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ProductSpecificationOption`
+--
+
+LOCK TABLES `ProductSpecificationOption` WRITE;
+/*!40000 ALTER TABLE `ProductSpecificationOption` DISABLE KEYS */;
+INSERT INTO `ProductSpecificationOption` VALUES (1,1,'{\"de\": \"Opt 1 de\", \"en\": \"Opt 1 en\", \"ru\": \"Opt 1 ru\"}',0),(2,1,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(3,1,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(4,2,'{\"de\": \"Opt 1\", \"en\": \"Opt 1\", \"ru\": \"Opt 1\"}',0),(5,2,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(6,2,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(7,3,'{\"de\": \"Opt 1\", \"en\": \"Opt 1\", \"ru\": \"Opt 1\"}',0),(8,3,'{\"de\": \"Opt 2\", \"en\": \"Opt 2\", \"ru\": \"Opt 2\"}',1),(9,3,'{\"de\": \"Opt 3\", \"en\": \"Opt 3\", \"ru\": \"Opt 3\"}',2),(10,3,'{\"de\": \"Opt 4\", \"en\": \"Opt 4\", \"ru\": \"Opt 4\"}',3);
+/*!40000 ALTER TABLE `ProductSpecificationOption` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ProductVariation`
 --
 
@@ -858,20 +852,24 @@ DROP TABLE IF EXISTS `ProductVariation`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ProductVariation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `item_id` int(11) NOT NULL,
-  `attribute_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `specification_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  `price` decimal(11,2) DEFAULT NULL,
+  `price` bigint(20) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
   `sku` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `images` json NOT NULL,
+  `sort` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `productvariation_ibfk_1` (`item_id`),
-  KEY `productvariation_ibfk_2` (`attribute_id`),
+  KEY `productvariation_ibfk_1` (`product_id`),
+  KEY `productvariation_ibfk_2` (`specification_id`),
   KEY `productvariation_ibfk_3` (`option_id`),
-  CONSTRAINT `productvariation_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productvariation_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `ProductAttribute` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productvariation_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductAttributeOption` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `productvariation_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `productvariation_ibfk_2` FOREIGN KEY (`specification_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `productvariation_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductSpecificationOption` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -880,7 +878,7 @@ CREATE TABLE `ProductVariation` (
 
 LOCK TABLES `ProductVariation` WRITE;
 /*!40000 ALTER TABLE `ProductVariation` DISABLE KEYS */;
-INSERT INTO `ProductVariation` VALUES (5,2,1,1,NULL,NULL,'[]');
+INSERT INTO `ProductVariation` VALUES (5,2,1,1,NULL,NULL,NULL,'[]',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(6,2,3,7,NULL,NULL,NULL,'[]',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(8,3,1,1,43,3,'frf','[]',0,'2020-09-12 21:56:00','2020-09-21 07:53:29'),(9,3,2,4,NULL,NULL,NULL,'[]',1,'2020-09-19 13:12:00','2020-09-21 07:53:29');
 /*!40000 ALTER TABLE `ProductVariation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -900,7 +898,7 @@ CREATE TABLE `SeoMeta` (
   PRIMARY KEY (`id`),
   KEY `model_id` (`model_id`),
   KEY `model_class` (`model_class`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -909,44 +907,45 @@ CREATE TABLE `SeoMeta` (
 
 LOCK TABLES `SeoMeta` WRITE;
 /*!40000 ALTER TABLE `SeoMeta` DISABLE KEYS */;
-INSERT INTO `SeoMeta` VALUES (4,'Blog',8,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(5,'Blog',8,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(6,'Blog',8,'de','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(9,'Blog',2,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(10,'Blog',2,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(14,'BlogCategory',1,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(15,'BlogCategory',2,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(16,'BlogCategory',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(21,'Product',12,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(22,'ProductBrand',1,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(23,'ProductBrand',2,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(24,'ProductBrand',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(25,'ProductCategory',119,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(26,'ProductCategory',120,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(27,'ProductCategory',121,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(28,'ProductCategory',122,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(29,'Product',2,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(33,'BlockPage',1,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(41,'StaticPage',15,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(42,'StaticPage',15,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(43,'BlockPage',3,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(44,'BlockPage',3,'de','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(45,'BlockPage',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(46,'ProductCategory',123,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}');
+INSERT INTO `SeoMeta` VALUES (1,'Product',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"asd\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(10,'ProductCategory',120,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(11,'BlockPage',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(12,'BlogCategory',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}');
 /*!40000 ALTER TABLE `SeoMeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `StaticPage`
+-- Table structure for table `Staticpage`
 --
 
-DROP TABLE IF EXISTS `StaticPage`;
+DROP TABLE IF EXISTS `Staticpage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StaticPage` (
+CREATE TABLE `Staticpage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `has_seo_meta` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `location` (`location`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `StaticPage`
+-- Dumping data for table `Staticpage`
 --
 
-LOCK TABLES `StaticPage` WRITE;
-/*!40000 ALTER TABLE `StaticPage` DISABLE KEYS */;
-INSERT INTO `StaticPage` VALUES (15,'home',1);
-/*!40000 ALTER TABLE `StaticPage` ENABLE KEYS */;
+LOCK TABLES `Staticpage` WRITE;
+/*!40000 ALTER TABLE `Staticpage` DISABLE KEYS */;
+INSERT INTO `Staticpage` VALUES (15,'home',1,'2020-09-12 15:00:00');
+/*!40000 ALTER TABLE `Staticpage` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `StaticPageBlock`
+-- Table structure for table `StaticpageBlock`
 --
 
-DROP TABLE IF EXISTS `StaticPageBlock`;
+DROP TABLE IF EXISTS `StaticpageBlock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StaticPageBlock` (
+CREATE TABLE `StaticpageBlock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -959,18 +958,18 @@ CREATE TABLE `StaticPageBlock` (
   `has_translation` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `staticpageblock_ibfk_1` (`item_id`),
-  CONSTRAINT `staticpageblock_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `StaticPage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `staticpageblock_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `Staticpage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `StaticPageBlock`
+-- Dumping data for table `StaticpageBlock`
 --
 
-LOCK TABLES `StaticPageBlock` WRITE;
-/*!40000 ALTER TABLE `StaticPageBlock` DISABLE KEYS */;
-INSERT INTO `StaticPageBlock` VALUES (40,15,'title_1','Title 1','\"sefse\"','textInput','[]',0,'First',0),(41,15,'title_2','Title 2','{\"en\": \"\", \"ru\": \"\"}','textInput','[]',0,'First',1),(42,15,'images_1','Images 1','[\"/uploaded/1592258248_xcu1KZpvMe--KHDF.png\", \"/uploaded/1592258287_tdYzxsAjOxv1dA5o.png\"]','images','[]',1,'Second',0),(43,15,'images_2','Images 2','{\"en\": [\"/uploaded/1592258248_j1qbfPDvCfYHJdte.png\"], \"ru\": [\"/uploaded/1592258287_Kbt1w7s5qy7jwVom.png\", \"/uploaded/1592258386_Op1FEWTHSU7W1vU5.png\"]}','images','[]',1,'Second',1),(44,15,'groups_1','Groups','[{\"image\": \"/uploads/media/jpg.jpg\", \"title\": \"asd\", \"description\": \"asdasd\", \"is_available\": \"0\"}, {\"image\": \"/uploads/images/logo.png\", \"title\": \"qwe\", \"description\": \"qweqwe\", \"is_available\": \"1\"}]','groups','[{\"name\": \"title\", \"type\": \"textInput\", \"label\": \"Title\"}, {\"name\": \"is_available\", \"type\": \"checkbox\", \"label\": \"Is available\"}, {\"name\": \"description\", \"type\": \"textArea\", \"label\": \"Description\"}, {\"name\": \"image\", \"type\": \"ElFinder\", \"label\": \"Image\"}]',2,'Third',0);
-/*!40000 ALTER TABLE `StaticPageBlock` ENABLE KEYS */;
+LOCK TABLES `StaticpageBlock` WRITE;
+/*!40000 ALTER TABLE `StaticpageBlock` DISABLE KEYS */;
+INSERT INTO `StaticpageBlock` VALUES (40,15,'title_1','Title 1','\"sefse\"','textInput','[]',0,'First',0),(41,15,'title_2','Title 2','{\"en\": \"\", \"ru\": \"\"}','textInput','[]',0,'First',1),(42,15,'images_1','Images 1','[\"/uploaded/1592258287_tdYzxsAjOxv1dA5o.png\", \"/uploaded/1592258248_xcu1KZpvMe--KHDF.png\"]','images','[]',1,'Second',0),(43,15,'images_2','Images 2','{\"en\": [\"/uploaded/1592258248_j1qbfPDvCfYHJdte.png\"], \"ru\": [\"/uploaded/1592258287_Kbt1w7s5qy7jwVom.png\", \"/uploaded/1592258386_Op1FEWTHSU7W1vU5.png\"]}','images','[]',1,'Second',1),(44,15,'groups_1','Groups','[{\"image\": \"/uploads/media/jpg.jpg\", \"title\": \"asd\", \"description\": \"asdasd\", \"is_available\": \"0\"}, {\"image\": \"/uploads/images/logo.png\", \"title\": \"qwe\", \"description\": \"qweqwe\", \"is_available\": \"1\"}]','groups','[{\"name\": \"title\", \"type\": \"textInput\", \"label\": \"Title\"}, {\"name\": \"is_available\", \"type\": \"checkbox\", \"label\": \"Is available\"}, {\"name\": \"description\", \"type\": \"textArea\", \"label\": \"Description\"}, {\"name\": \"image\", \"type\": \"ElFinder\", \"label\": \"Image\"}]',2,'Third',0);
+/*!40000 ALTER TABLE `StaticpageBlock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1000,7 +999,7 @@ CREATE TABLE `SystemLanguage` (
 
 LOCK TABLES `SystemLanguage` WRITE;
 /*!40000 ALTER TABLE `SystemLanguage` DISABLE KEYS */;
-INSERT INTO `SystemLanguage` VALUES (1,'English','en','/uploads/images/flags/gb.png',1,1,'2019-12-26 01:14:43'),(2,'Russian','ru','/uploads/images/flags/ru.png',0,1,'2019-07-16 18:18:10'),(3,'German','de','/uploads/images/flags/de.png',0,1,'2020-04-04 17:34:02');
+INSERT INTO `SystemLanguage` VALUES (1,'English','en','/uploads/images/flags/gb.png',1,1,'2019-12-26 01:14:43'),(2,'Russian','ru','/uploads/images/flags/ru.png',0,1,'2019-07-16 18:18:10'),(3,'German','de','/uploads/images/flags/de.png',0,0,'2020-09-12 17:30:12');
 /*!40000 ALTER TABLE `SystemLanguage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1048,7 +1047,7 @@ CREATE TABLE `TranslationMessage` (
   PRIMARY KEY (`id`,`language_id`),
   KEY `counter` (`counter`),
   CONSTRAINT `fk_message_source_message` FOREIGN KEY (`id`) REFERENCES `TranslationSource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1078 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1127 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1057,7 +1056,7 @@ CREATE TABLE `TranslationMessage` (
 
 LOCK TABLES `TranslationMessage` WRITE;
 /*!40000 ALTER TABLE `TranslationMessage` DISABLE KEYS */;
-INSERT INTO `TranslationMessage` VALUES (3,1,1,''),(1,1,2,''),(2,1,3,''),(6,2,1,''),(4,2,2,''),(5,2,3,''),(9,3,1,''),(7,3,2,''),(8,3,3,''),(12,4,1,''),(10,4,2,''),(11,4,3,''),(15,5,1,''),(13,5,2,''),(14,5,3,''),(18,6,1,''),(16,6,2,''),(17,6,3,''),(21,7,1,''),(19,7,2,''),(20,7,3,''),(24,8,1,''),(22,8,2,''),(23,8,3,''),(27,9,1,''),(25,9,2,''),(26,9,3,''),(30,10,1,''),(28,10,2,''),(29,10,3,''),(33,11,1,''),(31,11,2,''),(32,11,3,''),(36,12,1,''),(34,12,2,''),(35,12,3,''),(39,13,1,''),(37,13,2,''),(38,13,3,''),(42,14,1,''),(40,14,2,''),(41,14,3,''),(45,15,1,''),(43,15,2,''),(44,15,3,''),(48,16,1,''),(46,16,2,''),(47,16,3,''),(51,17,1,''),(49,17,2,''),(50,17,3,''),(54,18,1,''),(52,18,2,''),(53,18,3,''),(57,19,1,''),(55,19,2,''),(56,19,3,''),(60,20,1,''),(58,20,2,''),(59,20,3,''),(63,21,1,''),(61,21,2,''),(62,21,3,''),(66,22,1,''),(64,22,2,''),(65,22,3,''),(69,23,1,''),(67,23,2,''),(68,23,3,''),(72,24,1,''),(70,24,2,''),(71,24,3,''),(75,25,1,''),(73,25,2,''),(74,25,3,''),(78,26,1,''),(76,26,2,''),(77,26,3,''),(81,27,1,''),(79,27,2,''),(80,27,3,''),(84,28,1,''),(82,28,2,''),(83,28,3,''),(87,29,1,''),(85,29,2,''),(86,29,3,''),(90,30,1,''),(88,30,2,''),(89,30,3,''),(93,31,1,''),(91,31,2,''),(92,31,3,''),(96,32,1,''),(94,32,2,''),(95,32,3,''),(99,33,1,''),(97,33,2,''),(98,33,3,''),(102,34,1,''),(100,34,2,''),(101,34,3,''),(105,35,1,''),(103,35,2,''),(104,35,3,''),(108,36,1,''),(106,36,2,''),(107,36,3,''),(111,37,1,''),(109,37,2,''),(110,37,3,''),(114,38,1,''),(112,38,2,''),(113,38,3,''),(117,39,1,''),(115,39,2,''),(116,39,3,''),(120,40,1,''),(118,40,2,''),(119,40,3,''),(123,41,1,''),(121,41,2,''),(122,41,3,''),(126,42,1,''),(124,42,2,''),(125,42,3,''),(129,43,1,''),(127,43,2,''),(128,43,3,''),(132,44,1,''),(130,44,2,''),(131,44,3,''),(135,45,1,''),(133,45,2,''),(134,45,3,''),(138,46,1,''),(136,46,2,''),(137,46,3,''),(141,47,1,''),(139,47,2,''),(140,47,3,''),(144,48,1,''),(142,48,2,''),(143,48,3,''),(147,49,1,''),(145,49,2,''),(146,49,3,''),(150,50,1,''),(148,50,2,''),(149,50,3,''),(153,51,1,''),(151,51,2,''),(152,51,3,''),(156,52,1,''),(154,52,2,''),(155,52,3,''),(159,53,1,''),(157,53,2,''),(158,53,3,''),(162,54,1,''),(160,54,2,''),(161,54,3,''),(165,55,1,''),(163,55,2,''),(164,55,3,''),(168,56,1,''),(166,56,2,''),(167,56,3,''),(171,57,1,''),(169,57,2,''),(170,57,3,''),(174,58,1,''),(172,58,2,''),(173,58,3,''),(177,59,1,''),(175,59,2,''),(176,59,3,''),(180,60,1,''),(178,60,2,''),(179,60,3,''),(183,61,1,''),(181,61,2,''),(182,61,3,''),(186,62,1,''),(184,62,2,''),(185,62,3,''),(189,63,1,''),(187,63,2,''),(188,63,3,''),(192,64,1,''),(190,64,2,''),(191,64,3,''),(195,65,1,''),(193,65,2,''),(194,65,3,''),(198,66,1,''),(196,66,2,''),(197,66,3,''),(201,67,1,''),(199,67,2,''),(200,67,3,''),(204,68,1,''),(202,68,2,''),(203,68,3,''),(207,69,1,''),(205,69,2,''),(206,69,3,''),(210,70,1,''),(208,70,2,''),(209,70,3,''),(213,71,1,''),(211,71,2,''),(212,71,3,''),(216,72,1,''),(214,72,2,''),(215,72,3,''),(219,73,1,''),(217,73,2,''),(218,73,3,''),(222,74,1,''),(220,74,2,''),(221,74,3,''),(225,75,1,''),(223,75,2,''),(224,75,3,''),(228,76,1,''),(226,76,2,''),(227,76,3,''),(231,77,1,''),(229,77,2,''),(230,77,3,''),(234,78,1,''),(232,78,2,''),(233,78,3,''),(237,79,1,''),(235,79,2,''),(236,79,3,''),(240,80,1,''),(238,80,2,''),(239,80,3,''),(243,81,1,''),(241,81,2,''),(242,81,3,''),(246,82,1,''),(244,82,2,''),(245,82,3,''),(249,83,1,''),(247,83,2,''),(248,83,3,''),(252,84,1,''),(250,84,2,''),(251,84,3,''),(255,85,1,''),(253,85,2,''),(254,85,3,''),(258,86,1,''),(256,86,2,''),(257,86,3,''),(261,87,1,''),(259,87,2,''),(260,87,3,''),(264,88,1,''),(262,88,2,''),(263,88,3,''),(267,89,1,''),(265,89,2,''),(266,89,3,''),(270,90,1,''),(268,90,2,''),(269,90,3,''),(273,91,1,''),(271,91,2,''),(272,91,3,''),(276,92,1,''),(274,92,2,''),(275,92,3,''),(279,93,1,''),(277,93,2,''),(278,93,3,''),(282,94,1,''),(280,94,2,''),(281,94,3,''),(285,95,1,''),(283,95,2,''),(284,95,3,''),(288,96,1,''),(286,96,2,''),(287,96,3,''),(291,97,1,''),(289,97,2,''),(290,97,3,''),(294,98,1,''),(292,98,2,''),(293,98,3,''),(297,99,1,''),(295,99,2,''),(296,99,3,''),(300,100,1,''),(298,100,2,''),(299,100,3,''),(303,101,1,''),(301,101,2,''),(302,101,3,''),(306,102,1,''),(304,102,2,''),(305,102,3,''),(309,103,1,''),(307,103,2,''),(308,103,3,''),(312,104,1,''),(310,104,2,''),(311,104,3,''),(315,105,1,''),(313,105,2,''),(314,105,3,''),(318,106,1,''),(316,106,2,''),(317,106,3,''),(321,107,1,''),(319,107,2,''),(320,107,3,''),(324,108,1,''),(322,108,2,''),(323,108,3,''),(327,109,1,''),(325,109,2,''),(326,109,3,''),(330,110,1,''),(328,110,2,''),(329,110,3,''),(333,111,1,''),(331,111,2,''),(332,111,3,''),(336,112,1,''),(334,112,2,''),(335,112,3,''),(339,113,1,''),(337,113,2,''),(338,113,3,''),(342,114,1,''),(340,114,2,''),(341,114,3,''),(345,115,1,''),(343,115,2,''),(344,115,3,''),(348,116,1,''),(346,116,2,''),(347,116,3,''),(351,117,1,''),(349,117,2,''),(350,117,3,''),(354,118,1,'Home_pg en'),(352,118,2,'Home_pg ru'),(353,118,3,'Home_pg de'),(357,119,1,''),(355,119,2,''),(356,119,3,''),(360,120,1,''),(358,120,2,''),(359,120,3,''),(363,121,1,''),(361,121,2,''),(362,121,3,''),(366,122,1,''),(364,122,2,''),(365,122,3,''),(369,123,1,''),(367,123,2,''),(368,123,3,''),(372,124,1,''),(370,124,2,''),(371,124,3,''),(375,125,1,''),(373,125,2,''),(374,125,3,''),(378,126,1,''),(376,126,2,''),(377,126,3,''),(381,127,1,''),(379,127,2,''),(380,127,3,''),(384,128,1,''),(382,128,2,''),(383,128,3,''),(387,129,1,''),(385,129,2,''),(386,129,3,''),(390,130,1,''),(388,130,2,''),(389,130,3,''),(393,131,1,''),(391,131,2,''),(392,131,3,''),(396,132,1,''),(394,132,2,''),(395,132,3,''),(399,133,1,''),(397,133,2,''),(398,133,3,''),(402,134,1,''),(400,134,2,''),(401,134,3,''),(405,135,1,''),(403,135,2,''),(404,135,3,''),(408,136,1,''),(406,136,2,''),(407,136,3,''),(411,137,1,''),(409,137,2,''),(410,137,3,''),(414,138,1,''),(412,138,2,''),(413,138,3,''),(417,139,1,''),(415,139,2,''),(416,139,3,''),(420,140,1,''),(418,140,2,''),(419,140,3,''),(423,141,1,''),(421,141,2,''),(422,141,3,''),(426,142,1,''),(424,142,2,''),(425,142,3,''),(429,143,1,''),(427,143,2,''),(428,143,3,''),(432,144,1,''),(430,144,2,''),(431,144,3,''),(435,145,1,''),(433,145,2,''),(434,145,3,''),(438,146,1,''),(436,146,2,''),(437,146,3,''),(441,147,1,''),(439,147,2,''),(440,147,3,''),(444,148,1,''),(442,148,2,''),(443,148,3,''),(447,149,1,''),(445,149,2,''),(446,149,3,''),(450,150,1,''),(448,150,2,''),(449,150,3,''),(453,151,1,''),(451,151,2,''),(452,151,3,''),(456,152,1,''),(454,152,2,''),(455,152,3,''),(459,153,1,''),(457,153,2,''),(458,153,3,''),(462,154,1,''),(460,154,2,''),(461,154,3,''),(465,155,1,''),(463,155,2,''),(464,155,3,''),(468,156,1,''),(466,156,2,''),(467,156,3,''),(471,157,1,''),(469,157,2,''),(470,157,3,''),(474,158,1,''),(472,158,2,''),(473,158,3,''),(477,159,1,''),(475,159,2,''),(476,159,3,''),(480,160,1,''),(478,160,2,''),(479,160,3,''),(483,161,1,''),(481,161,2,''),(482,161,3,''),(486,162,1,''),(484,162,2,''),(485,162,3,''),(489,163,1,''),(487,163,2,''),(488,163,3,''),(492,164,1,''),(490,164,2,''),(491,164,3,''),(495,165,1,''),(493,165,2,''),(494,165,3,''),(498,166,1,''),(496,166,2,''),(497,166,3,''),(501,167,1,''),(499,167,2,''),(500,167,3,''),(504,168,1,''),(502,168,2,''),(503,168,3,''),(507,169,1,''),(505,169,2,''),(506,169,3,''),(510,170,1,''),(508,170,2,''),(509,170,3,''),(513,171,1,''),(511,171,2,''),(512,171,3,''),(516,172,1,''),(514,172,2,''),(515,172,3,''),(519,173,1,''),(517,173,2,''),(518,173,3,''),(522,174,1,''),(520,174,2,''),(521,174,3,''),(525,175,1,''),(523,175,2,''),(524,175,3,''),(528,176,1,''),(526,176,2,''),(527,176,3,''),(531,177,1,''),(529,177,2,''),(530,177,3,''),(534,178,1,''),(532,178,2,''),(533,178,3,''),(537,179,1,''),(535,179,2,''),(536,179,3,''),(540,180,1,''),(538,180,2,''),(539,180,3,''),(543,181,1,''),(541,181,2,''),(542,181,3,''),(546,182,1,''),(544,182,2,''),(545,182,3,''),(549,183,1,''),(547,183,2,''),(548,183,3,''),(552,184,1,''),(550,184,2,''),(551,184,3,''),(555,185,1,''),(553,185,2,''),(554,185,3,''),(558,186,1,''),(556,186,2,''),(557,186,3,''),(561,187,1,''),(559,187,2,''),(560,187,3,''),(564,188,1,''),(562,188,2,''),(563,188,3,''),(567,189,1,''),(565,189,2,''),(566,189,3,''),(570,190,1,''),(568,190,2,''),(569,190,3,''),(573,191,1,''),(571,191,2,''),(572,191,3,''),(576,192,1,''),(574,192,2,''),(575,192,3,''),(579,193,1,''),(577,193,2,''),(578,193,3,''),(582,194,1,''),(580,194,2,''),(581,194,3,''),(585,195,1,''),(583,195,2,''),(584,195,3,''),(588,196,1,''),(586,196,2,''),(587,196,3,''),(591,197,1,''),(589,197,2,''),(590,197,3,''),(594,198,1,''),(592,198,2,''),(593,198,3,''),(597,199,1,''),(595,199,2,''),(596,199,3,''),(600,200,1,''),(598,200,2,''),(599,200,3,''),(603,201,1,''),(601,201,2,''),(602,201,3,''),(606,202,1,''),(604,202,2,''),(605,202,3,''),(609,203,1,''),(607,203,2,''),(608,203,3,''),(612,204,1,''),(610,204,2,''),(611,204,3,''),(615,205,1,''),(613,205,2,''),(614,205,3,''),(618,206,1,''),(616,206,2,''),(617,206,3,''),(621,207,1,''),(619,207,2,''),(620,207,3,''),(624,208,1,''),(622,208,2,''),(623,208,3,''),(627,209,1,''),(625,209,2,''),(626,209,3,''),(630,210,1,''),(628,210,2,''),(629,210,3,''),(633,211,1,''),(631,211,2,''),(632,211,3,''),(636,212,1,''),(634,212,2,''),(635,212,3,''),(639,213,1,''),(637,213,2,''),(638,213,3,''),(642,214,1,''),(640,214,2,''),(641,214,3,''),(645,215,1,''),(643,215,2,''),(644,215,3,''),(648,216,1,''),(646,216,2,''),(647,216,3,''),(651,217,1,''),(649,217,2,''),(650,217,3,''),(654,218,1,''),(652,218,2,''),(653,218,3,''),(657,219,1,''),(655,219,2,''),(656,219,3,''),(660,220,1,''),(658,220,2,''),(659,220,3,''),(663,221,1,''),(661,221,2,''),(662,221,3,''),(666,222,1,''),(664,222,2,''),(665,222,3,''),(669,223,1,''),(667,223,2,''),(668,223,3,''),(672,224,1,''),(670,224,2,''),(671,224,3,''),(675,225,1,''),(673,225,2,''),(674,225,3,''),(678,226,1,''),(676,226,2,''),(677,226,3,''),(681,227,1,''),(679,227,2,''),(680,227,3,''),(684,228,1,''),(682,228,2,''),(683,228,3,''),(687,229,1,''),(685,229,2,''),(686,229,3,''),(690,230,1,''),(688,230,2,''),(689,230,3,''),(693,231,1,''),(691,231,2,''),(692,231,3,''),(696,232,1,''),(694,232,2,''),(695,232,3,''),(699,233,1,''),(697,233,2,''),(698,233,3,''),(702,234,1,''),(700,234,2,''),(701,234,3,''),(705,235,1,''),(703,235,2,''),(704,235,3,''),(708,236,1,''),(706,236,2,''),(707,236,3,''),(711,237,1,''),(709,237,2,''),(710,237,3,''),(714,238,1,''),(712,238,2,''),(713,238,3,''),(717,239,1,''),(715,239,2,''),(716,239,3,''),(720,240,1,''),(718,240,2,''),(719,240,3,''),(723,241,1,''),(721,241,2,''),(722,241,3,''),(726,242,1,''),(724,242,2,''),(725,242,3,''),(729,243,1,''),(727,243,2,''),(728,243,3,''),(732,244,1,''),(730,244,2,''),(731,244,3,''),(735,245,1,''),(733,245,2,''),(734,245,3,''),(738,246,1,''),(736,246,2,''),(737,246,3,''),(741,247,1,''),(739,247,2,''),(740,247,3,''),(744,248,1,''),(742,248,2,''),(743,248,3,''),(747,249,1,''),(745,249,2,''),(746,249,3,''),(750,250,1,''),(748,250,2,''),(749,250,3,''),(753,251,1,''),(751,251,2,''),(752,251,3,''),(756,252,1,''),(754,252,2,''),(755,252,3,''),(759,253,1,''),(757,253,2,''),(758,253,3,''),(762,254,1,''),(760,254,2,''),(761,254,3,''),(765,255,1,''),(763,255,2,''),(764,255,3,''),(768,256,1,''),(766,256,2,''),(767,256,3,''),(771,257,1,''),(769,257,2,''),(770,257,3,''),(774,258,1,''),(772,258,2,''),(773,258,3,''),(777,259,1,''),(775,259,2,''),(776,259,3,''),(780,260,1,''),(778,260,2,''),(779,260,3,''),(783,261,1,''),(781,261,2,''),(782,261,3,''),(786,262,1,''),(784,262,2,''),(785,262,3,''),(789,263,1,''),(787,263,2,''),(788,263,3,''),(792,264,1,''),(790,264,2,''),(791,264,3,''),(795,265,1,''),(793,265,2,''),(794,265,3,''),(798,266,1,''),(796,266,2,''),(797,266,3,''),(801,267,1,''),(799,267,2,''),(800,267,3,''),(804,268,1,''),(802,268,2,''),(803,268,3,''),(807,269,1,''),(805,269,2,''),(806,269,3,''),(810,270,1,''),(808,270,2,''),(809,270,3,''),(813,271,1,''),(811,271,2,''),(812,271,3,''),(816,272,1,''),(814,272,2,''),(815,272,3,''),(819,273,1,''),(817,273,2,''),(818,273,3,''),(822,274,1,''),(820,274,2,''),(821,274,3,''),(825,275,1,''),(823,275,2,''),(824,275,3,''),(828,276,1,''),(826,276,2,''),(827,276,3,''),(831,277,1,''),(829,277,2,''),(830,277,3,''),(834,278,1,''),(832,278,2,''),(833,278,3,''),(837,279,1,''),(835,279,2,''),(836,279,3,''),(840,280,1,''),(838,280,2,''),(839,280,3,''),(843,281,1,''),(841,281,2,''),(842,281,3,''),(846,282,1,''),(844,282,2,''),(845,282,3,''),(849,283,1,''),(847,283,2,''),(848,283,3,''),(852,284,1,''),(850,284,2,''),(851,284,3,''),(855,285,1,''),(853,285,2,''),(854,285,3,''),(858,286,1,''),(856,286,2,''),(857,286,3,''),(861,287,1,''),(859,287,2,''),(860,287,3,''),(864,288,1,''),(862,288,2,''),(863,288,3,''),(867,289,1,''),(865,289,2,''),(866,289,3,''),(870,290,1,''),(868,290,2,''),(869,290,3,''),(873,291,1,''),(871,291,2,''),(872,291,3,''),(876,292,1,''),(874,292,2,''),(875,292,3,''),(879,293,1,''),(877,293,2,''),(878,293,3,''),(882,294,1,''),(880,294,2,''),(881,294,3,''),(885,295,1,''),(883,295,2,''),(884,295,3,''),(888,296,1,''),(886,296,2,''),(887,296,3,''),(891,297,1,''),(889,297,2,''),(890,297,3,''),(894,298,1,''),(892,298,2,''),(893,298,3,''),(897,299,1,''),(895,299,2,''),(896,299,3,''),(900,300,1,''),(898,300,2,''),(899,300,3,''),(903,301,1,''),(901,301,2,''),(902,301,3,''),(906,302,1,''),(904,302,2,''),(905,302,3,''),(909,303,1,''),(907,303,2,''),(908,303,3,''),(912,304,1,''),(910,304,2,''),(911,304,3,''),(915,305,1,''),(913,305,2,''),(914,305,3,''),(918,306,1,''),(916,306,2,''),(917,306,3,''),(921,307,1,''),(919,307,2,''),(920,307,3,''),(924,309,1,''),(922,309,2,''),(923,309,3,''),(927,310,1,''),(925,310,2,''),(926,310,3,''),(930,311,1,''),(928,311,2,''),(929,311,3,''),(933,312,1,''),(931,312,2,''),(932,312,3,''),(936,313,1,''),(934,313,2,''),(935,313,3,''),(939,314,1,''),(937,314,2,''),(938,314,3,''),(942,315,1,''),(940,315,2,''),(941,315,3,''),(945,316,1,''),(943,316,2,''),(944,316,3,''),(948,317,1,''),(946,317,2,''),(947,317,3,''),(951,318,1,''),(949,318,2,''),(950,318,3,''),(954,319,1,''),(952,319,2,''),(953,319,3,''),(957,320,1,''),(955,320,2,''),(956,320,3,''),(960,321,1,''),(958,321,2,''),(959,321,3,''),(963,322,1,''),(961,322,2,''),(962,322,3,''),(966,323,1,''),(964,323,2,''),(965,323,3,''),(969,324,1,''),(967,324,2,''),(968,324,3,''),(972,325,1,''),(970,325,2,''),(971,325,3,''),(975,326,1,''),(973,326,2,''),(974,326,3,''),(978,327,1,''),(976,327,2,''),(977,327,3,''),(981,328,1,''),(979,328,2,''),(980,328,3,''),(984,329,1,''),(982,329,2,''),(983,329,3,''),(987,330,1,''),(985,330,2,''),(986,330,3,''),(990,331,1,''),(988,331,2,''),(989,331,3,''),(993,332,1,''),(991,332,2,''),(992,332,3,''),(996,333,1,''),(994,333,2,''),(995,333,3,''),(999,334,1,''),(997,334,2,''),(998,334,3,''),(1002,335,1,''),(1000,335,2,''),(1001,335,3,''),(1005,336,1,''),(1003,336,2,''),(1004,336,3,''),(1008,337,1,''),(1006,337,2,''),(1007,337,3,''),(1011,338,1,''),(1009,338,2,''),(1010,338,3,''),(1014,339,1,''),(1012,339,2,''),(1013,339,3,''),(1017,340,1,''),(1015,340,2,''),(1016,340,3,''),(1020,341,1,''),(1018,341,2,''),(1019,341,3,''),(1023,342,1,''),(1021,342,2,''),(1022,342,3,''),(1026,343,1,''),(1024,343,2,''),(1025,343,3,''),(1029,344,1,''),(1027,344,2,''),(1028,344,3,''),(1032,345,1,''),(1030,345,2,''),(1031,345,3,''),(1035,346,1,''),(1033,346,2,''),(1034,346,3,''),(1038,347,1,''),(1036,347,2,''),(1037,347,3,''),(1041,348,1,''),(1039,348,2,''),(1040,348,3,''),(1044,349,1,''),(1042,349,2,''),(1043,349,3,''),(1047,350,1,''),(1045,350,2,''),(1046,350,3,''),(1050,351,1,''),(1048,351,2,''),(1049,351,3,''),(1053,352,1,''),(1051,352,2,''),(1052,352,3,''),(1056,353,1,''),(1054,353,2,''),(1055,353,3,''),(1059,354,1,''),(1057,354,2,''),(1058,354,3,''),(1062,355,1,''),(1060,355,2,''),(1061,355,3,''),(1065,356,1,''),(1063,356,2,''),(1064,356,3,''),(1068,357,1,''),(1066,357,2,''),(1067,357,3,''),(1071,358,1,''),(1069,358,2,''),(1070,358,3,''),(1074,359,1,''),(1072,359,2,''),(1073,359,3,''),(1077,360,1,''),(1075,360,2,''),(1076,360,3,'');
+INSERT INTO `TranslationMessage` VALUES (3,1,1,''),(1,1,2,''),(2,1,3,''),(6,2,1,''),(4,2,2,''),(5,2,3,''),(9,3,1,''),(7,3,2,''),(8,3,3,''),(12,4,1,''),(10,4,2,''),(11,4,3,''),(15,5,1,''),(13,5,2,''),(14,5,3,''),(18,6,1,''),(16,6,2,''),(17,6,3,''),(21,7,1,''),(19,7,2,''),(20,7,3,''),(24,8,1,''),(22,8,2,''),(23,8,3,''),(27,9,1,''),(25,9,2,''),(26,9,3,''),(30,10,1,''),(28,10,2,''),(29,10,3,''),(33,11,1,''),(31,11,2,''),(32,11,3,''),(36,12,1,''),(34,12,2,''),(35,12,3,''),(39,13,1,''),(37,13,2,''),(38,13,3,''),(42,14,1,''),(40,14,2,''),(41,14,3,''),(45,15,1,''),(43,15,2,''),(44,15,3,''),(48,16,1,''),(46,16,2,''),(47,16,3,''),(51,17,1,''),(49,17,2,''),(50,17,3,''),(54,18,1,''),(52,18,2,''),(53,18,3,''),(57,19,1,''),(55,19,2,''),(56,19,3,''),(60,20,1,''),(58,20,2,''),(59,20,3,''),(63,21,1,''),(61,21,2,''),(62,21,3,''),(66,22,1,''),(64,22,2,''),(65,22,3,''),(69,23,1,''),(67,23,2,''),(68,23,3,''),(72,24,1,''),(70,24,2,''),(71,24,3,''),(75,25,1,''),(73,25,2,''),(74,25,3,''),(78,26,1,''),(76,26,2,''),(77,26,3,''),(81,27,1,''),(79,27,2,''),(80,27,3,''),(84,28,1,''),(82,28,2,''),(83,28,3,''),(87,29,1,''),(85,29,2,''),(86,29,3,''),(90,30,1,''),(88,30,2,''),(89,30,3,''),(93,31,1,''),(91,31,2,''),(92,31,3,''),(96,32,1,''),(94,32,2,''),(95,32,3,''),(99,33,1,''),(97,33,2,''),(98,33,3,''),(102,34,1,''),(100,34,2,''),(101,34,3,''),(105,35,1,''),(103,35,2,''),(104,35,3,''),(108,36,1,''),(106,36,2,''),(107,36,3,''),(111,37,1,''),(109,37,2,''),(110,37,3,''),(114,38,1,''),(112,38,2,''),(113,38,3,''),(117,39,1,''),(115,39,2,''),(116,39,3,''),(120,40,1,''),(118,40,2,''),(119,40,3,''),(123,41,1,''),(121,41,2,''),(122,41,3,''),(126,42,1,''),(124,42,2,''),(125,42,3,''),(129,43,1,''),(127,43,2,''),(128,43,3,''),(132,44,1,''),(130,44,2,''),(131,44,3,''),(135,45,1,''),(133,45,2,''),(134,45,3,''),(138,46,1,''),(136,46,2,''),(137,46,3,''),(141,47,1,''),(139,47,2,''),(140,47,3,''),(144,48,1,''),(142,48,2,''),(143,48,3,''),(147,49,1,''),(145,49,2,''),(146,49,3,''),(150,50,1,''),(148,50,2,''),(149,50,3,''),(153,51,1,''),(151,51,2,''),(152,51,3,''),(156,52,1,''),(154,52,2,''),(155,52,3,''),(159,53,1,''),(157,53,2,''),(158,53,3,''),(162,54,1,''),(160,54,2,''),(161,54,3,''),(165,55,1,''),(163,55,2,''),(164,55,3,''),(168,56,1,''),(166,56,2,''),(167,56,3,''),(171,57,1,''),(169,57,2,''),(170,57,3,''),(174,58,1,''),(172,58,2,''),(173,58,3,''),(177,59,1,''),(175,59,2,''),(176,59,3,''),(180,60,1,''),(178,60,2,''),(179,60,3,''),(183,61,1,''),(181,61,2,''),(182,61,3,''),(186,62,1,''),(184,62,2,''),(185,62,3,''),(189,63,1,''),(187,63,2,''),(188,63,3,''),(192,64,1,''),(190,64,2,''),(191,64,3,''),(195,65,1,''),(193,65,2,''),(194,65,3,''),(198,66,1,''),(196,66,2,''),(197,66,3,''),(201,67,1,''),(199,67,2,''),(200,67,3,''),(204,68,1,''),(202,68,2,''),(203,68,3,''),(207,69,1,''),(205,69,2,''),(206,69,3,''),(210,70,1,''),(208,70,2,''),(209,70,3,''),(213,71,1,''),(211,71,2,''),(212,71,3,''),(216,72,1,''),(214,72,2,''),(215,72,3,''),(219,73,1,''),(217,73,2,''),(218,73,3,''),(222,74,1,''),(220,74,2,''),(221,74,3,''),(225,75,1,''),(223,75,2,''),(224,75,3,''),(228,76,1,''),(226,76,2,''),(227,76,3,''),(231,77,1,''),(229,77,2,''),(230,77,3,''),(234,78,1,''),(232,78,2,''),(233,78,3,''),(237,79,1,''),(235,79,2,''),(236,79,3,''),(240,80,1,''),(238,80,2,''),(239,80,3,''),(243,81,1,''),(241,81,2,''),(242,81,3,''),(246,82,1,''),(244,82,2,''),(245,82,3,''),(249,83,1,''),(247,83,2,''),(248,83,3,''),(252,84,1,''),(250,84,2,''),(251,84,3,''),(255,85,1,''),(253,85,2,''),(254,85,3,''),(258,86,1,''),(256,86,2,''),(257,86,3,''),(261,87,1,''),(259,87,2,''),(260,87,3,''),(264,88,1,''),(262,88,2,''),(263,88,3,''),(267,89,1,''),(265,89,2,''),(266,89,3,''),(270,90,1,''),(268,90,2,''),(269,90,3,''),(273,91,1,''),(271,91,2,''),(272,91,3,''),(276,92,1,''),(274,92,2,''),(275,92,3,''),(279,93,1,''),(277,93,2,''),(278,93,3,''),(282,94,1,''),(280,94,2,''),(281,94,3,''),(285,95,1,''),(283,95,2,''),(284,95,3,''),(288,96,1,''),(286,96,2,''),(287,96,3,''),(291,97,1,''),(289,97,2,''),(290,97,3,''),(294,98,1,''),(292,98,2,''),(293,98,3,''),(297,99,1,''),(295,99,2,''),(296,99,3,''),(300,100,1,''),(298,100,2,''),(299,100,3,''),(303,101,1,''),(301,101,2,''),(302,101,3,''),(306,102,1,''),(304,102,2,''),(305,102,3,''),(309,103,1,''),(307,103,2,''),(308,103,3,''),(312,104,1,''),(310,104,2,''),(311,104,3,''),(315,105,1,''),(313,105,2,''),(314,105,3,''),(318,106,1,''),(316,106,2,''),(317,106,3,''),(321,107,1,''),(319,107,2,''),(320,107,3,''),(324,108,1,''),(322,108,2,''),(323,108,3,''),(327,109,1,''),(325,109,2,''),(326,109,3,''),(330,110,1,''),(328,110,2,''),(329,110,3,''),(333,111,1,''),(331,111,2,''),(332,111,3,''),(336,112,1,''),(334,112,2,''),(335,112,3,''),(339,113,1,''),(337,113,2,''),(338,113,3,''),(342,114,1,''),(340,114,2,''),(341,114,3,''),(345,115,1,''),(343,115,2,''),(344,115,3,''),(348,116,1,''),(346,116,2,''),(347,116,3,''),(351,117,1,''),(349,117,2,''),(350,117,3,''),(354,118,1,'Home_pg en'),(352,118,2,'Home_pg ru'),(353,118,3,'Home_pg de'),(357,119,1,''),(355,119,2,''),(356,119,3,''),(360,120,1,''),(358,120,2,''),(359,120,3,''),(363,121,1,''),(361,121,2,''),(362,121,3,''),(366,122,1,''),(364,122,2,''),(365,122,3,''),(369,123,1,''),(367,123,2,''),(368,123,3,''),(372,124,1,''),(370,124,2,''),(371,124,3,''),(375,125,1,''),(373,125,2,''),(374,125,3,''),(378,126,1,''),(376,126,2,''),(377,126,3,''),(381,127,1,''),(379,127,2,''),(380,127,3,''),(384,128,1,''),(382,128,2,''),(383,128,3,''),(387,129,1,''),(385,129,2,''),(386,129,3,''),(390,130,1,''),(388,130,2,''),(389,130,3,''),(393,131,1,''),(391,131,2,''),(392,131,3,''),(396,132,1,''),(394,132,2,''),(395,132,3,''),(399,133,1,''),(397,133,2,''),(398,133,3,''),(402,134,1,''),(400,134,2,''),(401,134,3,''),(405,135,1,''),(403,135,2,''),(404,135,3,''),(408,136,1,''),(406,136,2,''),(407,136,3,''),(411,137,1,''),(409,137,2,''),(410,137,3,''),(414,138,1,''),(412,138,2,''),(413,138,3,''),(417,139,1,''),(415,139,2,''),(416,139,3,''),(420,140,1,''),(418,140,2,''),(419,140,3,''),(423,141,1,''),(421,141,2,''),(422,141,3,''),(426,142,1,''),(424,142,2,''),(425,142,3,''),(429,143,1,''),(427,143,2,''),(428,143,3,''),(432,144,1,''),(430,144,2,''),(431,144,3,''),(435,145,1,''),(433,145,2,''),(434,145,3,''),(438,146,1,''),(436,146,2,''),(437,146,3,''),(441,147,1,''),(439,147,2,''),(440,147,3,''),(444,148,1,''),(442,148,2,''),(443,148,3,''),(447,149,1,''),(445,149,2,''),(446,149,3,''),(450,150,1,''),(448,150,2,''),(449,150,3,''),(453,151,1,''),(451,151,2,''),(452,151,3,''),(456,152,1,''),(454,152,2,''),(455,152,3,''),(459,153,1,''),(457,153,2,''),(458,153,3,''),(462,154,1,''),(460,154,2,''),(461,154,3,''),(465,155,1,''),(463,155,2,''),(464,155,3,''),(468,156,1,''),(466,156,2,''),(467,156,3,''),(471,157,1,''),(469,157,2,''),(470,157,3,''),(474,158,1,''),(472,158,2,''),(473,158,3,''),(477,159,1,''),(475,159,2,''),(476,159,3,''),(480,160,1,''),(478,160,2,''),(479,160,3,''),(483,161,1,''),(481,161,2,''),(482,161,3,''),(486,162,1,''),(484,162,2,''),(485,162,3,''),(489,163,1,''),(487,163,2,''),(488,163,3,''),(492,164,1,''),(490,164,2,''),(491,164,3,''),(495,165,1,''),(493,165,2,''),(494,165,3,''),(498,166,1,''),(496,166,2,''),(497,166,3,''),(501,167,1,''),(499,167,2,''),(500,167,3,''),(504,168,1,''),(502,168,2,''),(503,168,3,''),(507,169,1,''),(505,169,2,''),(506,169,3,''),(510,170,1,''),(508,170,2,''),(509,170,3,''),(513,171,1,''),(511,171,2,''),(512,171,3,''),(516,172,1,''),(514,172,2,''),(515,172,3,''),(519,173,1,''),(517,173,2,''),(518,173,3,''),(522,174,1,''),(520,174,2,''),(521,174,3,''),(525,175,1,''),(523,175,2,''),(524,175,3,''),(528,176,1,''),(526,176,2,''),(527,176,3,''),(531,177,1,''),(529,177,2,''),(530,177,3,''),(534,178,1,''),(532,178,2,''),(533,178,3,''),(537,179,1,''),(535,179,2,''),(536,179,3,''),(540,180,1,''),(538,180,2,''),(539,180,3,''),(543,181,1,''),(541,181,2,''),(542,181,3,''),(546,182,1,''),(544,182,2,''),(545,182,3,''),(549,183,1,''),(547,183,2,''),(548,183,3,''),(552,184,1,''),(550,184,2,''),(551,184,3,''),(555,185,1,''),(553,185,2,''),(554,185,3,''),(558,186,1,''),(556,186,2,''),(557,186,3,''),(561,187,1,''),(559,187,2,''),(560,187,3,''),(564,188,1,''),(562,188,2,''),(563,188,3,''),(567,189,1,''),(565,189,2,''),(566,189,3,''),(570,190,1,''),(568,190,2,''),(569,190,3,''),(573,191,1,''),(571,191,2,''),(572,191,3,''),(576,192,1,''),(574,192,2,''),(575,192,3,''),(579,193,1,''),(577,193,2,''),(578,193,3,''),(582,194,1,''),(580,194,2,''),(581,194,3,''),(585,195,1,''),(583,195,2,''),(584,195,3,''),(588,196,1,''),(586,196,2,''),(587,196,3,''),(591,197,1,''),(589,197,2,''),(590,197,3,''),(594,198,1,''),(592,198,2,''),(593,198,3,''),(597,199,1,''),(595,199,2,''),(596,199,3,''),(600,200,1,''),(598,200,2,''),(599,200,3,''),(603,201,1,''),(601,201,2,''),(602,201,3,''),(606,202,1,''),(604,202,2,''),(605,202,3,''),(609,203,1,''),(607,203,2,''),(608,203,3,''),(612,204,1,''),(610,204,2,''),(611,204,3,''),(615,205,1,''),(613,205,2,''),(614,205,3,''),(618,206,1,''),(616,206,2,''),(617,206,3,''),(621,207,1,''),(619,207,2,''),(620,207,3,''),(624,208,1,''),(622,208,2,''),(623,208,3,''),(627,209,1,''),(625,209,2,''),(626,209,3,''),(630,210,1,''),(628,210,2,''),(629,210,3,''),(633,211,1,''),(631,211,2,''),(632,211,3,''),(636,212,1,''),(634,212,2,''),(635,212,3,''),(639,213,1,''),(637,213,2,''),(638,213,3,''),(642,214,1,''),(640,214,2,''),(641,214,3,''),(645,215,1,''),(643,215,2,''),(644,215,3,''),(648,216,1,''),(646,216,2,''),(647,216,3,''),(651,217,1,''),(649,217,2,''),(650,217,3,''),(654,218,1,''),(652,218,2,''),(653,218,3,''),(657,219,1,''),(655,219,2,''),(656,219,3,''),(660,220,1,''),(658,220,2,''),(659,220,3,''),(663,221,1,''),(661,221,2,''),(662,221,3,''),(666,222,1,''),(664,222,2,''),(665,222,3,''),(669,223,1,''),(667,223,2,''),(668,223,3,''),(672,224,1,''),(670,224,2,''),(671,224,3,''),(675,225,1,''),(673,225,2,''),(674,225,3,''),(678,226,1,''),(676,226,2,''),(677,226,3,''),(681,227,1,''),(679,227,2,''),(680,227,3,''),(684,228,1,''),(682,228,2,''),(683,228,3,''),(687,229,1,''),(685,229,2,''),(686,229,3,''),(690,230,1,''),(688,230,2,''),(689,230,3,''),(693,231,1,''),(691,231,2,''),(692,231,3,''),(696,232,1,''),(694,232,2,''),(695,232,3,''),(699,233,1,''),(697,233,2,''),(698,233,3,''),(702,234,1,''),(700,234,2,''),(701,234,3,''),(705,235,1,''),(703,235,2,''),(704,235,3,''),(708,236,1,''),(706,236,2,''),(707,236,3,''),(711,237,1,''),(709,237,2,''),(710,237,3,''),(714,238,1,''),(712,238,2,''),(713,238,3,''),(717,239,1,''),(715,239,2,''),(716,239,3,''),(720,240,1,''),(718,240,2,''),(719,240,3,''),(723,241,1,''),(721,241,2,''),(722,241,3,''),(726,242,1,''),(724,242,2,''),(725,242,3,''),(729,243,1,''),(727,243,2,''),(728,243,3,''),(732,244,1,''),(730,244,2,''),(731,244,3,''),(735,245,1,''),(733,245,2,''),(734,245,3,''),(738,246,1,''),(736,246,2,''),(737,246,3,''),(741,247,1,''),(739,247,2,''),(740,247,3,''),(744,248,1,''),(742,248,2,''),(743,248,3,''),(747,249,1,''),(745,249,2,''),(746,249,3,''),(750,250,1,''),(748,250,2,''),(749,250,3,''),(753,251,1,''),(751,251,2,''),(752,251,3,''),(756,252,1,''),(754,252,2,''),(755,252,3,''),(759,253,1,''),(757,253,2,''),(758,253,3,''),(762,254,1,''),(760,254,2,''),(761,254,3,''),(765,255,1,''),(763,255,2,''),(764,255,3,''),(768,256,1,''),(766,256,2,''),(767,256,3,''),(771,257,1,''),(769,257,2,''),(770,257,3,''),(774,258,1,''),(772,258,2,''),(773,258,3,''),(777,259,1,''),(775,259,2,''),(776,259,3,''),(780,260,1,''),(778,260,2,''),(779,260,3,''),(783,261,1,''),(781,261,2,''),(782,261,3,''),(786,262,1,''),(784,262,2,''),(785,262,3,''),(789,263,1,''),(787,263,2,''),(788,263,3,''),(792,264,1,''),(790,264,2,''),(791,264,3,''),(795,265,1,''),(793,265,2,''),(794,265,3,''),(798,266,1,''),(796,266,2,''),(797,266,3,''),(801,267,1,''),(799,267,2,''),(800,267,3,''),(804,268,1,''),(802,268,2,''),(803,268,3,''),(807,269,1,''),(805,269,2,''),(806,269,3,''),(810,270,1,''),(808,270,2,''),(809,270,3,''),(813,271,1,''),(811,271,2,''),(812,271,3,''),(816,272,1,''),(814,272,2,''),(815,272,3,''),(819,273,1,''),(817,273,2,''),(818,273,3,''),(822,274,1,''),(820,274,2,''),(821,274,3,''),(825,275,1,''),(823,275,2,''),(824,275,3,''),(828,276,1,''),(826,276,2,''),(827,276,3,''),(831,277,1,''),(829,277,2,''),(830,277,3,''),(834,278,1,''),(832,278,2,''),(833,278,3,''),(837,279,1,''),(835,279,2,''),(836,279,3,''),(840,280,1,''),(838,280,2,''),(839,280,3,''),(843,281,1,''),(841,281,2,''),(842,281,3,''),(846,282,1,''),(844,282,2,''),(845,282,3,''),(849,283,1,''),(847,283,2,''),(848,283,3,''),(852,284,1,''),(850,284,2,''),(851,284,3,''),(855,285,1,''),(853,285,2,''),(854,285,3,''),(858,286,1,''),(856,286,2,''),(857,286,3,''),(861,287,1,''),(859,287,2,''),(860,287,3,''),(864,288,1,''),(862,288,2,''),(863,288,3,''),(867,289,1,''),(865,289,2,''),(866,289,3,''),(870,290,1,''),(868,290,2,''),(869,290,3,''),(873,291,1,''),(871,291,2,''),(872,291,3,''),(876,292,1,''),(874,292,2,''),(875,292,3,''),(879,293,1,''),(877,293,2,''),(878,293,3,''),(882,294,1,''),(880,294,2,''),(881,294,3,''),(885,295,1,''),(883,295,2,''),(884,295,3,''),(888,296,1,''),(886,296,2,''),(887,296,3,''),(891,297,1,''),(889,297,2,''),(890,297,3,''),(894,298,1,''),(892,298,2,''),(893,298,3,''),(897,299,1,''),(895,299,2,''),(896,299,3,''),(900,300,1,''),(898,300,2,''),(899,300,3,''),(903,301,1,''),(901,301,2,''),(902,301,3,''),(906,302,1,''),(904,302,2,''),(905,302,3,''),(909,303,1,''),(907,303,2,''),(908,303,3,''),(912,304,1,''),(910,304,2,''),(911,304,3,''),(915,305,1,''),(913,305,2,''),(914,305,3,''),(918,306,1,''),(916,306,2,''),(917,306,3,''),(921,307,1,''),(919,307,2,''),(920,307,3,''),(924,309,1,''),(922,309,2,''),(923,309,3,''),(927,310,1,''),(925,310,2,''),(926,310,3,''),(930,311,1,''),(928,311,2,''),(929,311,3,''),(933,312,1,''),(931,312,2,''),(932,312,3,''),(936,313,1,''),(934,313,2,''),(935,313,3,''),(939,314,1,''),(937,314,2,''),(938,314,3,''),(942,315,1,''),(940,315,2,''),(941,315,3,''),(945,316,1,''),(943,316,2,''),(944,316,3,''),(948,317,1,''),(946,317,2,''),(947,317,3,''),(951,318,1,''),(949,318,2,''),(950,318,3,''),(954,319,1,''),(952,319,2,''),(953,319,3,''),(957,320,1,''),(955,320,2,''),(956,320,3,''),(960,321,1,''),(958,321,2,''),(959,321,3,''),(963,322,1,''),(961,322,2,''),(962,322,3,''),(966,323,1,''),(964,323,2,''),(965,323,3,''),(969,324,1,''),(967,324,2,''),(968,324,3,''),(972,325,1,''),(970,325,2,''),(971,325,3,''),(975,326,1,''),(973,326,2,''),(974,326,3,''),(978,327,1,''),(976,327,2,''),(977,327,3,''),(981,328,1,''),(979,328,2,''),(980,328,3,''),(984,329,1,''),(982,329,2,''),(983,329,3,''),(987,330,1,''),(985,330,2,''),(986,330,3,''),(990,331,1,''),(988,331,2,''),(989,331,3,''),(993,332,1,''),(991,332,2,''),(992,332,3,''),(996,333,1,''),(994,333,2,''),(995,333,3,''),(999,334,1,''),(997,334,2,''),(998,334,3,''),(1002,335,1,''),(1000,335,2,''),(1001,335,3,''),(1005,336,1,''),(1003,336,2,''),(1004,336,3,''),(1008,337,1,''),(1006,337,2,''),(1007,337,3,''),(1011,338,1,''),(1009,338,2,''),(1010,338,3,''),(1014,339,1,''),(1012,339,2,''),(1013,339,3,''),(1017,340,1,''),(1015,340,2,''),(1016,340,3,''),(1020,341,1,''),(1018,341,2,''),(1019,341,3,''),(1023,342,1,''),(1021,342,2,''),(1022,342,3,''),(1026,343,1,''),(1024,343,2,''),(1025,343,3,''),(1029,344,1,''),(1027,344,2,''),(1028,344,3,''),(1032,345,1,''),(1030,345,2,''),(1031,345,3,''),(1035,346,1,''),(1033,346,2,''),(1034,346,3,''),(1038,347,1,''),(1036,347,2,''),(1037,347,3,''),(1041,348,1,''),(1039,348,2,''),(1040,348,3,''),(1044,349,1,''),(1042,349,2,''),(1043,349,3,''),(1047,350,1,''),(1045,350,2,''),(1046,350,3,''),(1050,351,1,''),(1048,351,2,''),(1049,351,3,''),(1053,352,1,''),(1051,352,2,''),(1052,352,3,''),(1056,353,1,''),(1054,353,2,''),(1055,353,3,''),(1059,354,1,''),(1057,354,2,''),(1058,354,3,''),(1062,355,1,''),(1060,355,2,''),(1061,355,3,''),(1065,356,1,''),(1063,356,2,''),(1064,356,3,''),(1068,357,1,''),(1066,357,2,''),(1067,357,3,''),(1071,358,1,''),(1069,358,2,''),(1070,358,3,''),(1074,359,1,''),(1072,359,2,''),(1073,359,3,''),(1077,360,1,''),(1075,360,2,''),(1076,360,3,''),(1080,361,1,''),(1078,361,2,''),(1079,361,3,''),(1083,362,1,''),(1081,362,2,''),(1082,362,3,''),(1086,363,1,''),(1084,363,2,''),(1085,363,3,''),(1089,364,1,''),(1087,364,2,''),(1088,364,3,''),(1092,365,1,''),(1090,365,2,''),(1091,365,3,''),(1095,366,1,''),(1093,366,2,''),(1094,366,3,''),(1098,367,1,''),(1096,367,2,''),(1097,367,3,''),(1101,368,1,''),(1099,368,2,''),(1100,368,3,''),(1104,369,1,''),(1102,369,2,''),(1103,369,3,''),(1107,370,1,''),(1105,370,2,''),(1106,370,3,''),(1110,371,1,''),(1108,371,2,''),(1109,371,3,''),(1112,372,1,''),(1111,372,2,''),(1114,373,1,''),(1113,373,2,''),(1116,374,1,''),(1115,374,2,''),(1118,375,1,''),(1117,375,2,''),(1120,376,1,''),(1119,376,2,''),(1122,377,1,''),(1121,377,2,''),(1124,378,1,''),(1123,378,2,''),(1126,379,1,''),(1125,379,2,'');
 /*!40000 ALTER TABLE `TranslationMessage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1073,7 +1072,7 @@ CREATE TABLE `TranslationSource` (
   `category` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=361 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=380 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1082,7 +1081,7 @@ CREATE TABLE `TranslationSource` (
 
 LOCK TABLES `TranslationSource` WRITE;
 /*!40000 ALTER TABLE `TranslationSource` DISABLE KEYS */;
-INSERT INTO `TranslationSource` VALUES (1,'app','Actions'),(2,'app','DELETE ALL'),(3,'app','Navigation'),(4,'app','Dashboard'),(5,'app','Users'),(6,'app','Permissions'),(7,'app','Routes'),(8,'app','Rules'),(9,'app','Roles'),(10,'app','Assignments'),(11,'app','Menu'),(12,'app','Static Pages'),(13,'app','Home'),(14,'app','Blocks'),(15,'app','Types'),(16,'app','Pages'),(17,'app','Blogs'),(18,'app','Categories'),(19,'app','Tags'),(20,'app','Comments'),(21,'app','Rates'),(22,'app','Products'),(23,'app','Brands'),(24,'app','Attributes'),(25,'app','Media'),(26,'app','Banners'),(27,'app','Gallery'),(28,'app','System'),(29,'app','Settings'),(30,'app','Languages'),(31,'app','Translations'),(32,'app','File manager'),(33,'app','Cache'),(34,'app','Refresh routes'),(35,'app','Remove thumbs'),(36,'app','Clear'),(37,'app','Information'),(38,'app','Help'),(39,'app','Gratitude'),(40,'app','Logout'),(41,'i18n-dot','Change'),(42,'i18n-dot','Loading...'),(43,'i18n-dot','Empty'),(44,'app','ID'),(45,'app','Username'),(46,'app','Role'),(47,'app','Email'),(48,'app','New password'),(49,'app','Full name'),(50,'app','Phone'),(51,'app','Address'),(52,'app','Created'),(53,'app','Updated'),(54,'app','Category'),(55,'app','Name'),(56,'app','Short Description'),(57,'app','Full Description'),(58,'app','Url'),(59,'app','Image'),(60,'app','Published'),(61,'app','Published from'),(62,'app','Published to'),(63,'app','Images'),(64,'app','Create'),(65,'app','Search'),(66,'app','Blog'),(67,'app','Block page'),(68,'app','Contact'),(69,'app','Signup'),(70,'app','Login'),(71,'app','Update: {name}'),(72,'app','General'),(73,'app','SEO meta'),(74,'app','Save'),(75,'app','SAVE'),(76,'app','SAVE & RELOAD'),(77,'app','SAVE & CREATE'),(78,'app','Record successfully updated'),(79,'app','Id'),(80,'app','Description'),(81,'app','System settings'),(82,'app','System Settings'),(83,'app','Label'),(84,'app','Value'),(85,'app','Type'),(86,'app','Sort'),(87,'app','Code'),(88,'app','Main'),(89,'app','Active'),(90,'app','Updated At'),(91,'app','System Languages'),(92,'app','Menus'),(93,'app','Tree'),(94,'app','Lft'),(95,'app','Rgt'),(96,'app','Depth'),(97,'app','Expanded'),(98,'app','Parent'),(99,'yii2mod.rbac','Routes'),(100,'yii2mod.rbac','Assignments'),(101,'yii2mod.rbac','Roles'),(102,'yii2mod.rbac','Permissions'),(103,'yii2mod.rbac','Rules'),(104,'yii2mod.rbac','Refresh'),(105,'yii2mod.rbac','Search for available'),(106,'yii2mod.rbac','Assign'),(107,'yii2mod.rbac','Remove'),(108,'yii2mod.rbac','Search for assigned'),(109,'app','Admin'),(110,'app','Registered'),(111,'app','Save link'),(112,'app','Create bookmark'),(113,'app','Update: {username}'),(114,'app','Profile'),(115,'app','Zzzs'),(116,'app','Record successfully created'),(117,'app','Record successfully deleted'),(118,'app','Home_pg'),(119,'app','test'),(120,'app','Password'),(121,'app','Remember me'),(122,'app','Reset password'),(123,'speedrunner','General'),(124,'speedrunner','Controller'),(125,'speedrunner','Model'),(126,'speedrunner','View'),(127,'speedrunner','Use'),(128,'speedrunner','Module name'),(129,'speedrunner','Generate files'),(130,'speedrunner','Controller name'),(131,'speedrunner','Controller actions'),(132,'speedrunner','Table name'),(133,'speedrunner','With translation'),(134,'speedrunner','Has SEO meta'),(135,'speedrunner','Model relations'),(136,'speedrunner','View relations'),(137,'speedrunner','Attributes fields'),(138,'speedrunner','Name'),(139,'speedrunner','Type'),(140,'speedrunner','Condition (from)'),(141,'speedrunner','Condition (to)'),(142,'speedrunner','Variable name'),(143,'speedrunner','Value'),(144,'speedrunner','GO'),(145,'app','Static pages'),(146,'app','Content'),(147,'app','Static Page: {location}'),(148,'app','Заголовок'),(149,'app','Описание'),(150,'app','Изображение'),(151,'app','Item ID'),(152,'app','User ID'),(153,'app','Text'),(154,'app','Status'),(155,'app','Item name'),(156,'app','Mark'),(157,'app','Comments & rates: {name}'),(158,'app','Successfully completed'),(159,'app','Use in filter'),(160,'app','Use in compare'),(161,'app','Use in detail page'),(162,'app','Options'),(163,'app','Product Attributes'),(164,'app','Field must contain only alphabet and numerical chars'),(165,'app','Has translation'),(166,'app','Block Types'),(167,'app','Block Pages'),(168,'app','Assign'),(169,'app','Page'),(170,'app','Краткое описание'),(171,'app','Полное описание'),(172,'speedrunner','Attribute'),(173,'speedrunner','GridView'),(174,'speedrunner','Label'),(175,'speedrunner','I18N'),(176,'speedrunner','Attrs (for \"groups\" type)'),(177,'speedrunner','Image'),(178,'speedrunner','Blocks'),(179,'speedrunner','Page name'),(180,'app','Part name'),(181,'app','Brand ID'),(182,'app','Main category'),(183,'app','Price'),(184,'app','Sale'),(185,'app','Quantity'),(186,'app','Sku'),(187,'app','Is Active'),(188,'app','Related'),(189,'app','Variations'),(190,'app','Stock'),(191,'app','Categories & Attributes'),(192,'app','Choose attribute'),(193,'app','Choose option'),(194,'app','Attribute'),(195,'app','Option'),(196,'app','GO'),(197,'app','Generate'),(198,'app','Controller'),(199,'app','Model'),(200,'app','View'),(201,'app','Use'),(202,'speedrunner','Module config'),(203,'app','Generator'),(204,'app','SpeedRunner'),(205,'app','Location'),(206,'app','Slider home'),(207,'app','Slider about'),(208,'app','Text 1'),(209,'app','Text 2'),(210,'app','Text 3'),(211,'app','Link'),(212,'app','Assign: {name}'),(213,'app','Used'),(214,'app','Update: {label}'),(215,'app','Blog Categories'),(216,'app','Blog comments'),(217,'app','User'),(218,'app','New'),(219,'app','Comment: {id}'),(220,'app','Blog Comments'),(221,'app','Product'),(222,'app','Products Comments'),(223,'app','Blog Rates'),(224,'app','Product Rates'),(225,'app','Blog Tags'),(226,'app','Galleries'),(227,'app','Message'),(228,'app','Translation Sources'),(229,'app','Update: {message}'),(230,'app','Prodile'),(231,'app','Zzz Categories'),(232,'app','Delete'),(233,'app','Delete with children'),(234,'app','Product Categories'),(235,'app','Url must be unique'),(236,'app','Full url'),(237,'app','Add'),(238,'app','Update'),(239,'app','Variation edit'),(240,'app','Attribute ID'),(241,'app','Option ID'),(242,'app','Update: {id}'),(243,'speedrunner','Duplicate types'),(244,'speedrunner','Module name (from)'),(245,'speedrunner','Module name (to)'),(246,'app','Sign In'),(247,'app','Sign in'),(248,'app','Incorrect username or password.'),(249,'app','Parameter not found'),(250,'app','Successfully changed'),(251,'app','SpeedRunner Gii'),(252,'app','Module Generator'),(253,'app','Module Duplicator'),(254,'app','Page Generator'),(255,'app','Block Generator'),(256,'app','Bookmarks'),(257,'app','Theme changed'),(258,'app','Bookmark has been added'),(259,'yii2mod.rbac','Create'),(260,'yii2mod.rbac','Name'),(261,'yii2mod.rbac','Action'),(262,'app','Bookmark has been deleted'),(263,'app','Theme has been changed'),(264,'app','API Generator'),(265,'app','E-mail'),(266,'app','Confirm password'),(267,'speedrunner','Module'),(268,'app','This username has already been taken.'),(269,'app','This email has already been taken.'),(270,'app','There is no user with this email address.'),(271,'app','Record has been updated'),(272,'app','Record has been created'),(273,'app','Record has been deleted'),(274,'app','Functions'),(275,'app','Include'),(276,'app','Exclude'),(277,'yii2mod.rbac','Create Rule'),(278,'yii2mod.rbac','Class Name'),(279,'yii2mod.rbac','Rule Name'),(280,'yii2mod.rbac','Select Rule'),(281,'yii2mod.rbac','Description'),(282,'yii2mod.rbac','Rule : {0}'),(283,'yii2mod.rbac','Update'),(284,'yii2mod.rbac','Delete'),(285,'yii2mod.rbac','Are you sure to delete this item?'),(286,'app','View: {name}'),(287,'yii2mod.rbac','Create Role'),(288,'yii2mod.rbac','Type'),(289,'yii2mod.rbac','Data'),(290,'yii2mod.rbac','Role : {0}'),(291,'app','Assignment'),(292,'yii2mod.rbac','Assignment : {0}'),(293,'yii2mod.rbac','Item has been removed.'),(294,'app','RBAC'),(295,'yii2mod.rbac','RBAC'),(296,'app','Error'),(297,'app','Main title'),(298,'app','Main description'),(299,'app','Main image'),(300,'app','Another title'),(301,'app','Another short description'),(302,'app','Another full description'),(303,'app','Browse'),(304,'app','Process has been completed'),(305,'app','Short description'),(306,'app','Full description'),(307,'app','Category id'),(308,'yii','Missing required arguments: {params}'),(309,'app','Tests'),(310,'app','Module Destroyer'),(311,'app','Destroy'),(312,'speedrunner','Modules'),(313,'app','Duplicate'),(314,'app','Product Brands'),(315,'app','Catalog'),(316,'app','Title'),(317,'app','Available'),(318,'app','Groups'),(319,'app','Verify code'),(320,'app','Submit'),(321,'app','Is available'),(322,'app','Availabel'),(323,'app','You have been registered successfully'),(324,'app','Are you sure you want to delete these items?'),(325,'app','Delete all'),(326,'app','Are you sure?'),(327,'speedrunner','Options'),(328,'app','You cannot delete main language'),(329,'speedrunner','Static Page'),(330,'speedrunner','Block'),(331,'speedrunner','API'),(332,'speedrunner','Generator'),(333,'speedrunner','Duplicator'),(334,'speedrunner','Destroyer'),(335,'speedrunner','Documentator'),(336,'speedrunner','Generate'),(337,'speedrunner','Part name'),(338,'speedrunner','Add'),(339,'speedrunner','Delete'),(340,'speedrunner','Attributes'),(341,'app','This username has already been taken'),(342,'app','This email has already been taken'),(343,'app','There is no user with this email address'),(344,'app','Orders'),(345,'app','Delivery type'),(346,'app','Payment type'),(347,'app','Total quantity'),(348,'app','Total price'),(349,'app','Delivery price'),(350,'app','Key'),(351,'app','Pickup'),(352,'app','Delivery'),(353,'app','Confirmed'),(354,'app','Payed'),(355,'app','Completed'),(356,'app','Canceled'),(357,'app','Cash'),(358,'app','Bank card'),(359,'app','You need to login for checkout'),(360,'app','Profile saved');
+INSERT INTO `TranslationSource` VALUES (1,'app','Actions'),(2,'app','DELETE ALL'),(3,'app','Navigation'),(4,'app','Dashboard'),(5,'app','Users'),(6,'app','Permissions'),(7,'app','Routes'),(8,'app','Rules'),(9,'app','Roles'),(10,'app','Assignments'),(11,'app','Menu'),(12,'app','Static Pages'),(13,'app','Home'),(14,'app','Blocks'),(15,'app','Types'),(16,'app','Pages'),(17,'app','Blogs'),(18,'app','Categories'),(19,'app','Tags'),(20,'app','Comments'),(21,'app','Rates'),(22,'app','Products'),(23,'app','Brands'),(24,'app','Attributes'),(25,'app','Media'),(26,'app','Banners'),(27,'app','Gallery'),(28,'app','System'),(29,'app','Settings'),(30,'app','Languages'),(31,'app','Translations'),(32,'app','File manager'),(33,'app','Cache'),(34,'app','Refresh routes'),(35,'app','Remove thumbs'),(36,'app','Clear'),(37,'app','Information'),(38,'app','Help'),(39,'app','Gratitude'),(40,'app','Logout'),(41,'i18n-dot','Change'),(42,'i18n-dot','Loading...'),(43,'i18n-dot','Empty'),(44,'app','ID'),(45,'app','Username'),(46,'app','Role'),(47,'app','Email'),(48,'app','New password'),(49,'app','Full name'),(50,'app','Phone'),(51,'app','Address'),(52,'app','Created'),(53,'app','Updated'),(54,'app','Category'),(55,'app','Name'),(56,'app','Short Description'),(57,'app','Full Description'),(58,'app','Url'),(59,'app','Image'),(60,'app','Published'),(61,'app','Published from'),(62,'app','Published to'),(63,'app','Images'),(64,'app','Create'),(65,'app','Search'),(66,'app','Blog'),(67,'app','Block page'),(68,'app','Contact'),(69,'app','Signup'),(70,'app','Login'),(71,'app','Update: {name}'),(72,'app','General'),(73,'app','SEO meta'),(74,'app','Save'),(75,'app','SAVE'),(76,'app','SAVE & RELOAD'),(77,'app','SAVE & CREATE'),(78,'app','Record successfully updated'),(79,'app','Id'),(80,'app','Description'),(81,'app','System settings'),(82,'app','System Settings'),(83,'app','Label'),(84,'app','Value'),(85,'app','Type'),(86,'app','Sort'),(87,'app','Code'),(88,'app','Main'),(89,'app','Active'),(90,'app','Updated At'),(91,'app','System Languages'),(92,'app','Menus'),(93,'app','Tree'),(94,'app','Lft'),(95,'app','Rgt'),(96,'app','Depth'),(97,'app','Expanded'),(98,'app','Parent'),(99,'yii2mod.rbac','Routes'),(100,'yii2mod.rbac','Assignments'),(101,'yii2mod.rbac','Roles'),(102,'yii2mod.rbac','Permissions'),(103,'yii2mod.rbac','Rules'),(104,'yii2mod.rbac','Refresh'),(105,'yii2mod.rbac','Search for available'),(106,'yii2mod.rbac','Assign'),(107,'yii2mod.rbac','Remove'),(108,'yii2mod.rbac','Search for assigned'),(109,'app','Admin'),(110,'app','Registered'),(111,'app','Save link'),(112,'app','Create bookmark'),(113,'app','Update: {username}'),(114,'app','Profile'),(115,'app','Zzzs'),(116,'app','Record successfully created'),(117,'app','Record successfully deleted'),(118,'app','Home_pg'),(119,'app','test'),(120,'app','Password'),(121,'app','Remember me'),(122,'app','Reset password'),(123,'speedrunner','General'),(124,'speedrunner','Controller'),(125,'speedrunner','Model'),(126,'speedrunner','View'),(127,'speedrunner','Use'),(128,'speedrunner','Module name'),(129,'speedrunner','Generate files'),(130,'speedrunner','Controller name'),(131,'speedrunner','Controller actions'),(132,'speedrunner','Table name'),(133,'speedrunner','With translation'),(134,'speedrunner','Has SEO meta'),(135,'speedrunner','Model relations'),(136,'speedrunner','View relations'),(137,'speedrunner','Attributes fields'),(138,'speedrunner','Name'),(139,'speedrunner','Type'),(140,'speedrunner','Condition (from)'),(141,'speedrunner','Condition (to)'),(142,'speedrunner','Variable name'),(143,'speedrunner','Value'),(144,'speedrunner','GO'),(145,'app','Static pages'),(146,'app','Content'),(147,'app','Static Page: {location}'),(148,'app','Заголовок'),(149,'app','Описание'),(150,'app','Изображение'),(151,'app','Item ID'),(152,'app','User ID'),(153,'app','Text'),(154,'app','Status'),(155,'app','Item name'),(156,'app','Mark'),(157,'app','Comments & rates: {name}'),(158,'app','Successfully completed'),(159,'app','Use in filter'),(160,'app','Use in compare'),(161,'app','Use in detail page'),(162,'app','Options'),(163,'app','Product Attributes'),(164,'app','Field must contain only alphabet and numerical chars'),(165,'app','Has translation'),(166,'app','Block Types'),(167,'app','Block Pages'),(168,'app','Assign'),(169,'app','Page'),(170,'app','Краткое описание'),(171,'app','Полное описание'),(172,'speedrunner','Attribute'),(173,'speedrunner','GridView'),(174,'speedrunner','Label'),(175,'speedrunner','I18N'),(176,'speedrunner','Attrs (for \"groups\" type)'),(177,'speedrunner','Image'),(178,'speedrunner','Blocks'),(179,'speedrunner','Page name'),(180,'app','Part name'),(181,'app','Brand ID'),(182,'app','Main category'),(183,'app','Price'),(184,'app','Sale'),(185,'app','Quantity'),(186,'app','Sku'),(187,'app','Is Active'),(188,'app','Related'),(189,'app','Variations'),(190,'app','Stock'),(191,'app','Categories & Attributes'),(192,'app','Choose attribute'),(193,'app','Choose option'),(194,'app','Attribute'),(195,'app','Option'),(196,'app','GO'),(197,'app','Generate'),(198,'app','Controller'),(199,'app','Model'),(200,'app','View'),(201,'app','Use'),(202,'speedrunner','Module config'),(203,'app','Generator'),(204,'app','SpeedRunner'),(205,'app','Location'),(206,'app','Slider home'),(207,'app','Slider about'),(208,'app','Text 1'),(209,'app','Text 2'),(210,'app','Text 3'),(211,'app','Link'),(212,'app','Assign: {name}'),(213,'app','Used'),(214,'app','Update: {label}'),(215,'app','Blog Categories'),(216,'app','Blog comments'),(217,'app','User'),(218,'app','New'),(219,'app','Comment: {id}'),(220,'app','Blog Comments'),(221,'app','Product'),(222,'app','Products Comments'),(223,'app','Blog Rates'),(224,'app','Product Rates'),(225,'app','Blog Tags'),(226,'app','Galleries'),(227,'app','Message'),(228,'app','Translation Sources'),(229,'app','Update: {message}'),(230,'app','Prodile'),(231,'app','Zzz Categories'),(232,'app','Delete'),(233,'app','Delete with children'),(234,'app','Product Categories'),(235,'app','Url must be unique'),(236,'app','Full url'),(237,'app','Add'),(238,'app','Update'),(239,'app','Variation edit'),(240,'app','Attribute ID'),(241,'app','Option ID'),(242,'app','Update: {id}'),(243,'speedrunner','Duplicate types'),(244,'speedrunner','Module name (from)'),(245,'speedrunner','Module name (to)'),(246,'app','Sign In'),(247,'app','Sign in'),(248,'app','Incorrect username or password.'),(249,'app','Parameter not found'),(250,'app','Successfully changed'),(251,'app','SpeedRunner Gii'),(252,'app','Module Generator'),(253,'app','Module Duplicator'),(254,'app','Page Generator'),(255,'app','Block Generator'),(256,'app','Bookmarks'),(257,'app','Theme changed'),(258,'app','Bookmark has been added'),(259,'yii2mod.rbac','Create'),(260,'yii2mod.rbac','Name'),(261,'yii2mod.rbac','Action'),(262,'app','Bookmark has been deleted'),(263,'app','Theme has been changed'),(264,'app','API Generator'),(265,'app','E-mail'),(266,'app','Confirm password'),(267,'speedrunner','Module'),(268,'app','This username has already been taken.'),(269,'app','This email has already been taken.'),(270,'app','There is no user with this email address.'),(271,'app','Record has been updated'),(272,'app','Record has been created'),(273,'app','Record has been deleted'),(274,'app','Functions'),(275,'app','Include'),(276,'app','Exclude'),(277,'yii2mod.rbac','Create Rule'),(278,'yii2mod.rbac','Class Name'),(279,'yii2mod.rbac','Rule Name'),(280,'yii2mod.rbac','Select Rule'),(281,'yii2mod.rbac','Description'),(282,'yii2mod.rbac','Rule : {0}'),(283,'yii2mod.rbac','Update'),(284,'yii2mod.rbac','Delete'),(285,'yii2mod.rbac','Are you sure to delete this item?'),(286,'app','View: {name}'),(287,'yii2mod.rbac','Create Role'),(288,'yii2mod.rbac','Type'),(289,'yii2mod.rbac','Data'),(290,'yii2mod.rbac','Role : {0}'),(291,'app','Assignment'),(292,'yii2mod.rbac','Assignment : {0}'),(293,'yii2mod.rbac','Item has been removed.'),(294,'app','RBAC'),(295,'yii2mod.rbac','RBAC'),(296,'app','Error'),(297,'app','Main title'),(298,'app','Main description'),(299,'app','Main image'),(300,'app','Another title'),(301,'app','Another short description'),(302,'app','Another full description'),(303,'app','Browse'),(304,'app','Process has been completed'),(305,'app','Short description'),(306,'app','Full description'),(307,'app','Category id'),(308,'yii','Missing required arguments: {params}'),(309,'app','Tests'),(310,'app','Module Destroyer'),(311,'app','Destroy'),(312,'speedrunner','Modules'),(313,'app','Duplicate'),(314,'app','Product Brands'),(315,'app','Catalog'),(316,'app','Title'),(317,'app','Available'),(318,'app','Groups'),(319,'app','Verify code'),(320,'app','Submit'),(321,'app','Is available'),(322,'app','Availabel'),(323,'app','You have been registered successfully'),(324,'app','Are you sure you want to delete these items?'),(325,'app','Delete all'),(326,'app','Are you sure?'),(327,'speedrunner','Options'),(328,'app','You cannot delete main language'),(329,'speedrunner','Static Page'),(330,'speedrunner','Block'),(331,'speedrunner','API'),(332,'speedrunner','Generator'),(333,'speedrunner','Duplicator'),(334,'speedrunner','Destroyer'),(335,'speedrunner','Documentator'),(336,'speedrunner','Generate'),(337,'speedrunner','Part name'),(338,'speedrunner','Add'),(339,'speedrunner','Delete'),(340,'speedrunner','Attributes'),(341,'app','This username has already been taken'),(342,'app','This email has already been taken'),(343,'app','There is no user with this email address'),(344,'app','Orders'),(345,'app','Delivery type'),(346,'app','Payment type'),(347,'app','Total quantity'),(348,'app','Total price'),(349,'app','Delivery price'),(350,'app','Key'),(351,'app','Pickup'),(352,'app','Delivery'),(353,'app','Confirmed'),(354,'app','Payed'),(355,'app','Completed'),(356,'app','Canceled'),(357,'app','Cash'),(358,'app','Bank card'),(359,'app','You need to login for checkout'),(360,'app','Profile saved'),(361,'app','Slug'),(362,'app','Speedrunner'),(363,'speedrunner','Static page'),(364,'app','News'),(365,'app','SKU'),(366,'app','Incorrect password'),(367,'app','Products price'),(368,'app','View: {id}'),(369,'app','Total'),(370,'app','Person'),(371,'app','Order'),(372,'app','Save & reload'),(373,'app','Brand'),(374,'app','Record has been saved'),(375,'app','Specifications'),(376,'app','Product Specifications'),(377,'app','Specification'),(378,'app','Categories & Specifications'),(379,'app','Banner');
 /*!40000 ALTER TABLE `TranslationSource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1131,14 +1130,14 @@ DROP TABLE IF EXISTS `UserProfile`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `UserProfile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `item_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `userprofile_ibfk_1` (`item_id`),
-  CONSTRAINT `userprofile_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `userprofile_ibfk_1` (`user_id`),
+  CONSTRAINT `userprofile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1162,7 +1161,7 @@ DROP TABLE IF EXISTS `Zzz`;
 CREATE TABLE `Zzz` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) DEFAULT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `short_description` json NOT NULL,
@@ -1171,7 +1170,7 @@ CREATE TABLE `Zzz` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`),
+  UNIQUE KEY `slug` (`slug`),
   KEY `zzz_ibfk_1` (`category_id`),
   CONSTRAINT `zzz_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `ZzzCategory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1196,13 +1195,13 @@ DROP TABLE IF EXISTS `ZzzCategory`;
 CREATE TABLE `ZzzCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` json NOT NULL,
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` json NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1360,4 +1359,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-18 11:05:02
+-- Dump completed on 2020-09-21 13:02:39

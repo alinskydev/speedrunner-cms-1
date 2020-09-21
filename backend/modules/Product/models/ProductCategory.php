@@ -5,9 +5,6 @@ namespace backend\modules\Product\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\behaviors\SluggableBehavior;
-use creocoder\nestedsets\NestedSetsBehavior;
-use wokster\treebehavior\NestedSetsTreeBehavior;
 use yii\db\Expression;
 
 
@@ -19,7 +16,7 @@ class ProductCategory extends ActiveRecord
     ];
     
     public $parent_id;
-    public $attrs_tmp;
+    public $specifications_tmp;
     
     public $seo_meta = [];
     
@@ -32,17 +29,32 @@ class ProductCategory extends ActiveRecord
     {
         return [
             'tree' => [
-                'class' => NestedSetsBehavior::className(),
+                'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
                 'treeAttribute' => 'tree',
             ],
             'htmlTree'=>[
-                'class' => NestedSetsTreeBehavior::className(),
+                'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
             ],
             'sluggable' => [
-                'class' => SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'url',
+                'slugAttribute' => 'slug',
                 'immutable' => true,
+            ],
+            'relations_many_many' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'manyMany',
+                'attributes' => [
+                    [
+                        'model' => new ProductCategorySpecificationRef,
+                        'relation' => 'specifications',
+                        'attribute' => 'specifications_tmp',
+                        'properties' => [
+                            'main' => 'category_id',
+                            'relational' => 'specification_id',
+                        ],
+                    ],
+                ],
             ],
         ];
     }
@@ -58,14 +70,14 @@ class ProductCategory extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'url', 'image'], 'string', 'max' => 100],
+            [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['description'], 'string'],
-            [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['parent_id'], 'required', 'when' => function ($model) {
                 return $model->isNewRecord;
             }],
-            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
-            [['attrs_tmp'], 'safe'],
+            [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
+            [['specifications_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id']],
         ];
     }
     
@@ -79,27 +91,27 @@ class ProductCategory extends ActiveRecord
             'depth' => Yii::t('app', 'Depth'),
             'expanded' => Yii::t('app', 'Expanded'),
             'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
+            'slug' => Yii::t('app', 'Slug'),
             'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
             'parent_id' => Yii::t('app', 'Parent'),
-            'attrs_tmp' => Yii::t('app', 'Attributes'),
+            'specifications_tmp' => Yii::t('app', 'Specifications'),
         ];
     }
     
-    public function fullUrl()
+    public function url()
     {
-        $parents = $this->parents()->orderBy('lft')->andWhere(['>', 'depth', 0])->select(['url'])->asArray()->all();
-        $result = implode('/', ArrayHelper::getColumn($parents, 'url'));
+        $parents = $this->parents()->orderBy('lft')->andWhere(['>', 'depth', 0])->select(['slug'])->asArray()->all();
+        $result = implode('/', ArrayHelper::getColumn($parents, 'slug'));
         
-        return $result ? "$result/$this->url" : $this->url;
+        return $result ? "$result/$this->slug" : $this->slug;
     }
     
     static function itemsTree($excepts = [])
     {
         $lang = Yii::$app->language;
         
-        $result = self::find()
+        $result = static::find()
             ->select([
                 'id',
                 new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name")
@@ -117,39 +129,14 @@ class ProductCategory extends ActiveRecord
             ->viaTable('ProductCategoryRef', ['category_id' => 'id']);
     }
     
-    public function getAttrs()
+    public function getSpecifications()
     {
-        return $this->hasMany(ProductAttribute::className(), ['id' => 'attribute_id'])
-            ->viaTable('ProductCategoryAttributeRef', ['category_id' => 'id']);
+        return $this->hasMany(ProductSpecification::className(), ['id' => 'specification_id'])
+            ->viaTable('ProductCategorySpecificationRef', ['category_id' => 'id']);
     }
     
     public static function find()
     {
         return new ProductCategoryQuery(get_called_class());
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        ATTRIBUTES
-        
-        $attributes = ArrayHelper::map($this->attrs, 'id', 'id');
-        
-        if ($this->attrs_tmp) {
-            foreach ($this->attrs_tmp as $a) {
-                $category_attribute = ProductCategoryAttributeRef::find()
-                    ->where(['category_id' => $this->id, 'attribute_id' => $a])
-                    ->one() ?: new ProductCategoryAttributeRef;
-                
-                $category_attribute->category_id = $this->id;
-                $category_attribute->attribute_id = $a;
-                $category_attribute->save();
-                
-                ArrayHelper::remove($attributes, $a);
-            }
-        }
-        
-        ProductCategoryAttributeRef::deleteAll(['category_id' => $this->id, 'attribute_id' => $attributes]);
-        
-        return parent::afterSave($insert, $changedAttributes);
     }
 }

@@ -6,7 +6,7 @@ use Yii;
 use common\components\framework\ActiveRecord;
 
 
-class ProductAttributeOption extends ActiveRecord
+class ProductSpecificationOption extends ActiveRecord
 {
     public $translation_attrs = [
         'name',
@@ -14,7 +14,7 @@ class ProductAttributeOption extends ActiveRecord
     
     public static function tableName()
     {
-        return 'ProductAttributeOption';
+        return 'ProductSpecificationOption';
     }
     
     public function rules()
@@ -29,14 +29,14 @@ class ProductAttributeOption extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'item_id' => Yii::t('app', 'Item ID'),
+            'item_id' => Yii::t('app', 'Specification'),
             'name' => Yii::t('app', 'Name'),
             'sort' => Yii::t('app', 'Sort'),
         ];
     }
     
-    public function getAttr()
+    public function getSpecification()
     {
-        return $this->hasOne(ProductAttribute::className(), ['id' => 'item_id']);
+        return $this->hasOne(ProductSpecification::className(), ['id' => 'item_id']);
     }
 }

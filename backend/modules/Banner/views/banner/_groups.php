@@ -24,10 +24,10 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
     </thead>
     
     <tbody>
-        <?php foreach ($groups as $g) { ?>
-            <?php $g_id = $g->isNewRecord ? '__key__' : $g->id ?>
+        <?php foreach ($groups as $value) { ?>
+            <?php $value_id = $value->isNewRecord ? '__key__' : $value->id ?>
             
-            <tr class="<?= $g->isNewRecord ? 'table-new-relation' : null ?>" data-table="groups">
+            <tr class="<?= $value->isNewRecord ? 'table-new-relation' : null ?>" data-table="groups">
                 <td>
                     <div class="btn btn-primary table-sorter">
                         <i class="fas fa-arrows-alt"></i>
@@ -35,8 +35,8 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($g, 'text_1', ['template' => '{input}'])->textArea([
-                        'name' => "Banner[groups_tmp][$g_id][text_1]",
+                    <?= $form->field($value, 'text_1', ['template' => '{input}'])->textArea([
+                        'name' => "Banner[groups_tmp][$value_id][text_1]",
                         'class' => 'form-control',
                         'rows' => 5,
                     ]) ?>
@@ -44,8 +44,8 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($g, 'text_2', ['template' => '{input}'])->textArea([
-                        'name' => "Banner[groups_tmp][$g_id][text_2]",
+                    <?= $form->field($value, 'text_2', ['template' => '{input}'])->textArea([
+                        'name' => "Banner[groups_tmp][$value_id][text_2]",
                         'class' => 'form-control',
                         'rows' => 5,
                     ]) ?>
@@ -53,8 +53,8 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($g, 'text_3', ['template' => '{input}'])->textArea([
-                        'name' => "Banner[groups_tmp][$g_id][text_3]",
+                    <?= $form->field($value, 'text_3', ['template' => '{input}'])->textArea([
+                        'name' => "Banner[groups_tmp][$value_id][text_3]",
                         'class' => 'form-control',
                         'rows' => 5,
                     ]) ?>
@@ -62,8 +62,8 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($g, 'link', ['template' => '{input}'])->textArea([
-                        'name' => "Banner[groups_tmp][$g_id][link]",
+                    <?= $form->field($value, 'link', ['template' => '{input}'])->textArea([
+                        'name' => "Banner[groups_tmp][$value_id][link]",
                         'class' => 'form-control',
                         'rows' => 5,
                     ]) ?>
@@ -71,12 +71,12 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($g, 'image', [
+                    <?= $form->field($value, 'image', [
                         'template' => '{input}'
                     ])->widget(ElFinderInput::className(), [
                         'connectorRoute' => '/connection/elfinder-file-upload',
-                        'name' => "Banner[groups_tmp][$g_id][image]",
-                        'id' => "elfinder-$g_id",
+                        'name' => "Banner[groups_tmp][$value_id][image]",
+                        'id' => "elfinder-$value_id",
                     ]) ?>
                 </td>
                 

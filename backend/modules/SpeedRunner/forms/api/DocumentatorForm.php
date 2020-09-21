@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\forms\api;
+namespace backend\modules\Speedrunner\forms\api;
 
 use Yii;
 use yii\base\Model;
@@ -56,7 +56,7 @@ class DocumentatorForm extends Model
             
             //        CONTROLLER
             
-            $controller_basename = StringHelper::basename($file);
+            $controller_basename = basename($file);
             $controller_name = str_replace(['Controller', '.php'], null, $controller_basename);
             $controller_url = Inflector::camel2id($controller_name, '-');
             
@@ -131,8 +131,8 @@ class DocumentatorForm extends Model
             }
         }
         
-        $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/api/documentator');
-        $folder_template_render = '@backend/modules/SpeedRunner/templates/api/documentator/';
+        $folder_template = Yii::getAlias('@backend/modules/Speedrunner/templates/api/documentator');
+        $folder_template_render = '@backend/modules/Speedrunner/templates/api/documentator/';
         $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result]);
         
         //        ZIP ARCHIVE
@@ -145,14 +145,12 @@ class DocumentatorForm extends Model
         $zip->addFile("$folder_template/assets/css/bootstrap.min.css", 'assets/css/bootstrap.min.css');
         $zip->addFile("$folder_template/assets/css/speedrunner.css", 'assets/css/speedrunner.css');
         
-        $zip->addFile("$folder_template/assets/fonts/Exo2/Thin.ttf", 'assets/fonts/Exo2/Thin.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/ExtraLight.ttf", 'assets/fonts/Exo2/ExtraLight.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/Light.ttf", 'assets/fonts/Exo2/Light.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/Regular.ttf", 'assets/fonts/Exo2/Regular.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/Medium.ttf", 'assets/fonts/Exo2/Medium.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/SemiBold.ttf", 'assets/fonts/Exo2/SemiBold.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/Bold.ttf", 'assets/fonts/Exo2/Bold.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Exo2/ExtraBold.ttf", 'assets/fonts/Exo2/ExtraBold.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/ExtraLight.ttf", 'assets/fonts/Oswald/ExtraLight.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/Light.ttf", 'assets/fonts/Oswald/Light.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/Regular.ttf", 'assets/fonts/Oswald/Regular.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/Medium.ttf", 'assets/fonts/Oswald/Medium.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/SemiBold.ttf", 'assets/fonts/Oswald/SemiBold.ttf');
+        $zip->addFile("$folder_template/assets/fonts/Oswald/Bold.ttf", 'assets/fonts/Oswald/Bold.ttf');
         
         $zip->addFile("$folder_template/assets/js/jquery.js", 'assets/js/jquery.js');
         $zip->addFile("$folder_template/assets/js/popper.min.js", 'assets/js/popper.min.js');

@@ -33,9 +33,6 @@ namespace backend\modules\<?= $model->module_name ?>\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-<?php if(isset($attrs['url'])) { ?>
-use yii\behaviors\SluggableBehavior;
-<?php } ?>
 
 
 class <?= $model->table_name ?> extends ActiveRecord
@@ -46,13 +43,13 @@ class <?= $model->table_name ?> extends ActiveRecord
         '<?= $key ?>',
 <?php } ?>
     ];
-
+    
 <?php } ?>
 <?php if ($model->view_relations) { ?>
 <?php foreach ($model->view_relations as $r) { ?>
     public $<?= $r['var_name'] ?>;
 <?php } ?>
-
+    
 <?php } ?>
 <?php if ($model->has_seo_meta) { ?>
     public $seo_meta = [];
@@ -62,26 +59,45 @@ class <?= $model->table_name ?> extends ActiveRecord
     {
         return '<?= $model->table_name ?>';
     }
-
-<?php if(isset($attrs['url'])) { ?>
+    
+<?php if (isset($attrs['slug']) || $model->view_relations) { ?>
     public function behaviors()
     {
         return [
+<?php if (isset($attrs['slug'])) { ?>
             'sluggable' => [
-                'class' => SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'url',
+                'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
+<?php } ?>
+<?php foreach ($model->view_relations as $r) { ?>
+        'relations_one_many' => [
+            'class' => \common\behaviors\RelationBehavior::className(),
+            'type' => 'oneMany',
+            'attributes' => [
+                [
+                    'model' => new <?= $r['model'] ?>,
+                    'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
+                    'attribute' => '<?= $r['var_name'] ?>',
+                    'properties' => [
+                        'main' => 'item_id',
+                        'relational' => [],
+                    ],
+                ],
+            ],
+        ],
+<?php } ?>
         ];
     }
-
+    
 <?php } ?>
     public function rules()
     {
-        return [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
+        return [<?= empty($rules) ? null : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
     }
-
+    
     public function attributeLabels()
     {
         return [
@@ -91,46 +107,10 @@ class <?= $model->table_name ?> extends ActiveRecord
         ];
     }
 <?php foreach ($model->model_relations as $r) { ?>
-
+    
     public function get<?= $r['name'] ?>()
     {
         return $this-><?= $r['type'] ?>(<?= $r['model'] ?>::className(), [<?= "'" . $r['cond_from'] . "' => '" . $r['cond_to'] . "'" ?>]);
-    }
-<?php } ?>
-<?php if ($model->view_relations) { ?>
-
-    public function afterSave($insert, $changedAttributes)
-    {
-<?php foreach ($model->view_relations as $r) { ?>
-<?php
-    $var_name = $r['var_name'];
-    $var_name_rel = str_replace('_tmp', '', $var_name);
-    $var_name_mdl = str_replace('_tmp', '_mdl', $var_name);
-?>
-        //        <?= strtoupper($var_name_rel) . "\n" ?>
-
-        $<?= $var_name_rel ?> = ArrayHelper::index($this-><?= $var_name_rel ?>, 'id');
-
-        if ($this-><?= $var_name ?>) {
-            $counter = 0;
-
-            foreach ($this-><?= $var_name ?> as $key => $value) {
-                $<?= $var_name_mdl ?> = <?= $r['model'] ?>::findOne($key) ?: new <?= $r['model'] ?>;
-                $<?= $var_name_mdl ?>->item_id = $this->id;
-                //        ATTRS
-                $<?= $var_name_mdl ?>->sort = $counter;
-                $<?= $var_name_mdl ?>->save();
-
-                ArrayHelper::remove($<?= $var_name_rel ?>, $key);
-
-                $counter++;
-            }
-        }
-
-        foreach ($<?= $var_name_rel ?> as $value) { $value->delete(); };
-
-<?php } ?>
-        return parent::afterSave($insert, $changedAttributes);
     }
 <?php } ?>
 }

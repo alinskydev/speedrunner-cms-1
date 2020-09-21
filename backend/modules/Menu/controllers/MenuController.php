@@ -11,10 +11,10 @@ use backend\modules\Menu\models\Menu;
 
 class MenuController extends Controller
 {
-    public function actionTree($id = 1)
+    public function actionTree()
     {
         return $this->render('tree', [
-            'data' => Menu::findOne($id)->tree(),
+            'data' => Menu::find()->where(['depth' => 0])->one()->tree(),
         ]);
     }
     
@@ -38,25 +38,27 @@ class MenuController extends Controller
     
     public function actionUpdate($id)
     {
-        if (!in_array($id, [1])) {
-            $model = Menu::findOne($id);
-            
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['tree']);
-            }
-            
-            return $this->renderAjax('update', [
-                'model' => $model,
-            ]);
-        } else {
-            $this->redirect(['tree']);
+        $model = Menu::findOne($id);
+        
+        if (!$model || $model->depth == 0) {
+            return $this->redirect(['tree']);
         }
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['tree']);
+        }
+        
+        return $this->renderAjax('update', [
+            'model' => $model,
+        ]);
     }
     
     public function actionDelete($id)
     {
-        if (!in_array($id, [1])) {
-            Menu::findOne($id)->delete();
+        $model = Menu::findOne($id);
+        
+        if ($model && $model->depth > 0) {
+            $model->delete();
         }
         
         return $this->redirect(['tree']);
@@ -64,8 +66,10 @@ class MenuController extends Controller
     
     public function actionDeleteWithChildren($id)
     {
-        if (!in_array($id, [1])) {
-            Menu::findOne($id)->deleteWithChildren();
+        $model = Menuz::findOne($id);
+        
+        if ($model && $model->depth > 0) {
+            $model->deleteWithChildren();
         }
         
         return $this->redirect(['tree']);
@@ -73,10 +77,10 @@ class MenuController extends Controller
     
     public function actionMove($item, $action, $second)
     {
-        if (!in_array($item, [1])) {
-            $item_model = Menu::findOne($item);
-            $second_model = Menu::findOne($second);
-            
+        $item_model = Menu::findOne($item);
+        $second_model = Menu::findOne($second);
+        
+        if ($item_model && $item_model->depth > 0 && $second_model && $second_model->depth > 0) {
             switch ($action) {
                 case 'after':
                     $item_model->insertAfter($second_model);
@@ -90,16 +94,19 @@ class MenuController extends Controller
             }
             
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
     
     public function actionExpandStatus($item)
     {
-        $item_model = Menu::findOne($item);
-        $item_model->expanded = intval(!$item_model->expanded);
+        $model = Menu::findOne($item);
         
-        return $item_model->save();
+        if ($model && $model->depth > 0) {
+            return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
+        }
+        
+        return false;
     }
 }

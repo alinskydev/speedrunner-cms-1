@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\StaticPage\models;
+namespace backend\modules\Staticpage\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
@@ -9,11 +9,11 @@ use yii\web\UploadedFile;
 use yii\db\JsonExpression;
 
 
-class StaticPageBlock extends ActiveRecord
+class StaticpageBlock extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'StaticPageBlock';
+        return 'StaticpageBlock';
     }
     
     public function rules()
@@ -43,7 +43,7 @@ class StaticPageBlock extends ActiveRecord
                 if (!$key || !in_array($key, $attrs)) {
                     $error_msg = Yii::t('app', 'Invalid type in {label}', ['label' => $this->label]);
                     $this->addError($attribute, $error_msg);
-                    Yii::$app->session->setFlash('danger', $error_msg);
+                    Yii::$app->session->addFlash('danger', $error_msg);
                 }
             }
         }

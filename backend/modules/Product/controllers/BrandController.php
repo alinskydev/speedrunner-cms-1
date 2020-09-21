@@ -33,9 +33,9 @@ class BrandController extends Controller
         return Yii::$app->sr->record->deleteModel(new ProductBrand);
     }
     
-    public function actionItemsList($q = '')
+    public function actionItemsList($q = null)
     {
-        $out['results'] = ProductBrand::itemsList('name', 'translation', 20, $q);
+        $out['results'] = ProductBrand::itemsList('name', 'translation', $q)->asArray()->all();
         return $this->asJson($out);
     }
 }

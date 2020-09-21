@@ -2,13 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\Menu;
-use backend\modules\StaticPage\models\StaticPage;
+use backend\modules\Staticpage\models\Staticpage;
 
 
-$static_pages = StaticPage::find()->asArray()->all();
-$static_page_items = array_map(function($value) {
-    return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/static-page/static-page/update', 'location' => $value['location']]];
-}, $static_pages);
+$staticpages = Staticpage::find()->asArray()->all();
+$staticpage_items = array_map(function($value) {
+    return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/staticpage/staticpage/update', 'location' => $value['location']]];
+}, $staticpages);
 
 $menuItems = [
     [
@@ -20,7 +20,7 @@ $menuItems = [
     ],
     [
         'label' => Yii::t('app', 'Static pages'),
-        'items' => $static_page_items,
+        'items' => $staticpage_items,
     ],
     [
         'label' => Yii::t('app', 'Content'),
@@ -52,7 +52,7 @@ $menuItems = [
             ['label' => Yii::t('app', 'Products'), 'url' => ['/product/product/index']],
             ['label' => Yii::t('app', 'Categories'), 'url' => ['/product/category/tree']],
             ['label' => Yii::t('app', 'Brands'), 'url' => ['/product/brand/index']],
-            ['label' => Yii::t('app', 'Attributes'), 'url' => ['/product/attribute/index']],
+            ['label' => Yii::t('app', 'Specifications'), 'url' => ['/product/specification/index']],
             ['label' => Yii::t('app', 'Comments'), 'url' => ['/product/comment/index']],
             ['label' => Yii::t('app', 'Rates'), 'url' => ['/product/rate/index']],
         ],
@@ -88,7 +88,7 @@ $menuItems = [
         ],
     ],
     [
-        'label' => Yii::t('app', 'SpeedRunner'),
+        'label' => Yii::t('app', 'Speedrunner'),
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],
             ['label' => Yii::t('app', 'Functions'), 'url' => ['/speedrunner/speedrunner/index']],

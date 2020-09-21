@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use zxbodya\yii2\elfinder\ElFinderInput;
 
 $this->title = 'Block Generator';
-$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
 <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var el, action, sendData;
         
         $(document).on('click', '.btn-attr-add', function() {
@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         $(document).on('click', '.btn-attr-remove', function() {
             $(this).parents('.block-attrs').remove();
         });
-    };
+    });
 </script>
 
 

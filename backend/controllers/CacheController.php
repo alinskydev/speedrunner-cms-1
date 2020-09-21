@@ -13,7 +13,7 @@ class CacheController extends Controller
     public function actionRefreshRoutes()
     {
         Yii::$app->sr->translation->fixMessages();
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Process has been completed'));
+        Yii::$app->session->addFlash('success', Yii::t('app', 'Process has been completed'));
         
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -23,7 +23,7 @@ class CacheController extends Controller
         $dir = Yii::getAlias('@frontend/web/assets/thumbs');
         FileHelper::removeDirectory($dir);
         FileHelper::createDirectory($dir);
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Process has been completed'));
+        Yii::$app->session->addFlash('success', Yii::t('app', 'Process has been completed'));
         
         return $this->redirect(Yii::$app->request->referrer);
     }
@@ -45,7 +45,7 @@ class CacheController extends Controller
             }
         }
         
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Process has been completed'));
+        Yii::$app->session->addFlash('success', Yii::t('app', 'Process has been completed'));
         
         return $this->redirect(Yii::$app->request->referrer);
     }

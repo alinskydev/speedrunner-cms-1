@@ -11,16 +11,16 @@ use backend\modules\Product\models\ProductCategory;
 
 class ProductController extends Controller
 {
-    public function actionCatalog($full_url)
+    public function actionCatalog($url)
     {
-        $url = explode('/', $full_url);
-        $url = end($url);
+        $slug = explode('/', $url);
+        $slug = end($slug);
         
-        if (!($cat = ProductCategory::find()->where(['url' => $url])->one())) {
+        if (!($cat = ProductCategory::find()->where(['slug' => $slug])->one())) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        if ($cat->fullUrl() != $full_url) {
+        if ($cat->url() != $url) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         

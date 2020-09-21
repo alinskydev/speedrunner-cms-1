@@ -33,7 +33,7 @@ use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;
 
 class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
 {
-<?php if(isset($attrs['url'])) { ?>
+<?php if(isset($attrs['slug'])) { ?>
     public function behaviors()
     {
         $behaviors = parent::behaviors();

@@ -27,6 +27,8 @@ $bookmark_add_value = implode(' &rsaquo; ', $bookmark_add_value);
 $flashes = Yii::$app->session->getAllFlashes();
 $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
 
+\backend\modules\Product\models\ProductCategory::updateAll(['updated' => '2020-09-12 15:00:00']);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -35,9 +37,9 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/elfinder-file-upload']) ?>">
-    <meta name="ckeditor-image_upload-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/editor-image-upload']) ?>">
-    <meta name="ckeditor-images-connection-url" content="<?= Yii::$app->urlManagerBackend->createUrl(['connection/editor-images-get']) ?>">
+    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-file-upload']) ?>">
+    <meta name="ckeditor-image_upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/editor-image-upload']) ?>">
+    <meta name="ckeditor-images-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/editor-images-get']) ?>">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -211,7 +213,12 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
     <div class="modal-dialog"></div>
 </div>
 
-<div id="ajax-mask"></div>
+<div id="ajax-mask">
+    <div class="ajax-mask-wrapper">
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
 
 <?php $this->endBody() ?>
 </body>

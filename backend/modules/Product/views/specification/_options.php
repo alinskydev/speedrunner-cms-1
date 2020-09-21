@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\Product\models\ProductAttributeOption;
+use backend\modules\Product\models\ProductSpecificationOption;
 
-$options = ArrayHelper::merge($model->options, [new ProductAttributeOption]);
+$options = ArrayHelper::merge($model->options, [new ProductSpecificationOption]);
 
 ?>
 
@@ -32,7 +32,7 @@ $options = ArrayHelper::merge($model->options, [new ProductAttributeOption]);
                 
                 <td>
                     <?= $form->field($o, 'name', ['template' => '{input}'])->textInput([
-                        'name' => "ProductAttribute[options_tmp][$o_id][name]",
+                        'name' => "ProductSpecification[options_tmp][$o_id][name]",
                         'class' => 'form-control',
                     ]) ?>
                 </td>

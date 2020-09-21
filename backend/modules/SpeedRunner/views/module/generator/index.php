@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $this->title = 'Module Generator';
-$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
 <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var el, action, sendData;
         
         $('#generatorform-module_name').on('change', function() {
@@ -123,11 +123,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         function getModelSchema() {
             action = '<?= Yii::$app->urlManager->createUrl(['speedrunner/module/generator/model-schema']) ?>';
             sendData = {
-                "table_name": $('#generatorform-table_name').val(),
-                "_csrf-backend": $('meta[name=csrf-token]').attr('content')
+                table_name: $('#generatorform-table_name').val()
             };
             
-            $.post(action, sendData, function(data) {
+            $.get(action, sendData, function(data) {
                 $('#generatorform-relations-result').html(data.relations);
                 $('#generatorform-attrs-result').html(data.attrs);
             });
@@ -136,7 +135,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         $('#generatorform-table_name').on('change', function() {
             getModelSchema();
         });
-    };
+    });
 </script>
 
 

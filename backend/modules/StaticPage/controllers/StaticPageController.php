@@ -1,37 +1,34 @@
 <?php
 
-namespace backend\modules\StaticPage\controllers;
+namespace backend\modules\Staticpage\controllers;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\StaticPage\models\StaticPage;
-use backend\modules\StaticPage\models\StaticPageBlock;
+use backend\modules\Staticpage\models\Staticpage;
+use backend\modules\Staticpage\models\StaticpageBlock;
 
 
-class StaticPageController extends Controller
+class StaticpageController extends Controller
 {
     public function actionUpdate($location)
     {
-        $model = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
+        $model = Staticpage::find()->with(['blocks'])->where(['location' => $location])->one();
 
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        if ($post_data = Yii::$app->request->post('StaticPageBlock')) {
+        if ($post_data = Yii::$app->request->post('StaticpageBlock')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
-
+            
             foreach ($post_data as $key => $p_d) {
-                $block_mdl = $blocks[$key];
-
-                if (isset($p_d['value'])) {
-                    $block_mdl->value = $p_d['value'];
+                if ($relation_mdl = ArrayHelper::getValue($blocks, $key)) {
+                    $relation_mdl->value = ArrayHelper::getValue($p_d, 'value');
+                    $relation_mdl->save();
                 }
-
-                $block_mdl->save();
             }
         }
 
@@ -51,7 +48,7 @@ class StaticPageController extends Controller
 
     public function actionImageDelete($id)
     {
-        if (!($model = StaticPageBlock::findOne($id))) {
+        if (!($model = StaticpageBlock::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -75,7 +72,7 @@ class StaticPageController extends Controller
 
     public function actionImageSort($id)
     {
-        if (!($model = StaticPageBlock::findOne($id))) {
+        if (!($model = StaticpageBlock::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
         }
 

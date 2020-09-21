@@ -29,13 +29,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= "<?= \$this->title ?>\n" ?>
-<?php
-    echo "        <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>\n";
-?>
+    <?php echo "<?php
+        \$buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo \$this->title . Html::tag('div', implode(' ', \$buttons), ['class' => 'float-right']);
+    ?>\n"; ?>
 </h2>
 
 <div class="row">
@@ -47,7 +54,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 </a>
             </li>
 <?php foreach ($model->view_relations as $r) { ?>
-<?php $var_name_rel = str_replace('_tmp', '', $r['var_name']); ?>
+<?php $var_name_rel = str_replace('_tmp', null, $r['var_name']); ?>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-<?= $var_name_rel ?>">
                     <?= "<?= Yii::t('app', '" . ucfirst($var_name_rel) . "') ?>\n" ?>
@@ -106,7 +113,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
             </div>
 <?php foreach ($model->view_relations as $r) { ?>
-<?php $var_name_rel = str_replace('_tmp', '', $r['var_name']); ?>
+<?php $var_name_rel = str_replace('_tmp', null, $r['var_name']); ?>
             
             <div id="tab-<?= $var_name_rel ?>" class="tab-pane fade">
                 <?= '<?= ' ?>$this->render('_<?= $var_name_rel ?>', [

@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers\module;
+namespace backend\modules\Speedrunner\controllers\module;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\SpeedRunner\forms\module\GeneratorForm;
+use backend\modules\Speedrunner\forms\module\GeneratorForm;
 
 
 class GeneratorController extends Controller
@@ -27,9 +27,9 @@ class GeneratorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->setFlash('success', 'Succeccfully done');
+                Yii::$app->session->addFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'An error occured');
+                Yii::$app->session->addFlash('danger', 'An error occured');
             }
             
             return $this->refresh();
@@ -45,10 +45,8 @@ class GeneratorController extends Controller
         ]);
     }
     
-    public function actionModelSchema()
+    public function actionModelSchema($table_name)
     {
-        $table_name = Yii::$app->request->post('table_name');
-        
         //        RELATIONS
         
         $table_schema_all = ArrayHelper::index($this->dbSchema->getTableSchemas(), 'name');

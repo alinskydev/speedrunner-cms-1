@@ -1,11 +1,11 @@
 <?php
 
-namespace common\helpers\SpeedRunner;
+namespace common\helpers\Speedrunner;
 
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use backend\modules\StaticPage\models\StaticPage;
+use backend\modules\Staticpage\models\Staticpage;
 
 
 class Record
@@ -29,10 +29,14 @@ class Record
     public function updateModel($model, $render_file = 'update', $render_params = [])
     {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Yii::$app->controller->redirect($this->redirect_url);
+            if (Yii::$app->request->get('reload-page')) {
+                return Yii::$app->controller->redirect(['update', 'id' => $model->id]);
+            } else {
+                return Yii::$app->controller->redirect(['index']);
+            }
         }
         
-        $render_type = (Yii::$app->request->isPost && Yii::$app->request->isAjax) ? 'renderAjax' : 'render';
+        $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         $render_params['model'] = $model;
         
         return Yii::$app->controller->{$render_type}($render_file, $render_params);
@@ -50,9 +54,9 @@ class Record
         return Yii::$app->controller->redirect($this->redirect_url);
     }
     
-    public function staticPage($location)
+    public function staticpage($location)
     {
-        $result['page'] = StaticPage::find()->with(['blocks'])->where(['location' => $location])->one();
+        $result['page'] = Staticpage::find()->with(['blocks'])->where(['location' => $location])->one();
         $result['blocks'] = ArrayHelper::map($result['page']->blocks, 'name', 'value');
         
         return $result;

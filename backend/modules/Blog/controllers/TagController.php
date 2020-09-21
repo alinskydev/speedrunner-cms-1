@@ -33,9 +33,9 @@ class TagController extends Controller
         return Yii::$app->sr->record->deleteModel(new BlogTag);
     }
     
-    public function actionItemsList($q = '')
+    public function actionItemsList($q = null)
     {
-        $out['results'] = BlogTag::itemsList('name', 'self', 20, $q);
+        $out['results'] = BlogTag::itemsList('name', 'self', $q)->asArray()->all();
         return $this->asJson($out);
     }
 }

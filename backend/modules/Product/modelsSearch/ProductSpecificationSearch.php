@@ -7,16 +7,16 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 
-use backend\modules\Product\models\ProductAttribute;
+use backend\modules\Product\models\ProductSpecification;
 
 
-class ProductAttributeSearch extends ProductAttribute
+class ProductSpecificationSearch extends ProductSpecification
 {
     public function rules()
     {
         return [
             [['id', 'use_filter', 'use_compare', 'use_detail'], 'integer'],
-            [['name', 'code', 'type'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -27,7 +27,7 @@ class ProductAttributeSearch extends ProductAttribute
 
     public function search($params)
     {
-        $query = ProductAttribute::find();
+        $query = ProductSpecification::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,13 +48,10 @@ class ProductAttributeSearch extends ProductAttribute
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'type' => $this->type,
             'use_filter' => $this->use_filter,
             'use_compare' => $this->use_compare,
             'use_detail' => $this->use_detail,
         ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code]);
         
         //        TRANSLATIONS
         

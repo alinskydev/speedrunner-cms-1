@@ -18,7 +18,7 @@ class SeoMeta extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'model_class' => Yii::t('app', 'Model class'),
-            'model_id' => Yii::t('app', 'Model ID'),
+            'model_id' => Yii::t('app', 'Model id'),
             'lang' => Yii::t('app', 'Lang'),
             'value' => Yii::t('app', 'Value'),
         ];

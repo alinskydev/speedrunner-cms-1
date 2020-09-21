@@ -16,11 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -120,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var id, oldIndex, newIndex, sendData,
             action = '<?= Yii::$app->urlManager->createUrl(['system/settings/sort']) ?>',
             token = $('meta[name=csrf-token]').attr('content');
@@ -147,5 +156,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             }
         }).disableSelection();
-    };
+    });
 </script>

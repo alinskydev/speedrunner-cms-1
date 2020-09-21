@@ -11,10 +11,10 @@ use backend\modules\Product\models\ProductCategory;
 
 class CategoryController extends Controller
 {
-    public function actionTree($id = 1)
+    public function actionTree()
     {
         return $this->render('tree', [
-            'data' => ProductCategory::findOne($id)->tree(),
+            'data' => ProductCategory::find()->where(['depth' => 0])->one()->tree(),
         ]);
     }
     
@@ -38,8 +38,13 @@ class CategoryController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = ProductCategory::find()->with(['attrs'])->where(['id' => $id])->one();
-        $model->attrs_tmp = $model->attrs;
+        $model = ProductCategory::find()->with(['specifications'])->where(['id' => $id])->one();
+        
+        if (!$model || $model->depth == 0) {
+            return $this->redirect(['tree']);
+        }
+        
+        $model->specifications_tmp = $model->specifications;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['tree']);
@@ -52,8 +57,10 @@ class CategoryController extends Controller
     
     public function actionDelete($id)
     {
-        if ($id != 1) {
-            ProductCategory::findOne($id)->delete();
+        $model = ProductCategory::findOne($id);
+        
+        if ($model && $model->depth > 0) {
+            $model->delete();
         }
         
         return $this->redirect(['tree']);
@@ -61,8 +68,10 @@ class CategoryController extends Controller
     
     public function actionDeleteWithChildren($id)
     {
-        if ($id != 1) {
-            ProductCategory::findOne($id)->deleteWithChildren();
+        $model = ProductCategory::findOne($id);
+        
+        if ($model && $model->depth > 0) {
+            $model->deleteWithChildren();
         }
         
         return $this->redirect(['tree']);
@@ -70,10 +79,10 @@ class CategoryController extends Controller
     
     public function actionMove($item, $action, $second)
     {
-        if ($item != 1) {
-            $item_model = ProductCategory::findOne($item);
-            $second_model = ProductCategory::findOne($second);
-            
+        $item_model = ProductCategory::findOne($item);
+        $second_model = ProductCategory::findOne($second);
+        
+        if ($item_model && $item_model->depth > 0 && $second_model && $second_model->depth > 0) {
             switch ($action) {
                 case 'after':
                     $item_model->insertAfter($second_model);
@@ -87,16 +96,19 @@ class CategoryController extends Controller
             }
             
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
     
     public function actionExpandStatus($item)
     {
-        $item_model = ProductCategory::findOne($item);
-        $item_model->expanded = intval(!$item_model->expanded);
+        $model = ProductCategory::findOne($item);
         
-        return $item_model->save();
+        if ($model && $model->depth > 0) {
+            return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
+        }
+        
+        return false;
     }
 }

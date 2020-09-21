@@ -21,11 +21,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -62,14 +71,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             switch ($b->type) {
                                 case 'textInput':
                                     echo $form->field($b, 'value')->textInput([
-                                        'name' => "StaticPageBlock[$b->id][value]",
+                                        'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id"
                                     ])->label($b->label);
                                     
                                     break;
                                 case 'textArea':
                                     echo $form->field($b, 'value')->textArea([
-                                        'name' => "StaticPageBlock[$b->id][value]",
+                                        'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
                                         'rows' => 5
                                     ])->label($b->label);
@@ -79,7 +88,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     echo $form->field($b, 'value', [
                                         'checkboxTemplate' => Yii::$app->params['switcher_template'],
                                     ])->checkbox([
-                                        'name' => "StaticPageBlock[$b->id][value]",
+                                        'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
                                         'class' => 'custom-control-input',
                                         'label' => null,
@@ -95,7 +104,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                             'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
                                         ],
                                         'options' => [
-                                            'name' => "StaticPageBlock[$b->id][value]",
+                                            'name' => "StaticpageBlock[$b->id][value]",
                                             'id' => "staticpageblock-$b->id",
                                         ],
                                     ])->label($b->label);
@@ -104,7 +113,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 case 'ElFinder':
                                     echo $form->field($b, 'value')->widget(ElFinderInput::className(), [
                                         'connectorRoute' => '/connection/elfinder-file-upload',
-                                        'name' => "StaticPageBlock[$b->id][value]",
+                                        'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
                                     ])->label($b->label);
                                     
@@ -116,11 +125,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'options' => [
                                             'accept' => 'image/*',
                                             'multiple' => true,
-                                            'name' => "StaticPageBlock[$b->id][value][]",
+                                            'name' => "StaticpageBlock[$b->id][value][]",
                                             'id' => "staticpageblock-$b->id",
                                         ],
                                         'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['static-page/static-page/image-delete', 'id' => $b->id]),
+                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-delete', 'id' => $b->id]),
                                             'initialPreview' => $b->value ?: [],
                                             'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?: [], function ($value) {
                                                 return ['key' => $value, 'downloadUrl' => $value];
@@ -128,7 +137,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         ]),
                                         'pluginEvents' => [
                                             'filesorted' => new JsExpression("function(event, params) {
-                                                $.post('".Yii::$app->urlManager->createUrl(['static-page/static-page/image-sort', 'id' => $b->id])."', {sort: params});
+                                                $.post('".Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-sort', 'id' => $b->id])."', {sort: params});
                                             }")
                                         ],
                                     ])->label($b->label);

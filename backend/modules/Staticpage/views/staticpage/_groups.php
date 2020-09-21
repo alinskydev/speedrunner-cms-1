@@ -18,7 +18,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
 
 <div class="form-group">
     <?= Html::label($model->label) ?>
-    <?= Html::hiddenInput("StaticPageBlock[$model->id][value]", null); ?>
+    <?= Html::hiddenInput("StaticpageBlock[$model->id][value]", null); ?>
     
     <table class="table table-bordered table-relations">
         <tbody>
@@ -38,7 +38,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                 </label>
                                 
                                 <?php
-                                    $input_name = "StaticPageBlock[$model->id][value][$key][$a_key]";
+                                    $input_name = "StaticpageBlock[$model->id][value][$key][$a_key]";
                                     $input_value = ArrayHelper::getValue($group, $a_key);
                                     
                                     switch ($a_value['type']) {

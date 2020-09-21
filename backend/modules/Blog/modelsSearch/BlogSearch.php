@@ -24,7 +24,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'category_id'], 'integer'],
-            [['name', 'url', 'created', 'updated', 'published'], 'safe'],
+            [['name', 'slug', 'created', 'updated', 'published'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class BlogSearch extends Blog
             'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'url', $this->url])
+        $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'published', $this->published])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);

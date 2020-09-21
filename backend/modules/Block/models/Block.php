@@ -43,7 +43,7 @@ class Block extends ActiveRecord
                 if (!$key || !in_array($key, $attrs)) {
                     $error_msg = Yii::t('app', 'Invalid type in {label}', ['label' => $this->type->label]);
                     $this->addError($attribute, $error_msg);
-                    Yii::$app->session->setFlash('danger', $error_msg);
+                    Yii::$app->session->addFlash('danger', $error_msg);
                 }
             }
         }

@@ -92,12 +92,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],\n";
                         
                         break;
-                    case 'url':
+                    case 'slug':
                         echo "            [
-                'attribute' => 'url',
+                'attribute' => 'slug',
                 'format' => 'raw',
                 'value' => function (\$model) {
-                    return Html::a(\$model->url, Yii::\$app->urlManagerFrontend->createUrl(['', 'url' => \$model->url]), ['target' => '_blank']);
+                    return Html::a(\$model->slug, Yii::\$app->urlManagerFrontend->createUrl(['', 'slug' => \$model->slug]), ['target' => '_blank']);
                 },
             ],\n";
                         
@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '<?= implode('', $buttons_template) ?>',
+                'template' => '<?= implode(null, $buttons_template) ?>',
                 'buttons' => [],
             ],
         ],

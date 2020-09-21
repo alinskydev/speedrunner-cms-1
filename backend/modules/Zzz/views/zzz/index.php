@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use common\components\framework\grid\GridView;
 use yii\helpers\ArrayHelper;
+use common\components\framework\grid\GridView;
 
 use backend\modules\Zzz\models\ZzzCategory;
 
@@ -46,12 +46,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             'name',
+            'slug',
             [
                 'attribute' => 'category_id',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map(ZzzCategory::itemsList('name', 'translation'), 'id', 'text'),
+                'filter' => ArrayHelper::map(ZzzCategory::itemsList('name', 'translation', null)->asArray()->all(), 'id', 'text'),
                 'value' => function ($model) {
-                    return $model->category ? $model->category->name : null;
+                    return ArrayHelper::getValue($model->category, 'name');
                 },
                 'filterInputOptions' => [
                     'data-toggle' => 'selectpicker',
@@ -61,7 +62,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'updated',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update} {delete}',
                 'buttons' => [],
             ],
         ],

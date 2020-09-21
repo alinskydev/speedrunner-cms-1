@@ -14,8 +14,8 @@ class ProductCategoryUrlRule extends BaseObject implements UrlRuleInterface
     public function createUrl($manager, $route, $params)
     {
         if ($route == $this->route) {
-            $path = '/catalog/' . $params['full_url'];
-            unset($params['full_url']);
+            $path = '/catalog/' . $params['url'];
+            unset($params['url']);
             
             if ($params) {
                 $path .= '?';
@@ -42,7 +42,7 @@ class ProductCategoryUrlRule extends BaseObject implements UrlRuleInterface
         $path = explode('/', $request->pathInfo);
         
         if (array_shift($path) == 'catalog') {
-            return [$this->route, ['full_url' => implode('/', $path)]];
+            return [$this->route, ['url' => implode('/', $path)]];
         } else {
             return false;
         }

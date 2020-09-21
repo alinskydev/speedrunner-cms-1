@@ -65,12 +65,12 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $page = Yii::$app->sr->record->staticPage('home');
+        $page = Yii::$app->sr->record->staticpage('home');
         
         return $this->render('index', [
             'page' => $page['page'],
             'blocks' => $page['blocks'],
-            'cats' => ProductCategory::find()->all(),
+            'categories' => ProductCategory::find()->all(),
         ]);
     }
     
@@ -93,11 +93,11 @@ class SiteController extends Controller
             }
             
             return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
         }
+        
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
     }
     
     public function actionLogin()
@@ -111,12 +111,12 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            $model->password = '';
-            
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            $model->password = null;
         }
+        
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
     
     public function actionLogout()

@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $this->title = 'Static Page Generator';
-$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
 <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var el, action, sendData,
             partIndex = 0;
         
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         $(document).on('click', '.btn-attr-remove', function() {
             $(this).parents('.page-attrs').remove();
         });
-    };
+    });
 </script>
 
 

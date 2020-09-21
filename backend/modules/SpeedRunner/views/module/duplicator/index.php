@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $this->title = 'Module Duplicator';
-$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

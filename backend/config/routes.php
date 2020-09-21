@@ -4,6 +4,7 @@ return [
     '/' => 'site/index',
     'login' => 'site/login',
     'logout' => 'site/logout',
+    'error' => 'site/error',
     
-    'static-page/update/<location>' => 'static-page/static-page/update',
+    'staticpage/update/<location>' => 'staticpage/static-page/update',
 ];

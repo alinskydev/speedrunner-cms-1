@@ -14,11 +14,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -46,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput() ?>
-                <?= $form->field($model, 'url')->textInput() ?>
+                <?= $form->field($model, 'slug')->textInput() ?>
             </div>
             
             <div id="tab-assign" class="tab-pane fade">
@@ -119,7 +124,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
 <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         $('#sortable-from li button').tooltip({
             animated: 'fade',
             placement: 'auto',
@@ -159,5 +164,5 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         }).disableSelection();
         
         $('#sortable-to').sortable({handle: '.table-sorter', placeholder: 'sortable-placeholder mb-2'}).disableSelection();
-    };
+    });
 </script>

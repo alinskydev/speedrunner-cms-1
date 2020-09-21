@@ -62,9 +62,9 @@ class TranslationSource extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
-            foreach ($this->translations_tmp as $key => $t_t) {
+            foreach ($this->translations_tmp as $key => $value) {
                 $t_msg = TranslationMessage::find()->where(['counter' => $key])->one();
-                $t_msg->translation = $t_t;
+                $t_msg->translation = $value;
                 $t_msg->save();
             }
         }

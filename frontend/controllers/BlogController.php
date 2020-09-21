@@ -21,8 +21,7 @@ class BlogController extends Controller
                 'variations' => [
                     Yii::$app->language,
                     Yii::$app->user,
-                    Yii::$app->request->get('page'),
-                    Yii::$app->request->get('url'),
+                    Yii::$app->request->get(),
                 ],
             ],
         ];
@@ -44,11 +43,11 @@ class BlogController extends Controller
         ]);
     }
     
-    public function actionView($url)
+    public function actionView($slug)
     {
         $model = Blog::find()->where([
             'and',
-            ['url' => $url],
+            ['slug' => $slug],
             ['<=', 'published', date('Y-m-d H:i:s')],
         ])->one();
         

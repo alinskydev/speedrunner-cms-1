@@ -21,11 +21,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ]); ?>
 
 <h2 class="main-title">
-    <?= $this->title ?>
-    <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-        ['class' => 'btn btn-primary btn-icon float-right']
-    ) ?>
+    <?php
+        $buttons = [
+            Html::button(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
+                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+            ),
+            Html::submitButton(
+                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
+                ['class' => 'btn btn-primary btn-icon']
+            ),
+        ];
+        
+        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
+    ?>
 </h2>
 
 <div class="row">
@@ -47,8 +56,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-cats-attrs">
-                    <?= Yii::t('app', 'Categories & Attributes') ?>
+                <a class="nav-link" data-toggle="pill" href="#tab-categories-specifications">
+                    <?= Yii::t('app', 'Categories & Specifications') ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -68,23 +77,15 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </li>
         </ul>
     </div>
-
+    
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput() ?>
-                <?= $form->field($model, 'url')->textInput() ?>
-
-                <?= $form->field($model, 'is_active', [
-                    'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                ])->checkbox([
-                    'class' => 'custom-control-input'
-                ])->label(null, [
-                    'class' => 'custom-control-label'
-                ]) ?>
-
+                <?= $form->field($model, 'slug')->textInput() ?>
+                
                 <?= $form->field($model, 'brand_id')->widget(Select2::classname(), [
-                    'data' => $model->brand ? [$model->brand_id => $model->brand->name] : [],
+                    'data' => [$model->brand_id => ArrayHelper::getValue($model->brand, 'name')],
                     'options' => [
                         'placeholder' => '',
                     ],
@@ -98,7 +99,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]) ?>
-
+                
                 <?= $form->field($model, 'short_description')->textArea(['rows' => 5]); ?>
                 <?= $form->field($model, 'full_description')->widget(Widget::className(), [
                     'settings' => [
@@ -107,14 +108,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                 ]); ?>
             </div>
-
+            
             <div id="tab-stock" class="tab-pane fade">
                 <?= $form->field($model, 'price')->textInput() ?>
                 <?= $form->field($model, 'quantity')->textInput() ?>
                 <?= $form->field($model, 'sku')->textInput() ?>
                 <?= $form->field($model, 'sale')->textInput() ?>
             </div>
-
+            
             <div id="tab-images" class="tab-pane fade">
                 <?= $form->field($model, 'images', [
                     'template' => '{label}{error}{hint}{input}',
@@ -137,27 +138,27 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                 ]); ?>
             </div>
-
-            <div id="tab-cats-attrs" class="tab-pane fade">
+            
+            <div id="tab-categories-specifications" class="tab-pane fade">
                 <?= $form->field($model, 'main_category_id')->dropDownList(ProductCategory::itemsTree([1]), [
                     'data-toggle' => 'selectpicker',
                     'prompt' => ' '
                 ]) ?>
-
-                <?= $this->render('_category_tree', [
+                
+                <?= $this->render('_categories', [
                     'model' => $model,
                     'form' => $form,
                     'data' => ProductCategory::findOne(1)->tree(),
                 ]); ?>
             </div>
-
+            
             <div id="tab-variations" class="tab-pane fade">
                 <?= $this->render('_variations', [
                     'model' => $model,
                     'form' => $form,
                 ]); ?>
             </div>
-
+            
             <div id="tab-related" class="tab-pane fade">
                 <?= $form->field($model, 'related_tmp')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map($model->related, 'id', 'name'),
@@ -176,7 +177,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]) ?>
             </div>
-
+            
             <div id="tab-seo-meta" class="tab-pane fade">
                 <?= Yii::$app->sr->seo->getMetaLayout($model) ?>
             </div>
@@ -185,89 +186,3 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 </div>
 
 <?php ActiveForm::end(); ?>
-
-
-<script>
-    window.onload = function() {
-
-        //      ATTRS
-
-        var action = '<?= Yii::$app->urlManager->createUrl('product/product/get-attributes') ?>',
-            json_data, html, options;
-
-        function getAttsFunc(categories) {
-            sendData = {
-                id: '<?= $model->id ? $model->id : 0 ?>',
-                categories: categories
-            };
-
-            $.get(action, sendData, function(data) {
-                html = '';
-                json_data = data.json;
-
-                $('#attributes-inner').html(data.html);
-
-                for (i = 0; i < json_data.length; i++) {
-                    html += '<option value="' + json_data[i]['id'] + '">' + json_data[i]['name'] + '</option>';
-                }
-
-                $('#vars-attr-list').html(html);
-                changeAttrFunc($('#vars-attr-list').val());
-            });
-        };
-
-        function changeAttrFunc(attrId) {
-            html = '';
-
-            for (i = 0; i < json_data.length; i++) {
-                if (attrId == json_data[i]['id']) {
-                    options = json_data[i]['options'];
-
-                    for (j = 0; j < options.length; j++) {
-                        html += '<option value="' + options[j]['id'] + '">' + options[j]['name'] + '</option>';
-                    }
-
-                    $('#vars-option-list').html(html);
-                }
-            }
-        }
-
-        getAttsFunc($('#product-cats_tmp').val());
-        processVars();
-
-        $('#product-cats_tmp').on('change', function() {
-            getAttsFunc($(this).val());
-        });
-
-        $('#vars-attr-list').on('change', function() {
-            changeAttrFunc($(this).val());
-        });
-
-        //      VARIATION UPDATE
-
-        var el, action, sendData;
-
-        $(document).on('submit', '#vars-edit-form', function(e) {
-            e.preventDefault();
-
-            el = $(this);
-            action = el.attr('action');
-            sendData = new FormData(el[0]);
-
-            $.ajax({
-                type: "POST",
-                url: action,
-                data: sendData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data === '1') {
-                        $('#main-modal').modal('hide');
-                    } else {
-                        $('#main-modal').html(data);
-                    }
-                }
-            });
-        });
-    };
-</script>

@@ -4,7 +4,7 @@ namespace backend\modules\Zzz\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
-use yii\behaviors\SluggableBehavior;
+use yii\helpers\ArrayHelper;
 
 
 class ZzzCategory extends ActiveRecord
@@ -23,9 +23,9 @@ class ZzzCategory extends ActiveRecord
     {
         return [
             'sluggable' => [
-                'class' => SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
                 'attribute' => 'name',
-                'slugAttribute' => 'url',
+                'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
         ];
@@ -35,9 +35,9 @@ class ZzzCategory extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'url', 'image'], 'string', 'max' => 100],
-            [['url'], 'unique'],
-            [['url'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['name', 'slug', 'image'], 'string', 'max' => 100],
+            [['slug'], 'unique'],
+            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['description'], 'string'],
         ];
     }
@@ -47,7 +47,7 @@ class ZzzCategory extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'url' => Yii::t('app', 'Url'),
+            'slug' => Yii::t('app', 'Slug'),
             'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),

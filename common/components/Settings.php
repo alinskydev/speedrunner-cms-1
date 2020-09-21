@@ -20,6 +20,6 @@ class Settings extends Component
     
     public function __get($name)
     {
-        return isset($this->_attributes[$name]) ? $this->_attributes[$name] : null;
+        return ArrayHelper::getValue($this->_attributes, $name);
     }
 }

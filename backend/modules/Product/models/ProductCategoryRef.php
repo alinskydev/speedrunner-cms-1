@@ -12,4 +12,13 @@ class ProductCategoryRef extends ActiveRecord
     {
         return 'ProductCategoryRef';
     }
+    
+    public function rules()
+    {
+        return [
+            [['product_id', 'category_id'], 'required'],
+            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
+            [['category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
+        ];
+    }
 }

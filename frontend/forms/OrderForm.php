@@ -55,13 +55,14 @@ class OrderForm extends Model
     
     public function save()
     {
-        $total_quantity = 0;
         $total_price = 0;
+        $total_quantity = 0;
         
         $cart = Yii::$app->session->get('cart', []);
         $cart_products = ArrayHelper::getValue($cart, 'products', []);
         $cart_products = ArrayHelper::getColumn($cart_products, 'total_quantity');
         
+        $transaction = Yii::$app->db->beginTransaction();
         $order = $this->order;
         
         foreach ($this->attributes as $key => $a) {
@@ -104,19 +105,19 @@ class OrderForm extends Model
             }
         }
         
-        if ($total_price && $total_quantity) {
-            $order->updateAttributes([
-                'total_quantity' => $total_quantity,
-                'total_price' => $total_price,
-            ]);
-            
-            Yii::$app->session->remove('cart');
-            
-            return $order->key;
+        if (!$total_price || !$total_quantity) {
+            $transaction->rollBack();
+            return false;
         }
         
-        $order->delete();
+        $transaction->commit();
+        Yii::$app->session->remove('cart');
         
-        return null;
+        $order->updateAttributes([
+            'total_quantity' => $total_quantity,
+            'total_price' => $total_price,
+        ]);
+        
+        return $order->key;
     }
 }

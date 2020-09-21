@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\forms\module;
+namespace backend\modules\Speedrunner\forms\module;
 
 use Yii;
 use yii\base\Model;
@@ -30,7 +30,7 @@ class DestroyerForm extends Model
     static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
-            if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner', 'static-page', 'system', 'user', 'seo'])) {
+            if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner', 'staticpage', 'system', 'user', 'seo'])) {
                 $result[ucfirst($key)] = ucfirst($key);
             }
         }

@@ -49,7 +49,7 @@ class SystemLanguage extends ActiveRecord
     
     static function activeItem()
     {
-        return self::find()->where(['weight' => 1])->asArray()->one();
+        return static::find()->where(['weight' => 1])->asArray()->one();
     }
     
     public function beforeSave($insert)
@@ -76,7 +76,7 @@ class SystemLanguage extends ActiveRecord
     public function beforeDelete()
     {
         if ($this->weight) {
-            Yii::$app->session->setFlash('danger', Yii::t('app', 'You cannot delete main language'));
+            Yii::$app->session->addFlash('danger', Yii::t('app', 'You cannot delete main language'));
             return false;
         }
         

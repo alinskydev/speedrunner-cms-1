@@ -5,7 +5,6 @@ namespace backend\modules\Product\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\web\UploadedFile;
 
 
 class ProductVariation extends ActiveRecord
@@ -15,15 +14,26 @@ class ProductVariation extends ActiveRecord
         return 'ProductVariation';
     }
     
+    public function behaviors()
+    {
+        return [
+            'files' => [
+                'class' => \common\behaviors\FilesBehavior::className(),
+                'attributes' => ['images'],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [
-            [['attribute_id', 'option_id'], 'required'],
-            [['attribute_id'], 'exist', 'targetClass' => ProductAttribute::className(), 'targetAttribute' => 'id'],
-            [['option_id'], 'exist', 'targetClass' => ProductAttributeOption::className(), 'targetAttribute' => 'id'],
-            [['price'], 'number'],
+            [['specification_id', 'option_id'], 'required'],
+            [['price', 'quantity'], 'integer', 'min' => 0],
             [['sku'], 'string', 'max' => 100],
             [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            
+            [['specification_id'], 'exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id'],
+            [['option_id'], 'exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -31,59 +41,26 @@ class ProductVariation extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'item_id' => Yii::t('app', 'Item ID'),
-            'attribute_id' => Yii::t('app', 'Attribute ID'),
-            'option_id' => Yii::t('app', 'Option ID'),
+            'product_id' => Yii::t('app', 'Product'),
+            'specification_id' => Yii::t('app', 'Specification'),
+            'option_id' => Yii::t('app', 'Option'),
             'price' => Yii::t('app', 'Price'),
+            'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'Sku'),
             'images' => Yii::t('app', 'Images'),
+            'sort' => Yii::t('app', 'Sort'),
+            'created' => Yii::t('app', 'Created'),
+            'updated' => Yii::t('app', 'Updated'),
         ];
     }
     
-    public function getAttr()
+    public function getSpecification()
     {
-        return $this->hasOne(ProductAttribute::className(), ['id' => 'attribute_id']);
+        return $this->hasOne(ProductSpecification::className(), ['id' => 'specification_id']);
     }
     
     public function getOption()
     {
-        return $this->hasOne(ProductAttributeOption::className(), ['id' => 'option_id']);
-    }
-    
-    public function beforeValidate()
-    {
-        if ($images = UploadedFile::getInstances($this, 'images')) {
-            $this->images = $images;
-        }
-        
-        return parent::beforeValidate();
-    }
-    
-    public function beforeSave($insert)
-    {
-        //        IMAGES
-        
-        $old_images = ArrayHelper::getValue($this->oldAttributes, 'images', []);
-        
-        if ($images = UploadedFile::getInstances($this, 'images')) {
-            foreach ($images as $img) {
-                $images_arr[] = Yii::$app->sr->image->save($img);
-            }
-            
-            $this->images = array_merge($old_images, $images_arr);
-        } else {
-            $this->images = $old_images;
-        }
-        
-        return parent::beforeSave($insert);
-    }
-    
-    public function afterDelete()
-    {
-        foreach ($this->images as $img) {
-            Yii::$app->sr->file->delete($img);
-        }
-        
-        return parent::afterDelete();
+        return $this->hasOne(ProductSpecificationOption::className(), ['id' => 'option_id']);
     }
 }

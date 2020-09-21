@@ -4,7 +4,7 @@ Yii::$app->sr->seo->registerMeta($page);
 
 ?>
 
-<?php foreach ($cats as $c) { ?>
+<?php foreach ($categories as $c) { ?>
     <?= $c->name ?>
-    <?= Yii::$app->urlManager->createUrl(['product/catalog', 'full_url' => $c->fullUrl()]) ?>
+    <?= Yii::$app->urlManager->createUrl(['product/catalog', 'url' => $c->url()]) ?>
 <?php } ?>

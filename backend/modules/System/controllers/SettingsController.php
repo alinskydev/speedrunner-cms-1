@@ -5,6 +5,7 @@ namespace backend\modules\System\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemSettings;
 
@@ -16,8 +17,8 @@ class SettingsController extends Controller
         if ($post_data = Yii::$app->request->post('SystemSettings')) {
             foreach ($post_data as $key => $p_d) {
                 if ($model = SystemSettings::find()->where(['name' => $key])->one()) {
-                    $model->label = $p_d['label'];
-                    $model->value = $p_d['value'];
+                    $model->label = ArrayHelper::getValue($p_d, 'label');
+                    $model->value = ArrayHelper::getValue($p_d, 'value');
                     $model->save();
                 }
             }

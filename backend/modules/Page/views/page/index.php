@@ -33,10 +33,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'name',
             [
-                'attribute' => 'url',
+                'attribute' => 'slug',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::a($model->url, Yii::$app->urlManagerFrontend->createUrl(['site/page', 'url' => $model->url]), ['target' => '_blank']);
+                    return Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['site/page', 'slug' => $model->slug]), ['target' => '_blank']);
                 }
             ],
             'created',

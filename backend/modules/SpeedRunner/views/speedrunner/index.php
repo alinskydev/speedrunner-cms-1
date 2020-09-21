@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'SpeedRunner';
+$this->title = 'Speedrunner';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

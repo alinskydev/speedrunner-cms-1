@@ -24,7 +24,7 @@ class ProductBrandSearch extends ProductBrand
     {
         return [
             [['id'], 'integer'],
-            [['name', 'url', 'created', 'updated'], 'safe'],
+            [['name', 'slug', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -58,7 +58,7 @@ class ProductBrandSearch extends ProductBrand
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'url', $this->url])
+        $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
         

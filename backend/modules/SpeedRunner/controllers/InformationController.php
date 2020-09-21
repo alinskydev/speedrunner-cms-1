@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers;
+namespace backend\modules\Speedrunner\controllers;
 
 use Yii;
 use yii\web\Controller;

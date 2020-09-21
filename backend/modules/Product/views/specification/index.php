@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
-$this->title = Yii::t('app', 'Product Attributes');
+$this->title = Yii::t('app', 'Product Specifications');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -33,20 +33,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             'name',
-            'code',
-            [
-                'attribute' => 'type',
-                'filter' => $modelSearch->types(),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->types(), $model->type);
-                },
-            ],
             'use_filter:boolean',
             'use_compare:boolean',
             'use_detail:boolean',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update} {delete}',
                 'buttons' => [],
             ],
         ],

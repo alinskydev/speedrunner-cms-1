@@ -54,9 +54,7 @@ class BlogController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = Blog::find()->with(['tags'])->where(['id' => $id])->one();
-        
-        if ($model) {
+        if ($model = Blog::find()->with(['tags'])->where(['id' => $id])->one()) {
             $model->tags_tmp = $model->tags;
             
             return Yii::$app->sr->record->updateModel($model);
@@ -70,9 +68,9 @@ class BlogController extends Controller
         return Yii::$app->sr->record->deleteModel(new Blog);
     }
     
-    public function actionItemsList($q = '')
+    public function actionItemsList($q = null)
     {
-        $out['results'] = Blog::itemsList('name', 'translation', 20, $q);
+        $out['results'] = Blog::itemsList('name', 'translation', $q)->asArray()->all();
         return $this->asJson($out);
     }
     

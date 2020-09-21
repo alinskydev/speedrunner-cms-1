@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers;
+namespace backend\modules\Speedrunner\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -36,7 +36,7 @@ class SpeedrunnerController extends Controller
                 ],
             ],
             [
-                'label' => 'Static Page',
+                'label' => 'Static page',
                 'actions' => [
                     'staticpage_generator' => [
                         'url' => ['speedrunner/staticpage/generator'],

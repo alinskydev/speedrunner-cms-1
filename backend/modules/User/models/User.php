@@ -5,7 +5,6 @@ namespace backend\modules\User\models;
 use Yii;
 use common\components\framework\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -35,7 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'role'], 'required'],
+            [['username', 'email', 'role', 'full_name'], 'required'],
             [['new_password'], 'required', 'when' => function($model) {
                 return $model->isNewRecord;
             }],
@@ -82,9 +81,25 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
+    static function itemsList($attr, $type, $q = null, $limit = 20)
+    {
+        $query = static::find()->joinWith(['profile'])->limit($limit);
+        
+        switch ($type) {
+            case 'self':
+                $query->select(['User.id', "User.$attr as text"])->andFilterWhere(['like', "User.$attr", $q]);
+                break;
+            case 'profile':
+                $query->select(['User.id', "UserProfile.$attr as text"])->andFilterWhere(['like', "UserProfile.$attr", $q]);
+                break;
+        }
+        
+        return $query;
+    }
+    
     public function getProfile()
     {
-        return $this->hasOne(UserProfile::className(), ['item_id' => 'id']);
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
     
     static function find()
@@ -138,7 +153,7 @@ class User extends ActiveRecord implements IdentityInterface
         //        PROFILE
         
         $profile = $this->profile ?: new UserProfile;
-        $profile->item_id = $this->id;
+        $profile->user_id = $this->id;
         
         foreach ($this->profile_attrs as $p_a) {
             $profile->{$p_a} = $this->{$p_a};
@@ -165,7 +180,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeDelete()
     {
         if ($this->id == 1) {
-            Yii::$app->session->setFlash('danger', Yii::t('app', 'You cannot delete this record'));
+            Yii::$app->session->addFlash('danger', Yii::t('app', 'You cannot delete this record'));
             return false;
         }
         
@@ -174,10 +189,10 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterDelete()
     {
+        Yii::$app->sr->file->delete($this->image);
+        
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
-
-        Yii::$app->sr->file->delete($this->image);
         
         return parent::afterDelete();
     }
@@ -202,7 +217,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByPasswordResetToken($token)
     {
         if (!static::isPasswordResetTokenValid($token)) {
-            return null;
+            return false;
         }
 
         return static::findOne([

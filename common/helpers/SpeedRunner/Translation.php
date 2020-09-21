@@ -1,6 +1,6 @@
 <?php
 
-namespace common\helpers\SpeedRunner;
+namespace common\helpers\Speedrunner;
 
 use Yii;
 use yii\helpers\ArrayHelper;

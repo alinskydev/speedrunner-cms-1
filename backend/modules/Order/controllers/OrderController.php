@@ -25,7 +25,11 @@ class OrderController extends Controller
         }
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            if (Yii::$app->request->get('reload-page')) {
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                return $this->redirect(['index']);
+            }
         }
         
         return $this->render('view', [

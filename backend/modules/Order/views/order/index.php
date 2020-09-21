@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'user_id',
-                    'data' => isset($modelSearch->user) ? [$modelSearch->user_id => $modelSearch->user->username] : [],
+                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'username')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]
                 ]),
                 'value' => function ($model) {
-                    return $model->user ? $model->user->username : null;
+                    return ArrayHelper::getValue($model->user, 'username');
                 },
             ],
             [
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     $result[] = $model->getAttributeLabel('total_quantity') . ": $model->total_quantity";
                     $result[] = Yii::t('app', 'Products price') . ": $model->total_price";
                     $result[] = $model->getAttributeLabel('delivery_price') . ": $model->delivery_price";
-                    $result[] = $model->getAttributeLabel('total_price') . ": $model->realTotalPrice()";
+                    $result[] = $model->getAttributeLabel('total_price') . ": " . $model->realTotalPrice();
                     
                     return implode('<br>', $result);
                 }
@@ -95,9 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'status',
                 'format' => 'raw',
-                'filter' => ArrayHelper::getColumn($modelSearch->statuses(), function ($value) {
-                    return $value['label'];
-                }),
+                'filter' => ArrayHelper::getColumn($modelSearch->statuses(), 'label'),
                 'value' => function ($model) {
                     return ArrayHelper::getValue($model->statuses(), "$model->status.label");
                 }

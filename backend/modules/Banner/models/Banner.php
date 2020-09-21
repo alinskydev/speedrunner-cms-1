@@ -16,6 +16,27 @@ class Banner extends ActiveRecord
         return 'Banner';
     }
     
+    public function behaviors()
+    {
+        return [
+            'relations_one_many' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'oneMany',
+                'attributes' => [
+                    [
+                        'model' => new BannerGroup,
+                        'relation' => 'groups',
+                        'attribute' => 'groups_tmp',
+                        'properties' => [
+                            'main' => 'item_id',
+                            'relational' => ['text_1', 'text_2', 'text_3', 'link', 'image'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [
@@ -48,35 +69,5 @@ class Banner extends ActiveRecord
     public function getGroups()
     {
         return $this->hasMany(BannerGroup::className(), ['item_id' => 'id'])->orderBy('sort');
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        GROUPS
-        
-        $groups = ArrayHelper::index($this->groups, 'id');
-        
-        if ($this->groups_tmp) {
-            $counter = 0;
-            
-            foreach ($this->groups_tmp as $key => $g) {
-                $group_mdl = BannerGroup::findOne($key) ?: new BannerGroup;
-                $group_mdl->item_id = $this->id;
-                $group_mdl->text_1 = ArrayHelper::getValue($g, 'text_1');
-                $group_mdl->text_2 = ArrayHelper::getValue($g, 'text_2');
-                $group_mdl->text_3 = ArrayHelper::getValue($g, 'text_3');
-                $group_mdl->link = ArrayHelper::getValue($g, 'link');
-                $group_mdl->image = ArrayHelper::getValue($g, 'image');
-                $group_mdl->sort = $counter;
-                $group_mdl->save();
-                
-                ArrayHelper::remove($groups, $key);
-                $counter++;
-            }
-        }
-        
-        foreach ($groups as $g) { $g->delete(); };
-        
-        return parent::afterSave($insert, $changedAttributes);
     }
 }

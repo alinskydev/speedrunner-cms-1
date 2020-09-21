@@ -26,13 +26,9 @@ class TranslationSourceSearch extends TranslationSource
 
     public function search($params)
     {
-        $query = TranslationSource::find()->alias('self')
-            ->joinWith([
-                'translations as translations',
-            ])
-            ->with([
-                'translations.language'
-            ])
+        $query = TranslationSource::find()
+            ->joinWith(['translations'])
+            ->with(['translations.language'])
             ->distinct();
 
         $dataProvider = new ActiveDataProvider([
@@ -53,12 +49,12 @@ class TranslationSourceSearch extends TranslationSource
         }
 
         $query->andFilterWhere([
-            'self.id' => $this->id,
+            'TranslationSource.id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'self.category', $this->category])
-            ->andFilterWhere(['like', 'self.message', $this->message])
-            ->andFilterWhere(['like', 'translations.translation', $this->translations_tmp]);
+        $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
+            ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
+            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp]);
 
 		$this->afterSearch();
 		return $dataProvider;

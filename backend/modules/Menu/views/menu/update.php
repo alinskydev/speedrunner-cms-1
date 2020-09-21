@@ -70,7 +70,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                             ['class' => 'btn btn-danger btn-icon']
                         );
                         
-                        echo Html::tag('div', implode('', $buttons), ['class' => 'float-right']);
+                        echo Html::tag('div', implode(null, $buttons), ['class' => 'float-right']);
                     }
                 ?>
             </div>

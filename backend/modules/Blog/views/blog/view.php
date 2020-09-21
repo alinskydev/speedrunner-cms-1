@@ -57,9 +57,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'filter' => Select2::widget([
                                 'model' => $modelSearch['comments'],
                                 'attribute' => 'user_id',
-                                'data' => isset($modelSearch['comments']->user) ? [
-                                    $modelSearch['comments']->user_id => $modelSearch['comments']->user->username
-                                ] : [],
+                                'data' => [$modelSearch['comments']->user_id => ArrayHelper::getValue($modelSearch['comments']->user, 'username')],
                                 'options' => ['placeholder' => ' '],
                                 'pluginOptions' => [
                                     'allowClear' => true,
@@ -72,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 ]
                             ]),
                             'value' => function ($model) {
-                                return $model->user ? $model->user->username : null;
+                                return ArrayHelper::getValue($model->user, 'username');
                             },
                         ],
                         'text:ntext',
@@ -114,9 +112,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'filter' => Select2::widget([
                                 'model' => $modelSearch['rates'],
                                 'attribute' => 'user_id',
-                                'data' => isset($modelSearch['rates']->user) ? [
-                                    $modelSearch['rates']->user_id => $modelSearch['rates']->user->username
-                                ] : [],
+                                'data' => [$modelSearch['rates']->user_id => ArrayHelper::getValue($modelSearch['rates']->user, 'username')],
                                 'options' => ['placeholder' => ' '],
                                 'pluginOptions' => [
                                     'allowClear' => true,
@@ -129,7 +125,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 ]
                             ]),
                             'value' => function ($model) {
-                                return $model->user ? $model->user->username : null;
+                                return ArrayHelper::getValue($model->user, 'username');
                             },
                         ],
                         'mark',

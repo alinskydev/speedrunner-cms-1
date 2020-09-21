@@ -52,9 +52,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'full_name',
             'phone',
             'created',
+            'updated',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update} {delete}',
                 'buttons' => [],
             ],
         ],

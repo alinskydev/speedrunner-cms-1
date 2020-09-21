@@ -24,7 +24,7 @@ class ZzzSearch extends Zzz
     {
         return [
             [['id', 'category_id'], 'integer'],
-            [['name', 'url', 'created', 'updated'], 'safe'],
+            [['name', 'slug', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -59,7 +59,7 @@ class ZzzSearch extends Zzz
             'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'url', $this->url])
+        $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
         

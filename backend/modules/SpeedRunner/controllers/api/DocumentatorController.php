@@ -1,12 +1,12 @@
 <?php
 
-namespace backend\modules\SpeedRunner\controllers\api;
+namespace backend\modules\Speedrunner\controllers\api;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
-use backend\modules\SpeedRunner\forms\api\DocumentatorForm;
+use backend\modules\Speedrunner\forms\api\DocumentatorForm;
 
 
 class DocumentatorController extends Controller
@@ -19,9 +19,9 @@ class DocumentatorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->setFlash('success', 'Succeccfully done');
+                Yii::$app->session->addFlash('success', 'Succeccfully done');
             } else {
-                Yii::$app->session->setFlash('danger', 'An error occured');
+                Yii::$app->session->addFlash('danger', 'An error occured');
             }
             
             return $this->refresh();

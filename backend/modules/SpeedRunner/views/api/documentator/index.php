@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 
 $this->title = 'API Documentator';
-$this->params['breadcrumbs'][] = ['label' => 'SpeedRunner', 'url' => ['/speedrunner/speedrunner']];
+$this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

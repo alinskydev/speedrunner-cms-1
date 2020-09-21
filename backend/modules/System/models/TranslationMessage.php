@@ -27,7 +27,7 @@ class TranslationMessage extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'language_id' => Yii::t('app', 'Language ID'),
+            'language_id' => Yii::t('app', 'Language'),
             'translation' => Yii::t('app', 'Translation'),
         ];
     }

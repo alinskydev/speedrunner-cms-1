@@ -71,11 +71,11 @@ return [
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../frontend/config/routes.php',
         ],
-
+        
         //        HELPERS
-
+        
         'settings' => ['class' => 'common\components\Settings'],
-        'sr' => ['class' => 'common\helpers\SpeedRunner'],
+        'sr' => ['class' => 'common\helpers\Speedrunner'],
         'frontendLocalisedRoutes' => ['class' => 'frontend\components\LocalisedRoutes'],
     ],
 ];

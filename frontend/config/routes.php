@@ -9,9 +9,9 @@ return [
     'contact' => 'site/contact',
     
     'blog' => 'blog/index',
-    'blog/<url>' => 'blog/view',
+    'blog/<slug>' => 'blog/view',
     
-    'page/<url>' => 'block/view',
+    'page/<slug>' => 'block/view',
     
     'order/view/<key>' => 'order/view',
     

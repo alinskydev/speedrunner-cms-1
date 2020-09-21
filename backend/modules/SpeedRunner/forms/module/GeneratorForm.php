@@ -1,12 +1,13 @@
 <?php
 
-namespace backend\modules\SpeedRunner\forms\module;
+namespace backend\modules\Speedrunner\forms\module;
 
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\db\Schema;
+use yii\helpers\Inflector;
 
 
 class GeneratorForm extends Model
@@ -77,8 +78,8 @@ class GeneratorForm extends Model
     {
         //        PREPARE
         
-        $folder_template = Yii::getAlias('@backend/modules/SpeedRunner/templates/module/generator');
-        $folder_template_render = '@backend/modules/SpeedRunner/templates/module/generator';
+        $folder_template = Yii::getAlias('@backend/modules/Speedrunner/templates/module/generator');
+        $folder_template_render = '@backend/modules/Speedrunner/templates/module/generator';
         $folder_module = Yii::getAlias("@backend/modules/$this->module_name/");
         
         FileHelper::createDirectory($folder_module, $mode = 0644);
@@ -155,7 +156,7 @@ class GeneratorForm extends Model
             }
             
             foreach ($view_files as $v_f) {
-                $dir = $folder_module . 'views/' . strtolower($this->controller_name) . '/';
+                $dir = $folder_module . 'views/' . Inflector::camel2id($this->controller_name) . '/';
                 FileHelper::createDirectory($dir, $mode = 0644);
                 
                 $file_content = Yii::$app->controller->renderPartial("$folder_template_render/views/$v_f.php", ['model' => $this]);
@@ -175,7 +176,7 @@ class GeneratorForm extends Model
                     'relation' => $r
                 ]);
                 
-                $file = fopen($dir . '_' . str_replace('_tmp', '', $r['var_name']) . '.php', 'w');
+                $file = fopen($dir . '_' . str_replace('_tmp', null, $r['var_name']) . '.php', 'w');
                 fwrite($file, $file_content);
                 fclose($file);
             }

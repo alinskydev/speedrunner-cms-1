@@ -6,10 +6,10 @@ use Yii;
 use common\components\framework\ActiveRecord;
 
 
-class ProductCategoryAttributeRef extends ActiveRecord
+class ProductCategorySpecificationRef extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductCategoryAttributeRef';
+        return 'ProductCategorySpecificationRef';
     }
 }

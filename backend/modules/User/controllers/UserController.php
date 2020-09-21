@@ -33,10 +33,9 @@ class UserController extends Controller
         return Yii::$app->sr->record->deleteModel(new User);
     }
     
-    public function actionItemsList($q = '', $role = null)
+    public function actionItemsList($q = null, $role = null)
     {
-        $cond = $role ? ['role' => $role] : [];
-        $out['results'] = User::itemsList('username', 'self', 20, $q, $cond);
+        $out['results'] = User::itemsList('username', 'self', $q)->andFilterWhere(['User.role' => $role])->asArray()->all();
         return $this->asJson($out);
     }
 }

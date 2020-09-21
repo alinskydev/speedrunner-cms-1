@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\SpeedRunner\forms\block;
+namespace backend\modules\Speedrunner\forms\block;
 
 use Yii;
 use yii\base\Model;

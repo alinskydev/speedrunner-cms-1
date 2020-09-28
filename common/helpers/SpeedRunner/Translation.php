@@ -8,7 +8,7 @@ use yii\helpers\StringHelper;
 use yii\db\Query;
 
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\System\models\TranslationMessage;
+use backend\modules\Translation\models\TranslationMessage;
 
 
 class Translation

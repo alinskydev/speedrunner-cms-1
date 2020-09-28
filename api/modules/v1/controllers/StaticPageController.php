@@ -4,14 +4,14 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
-use api\modules\v1\models\StaticPage;
+use backend\modules\Staticpage\models\Staticpage;
+use backend\modules\Staticpage\modelsSearch\StaticpageSearch;
 
 
-class StaticPageController extends Controller
+class StaticpageController extends Controller
 {
     public function behaviors()
     {
@@ -28,7 +28,6 @@ class StaticPageController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
-                    'view' => ['get'],
                 ],
             ],
         ];
@@ -36,17 +35,12 @@ class StaticPageController extends Controller
     
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => StaticPage::find()->with(['blocks', 'blocks.images']),
-        ]);
-    }
-    
-    public function actionView($id)
-    {
-        if ($model = StaticPage::find()->with(['blocks', 'blocks.images'])->where(['id' => $id])->one()) {
-            return $model;
-        } else {
-            throw new \yii\web\NotFoundHttpException();
-        }
+        $searchModel = new StaticpageSearch;
+        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
+        
+        return [
+            'data' => $dataProvider,
+            'links' => $dataProvider->pagination->getLinks(true),
+        ];
     }
 }

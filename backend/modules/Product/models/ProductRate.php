@@ -18,8 +18,9 @@ class ProductRate extends ActiveRecord
     {
         return [
             [['product_id', 'mark'], 'required'],
-            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
             [['mark'], 'integer', 'min' => 1, 'max' => 10],
+            
+            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
         ];
     }
     

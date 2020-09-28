@@ -40,7 +40,9 @@ class ProductBrandSearch extends ProductBrand
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 30
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
+                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC],

@@ -14,7 +14,7 @@ class Seo
         $model_class = basename($model->className());
         
         $seo_meta_mdl = SeoMeta::find()
-            ->where([
+            ->andWhere([
                 'model_class' => $model_class,
                 'model_id' => $model->id,
                 'lang' => Yii::$app->language
@@ -54,7 +54,7 @@ class Seo
         $model_class = basename($model->className());
         
         $seo_mdl = SeoMeta::find()
-            ->where([
+            ->andWhere([
                 'model_class' => $model_class,
                 'model_id' => $model->id,
                 'lang' => Yii::$app->language

@@ -26,12 +26,15 @@ class BlogCommentSearch extends BlogComment
 
     public function search($params)
     {
-        $query = BlogComment::find()->with(['blog', 'user']);
+        $query = BlogComment::find()
+            ->with(['blog', 'user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 30
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
+                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]

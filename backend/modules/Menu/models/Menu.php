@@ -49,6 +49,7 @@ class Menu extends ActiveRecord
             [['parent_id'], 'required', 'when' => function ($model) {
                 return $model->isNewRecord;
             }],
+            
             [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
         ];
     }
@@ -77,7 +78,7 @@ class Menu extends ActiveRecord
                 'id',
                 new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name"),
             ])
-            ->where(['not in', 'id', $excepts])
+            ->andWhere(['not in', 'id', $excepts])
             ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
             ->asArray()->all();
         

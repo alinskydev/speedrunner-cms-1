@@ -73,6 +73,22 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
+    public function fields()
+    {
+        return [
+            'id',
+            'username',
+            'access_token' => function ($model) {
+                return $model->auth_key;
+            },
+            'full_name',
+            'phone',
+            'address',
+            'created',
+            'updated',
+        ];
+    }
+    
     static function roles()
     {
         return [
@@ -201,17 +217,17 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function findIdentity($id)
     {
-        return static::find()->where(['id' => $id])->one();
+        return static::find()->andWhere(['id' => $id])->one();
     }
     
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::find()->where(['auth_key' => $token])->one();
+        return static::find()->andWhere(['auth_key' => $token])->one();
     }
     
     public static function findByUsername($username)
     {
-        return static::find()->where(['username' => $username])->one();
+        return static::find()->andWhere(['username' => $username])->one();
     }
     
     public static function findByPasswordResetToken($token)

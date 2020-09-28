@@ -14,7 +14,7 @@ class MenuController extends Controller
     public function actionTree()
     {
         return $this->render('tree', [
-            'data' => Menu::find()->where(['depth' => 0])->one()->tree(),
+            'data' => Menu::find()->andWhere(['depth' => 0])->one()->tree(),
         ]);
     }
     

@@ -4,11 +4,11 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
-use api\modules\v1\models\Banner;
+use backend\modules\Banner\models\Banner;
+use backend\modules\Banner\modelsSearch\BannerSeach;
 
 
 class BannerController extends Controller
@@ -28,7 +28,6 @@ class BannerController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
-                    'view' => ['get'],
                 ],
             ],
         ];
@@ -36,17 +35,12 @@ class BannerController extends Controller
     
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => Banner::find()->with(['images']),
-        ]);
-    }
-    
-    public function actionView($id)
-    {
-        if ($model = Banner::find()->with(['images'])->where(['id' => $id])->one()) {
-            return $model;
-        } else {
-            throw new \yii\web\NotFoundHttpException();
-        }
+        $searchModel = new BannerSeach;
+        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
+        
+        return [
+            'data' => $dataProvider,
+            'links' => $dataProvider->pagination->getLinks(true),
+        ];
     }
 }

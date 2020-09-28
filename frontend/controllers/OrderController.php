@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function actionView($key)
     {
-        $model = Order::find()->with(['products.product'])->where(['key' => $key])->one();
+        $model = Order::find()->with(['products.product'])->andWhere(['key' => $key])->one();
         
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);

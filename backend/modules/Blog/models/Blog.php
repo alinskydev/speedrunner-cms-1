@@ -51,9 +51,10 @@ class Blog extends ActiveRecord
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['published'], 'date', 'format' => 'php: d.m.Y H:i'],
-            [['category_id'], 'exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
             [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
+            
+            [['category_id'], 'exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -72,6 +73,20 @@ class Blog extends ActiveRecord
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'tags_tmp' => Yii::t('app', 'Tags'),
+        ];
+    }
+    
+    public function fields()
+    {
+        return [
+            'id',
+            'name',
+            'short_description',
+            'full_description',
+            'image' => function ($model) {
+                return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image);
+            },
+            'created',
         ];
     }
     

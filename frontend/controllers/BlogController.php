@@ -45,7 +45,7 @@ class BlogController extends Controller
     
     public function actionView($slug)
     {
-        $model = Blog::find()->where([
+        $model = Blog::find()->andWhere([
             'and',
             ['slug' => $slug],
             ['<=', 'published', date('Y-m-d H:i:s')],

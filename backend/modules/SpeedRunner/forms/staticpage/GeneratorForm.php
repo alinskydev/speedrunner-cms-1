@@ -38,7 +38,7 @@ class GeneratorForm extends Model
     
     public function process()
     {
-        if ($page = StaticPage::find()->where(['location' => $this->page_name])->one()) {
+        if ($page = StaticPage::find()->andWhere(['location' => $this->page_name])->one()) {
             $page->delete();
         }
         

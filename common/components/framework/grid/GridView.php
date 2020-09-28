@@ -258,7 +258,7 @@ class GridView extends BaseListView
      * - `{sorter}`: the sorter. See [[renderSorter()]].
      * - `{pager}`: the pager. See [[renderPager()]].
      */
-    public $layout = "{items}{pager}{summary}";
+    public $layout = "{items} {pager} {summary}";
 
     public $buttons = [
         'delete' => [

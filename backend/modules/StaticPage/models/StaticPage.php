@@ -15,6 +15,15 @@ class Staticpage extends ActiveRecord
         return 'Staticpage';
     }
     
+    public function fields()
+    {
+        return [
+            'id',
+            'location',
+            'blocks',
+        ];
+    }
+    
     public function getBlocks()
     {
         return $this->hasMany(StaticpageBlock::className(), ['item_id' => 'id'])->orderBy('part_index');

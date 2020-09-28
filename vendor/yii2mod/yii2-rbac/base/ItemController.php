@@ -137,7 +137,7 @@ class ItemController extends Controller
     {
         $model = $this->findModel($id);
         Yii::$app->getAuthManager()->remove($model->item);
-        Yii::$app->session->setFlash('success', Yii::t('yii2mod.rbac', 'Item has been removed.'));
+        Yii::$app->session->addFlash('success', Yii::t('yii2mod.rbac', 'Item has been removed.'));
 
         return $this->redirect(['index']);
     }

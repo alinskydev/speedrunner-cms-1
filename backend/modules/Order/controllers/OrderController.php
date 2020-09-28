@@ -20,7 +20,7 @@ class OrderController extends Controller
     
     public function actionView($id)
     {
-        if (!($model = Order::find()->with(['products'])->where(['id' => $id])->one())) {
+        if (!($model = Order::find()->with(['products'])->andWhere(['id' => $id])->one())) {
             return $this->redirect(['index']);
         }
         

@@ -45,8 +45,9 @@ class Zzz extends ActiveRecord
             [['full_description'], 'string'],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['category_id'], 'exist', 'targetClass' => ZzzCategory::className(), 'targetAttribute' => 'id'],
             [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            
+            [['category_id'], 'exist', 'targetClass' => ZzzCategory::className(), 'targetAttribute' => 'id'],
         ];
     }
     

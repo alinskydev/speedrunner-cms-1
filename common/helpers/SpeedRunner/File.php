@@ -12,10 +12,11 @@ class File
 {
     public function save($file, $selected_dir = 'uploaded')
     {
+        $selected_dir .= '/' . date('Y-m-d');
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);
         
-        $file_name = strtotime('now') . '_' . Yii::$app->security->generateRandomString(16) . ".$file->extension";
+        $file_name = md5(strtotime('now') . Yii::$app->security->generateRandomString(16)) . ".$file->extension";
         $file->saveAs("$dir/$file_name");
         
         return "/$selected_dir/$file_name";

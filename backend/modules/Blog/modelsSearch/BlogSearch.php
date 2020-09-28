@@ -27,36 +27,36 @@ class BlogSearch extends Blog
             [['name', 'slug', 'created', 'updated', 'published'], 'safe'],
         ];
     }
-
+    
     public function scenarios()
     {
         return Model::scenarios();
     }
-
+    
     public function search($params)
     {
-        $query = Blog::find()->with([
-            'category',
-            'tags',
-        ]);
-
+        $query = Blog::find()
+            ->with(['category', 'tags']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 30
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
+                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
             ],
         ]);
-
+        
         $this->load($params);
 		$this->beforeSearch();
-
+        
         if (!$this->validate()) {
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,

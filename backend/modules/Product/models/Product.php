@@ -87,7 +87,7 @@ class Product extends ActiveRecord
         return [
             [['name', 'main_category_id'], 'required'],
             [['price', 'sale', 'quantity'], 'integer', 'min' => 0],
-            [['sale'], 'compare', 'compareAttribute' => 'price', 'operator' => '<='],
+            [['sale'], 'compare', 'compareAttribute' => 'price', 'operator' => '<=', 'type' => 'number'],
             [['name', 'slug', 'sku'], 'string', 'max' => 100],
             [['short_description'], 'string', 'max' => 255],
             [['full_description'], 'string'],

@@ -1,21 +1,21 @@
 <?php
 
-namespace backend\modules\System\modelsSearch;
+namespace backend\modules\Staticpage\modelsSearch;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-use backend\modules\System\models\TranslationSource;
+use backend\modules\Staticpage\models\Staticpage;
 
 
-class TranslationSourceSearch extends TranslationSource
+class StaticpageSearch extends Staticpage
 {
     public function rules()
     {
         return [
             [['id'], 'integer'],
-            [['category', 'message', 'translations_tmp'], 'safe'],
+            [['location'], 'safe'],
         ];
     }
 
@@ -26,15 +26,14 @@ class TranslationSourceSearch extends TranslationSource
 
     public function search($params)
     {
-        $query = TranslationSource::find()
-            ->joinWith(['translations'])
-            ->with(['translations.language'])
-            ->distinct();
+        $query = Staticpage::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 30
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
+                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -49,12 +48,10 @@ class TranslationSourceSearch extends TranslationSource
         }
 
         $query->andFilterWhere([
-            'TranslationSource.id' => $this->id,
+            'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
-            ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
-            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp]);
+        $query->andFilterWhere(['like', 'location', $this->location]);
 
 		$this->afterSearch();
 		return $dataProvider;

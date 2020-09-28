@@ -24,7 +24,7 @@ class SpecificationController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = ProductSpecification::find()->with(['options'])->where(['id' => $id])->one();
+        $model = ProductSpecification::find()->with(['options'])->andWhere(['id' => $id])->one();
         return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
     

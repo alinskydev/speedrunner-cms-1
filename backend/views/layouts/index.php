@@ -18,7 +18,6 @@ if (Yii::$app->session->get('theme_dark')) {
 //-----------------------------------------------------------------------------------
 
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
-$user = Yii::$app->user->identity;
 
 $langs = Yii::$app->i18n->getLanguages(true);
 $lang_curr = Yii::$app->i18n->getLanguage();

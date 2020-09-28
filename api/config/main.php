@@ -46,7 +46,7 @@ return [
             'cachePath' => '@frontend/runtime/cache',
         ],
         'response' => [
-            'format' =>  \yii\web\Response::FORMAT_JSON
+            'format' => \yii\web\Response::FORMAT_JSON
         ],
     ],
     'as beforeRequest' => [

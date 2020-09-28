@@ -83,21 +83,16 @@ class DocumentatorForm extends Model
                     $params['get'] = $controller_reflection->getMethod($method_name)->getParameters();
                     $params['get'] = ArrayHelper::getColumn($params['get'], 'name');
                     
-                    if ($a_key == 'index') {
-                        $url = Yii::$app->urlManagerApi->createFileUrl(["$module->id/$controller_url"]);
-                    } elseif (in_array('id', $params['get'])) {
-                        $url = Yii::$app->urlManagerApi->createFileUrl(["$module->id/$controller_url/$a_key", 'id' => '{id}']);
-                    } else {
-                        $url = Yii::$app->urlManagerApi->createFileUrl(["$module->id/$controller_url/$a_key"]);
-                    }
+                    $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $params['get']));
+                    $url = Yii::$app->urlManagerApi->createFileUrl($link);
                     
                     //        POST PARAMS
                     
                     $params['post'] = [];
-                    $static_properties = $controller_reflection->getStaticProperties();
+                    $properties = $controller_reflection->getDefaultProperties();
                     
-                    if (isset($static_properties['forms'][$a_key])) {
-                        $form = new $static_properties['forms'][$a_key];
+                    if (isset($properties['forms'][$a_key])) {
+                        $form = new $properties['forms'][$a_key];
                         
                         foreach ($form->rules() as $rule) {
                             foreach ($rule[0] as $r) {
@@ -110,7 +105,7 @@ class DocumentatorForm extends Model
                                     if (is_callable($value)) {
                                         $value = "$key: FUNCTION";
                                     } elseif (is_array($value)) {
-                                        $value = "$key: [" . implode(', ', $value) . ']';
+                                        $value = "$key: [" . $this->implodeRecursive(', ', $value) . ']';
                                     } else {
                                         $value = "$key: $value";
                                     }
@@ -165,5 +160,22 @@ class DocumentatorForm extends Model
         die;
         
         return true;
+    }
+    
+    protected function implodeRecursive($separator, $arrayvar)
+    {
+        $output = null;
+        
+        foreach ($arrayvar as $key => $av) {
+            $output .= (!is_int($key) ? "$key: " : null);
+            
+            if (is_array($av)) {
+                $output .= $this->implodeRecursive($separator, $av);
+            } else {
+                $output .= $separator . $av;
+            }
+        }
+
+        return trim($output, $separator);
     }
 }

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 $this->title = Yii::$app->settings->site_name . ' API';
 
@@ -32,24 +33,62 @@ $tabs = array_keys($result);
     <div class="row">
         <div class="col-lg-2 col-md-3">
             <ul class="nav flex-column nav-pills main-shadow" role="tablist">
-                <?php $counter = 0; ?>
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#tab-general">
+                        General
+                    </a>
+                </li>
+                
                 <?php foreach ($result as $key => $r) { ?>
                     <li class="nav-item">
-                        <a class="nav-link <?= !$counter ? 'active' : null ?>" data-toggle="pill" href="#tab-<?= $counter ?>">
+                        <a class="nav-link" data-toggle="pill" href="#tab-<?= $key ?>">
                             <?= $key ?>
                         </a>
                     </li>
-                    
-                    <?php $counter++ ?>
                 <?php } ?>
             </ul>
         </div>
         
         <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
             <div class="tab-content main-shadow p-3">
-                <?php $counter = 0; ?>
+                <div id="tab-general" class="tab-pane active">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    Host url
+                                </th>
+                                <td>
+                                    <?= Url::base(true); ?>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th>
+                                    Formats
+                                </th>
+                                <td>
+                                    JSON or Multipart form data (for files transferring)
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th>
+                                    List query arguments (as GET params)
+                                </th>
+                                <td>
+                                    Sorting: ?sort=<b>{attribute}</b> or ?sort=<b>-{attribute}</b><br>
+                                    Number of records: ?per-page=<b>{number}</b><br>
+                                    Pagination: ?page=<b>{number}</b><br>
+                                    Filtering: ?filter[<b>{attribute}</b>]=<b>{value}</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
                 <?php foreach ($result as $key => $r) { ?>
-                    <div id="tab-<?= $counter ?>" class="tab-pane <?= !$counter ? 'active' : 'fade' ?>">
+                    <div id="tab-<?= $key ?>" class="tab-pane fade">
                         <?php if ($r['behaviors']) { ?>
                             <h5 class="mb-3 text-danger">
                                 <?= implode('<br>', $r['behaviors']) ?>
@@ -88,12 +127,11 @@ $tabs = array_keys($result);
                                                     $params = $a['params'];
                                                     
                                                     if ($params['get']) {
-                                                        echo Html::tag('b', 'GET') . '<hr>';
-                                                        echo implode(', ', $params['get']);
+                                                        echo Html::tag('b', 'GET') . ' {' . implode(', ', $params['get']) . '}<hr>';
                                                     }
                                                     
                                                     if ($params['post']) {
-                                                        echo Html::tag('b', 'POST') . '<hr>';
+                                                        echo Html::tag('b', 'POST') . '<br>';
                                                         echo Html::tag('pre', json_encode($params['post'], JSON_PRETTY_PRINT));
                                                     }
                                                 ?>
@@ -104,8 +142,6 @@ $tabs = array_keys($result);
                             </table>
                         </div>
                     </div>
-                    
-                    <?php $counter++ ?>
                 <?php } ?>
             </div>
         </div>

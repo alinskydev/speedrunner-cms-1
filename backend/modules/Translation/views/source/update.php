@@ -3,13 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-use backend\modules\System\models\SystemLanguage;
-
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {message}', ['message' => $model->message]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Translation Sources'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
-
-$active_langs = SystemLanguage::find()->where(['active' => 1])->column();
 
 ?>
 
@@ -49,8 +45,8 @@ $active_langs = SystemLanguage::find()->where(['active' => 1])->column();
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?php
-                    foreach ($model->getActiveTranslations($active_langs) as $t) {
-                        echo $form->field($model, 'translations_tmp['.$t->counter.']')
+                    foreach ($model->activeTranslations() as $t) {
+                        echo $form->field($model, "translations_tmp[$t->counter]")
                             ->textarea(['rows' => 6, 'value' => $t->translation])
                             ->label($t->language->name);
                     }

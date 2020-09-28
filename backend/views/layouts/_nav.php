@@ -76,13 +76,12 @@ $menuItems = [
         'items' => [
             ['label' => Yii::t('app', 'Settings'),'url' => ['/system/settings/update']],
             ['label' => Yii::t('app', 'Languages'), 'url' => ['/system/language/index']],
-            ['label' => Yii::t('app', 'Translations'), 'url' => ['/system/translation-source/index']],
+            ['label' => Yii::t('app', 'Translations'), 'url' => ['/translation/source/index']],
         ],
     ],
     [
         'label' => Yii::t('app', 'Cache'),
         'items' => [
-            ['label' => Yii::t('app', 'Refresh routes'), 'url' => ['/cache/refresh-routes']],
             ['label' => Yii::t('app', 'Remove thumbs'), 'url' => ['/cache/remove-thumbs']],
             ['label' => Yii::t('app', 'Clear'), 'url' => ['/cache/clear']],
         ],

@@ -16,7 +16,7 @@ class ProductController extends Controller
         $slug = explode('/', $url);
         $slug = end($slug);
         
-        if (!($cat = ProductCategory::find()->where(['slug' => $slug])->one())) {
+        if (!($cat = ProductCategory::find()->andWhere(['slug' => $slug])->one())) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         

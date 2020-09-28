@@ -45,7 +45,7 @@ class Record
     public function deleteModel($model)
     {
         $id = Yii::$app->request->post('selection') ?: Yii::$app->request->get('id');
-        $models = $model->find()->where(['id' => $id])->all();
+        $models = $model->find()->andWhere(['id' => $id])->all();
         
         foreach ($models as $m) {
             $m->delete();
@@ -56,7 +56,7 @@ class Record
     
     public function staticpage($location)
     {
-        $result['page'] = Staticpage::find()->with(['blocks'])->where(['location' => $location])->one();
+        $result['page'] = Staticpage::find()->with(['blocks'])->andWhere(['location' => $location])->one();
         $result['blocks'] = ArrayHelper::map($result['page']->blocks, 'name', 'value');
         
         return $result;

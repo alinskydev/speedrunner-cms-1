@@ -6,7 +6,7 @@ use kartik\select2\Select2;
 
 $attr_types = Yii::$app->params['input_types'];
 $attr_types['select'] = 'Select';
-unset($attr_types['images'], $attr_types['groups']);
+unset($attr_types['groups']);
 
 ?>
 
@@ -67,10 +67,14 @@ unset($attr_types['images'], $attr_types['groups']);
                 </td>
                 
                 <td>
-                    <?= Html::dropdownList("GeneratorForm[attrs_fields][$c->name][type]", null, $attr_types, [
-                        'class' => 'form-control',
-                        'prompt' => ' '
-                    ]) ?>
+                    <?php
+                        echo Html::dropdownList("GeneratorForm[attrs_fields][$c->name][type]", null, $attr_types, [
+                            'class' => 'form-control',
+                            'prompt' => ' '
+                        ]);
+                        
+                        echo Html::hiddenInput("GeneratorForm[attrs_fields][$c->name][name]", $c->name);
+                    ?>
                 </td>
             </tr>
         <?php } ?>

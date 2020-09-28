@@ -3,12 +3,13 @@
 use yii\helpers\ArrayHelper;
 use yii\db\mysql\ColumnSchema;
 
-//      DB SCHEMA
+//        DB SCHEMA
 
 $dbSchema = Yii::$app->db->schema;
 $columns = $dbSchema->getTableSchema($model->table_name)->columns;
+$attrs_fields = ArrayHelper::index($model->attrs_fields, null, 'type');
 
-//      RULES
+//        RULES
 
 foreach ($model->view_relations as $r) {
     $columns[$r['var_name']] = new ColumnSchema;
@@ -60,7 +61,7 @@ class <?= $model->table_name ?> extends ActiveRecord
         return '<?= $model->table_name ?>';
     }
     
-<?php if (isset($attrs['slug']) || $model->view_relations) { ?>
+<?php if (isset($attrs['slug']) || isset($attrs_fields['images']) || $model->view_relations) { ?>
     public function behaviors()
     {
         return [
@@ -72,22 +73,31 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'immutable' => true,
             ],
 <?php } ?>
+<?php if (isset($attrs_fields['images'])) { ?>
+<?php $image_attrs = ArrayHelper::getColumn($attrs_fields['images'], 'name') ?>
+            'files' => [
+                'class' => \common\behaviors\FilesBehavior::className(),
+                'attributes' => ['<?= implode("', '", $image_attrs) ?>'],
+            ],
+<?php } ?>
+<?php if ($model->view_relations) { ?>
+            'relations_one_many' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'oneMany',
+                'attributes' => [
 <?php foreach ($model->view_relations as $r) { ?>
-        'relations_one_many' => [
-            'class' => \common\behaviors\RelationBehavior::className(),
-            'type' => 'oneMany',
-            'attributes' => [
-                [
-                    'model' => new <?= $r['model'] ?>,
-                    'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
-                    'attribute' => '<?= $r['var_name'] ?>',
-                    'properties' => [
-                        'main' => 'item_id',
-                        'relational' => [],
+                    [
+                        'model' => new <?= $r['model'] ?>,
+                        'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
+                        'attribute' => '<?= $r['var_name'] ?>',
+                        'properties' => [
+                            'main' => 'item_id',
+                            'relational' => [],
+                        ],
                     ],
+<?php } ?>
                 ],
             ],
-        ],
 <?php } ?>
         ];
     }

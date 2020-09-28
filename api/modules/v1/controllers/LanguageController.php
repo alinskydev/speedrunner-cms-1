@@ -4,12 +4,11 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use xtomdex\widgets\CountrySelect;
 
-use api\modules\v1\models\SystemLanguage;
+use backend\modules\System\models\SystemLanguage;
+use backend\modules\System\modelsSearch\SystemLanguageSearch;
 
 
 class LanguageController extends Controller
@@ -29,7 +28,6 @@ class LanguageController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
-                    'view' => ['get'],
                 ],
             ],
         ];
@@ -37,17 +35,12 @@ class LanguageController extends Controller
     
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => SystemLanguage::find(),
-        ]);
-    }
-    
-    public function actionView($id)
-    {
-        if ($model = SystemLanguage::findOne($id)) {
-            return $model;
-        } else {
-            throw new \yii\web\NotFoundHttpException();
-        }
+        $searchModel = new SystemLanguageSearch;
+        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
+        
+        return [
+            'data' => $dataProvider,
+            'links' => $dataProvider->pagination->getLinks(true),
+        ];
     }
 }

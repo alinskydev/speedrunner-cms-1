@@ -32,7 +32,7 @@ class PageController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = BlockPage::find()->with(['blocks', 'blocks.type'])->where(['id' => $id])->one();
+        $model = BlockPage::find()->with(['blocks', 'blocks.type'])->andWhere(['id' => $id])->one();
         
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);
@@ -75,6 +75,26 @@ class PageController extends Controller
         }
     }
     
+    public function actionImageSort($id)
+    {
+        if (!($model = Block::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->value;
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        if ($model->type->has_translation) {
+            $json = ArrayHelper::getValue($model->oldAttributes, 'value');
+            $json[Yii::$app->language] = array_values($images);
+            
+            return $model->updateAttributes(['value' => $json]);
+        } else {
+            return $model->updateAttributes(['value' => array_values($images)]);
+        }
+    }
+    
     public function actionImageDelete($id)
     {
         if (!($model = Block::findOne($id))) {
@@ -96,26 +116,6 @@ class PageController extends Controller
             } else {
                 return $model->updateAttributes(['value' => array_values($images)]);
             }
-        }
-    }
-    
-    public function actionImageSort($id)
-    {
-        if (!($model = Block::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->value;
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        if ($model->type->has_translation) {
-            $json = ArrayHelper::getValue($model->oldAttributes, 'value');
-            $json[Yii::$app->language] = array_values($images);
-            
-            return $model->updateAttributes(['value' => $json]);
-        } else {
-            return $model->updateAttributes(['value' => array_values($images)]);
         }
     }
 }

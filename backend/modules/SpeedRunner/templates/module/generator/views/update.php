@@ -5,6 +5,7 @@ $index_title = ($model->module_name == $model->controller_name) ? $model->module
 //      ATTRIBUTES
 
 $attrs = $model->attrs_fields ?: [];
+$controller_url = strtolower($model->module_name) . '/' . strtolower($model->controller_name);
 
 echo '<?php';
 
@@ -17,6 +18,8 @@ use yii\bootstrap\ActiveForm;
 use zxbodya\yii2\elfinder\ElFinderInput;
 use vova07\imperavi\Widget;
 use kartik\file\FileInput;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
@@ -107,6 +110,28 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 echo "                <?= \$form->field(\$model, '$key')->widget(ElFinderInput::className(), [
                     'connectorRoute' => '/connection/elfinder-file-upload',
                 ]) ?>\n";
+                break;
+            case 'images':
+                echo "                <?= \$form->field(\$model, '$key',[
+                    'template' => '{label}{error}{hint}{input}',
+                ])->widget(FileInput::className(), [
+                    'options' => [
+                        'accept' => 'image/*',
+                        'multiple' => true,
+                    ],
+                    'pluginOptions' => array_merge(Yii::\$app->params['fileInput_pluginOptions'], [
+                        'deleteUrl' => Yii::\$app->urlManager->createUrl(['$controller_url/image-delete', 'id' => \$model->id, 'attr' => '$key']),
+                        'initialPreview' => \$model->$key ?: [],
+                        'initialPreviewConfig' => ArrayHelper::getColumn(\$model->$key ?: [], function (\$value) {
+                            return ['key' => \$value, 'downloadUrl' => \$value];
+                        }),
+                    ]),
+                    'pluginEvents' => [
+                        'filesorted' => new JsExpression(" . '"function(event, params) {
+                            $.post(' . "'" . '".Yii::$app->urlManager->createUrl([' . "'$controller_url/image-sort', 'id' => \$model->id, 'attr' => '$key']). " . '"' . "', {sort: params});
+                        }" . '")
+                    ],
+                ]) ?>' . "\n";
                 break;
         }
     }

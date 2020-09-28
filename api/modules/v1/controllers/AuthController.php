@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 
 class AuthController extends Controller
 {
-    static $forms = [
+    protected $forms = [
         'login' => '\common\forms\LoginForm',
         'signup' => '\frontend\forms\SignupForm',
         'request-password-reset' => '\frontend\forms\PasswordResetRequestForm',
@@ -41,51 +41,85 @@ class AuthController extends Controller
     public function actionLogin()
     {
         $model = new $this->forms['login'];
-        $model->load(['LoginForm' => Yii::$app->request->post()]);
+        $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
-            if ($model->login()) {
-                return [
-                    'errors' => null,
-                    'access-token' => Yii::$app->user->identity->auth_key
-                ];
-            } else {
-                return ['errors' => $model->errors];
-            }
+            $model->login();
+            
+            return [
+                'name' => 'OK',
+                'message' => [
+                    'access_token' => Yii::$app->user->identity->auth_key,
+                ],
+                'code' => 0,
+                'status' => 200,
+            ];
         } else {
-            return ['errors' => $model->errors];
+            Yii::$app->response->statusCode = 422;
+            
+            return [
+                'name' => 'Unprocessable entity',
+                'message' => $model->errors,
+                'code' => 0,
+                'status' => 422,
+                'type' => 'yii\\web\\UnprocessableEntityHttpException',
+            ];
         }
     }
     
     public function actionSignup()
     {
         $model = new $this->forms['signup'];
-        $model->load(['SignupForm' => Yii::$app->request->post()]);
+        $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
-            if ($user = $model->signup()) {
-                return [
-                    'errors' => null,
-                    'access-token' => $user->auth_key
-                ];
-            } else {
-                return ['errors' => $model->errors];
-            }
+            $user = $model->signup();
+            
+            return [
+                'name' => 'OK',
+                'message' => [
+                    'access_token' => $user->auth_key,
+                ],
+                'code' => 0,
+                'status' => 200,
+            ];
         } else {
-            return ['errors' => $model->errors];
+            Yii::$app->response->statusCode = 422;
+            
+            return [
+                'name' => 'Unprocessable entity',
+                'message' => $model->errors,
+                'code' => 0,
+                'status' => 422,
+                'type' => 'yii\\web\\UnprocessableEntityHttpException',
+            ];
         }
     }
     
     public function actionRequestPasswordReset()
     {
         $model = new $this->forms['reset-password'];
-        $model->load(['PasswordResetRequestForm' => Yii::$app->request->post()]);
+        $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
             $model->sendEmail();
-            return ['errors' => null];
+            
+            return [
+                'name' => 'OK',
+                'message' => 'Success',
+                'code' => 0,
+                'status' => 200,
+            ];
         } else {
-            return ['errors' => $model->errors];
+            Yii::$app->response->statusCode = 422;
+            
+            return [
+                'name' => 'Unprocessable entity',
+                'message' => $model->errors,
+                'code' => 0,
+                'status' => 422,
+                'type' => 'yii\\web\\UnprocessableEntityHttpException',
+            ];
         }
     }
 }

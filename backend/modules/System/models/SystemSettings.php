@@ -33,4 +33,14 @@ class SystemSettings extends ActiveRecord
             'sort' => Yii::t('app', 'Sort'),
         ];
     }
+    
+    public function fields()
+    {
+        return [
+            'id',
+            'name',
+            'label',
+            'value',
+        ];
+    }
 }

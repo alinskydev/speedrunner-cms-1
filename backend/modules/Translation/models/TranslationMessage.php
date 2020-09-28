@@ -1,9 +1,11 @@
 <?php
 
-namespace backend\modules\System\models;
+namespace backend\modules\Translation\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
+
+use backend\modules\System\models\SystemLanguage;
 
 
 class TranslationMessage extends ActiveRecord
@@ -16,10 +18,7 @@ class TranslationMessage extends ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'language_id'], 'required'],
             [['translation'], 'string'],
-            [['language_id'], 'exist', 'targetClass' => SystemLanguage::className(), 'targetAttribute' => 'id'],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => TranslationSource::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -30,11 +29,6 @@ class TranslationMessage extends ActiveRecord
             'language_id' => Yii::t('app', 'Language'),
             'translation' => Yii::t('app', 'Translation'),
         ];
-    }
-    
-    public function getId()
-    {
-        return $this->hasOne(translationSource::className(), ['id' => 'id']);
     }
     
     public function getLanguage()

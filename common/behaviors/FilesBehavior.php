@@ -36,6 +36,7 @@ class FilesBehavior extends Behavior
     {
         foreach ($this->attributes as $a) {
             $old_value = ArrayHelper::getValue($this->owner->oldAttributes, $a, []);
+            $new_value = [];
             
             if ($value = UploadedFile::getInstances($this->owner, $a)) {
                 foreach ($value as $v) {

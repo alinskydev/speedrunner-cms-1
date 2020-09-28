@@ -62,7 +62,7 @@ class ProductController extends Controller
                 'brand', 'categories',
                 'variations.specification', 'variations.option'
             ])
-            ->where(['id' => $id])
+            ->andWhere(['id' => $id])
             ->one();
         
         if ($model) {
@@ -86,34 +86,42 @@ class ProductController extends Controller
         return $this->asJson($out);
     }
     
-    public function actionImageDelete($id)
+    public function actionImageSort($id, $attr)
     {
+        if (!in_array($attr, ['images'])) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
         if (!($model = Product::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $images = $model->images;
+        $images = $model->{$attr};
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes([$attr => array_values($images)]);
+    }
+    
+    public function actionImageDelete($id, $attr)
+    {
+        if (!in_array($attr, ['images'])) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        if (!($model = Product::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->{$attr};
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
             Yii::$app->sr->file->delete($images[$key]);
             unset($images[$key]);
             
-            return $model->updateAttributes(['images' => array_values($images)]);
+            return $model->updateAttributes([$attr => array_values($images)]);
         }
-    }
-    
-    public function actionImageSort($id)
-    {
-        if (!($model = Product::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->images;
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        return $model->updateAttributes(['images' => array_values($images)]);
     }
     
     public function actionSpecifications($id, $categories)
@@ -129,7 +137,7 @@ class ProductController extends Controller
                     $query->select(['*', new Expression("ProductSpecificationOption.name->>'$.$lang' as name")]);
                 },
             ])
-            ->where(['ProductCategory.id' => $categories])
+            ->andWhere(['ProductCategory.id' => $categories])
             ->select([
                 'ProductSpecification.*',
                 new Expression("ProductSpecification.name->>'$.$lang' as name"),

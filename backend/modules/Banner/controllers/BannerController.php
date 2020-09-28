@@ -19,7 +19,7 @@ class BannerController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = Banner::find()->with(['groups'])->where(['id' => $id])->one();
+        $model = Banner::find()->with(['groups'])->andWhere(['id' => $id])->one();
         return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
 }

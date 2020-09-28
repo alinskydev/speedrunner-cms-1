@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function actionTree()
     {
         return $this->render('tree', [
-            'data' => ProductCategory::find()->where(['depth' => 0])->one()->tree(),
+            'data' => ProductCategory::find()->andWhere(['depth' => 0])->one()->tree(),
         ]);
     }
     
@@ -38,7 +38,7 @@ class CategoryController extends Controller
     
     public function actionUpdate($id)
     {
-        $model = ProductCategory::find()->with(['specifications'])->where(['id' => $id])->one();
+        $model = ProductCategory::find()->with(['specifications'])->andWhere(['id' => $id])->one();
         
         if (!$model || $model->depth == 0) {
             return $this->redirect(['tree']);

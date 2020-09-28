@@ -4,11 +4,11 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
-use api\modules\v1\models\Blog;
+use backend\modules\Blog\models\Blog;
+use backend\modules\Blog\modelsSearch\BlogSearch;
 
 
 class BlogController extends Controller
@@ -28,7 +28,6 @@ class BlogController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
-                    'view' => ['get'],
                 ],
             ],
         ];
@@ -36,20 +35,12 @@ class BlogController extends Controller
     
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => Blog::find(),
-            'pagination' => [
-                'pageSize' => 20
-            ],
-        ]);
-    }
-    
-    public function actionView($id)
-    {
-        if ($model = Blog::findOne($id)) {
-            return $model;
-        } else {
-            throw new \yii\web\NotFoundHttpException();
-        }
+        $searchModel = new BlogSearch;
+        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
+        
+        return [
+            'data' => $dataProvider,
+            'links' => $dataProvider->pagination->getLinks(true),
+        ];
     }
 }

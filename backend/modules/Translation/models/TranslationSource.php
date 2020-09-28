@@ -1,9 +1,10 @@
 <?php
 
-namespace backend\modules\System\models;
+namespace backend\modules\Translation\models;
 
 use Yii;
 use common\components\framework\ActiveRecord;
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 
@@ -41,41 +42,34 @@ class TranslationSource extends ActiveRecord
         return $this->hasMany(TranslationMessage::className(), ['id' => 'id']);
     }
     
-    public function getActiveTranslations($langs)
+    public function activeTranslations()
     {
-        return $this->hasMany(TranslationMessage::className(), ['id' => 'id'])->andWhere(['in', 'language_id', $langs])->all();
+        $lang_ids = ArrayHelper::getColumn(Yii::$app->i18n->getLanguages(true), 'id');
+        return TranslationMessage::find()->andWhere(['and', ['id' => $this->id], ['in', 'language_id', $lang_ids]])->all();
     }
     
-    public function getTranslationsColumn($langs)
+    public function translationsColumn($langs)
     {
-        $result = [];
-        
         foreach ($this->translations as $t) {
             if ($t->translation && in_array($t->language_id, $langs)) {
-                $result[] = '<b>' . $t->language->name . '</b>: ' . nl2br($t->translation);
+                $result[] = Html::tag('b', $t->language->name) . ': ' . nl2br($t->translation);
             }
         }
         
-        return implode('<br>', $result);
+        return isset($result) ? implode('<br>', $result) : null;
     }
     
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
             foreach ($this->translations_tmp as $key => $value) {
-                $t_msg = TranslationMessage::find()->where(['counter' => $key])->one();
-                $t_msg->translation = $value;
-                $t_msg->save();
+                if ($t_msg = TranslationMessage::find()->andWhere(['counter' => $key])->one()) {
+                    $t_msg->translation = $value;
+                    $t_msg->save();
+                }
             }
         }
         
         return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        TranslationMessage::deleteAll(['id' => $this->id]);
-        
-        return parent::afterDelete();
     }
 }

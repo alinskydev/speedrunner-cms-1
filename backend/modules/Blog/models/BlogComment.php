@@ -18,9 +18,10 @@ class BlogComment extends ActiveRecord
     {
         return [
             [['blog_id', 'text'], 'required'],
-            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
             [['status'], 'in', 'range' => array_keys(Yii::$app->params['comment_statuses'])],
             [['text'], 'string', 'max' => 1000],
+            
+            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
         ];
     }
     

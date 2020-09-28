@@ -26,9 +26,10 @@ return [
         'speedrunner' => ['class' => 'backend\modules\Speedrunner\Module'],
         'staticpage' => ['class' => 'backend\modules\Staticpage\Module'],
         'system' => ['class' => 'backend\modules\System\Module'],
+        'translation' => ['class' => 'backend\modules\Translation\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],
         'zzz' => ['class' => 'backend\modules\Zzz\Module'],
-
+        
         'rbac' => ['class' => 'yii2mod\rbac\Module'],
     ],
     'as access' => [

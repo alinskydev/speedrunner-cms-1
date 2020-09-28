@@ -16,7 +16,7 @@ class SettingsController extends Controller
     {
         if ($post_data = Yii::$app->request->post('SystemSettings')) {
             foreach ($post_data as $key => $p_d) {
-                if ($model = SystemSettings::find()->where(['name' => $key])->one()) {
+                if ($model = SystemSettings::find()->andWhere(['name' => $key])->one()) {
                     $model->label = ArrayHelper::getValue($p_d, 'label');
                     $model->value = ArrayHelper::getValue($p_d, 'value');
                     $model->save();

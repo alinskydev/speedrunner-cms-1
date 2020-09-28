@@ -50,7 +50,7 @@ class UrlManager extends \yii\web\UrlManager
      */
     public function init()
     {
-        $languages = SystemLanguage::find()->where(['active' => 1])->asArray()->all();
+        $languages = SystemLanguage::find()->andWhere(['active' => 1])->asArray()->all();
         $this->languages = ArrayHelper::getColumn($languages, 'code');
         
         parent::init();

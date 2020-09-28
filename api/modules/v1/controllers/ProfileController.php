@@ -8,14 +8,14 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\filters\auth\HttpBasicAuth;
 
-use api\modules\v1\models\User;
+use backend\modules\User\models\User;
 
 
 class ProfileController extends Controller
 {
     protected $user;
     
-    static $forms = [
+    protected $forms = [
         'update' => '\frontend\forms\ProfileForm',
     ];
     
@@ -57,26 +57,39 @@ class ProfileController extends Controller
     
     public function actionUpdate()
     {
+        $model = new $this->forms['update'](['user' => $this->user]);
+        $model->load([$model->formName() => Yii::$app->request->post()]);
+        
 //        if (isset($_FILES['image'])) {
 //            foreach ($_FILES['image'] as $key => $f) {
-//                $_FILES['ProfileForm'][$key]['image'] = $f;
+//                $_FILES[$model->formName()][$key]['image'] = $f;
 //            }
 //            
 //            unset($_FILES['image']);
 //        }
         
-        $model = new $this->forms['update'](['user' => $this->user]);
-        $model->load(['ProfileForm' => Yii::$app->request->post()]);
-        
         if ($model->validate()) {
             $model->update();
+            $this->user->refresh();
             
             return [
-                'errors' => null,
-                'access-token' => User::findOne($this->user->id)->auth_key
+                'name' => 'OK',
+                'message' => [
+                    'access_token' => $this->user->auth_key,
+                ],
+                'code' => 0,
+                'status' => 200,
             ];
         } else {
-            return ['errors' => $model->errors];
+            Yii::$app->response->statusCode = 422;
+            
+            return [
+                'name' => 'Unprocessable entity',
+                'message' => $model->errors,
+                'code' => 0,
+                'status' => 422,
+                'type' => 'yii\\web\\UnprocessableEntityHttpException',
+            ];
         }
     }
 }

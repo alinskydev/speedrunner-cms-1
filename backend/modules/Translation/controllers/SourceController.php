@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\modules\System\controllers;
+namespace backend\modules\Translation\controllers;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
-use backend\modules\System\models\TranslationSource;
-use backend\modules\System\modelsSearch\TranslationSourceSearch;
+use backend\modules\Translation\models\TranslationSource;
+use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
 
 
-class TranslationSourceController extends Controller
+class SourceController extends Controller
 {
     public function actionIndex()
     {

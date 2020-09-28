@@ -17,6 +17,7 @@ class ProductCategoryRef extends ActiveRecord
     {
         return [
             [['product_id', 'category_id'], 'required'],
+            
             [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
             [['category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
         ];

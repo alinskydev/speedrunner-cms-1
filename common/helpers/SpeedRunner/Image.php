@@ -13,10 +13,11 @@ class Image
 {
     public function save($img, $selected_dir = 'uploaded', $width_height = [])
     {
+        $selected_dir .= '/' . date('Y-m-d');
         $dir = Yii::getAlias("@frontend/web/$selected_dir");
         FileHelper::createDirectory($dir);
         
-        $image_name = strtotime('now') . '_' . Yii::$app->security->generateRandomString(16) . ".$img->extension";
+        $image_name = md5(strtotime('now') . Yii::$app->security->generateRandomString(16)) . ".$img->extension";
         $image = Yii::$app->image->load($img->tempName);
         
         if ($width_height) {

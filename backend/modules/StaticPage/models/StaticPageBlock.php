@@ -60,6 +60,29 @@ class StaticpageBlock extends ActiveRecord
         ];
     }
     
+    public function fields()
+    {
+        return [
+            'name',
+            'label',
+            'part_name',
+            'value' => function ($model) {
+                switch ($model->type) {
+                    case 'images':
+                        foreach ($model->value as $v) {
+                            $result[] = Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($v);
+                        }
+                        
+                        return isset($result) ? $result : [];
+                    case 'groups':
+                        return $model->value;
+                    default:
+                        return $model->value;
+                }
+            },
+        ];
+    }
+    
     public function afterFind()
     {
         $this->value = $this->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;

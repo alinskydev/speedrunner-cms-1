@@ -58,6 +58,15 @@ class Banner extends ActiveRecord
         ];
     }
     
+    public function fields()
+    {
+        return [
+            'id',
+            'location',
+            'groups',
+        ];
+    }
+    
     static function locations()
     {
         return [

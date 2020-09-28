@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 
 class FeedbackController extends Controller
 {
-    static $forms = [
+    protected $forms = [
         'send' => '\frontend\forms\ContactForm',
     ];
     
@@ -37,13 +37,27 @@ class FeedbackController extends Controller
     public function actionSend()
     {
         $model = new $this->forms['send'];
-        $model->load(['ContactForm' => Yii::$app->request->post()]);
+        $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
-            $model->send();
-            return ['errors' => null];
+            $model->sendEmail();
+            
+            return [
+                'name' => 'OK',
+                'message' => 'Success',
+                'code' => 0,
+                'status' => 200,
+            ];
         } else {
-            return ['errors' => $model->errors];
+            Yii::$app->response->statusCode = 422;
+            
+            return [
+                'name' => 'Unprocessable entity',
+                'message' => $model->errors,
+                'code' => 0,
+                'status' => 422,
+                'type' => 'yii\\web\\UnprocessableEntityHttpException',
+            ];
         }
     }
 }

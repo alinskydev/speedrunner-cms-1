@@ -26,12 +26,15 @@ class ProductCommentSearch extends ProductComment
 
     public function search($params)
     {
-        $query = ProductComment::find()->with(['product', 'user']);
+        $query = ProductComment::find()
+            ->with(['product', 'user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 30
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
+                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]

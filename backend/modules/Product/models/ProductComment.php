@@ -18,9 +18,10 @@ class ProductComment extends ActiveRecord
     {
         return [
             [['product_id', 'text'], 'required'],
-            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
             [['status'], 'in', 'range' => array_keys(Yii::$app->params['comment_statuses'])],
             [['text'], 'string', 'max' => 1000],
+            
+            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
         ];
     }
     

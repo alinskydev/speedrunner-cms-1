@@ -1,23 +1,21 @@
 <?php
 
-namespace backend\modules\Blog\modelsSearch;
+namespace backend\modules\Translation\modelsSearch;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-use backend\modules\Blog\models\BlogRate;
+use backend\modules\Translation\models\TranslationSource;
 
 
-class BlogRateSearch extends BlogRate
+class TranslationSourceSearch extends TranslationSource
 {
-    public $item_name;
-    
     public function rules()
     {
         return [
-            [['id', 'blog_id', 'user_id', 'mark'], 'integer'],
-            [['created'], 'safe'],
+            [['id'], 'integer'],
+            [['category', 'message', 'translations_tmp'], 'safe'],
         ];
     }
 
@@ -28,8 +26,10 @@ class BlogRateSearch extends BlogRate
 
     public function search($params)
     {
-        $query = BlogRate::find()
-            ->with(['blog', 'user']);
+        $query = TranslationSource::find()
+            ->joinWith(['translations'])
+            ->with(['translations.language'])
+            ->distinct();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,13 +51,12 @@ class BlogRateSearch extends BlogRate
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'blog_id' => $this->blog_id,
-            'user_id' => $this->user_id,
-            'mark' => $this->mark,
+            'TranslationSource.id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'created', $this->created]);
+        $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
+            ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
+            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp]);
 
 		$this->afterSearch();
 		return $dataProvider;

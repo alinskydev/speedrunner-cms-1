@@ -26,33 +26,41 @@ class VariationController extends Controller
         }
     }
     
-    public function actionImageDelete($id)
+    public function actionImageSort($id, $attr)
     {
+        if (!in_array($attr, ['images'])) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
         if (!($model = ProductVariation::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $images = $model->images;
+        $images = $model->{$attr};
+        $stack = Yii::$app->request->post('sort')['stack'];
+        $images = ArrayHelper::getColumn($stack, 'key');
+        
+        return $model->updateAttributes([$attr => array_values($images)]);
+    }
+    
+    public function actionImageDelete($id, $attr)
+    {
+        if (!in_array($attr, ['images'])) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        if (!($model = ProductVariation::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $images = $model->{$attr};
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
             Yii::$app->sr->file->delete($images[$key]);
             unset($images[$key]);
             
-            return $model->updateAttributes(['images' => array_values($images)]);
+            return $model->updateAttributes([$attr => array_values($images)]);
         }
-    }
-    
-    public function actionImageSort($id)
-    {
-        if (!($model = ProductVariation::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->images;
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        return $model->updateAttributes(['images' => array_values($images)]);
     }
 }

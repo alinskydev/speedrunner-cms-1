@@ -18,8 +18,9 @@ class BlogRate extends ActiveRecord
     {
         return [
             [['blog_id', 'mark'], 'required'],
-            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
             [['mark'], 'integer', 'min' => 1, 'max' => 10],
+            
+            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
         ];
     }
     

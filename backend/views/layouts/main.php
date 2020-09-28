@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
-use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 
@@ -26,8 +25,6 @@ $bookmark_add_value = implode(' &rsaquo; ', $bookmark_add_value);
 
 $flashes = Yii::$app->session->getAllFlashes();
 $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
-
-\backend\modules\Product\models\ProductCategory::updateAll(['updated' => '2020-09-12 15:00:00']);
 
 ?>
 

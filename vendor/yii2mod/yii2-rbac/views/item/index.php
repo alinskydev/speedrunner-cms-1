@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
             ],
         ],
     ]); ?>

@@ -124,7 +124,7 @@ class RuleController extends Controller
     {
         $model = $this->findModel($id);
         Yii::$app->authManager->remove($model->item);
-        Yii::$app->session->setFlash('success', Yii::t('yii2mod.rbac', 'Rule has been deleted.'));
+        Yii::$app->session->addFlash('success', Yii::t('yii2mod.rbac', 'Rule has been deleted.'));
 
         return $this->redirect(['index']);
     }

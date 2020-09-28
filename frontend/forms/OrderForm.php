@@ -76,7 +76,7 @@ class OrderForm extends Model
         
         if ($order->save()) {
             $products = Product::find()
-                ->where([
+                ->andWhere([
                     'and',
                     ['id' => array_keys($cart_products)],
                     ['>', 'quantity', 0],

@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use wbraganca\fancytree\FancytreeWidget;
 
-$categories = json_decode($model->categories_tmp, JSON_UNESCAPED_UNICODE);
+$categories = ArrayHelper::getColumn($model->categories, 'id');
 $data = selectCategories($data, $categories);
 
 function selectCategories($data, $categories)
@@ -13,10 +13,13 @@ function selectCategories($data, $categories)
     $result = [];
     
     foreach ($data as $key => $d) {
-        $d['selected'] = in_array($d['id'], $categories);
-        $d['children'] = selectCategories($d['children'], $categories);
-        
-        $result[] = $d;
+        $result[] = [
+            'key' => $d['id'],
+            'title' => $d['title'],
+            'selected' => in_array($d['id'], $categories),
+            'expanded' => true,
+            'children' => isset($d['children']) ? selectCategories($d['children'], $categories) : [],
+        ];
     }
     
     return $result;
@@ -34,31 +37,45 @@ function selectCategories($data, $categories)
             </div>
             
             <div class="p-3">
+                <?= $form->field($model, 'categories_tmp', [
+                    'template' => '{label}{error}<br>',
+                    'options' => ['class' => 'mb-0'],
+                ])->hiddenInput(['value' => '']) ?>
+                
                 <?= FancytreeWidget::widget([
+                    'id' => 'product-categories_tmp-tree',
+                    'pluginOptions' => [
+                        'data-action' => Yii::$app->urlManager->createUrl(['product/product/specifications']),
+                        'data-id' => ArrayHelper::getValue($model, 'id'),
+                    ],
                     'options' => [
                         'source' => $data,
                         'checkbox' => true,
-                        'generateIds' => true,
-                        'idPrefix' => 'id-',
-                        'extensions' => [],
+                        'init' => new JsExpression('function(event, data) {
+                            data.tree.options.select(event, data);
+                        }'),
                         'select' => new JsExpression('function(event, data) {
-                            categoriesValue = JSON.parse($("#product-categories_tmp").val());
-                            id = parseInt(data.node.data.id);
+                            selectedNodes = data.tree.getSelectedNodes();
+                            nodesArr = [];
                             
-                            if (categoriesValue.includes(id)) {
-                                categoriesValue.splice(categoriesValue.indexOf(id), 1);
-                            } else {
-                                categoriesValue.push(id);
+                            for (key in selectedNodes) {
+                                nodesArr.push(selectedNodes[key]["key"]);
+                            }
+                            
+                            el = data.tree.$div;
+                            action = el.data("action");
+                            sendData = {
+                                id: el.data("id"),
+                                categories: nodesArr
                             };
                             
-                            $("#product-categories_tmp").val(JSON.stringify(categoriesValue)).change();
+                            $.get(action, sendData, function(data) {
+                                $("#specifications-wrapper").html(data.specifications);
+                                $("#variation-specification").html(data.variations).trigger("change");
+                            });
                         }'),
                     ],
                 ]); ?>
-                
-                <?= $form->field($model, 'categories_tmp', ['template' => '{input}'])->hiddenInput([
-                    'data-action' => Yii::$app->urlManager->createUrl(['product/product/specifications']),
-                ]) ?>
             </div>
         </div>
     </div>
@@ -81,27 +98,13 @@ function selectCategories($data, $categories)
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var el, action, sendData;
-        
-        $(document).on('change', '#product-categories_tmp', function() {
-            el = $(this);
-            action = el.data('action');
-            sendData = {
-                id: '<?= ArrayHelper::getValue($model, 'id') ?>',
-                categories: el.val()
-            };
-            
-            $.get(action, sendData, function(data) {
-                $('#specifications-wrapper').html(data.specifications);
-                $('#variation-specification').html(data.variations).trigger('change');
-            });
-        });
-        
         $(document).on('change', '#variation-specification', function() {
             $('#variation-option').html($(this).find(':selected').data('options') ? $(this).find(':selected').data('options') : null);
         });
         
-        $('#product-categories_tmp').trigger('change');
+        $(document).on('submit', '#edit-form', function() {
+			$.ui.fancytree.getTree('#fancyree_product-categories_tmp-tree').generateFormElements('Product[categories_tmp][]');
+		});
     });
 </script>
 

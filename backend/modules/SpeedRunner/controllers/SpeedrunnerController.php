@@ -4,7 +4,6 @@ namespace backend\modules\Speedrunner\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 
 class SpeedrunnerController extends Controller

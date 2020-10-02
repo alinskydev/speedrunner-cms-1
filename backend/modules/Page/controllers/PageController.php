@@ -4,7 +4,6 @@ namespace backend\modules\Page\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Page\models\Page;
 use backend\modules\Page\modelsSearch\PageSearch;

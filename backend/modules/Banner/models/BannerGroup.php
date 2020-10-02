@@ -8,7 +8,7 @@ use common\components\framework\ActiveRecord;
 
 class BannerGroup extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'text_1',
         'text_2',
         'text_3',

@@ -4,7 +4,6 @@ namespace backend\modules\Menu\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Menu\models\Menu;
 
@@ -99,14 +98,14 @@ class MenuController extends Controller
         return false;
     }
     
-    public function actionExpandStatus($item)
+    public function actionExpand($id)
     {
-        $model = Menu::findOne($item);
+        $model = Menu::findOne($id);
         
-        if ($model && $model->depth > 0) {
-            return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
+        if (!$model || $model->depth == 0) {
+            return false;
         }
         
-        return false;
+        return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
     }
 }

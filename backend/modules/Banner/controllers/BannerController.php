@@ -4,7 +4,6 @@ namespace backend\modules\Banner\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Banner\models\Banner;
 use backend\modules\Banner\modelsSearch\BannerSearch;

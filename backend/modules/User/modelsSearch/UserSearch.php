@@ -61,7 +61,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'User.created', $this->created])
             ->andFilterWhere(['like', 'User.updated', $this->updated]);
         
-        foreach ($this->profile_attrs as $p_a) {
+        foreach ($this->profile_attributes as $p_a) {
             $dataProvider->sort->attributes[$p_a] = [
                 'asc' => ["UserProfile.$p_a" => SORT_ASC],
                 'desc' => ["UserProfile.$p_a" => SORT_DESC],

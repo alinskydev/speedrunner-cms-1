@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class BlockPage extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
     ];
     

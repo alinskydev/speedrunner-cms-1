@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Product\models\ProductCategory;
 
@@ -101,14 +100,14 @@ class CategoryController extends Controller
         return false;
     }
     
-    public function actionExpandStatus($item)
+    public function actionExpand($id)
     {
-        $model = ProductCategory::findOne($item);
+        $model = ProductCategory::findOne($id);
         
-        if ($model && $model->depth > 0) {
-            return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
+        if (!$model || $model->depth == 0) {
+            return false;
         }
         
-        return false;
+        return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
     }
 }

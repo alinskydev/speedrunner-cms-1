@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Product\models\ProductSpecification;
 use backend\modules\Product\modelsSearch\ProductSpecificationSearch;
@@ -31,11 +30,5 @@ class SpecificationController extends Controller
     public function actionDelete()
     {
         return Yii::$app->sr->record->deleteModel(new ProductSpecification);
-    }
-    
-    public function actionItemsList($q = null)
-    {
-        $out['results'] = ProductSpecification::itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
     }
 }

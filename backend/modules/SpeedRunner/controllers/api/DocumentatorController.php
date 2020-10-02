@@ -4,7 +4,6 @@ namespace backend\modules\Speedrunner\controllers\api;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Speedrunner\forms\api\DocumentatorForm;
 

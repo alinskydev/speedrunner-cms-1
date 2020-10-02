@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['blog/blog/items-list']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['user/user/items-list']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/user']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')

@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class Zzz extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'short_description',
         'full_description',

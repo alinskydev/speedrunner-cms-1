@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class ProductSpecification extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
     ];
     

@@ -4,7 +4,6 @@ namespace backend\modules\Zzz\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Zzz\models\ZzzCategory;
 use backend\modules\Zzz\modelsSearch\ZzzCategorySearch;

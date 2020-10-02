@@ -2,7 +2,7 @@
 
 use yii\helpers\ArrayHelper;
 
-$title = ($model->module_name == $model->controller_name) ? $model->module_name : $model->module_name . ' ' . $model->controller_name;
+$title = ($model->module_name == $model->controller_name) ? $model->module_name : $model->module_name . ' ' . strtolower($model->controller_name);
 
 //      ATTRIBUTES
 

@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class Blog extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'short_description',
         'full_description',
@@ -99,7 +99,7 @@ class Blog extends ActiveRecord
     {
         return $this->hasMany(BlogTag::className(), ['id' => 'tag_id'])
             ->viaTable('BlogTagRef', ['blog_id' => 'id'], function ($query) {
-                $query->andWhere(['lang' => Yii::$app->language]);
+                $query->onCondition(['lang' => Yii::$app->language]);
             });
     }
     

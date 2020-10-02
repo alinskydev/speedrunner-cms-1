@@ -4,7 +4,6 @@ namespace backend\modules\Translation\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Translation\models\TranslationSource;
 use backend\modules\Translation\modelsSearch\TranslationSourceSearch;

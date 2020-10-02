@@ -4,7 +4,6 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Blog\models\BlogCategory;
 use backend\modules\Blog\modelsSearch\BlogCategorySearch;
@@ -31,11 +30,5 @@ class CategoryController extends Controller
     public function actionDelete()
     {
         return Yii::$app->sr->record->deleteModel(new BlogCategory);
-    }
-    
-    public function actionItemsList($q = null)
-    {
-        $out['results'] = BlogCategory::itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
     }
 }

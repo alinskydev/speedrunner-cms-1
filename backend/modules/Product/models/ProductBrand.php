@@ -8,7 +8,7 @@ use common\components\framework\ActiveRecord;
 
 class ProductBrand extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'description',
     ];

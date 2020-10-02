@@ -13,7 +13,7 @@ use backend\modules\Product\models\Product;
 
 class OrderForm extends Model
 {
-    const EXCEPT_ATTRS = ['user', 'order'];
+    const EXCEPT_ATTRIBUTES = ['user', 'order'];
     
     public $user;
     public $order;
@@ -66,7 +66,7 @@ class OrderForm extends Model
         $order = $this->order;
         
         foreach ($this->attributes as $key => $a) {
-            if (!in_array($key, self::EXCEPT_ATTRS)) {
+            if (!in_array($key, self::EXCEPT_ATTRIBUTES)) {
                 $order->{$key} = $a;
             }
         }

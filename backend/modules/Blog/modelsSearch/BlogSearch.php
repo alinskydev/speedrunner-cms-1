@@ -12,6 +12,8 @@ use backend\modules\Blog\models\Blog;
 
 class BlogSearch extends Blog
 {
+    public $tag_id;
+    
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -23,7 +25,7 @@ class BlogSearch extends Blog
     public function rules()
     {
         return [
-            [['id', 'category_id'], 'integer'],
+            [['id', 'category_id', 'tag_id'], 'integer'],
             [['name', 'slug', 'created', 'updated', 'published'], 'safe'],
         ];
     }
@@ -36,7 +38,9 @@ class BlogSearch extends Blog
     public function search($params)
     {
         $query = Blog::find()
-            ->with(['category', 'tags']);
+            ->joinWith(['tags'])
+            ->with(['category'])
+            ->distinct();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,22 +62,23 @@ class BlogSearch extends Blog
         }
         
         $query->andFilterWhere([
-            'id' => $this->id,
-            'category_id' => $this->category_id,
+            'Blog.id' => $this->id,
+            'Blog.category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'published', $this->published])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+        $query->andFilterWhere(['like', 'Blog.slug', $this->slug])
+            ->andFilterWhere(['like', 'Blog.published', $this->published])
+            ->andFilterWhere(['like', 'Blog.created', $this->created])
+            ->andFilterWhere(['like', 'Blog.updated', $this->updated])
+            ->andFilterWhere(['like', 'BlogTag.id', $this->tag_id]);
         
         //        TRANSLATIONS
         
         $lang = Yii::$app->language;
         
-        foreach ($this->translation_attrs as $t_a) {
-            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
-            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
+        foreach ($this->translation_attributes as $t_a) {
+            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT(Blog.$t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
+            $query->addSelect([new Expression("Blog.$t_a->>'$.$lang' as json_$t_a")]);
             
             $dataProvider->sort->attributes[$t_a] = [
                 'asc' => ["json_$t_a" => SORT_ASC],

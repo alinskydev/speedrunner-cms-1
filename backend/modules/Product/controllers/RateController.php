@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Product\models\ProductRate;
 use backend\modules\Product\modelsSearch\ProductRateSearch;

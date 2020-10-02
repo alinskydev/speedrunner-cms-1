@@ -16,16 +16,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         //        TRANSLATIONS
         
-        if (isset($this->translation_attrs)) {
-            foreach ($this->translation_attrs as $a) {
+        if (isset($this->translation_attributes)) {
+            foreach ($this->translation_attributes as $a) {
                 $this->{$a} = ArrayHelper::getValue($this->{$a}, Yii::$app->language);
             }
         }
         
         //        DATETIME FORMAT
         
-        foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
-            foreach ($d_f_a['attrs'] as $a) {
+        foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
+            foreach ($d_f_a['attributes'] as $a) {
                 if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['afterFind'], strtotime($this->{$a})) : null;
                 }
@@ -39,8 +39,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         //        TRANSLATIONS
         
-        if (isset($this->translation_attrs)) {
-            foreach ($this->translation_attrs as $a) {
+        if (isset($this->translation_attributes)) {
+            foreach ($this->translation_attributes as $a) {
                 if ($json = ArrayHelper::getValue($this->oldAttributes, $a)) {
                     $json[Yii::$app->language] = $this->{$a};
                 } else {
@@ -57,8 +57,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        DATETIME FORMAT
         
-        foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
-            foreach ($d_f_a['attrs'] as $a) {
+        foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
+            foreach ($d_f_a['attributes'] as $a) {
                 if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['beforeSave'], strtotime($this->{$a})) : null;
                 }
@@ -99,13 +99,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            $class_name = basename($this->className());
-            
-            if (!in_array($class_name, ['LogAction', 'LogActionAttr'])) {
-                if (!Yii::$app->session->hasFlash('success')) {
-                    Yii::$app->session->addFlash('success', Yii::t('app', 'Record has been saved'), false);
-                }
-            }
+            Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been saved')]);
         }
         
         return parent::afterSave($insert, $changedAttributes);
@@ -122,7 +116,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            Yii::$app->session->addFlash('success', Yii::t('app', 'Record has been deleted'));
+            Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been deleted')]);
         }
         
         return parent::afterDelete();
@@ -132,8 +126,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         //        DATETIME FORMAT
         
-        foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
-            foreach ($d_f_a['attrs'] as $a) {
+        foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
+            foreach ($d_f_a['attributes'] as $a) {
                 if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['beforeSearch'], strtotime($this->{$a})) : null;
                 }
@@ -145,8 +139,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         //        DATETIME FORMAT
         
-        foreach (Yii::$app->params['date_format_attrs'] as $key => $d_f_a) {
-            foreach ($d_f_a['attrs'] as $a) {
+        foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
+            foreach ($d_f_a['attributes'] as $a) {
                 if (array_key_exists($a, $this->attributes)) {
                     $this->{$a} = $this->{$a} ? date($d_f_a['formats']['afterSearch'], strtotime($this->{$a})) : null;
                 }

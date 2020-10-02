@@ -8,6 +8,7 @@
 namespace wbraganca\fancytree;
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 /**
@@ -22,6 +23,7 @@ class FancytreeWidget extends \yii\base\Widget
      * @var array
      */
     public $options = [];
+    public $pluginOptions = [];
 
     /**
      * @inheritdoc
@@ -44,7 +46,7 @@ class FancytreeWidget extends \yii\base\Widget
             $id = $this->options['id'];
             unset($this->options['id']);
         } else {
-           echo Html::tag('div', '', ['id' => $id]);
+           echo Html::tag('div', '', ArrayHelper::merge(['id' => $id], $this->pluginOptions));
         }
         $options = Json::encode($this->options);
         $view->registerJs('$("#' . $id . '").fancytree( ' .$options .')');

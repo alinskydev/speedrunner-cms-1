@@ -83,6 +83,16 @@ $tabs = array_keys($result);
                                     Filtering: ?filter[<b>{attribute}</b>]=<b>{value}</b>
                                 </td>
                             </tr>
+                            
+                            <tr>
+                                <th>
+                                    Auth
+                                </th>
+                                <td>
+                                    Basic (send <b>access_token</b> as <b>username</b>)<br>
+                                    <b>Access_token</b> can be recieved after login and changes when password has been changed
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

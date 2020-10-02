@@ -4,7 +4,6 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\Blog;
@@ -56,7 +55,6 @@ class BlogController extends Controller
     {
         if ($model = Blog::find()->with(['tags'])->andWhere(['id' => $id])->one()) {
             $model->tags_tmp = $model->tags;
-            
             return Yii::$app->sr->record->updateModel($model);
         } else {
             return $this->redirect(['index']);
@@ -66,12 +64,6 @@ class BlogController extends Controller
     public function actionDelete()
     {
         return Yii::$app->sr->record->deleteModel(new Blog);
-    }
-    
-    public function actionItemsList($q = null)
-    {
-        $out['results'] = Blog::itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
     }
     
     public function actionImageSort($id, $attr)

@@ -4,7 +4,6 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\Blog\models\BlogRate;
 use backend\modules\Blog\modelsSearch\BlogRateSearch;

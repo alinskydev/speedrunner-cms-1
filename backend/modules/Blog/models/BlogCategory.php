@@ -8,7 +8,7 @@ use common\components\framework\ActiveRecord;
 
 class BlogCategory extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'description',
     ];

@@ -14,7 +14,7 @@ class ActiveField
         foreach (Yii::$app->i18n->getLanguages() as $l) {
             $new_name = "{$name}[{$l['code']}]";
             $new_input_options = ArrayHelper::merge([
-                'value' => ArrayHelper::getValue($model->translation_attrs[$name], $l['code']),
+                'value' => ArrayHelper::getValue($model->translation_attributes[$name], $l['code']),
             ], $input_options);
             
             $form_groups[] = $form->field($model, $new_name, $field_options)->{$input_type}($new_input_options);

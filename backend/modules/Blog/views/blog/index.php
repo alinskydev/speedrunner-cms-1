@@ -6,6 +6,8 @@ use common\components\framework\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
+use backend\modules\Blog\models\BlogTag;
+
 $this->title = Yii::t('app', 'Blogs');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -64,7 +66,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['blog/category/items-list']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-category']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -83,7 +85,24 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             [
-                'attribute' => 'tags_tmp',
+                'attribute' => 'tag_id',
+                'label' => $modelSearch->getAttributeLabel('tags_tmp'),
+                'format' => 'raw',
+                'filter' => Select2::widget([
+                    'model' => $modelSearch,
+                    'attribute' => 'tag_id',
+                    'data' => [$modelSearch->tag_id => ArrayHelper::getValue(BlogTag::findOne($modelSearch->tag_id), 'name')],
+                    'options' => ['placeholder' => ' '],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'ajax' => [
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-tag']),
+                            'dataType' => 'json',
+                            'delay' => 300,
+                            'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                        ],
+                    ]
+                ]),
                 'value' => 'tagsColumn',
             ],
             [

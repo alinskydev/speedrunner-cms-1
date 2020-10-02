@@ -33,23 +33,30 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div class="p-3">
                 <?= FancytreeWidget::widget([
+                    'pluginOptions' => [
+                        'data-action_create' => Yii::$app->urlManager->createUrl(['product/category/create']),
+                        'data-action_update' => Yii::$app->urlManager->createUrl(['product/category/update']),
+                        'data-action_expand' => Yii::$app->urlManager->createUrl(['product/category/expand']),
+                        'data-action_move' => Yii::$app->urlManager->createUrl(['product/category/move']),
+                    ],
                     'options' => [
                         'source' => $data,
                         'extensions' => ['dnd'],
-                        'init' => new JsExpression('function(event, data, flag) {
-                            $("#nav-item-content").load("' . Yii::$app->urlManager->createUrl([
-                                'product/category/create'
-                            ]) . '");
+                        'init' => new JsExpression('function(event, data) {
+                            $("#nav-item-content").load(data.tree.$div.data("action_create"));
+                        }'),
+                        'activate' => new JsExpression('function(event, data) {
+                            $("#nav-item-content").load(data.tree.$div.data("action_update") + "?id=" + data.node.data.id);
                         }'),
                         'collapse' => new JsExpression('function(event, data) {
-                            $.get("' . Yii::$app->urlManager->createUrl(['product/category/expand-status']) . '", {
-                                item: data.node.data.id
-                            }, function() {});
+                            $.get(data.tree.$div.data("action_expand"), {
+                                id: data.node.data.id
+                            });
                         }'),
                         'expand' => new JsExpression('function(event, data) {
-                            $.get("' . Yii::$app->urlManager->createUrl(['product/category/expand-status']) . '", {
-                                item: data.node.data.id
-                            }, function() {});
+                            $.get(data.tree.$div.data("action_expand"), {
+                                id: data.node.data.id
+                            });
                         }'),
                         'dnd' => [
                             'preventVoidMoves' => true,
@@ -62,7 +69,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 return true;
                             }'),
                             'dragDrop' => new JsExpression('function(node, data) {
-                                $.get("' . Yii::$app->urlManager->createUrl(['product/category/move']) . '", {
+                                $.get(data.tree.$div.data("action_move"), {
                                     item: data.otherNode.data.id,
                                     action: data.hitMode,
                                     second: node.data.id
@@ -71,11 +78,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 });
                             }'),
                         ],
-                        'activate' => new JsExpression('function(event, data) {
-                            $("#nav-item-content").load("' . Yii::$app->urlManager->createUrl([
-                                'product/category/update'
-                            ]) . '?id=" + data.node.data.id);
-                        }'),
                     ],
                 ]); ?>
             </div>

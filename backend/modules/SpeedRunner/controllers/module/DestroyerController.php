@@ -4,7 +4,6 @@ namespace backend\modules\Speedrunner\controllers\module;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Speedrunner\forms\module\DestroyerForm;

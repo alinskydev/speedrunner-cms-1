@@ -11,10 +11,9 @@ use yii\web\UploadedFile;
 
 class User extends ActiveRecord implements IdentityInterface
 {
-    public $name;
     public $new_password;
     
-    public $profile_attrs = [
+    public $profile_attributes = [
         'full_name',
         'phone',
         'address',
@@ -38,10 +37,12 @@ class User extends ActiveRecord implements IdentityInterface
             [['new_password'], 'required', 'when' => function($model) {
                 return $model->isNewRecord;
             }],
+            
             [['username', 'email'], 'unique'],
-            [['email'], 'email'],
-            [['full_name', 'phone'], 'string', 'max' => 100],
+            [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
+            [['username', 'full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 255],
+            [['email'], 'email'],
             [['role'], 'in', 'range' => array_keys($this->roles())],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 6, 'max' => 50],
@@ -118,16 +119,9 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
     
-    static function find()
-    {
-        return parent::find()->with(['profile']);
-    }
-    
     public function afterFind()
     {
-        $this->name = $this->username;
-        
-        foreach ($this->profile_attrs as $p_a) {
+        foreach ($this->profile_attributes as $p_a) {
             $this->{$p_a} = $this->profile->{$p_a};
         }
         
@@ -171,7 +165,7 @@ class User extends ActiveRecord implements IdentityInterface
         $profile = $this->profile ?: new UserProfile;
         $profile->user_id = $this->id;
         
-        foreach ($this->profile_attrs as $p_a) {
+        foreach ($this->profile_attributes as $p_a) {
             $profile->{$p_a} = $this->{$p_a};
         }
         

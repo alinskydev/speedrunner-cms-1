@@ -4,7 +4,6 @@ namespace backend\modules\User\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 use backend\modules\User\models\User;
 use backend\modules\User\modelsSearch\UserSearch;
@@ -31,11 +30,5 @@ class UserController extends Controller
     public function actionDelete()
     {
         return Yii::$app->sr->record->deleteModel(new User);
-    }
-    
-    public function actionItemsList($q = null, $role = null)
-    {
-        $out['results'] = User::itemsList('username', 'self', $q)->andFilterWhere(['User.role' => $role])->asArray()->all();
-        return $this->asJson($out);
     }
 }

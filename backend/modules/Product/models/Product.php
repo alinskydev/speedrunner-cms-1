@@ -9,14 +9,14 @@ use yii\helpers\ArrayHelper;
 
 class Product extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'short_description',
         'full_description',
     ];
     
-    public $categories_tmp = '[]';
-    public $options_tmp = [];
+    public $categories_tmp;
+    public $options_tmp;
     public $related_tmp;
     public $variations_tmp;
     
@@ -59,6 +59,15 @@ class Product extends ActiveRecord
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'manyMany',
                 'attributes' => [
+                    [
+                        'model' => new ProductCategoryRef,
+                        'relation' => 'categories',
+                        'attribute' => 'categories_tmp',
+                        'properties' => [
+                            'main' => 'product_id',
+                            'relational' => 'category_id',
+                        ],
+                    ],
                     [
                         'model' => new ProductOptionRef,
                         'relation' => 'options',
@@ -170,30 +179,5 @@ class Product extends ActiveRecord
     public function getRates()
     {
         return $this->hasMany(ProductRate::className(), ['product_id' => 'id']);
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        CATEGORIES
-        
-        $categories = ArrayHelper::map($this->categories, 'id', 'id');
-        $categories_tmp = json_decode($this->categories_tmp, true);
-        
-        if ($categories_tmp) {
-            foreach ($categories_tmp as $value) {
-                if (!in_array($value, $categories)) {
-                    $relation_mdl = new ProductCategoryRef;
-                    $relation_mdl->product_id = $this->id;
-                    $relation_mdl->category_id = $value;
-                    $relation_mdl->save();
-                }
-                
-                ArrayHelper::remove($categories, $value);
-            }
-        }
-        
-        ProductCategoryRef::deleteAll(['category_id' => $categories, 'product_id' => $this->id]);
-        
-        return parent::afterSave($insert, $changedAttributes);
     }
 }

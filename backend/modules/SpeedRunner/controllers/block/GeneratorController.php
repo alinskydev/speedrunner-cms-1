@@ -4,7 +4,6 @@ namespace backend\modules\Speedrunner\controllers\block;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\db\Schema;
 

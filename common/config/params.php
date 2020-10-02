@@ -20,7 +20,7 @@ return [
         'groups' => 'Groups',
     ],
     
-    'date_format_attrs' => [
+    'date_format_attributes' => [
         'datetime' => [
             'formats' => [
                 'afterFind' => 'd.m.Y H:i',
@@ -28,7 +28,7 @@ return [
                 'beforeSearch' => 'Y-m-d',
                 'afterSearch' => 'd.m.Y',
             ],
-            'attrs' => [
+            'attributes' => [
                 'created', 'updated', 'datetime', 'published'
             ]
         ],
@@ -39,7 +39,7 @@ return [
                 'beforeSearch' => 'Y-m-d',
                 'afterSearch' => 'd.m.Y',
             ],
-            'attrs' => [
+            'attributes' => [
                 'date'
             ]
         ],
@@ -50,7 +50,7 @@ return [
                 'beforeSearch' => 'H:i',
                 'afterSearch' => 'H:i',
             ],
-            'attrs' => [
+            'attributes' => [
                 'time'
             ]
         ],
@@ -61,7 +61,7 @@ return [
                 'beforeSearch' => 'Y-m',
                 'afterSearch' => 'm.Y',
             ],
-            'attrs' => [
+            'attributes' => [
                 'month'
             ]
         ],

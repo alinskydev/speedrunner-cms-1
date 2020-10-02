@@ -10,7 +10,7 @@ use yii\db\Expression;
 
 class Menu extends ActiveRecord
 {
-    public $translation_attrs = [
+    public $translation_attributes = [
         'name',
         'url',
     ];
@@ -37,7 +37,7 @@ class Menu extends ActiveRecord
     public function transactions()
     {
         return [
-            self::SCENARIO_DEFAULT => self::OP_ALL,
+            static::SCENARIO_DEFAULT => static::OP_ALL,
         ];
     }
     

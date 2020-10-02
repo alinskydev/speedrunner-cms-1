@@ -188,7 +188,7 @@ CREATE TABLE `Blog` (
   UNIQUE KEY `slug` (`slug`),
   KEY `blog_ibfk_1` (`category_id`),
   CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `BlogCategory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `Blog` (
 
 LOCK TABLES `Blog` WRITE;
 /*!40000 ALTER TABLE `Blog` DISABLE KEYS */;
-INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-09-27 14:45:05'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',3,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[\"/uploaded/2020-09-27/31b8680aba7cbbe005f073d442e968a6.png\", \"/uploaded/2020-09-27/d1de990da0a1f89cbb577e73b2047544.png\"]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-09-27 13:16:18');
+INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-09-27 14:45:05'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',3,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[\"/uploaded/2020-09-27/31b8680aba7cbbe005f073d442e968a6.png\", \"/uploaded/2020-09-27/d1de990da0a1f89cbb577e73b2047544.png\"]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-10-02 22:45:37');
 /*!40000 ALTER TABLE `Blog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +343,7 @@ CREATE TABLE `BlogTagRef` (
 
 LOCK TABLES `BlogTagRef` WRITE;
 /*!40000 ALTER TABLE `BlogTagRef` DISABLE KEYS */;
-INSERT INTO `BlogTagRef` VALUES (8,4,'en'),(8,6,'en'),(8,5,'ru'),(2,5,'ru'),(2,6,'ru');
+INSERT INTO `BlogTagRef` VALUES (8,5,'ru'),(2,5,'ru'),(2,6,'ru'),(8,4,'en'),(8,6,'en');
 /*!40000 ALTER TABLE `BlogTagRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `Menu` (
 
 LOCK TABLES `Menu` WRITE;
 /*!40000 ALTER TABLE `Menu` DISABLE KEYS */;
-INSERT INTO `Menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,1,2,7,1,0,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(5,1,8,9,1,1,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}','2020-09-12 15:00:00','2020-09-12 15:00:00');
+INSERT INTO `Menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,1,2,7,1,0,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(5,1,8,9,1,1,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-10-02 23:25:55'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}','2020-09-12 15:00:00','2020-09-12 15:00:00');
 /*!40000 ALTER TABLE `Menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +546,7 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[]',NULL,121,23,NULL,NULL,'','2020-06-14 20:19:00','2020-09-12 09:50:49'),(3,'{\"de\": \"das\", \"en\": \"das\", \"ru\": \"das\"}','das','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','[]',NULL,123,NULL,NULL,NULL,'','2020-08-31 15:48:00','2020-09-21 07:53:29');
+INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[]',NULL,121,23,NULL,NULL,'','2020-06-14 20:19:00','2020-09-12 09:50:49'),(3,'{\"de\": \"das\", \"en\": \"das\", \"ru\": \"das\"}','das','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','[]',NULL,123,NULL,NULL,NULL,'','2020-08-31 15:48:00','2020-10-02 23:15:42');
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -632,7 +632,7 @@ CREATE TABLE `ProductCategoryRef` (
   KEY `productcategoryref_ibfk_2` (`category_id`),
   CONSTRAINT `productcategoryref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `productcategoryref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -641,7 +641,7 @@ CREATE TABLE `ProductCategoryRef` (
 
 LOCK TABLES `ProductCategoryRef` WRITE;
 /*!40000 ALTER TABLE `ProductCategoryRef` DISABLE KEYS */;
-INSERT INTO `ProductCategoryRef` VALUES (4,2,121),(5,2,122),(6,2,120),(14,3,123),(16,3,120);
+INSERT INTO `ProductCategoryRef` VALUES (4,2,121),(5,2,122),(6,2,120),(19,3,120),(20,3,123);
 /*!40000 ALTER TABLE `ProductCategoryRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -726,7 +726,7 @@ CREATE TABLE `ProductOptionRef` (
 
 LOCK TABLES `ProductOptionRef` WRITE;
 /*!40000 ALTER TABLE `ProductOptionRef` DISABLE KEYS */;
-INSERT INTO `ProductOptionRef` VALUES (2,10),(3,7),(3,1),(3,4),(3,5);
+INSERT INTO `ProductOptionRef` VALUES (2,10),(3,1),(3,5),(3,6),(3,7),(3,10);
 /*!40000 ALTER TABLE `ProductOptionRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -783,6 +783,7 @@ CREATE TABLE `ProductRelatedRef` (
 
 LOCK TABLES `ProductRelatedRef` WRITE;
 /*!40000 ALTER TABLE `ProductRelatedRef` DISABLE KEYS */;
+INSERT INTO `ProductRelatedRef` VALUES (3,2);
 /*!40000 ALTER TABLE `ProductRelatedRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -878,7 +879,7 @@ CREATE TABLE `ProductVariation` (
 
 LOCK TABLES `ProductVariation` WRITE;
 /*!40000 ALTER TABLE `ProductVariation` DISABLE KEYS */;
-INSERT INTO `ProductVariation` VALUES (5,2,1,1,NULL,NULL,NULL,'[]',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(6,2,3,7,NULL,NULL,NULL,'[]',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(8,3,1,1,43,3,'frf','[]',0,'2020-09-12 21:56:00','2020-09-21 07:53:29'),(9,3,2,4,NULL,NULL,NULL,'[]',1,'2020-09-19 13:12:00','2020-09-21 07:53:29');
+INSERT INTO `ProductVariation` VALUES (5,2,1,1,NULL,NULL,NULL,'[]',0,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(6,2,3,7,NULL,NULL,NULL,'[]',1,'2020-09-12 15:00:00','2020-09-12 15:00:00'),(8,3,1,1,43,3,'frf','[]',0,'2020-09-12 21:56:00','2020-10-02 23:15:42'),(9,3,2,4,NULL,NULL,NULL,'[]',1,'2020-09-19 13:12:00','2020-10-02 23:15:42');
 /*!40000 ALTER TABLE `ProductVariation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -898,7 +899,7 @@ CREATE TABLE `SeoMeta` (
   PRIMARY KEY (`id`),
   KEY `model_id` (`model_id`),
   KEY `model_class` (`model_class`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -907,7 +908,7 @@ CREATE TABLE `SeoMeta` (
 
 LOCK TABLES `SeoMeta` WRITE;
 /*!40000 ALTER TABLE `SeoMeta` DISABLE KEYS */;
-INSERT INTO `SeoMeta` VALUES (1,'Product',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"asd\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(10,'ProductCategory',120,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(11,'BlockPage',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(12,'BlogCategory',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(13,'Blog',8,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(14,'Blog',2,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}');
+INSERT INTO `SeoMeta` VALUES (1,'Product',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"asd\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(10,'ProductCategory',120,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(11,'BlockPage',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(12,'BlogCategory',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(13,'Blog',8,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(14,'Blog',2,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(16,'Blog',8,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}');
 /*!40000 ALTER TABLE `SeoMeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1094,7 +1095,7 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` enum('admin','registered') COLLATE utf8mb4_unicode_ci NOT NULL,
   `auth_key` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1359,4 +1360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-28 18:50:01
+-- Dump completed on 2020-10-03  4:26:54

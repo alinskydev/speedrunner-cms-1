@@ -4,7 +4,6 @@ namespace backend\modules\System\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemSettings;

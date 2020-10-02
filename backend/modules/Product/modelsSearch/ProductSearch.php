@@ -76,7 +76,7 @@ class ProductSearch extends Product
         
         $lang = Yii::$app->language;
         
-        foreach ($this->translation_attrs as $t_a) {
+        foreach ($this->translation_attributes as $t_a) {
             $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
             $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
             

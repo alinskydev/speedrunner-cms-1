@@ -16,7 +16,6 @@ namespace backend\modules\<?= $model->module_name ?>\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;

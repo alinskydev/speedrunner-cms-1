@@ -39,7 +39,7 @@ use yii\helpers\ArrayHelper;
 class <?= $model->table_name ?> extends ActiveRecord
 {
 <?php if ($model->attrs_translation) { ?>
-    public $translation_attrs = [
+    public $translation_attributes = [
 <?php foreach ($model->attrs_translation as $key => $a) { ?>
         '<?= $key ?>',
 <?php } ?>

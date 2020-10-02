@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
@@ -66,9 +65,7 @@ class ProductController extends Controller
             ->one();
         
         if ($model) {
-            $model->categories_tmp = json_encode(ArrayHelper::getColumn($model->categories, 'id'));
-            $model->related_tmp = ArrayHelper::getColumn($model->related, 'id');
-            
+            $model->related_tmp = $model->related;
             return Yii::$app->sr->record->updateModel($model);
         } else {
             return $this->redirect(['index']);
@@ -78,12 +75,6 @@ class ProductController extends Controller
     public function actionDelete()
     {
         return Yii::$app->sr->record->deleteModel(new Product);
-    }
-    
-    public function actionItemsList($q = null, $id = null)
-    {
-        $out['results'] = Product::itemsList('name', 'translation', $q)->andFilterWhere(['!=', 'id', $id])->asArray()->all();
-        return $this->asJson($out);
     }
     
     public function actionImageSort($id, $attr)
@@ -124,10 +115,9 @@ class ProductController extends Controller
         }
     }
     
-    public function actionSpecifications($id, $categories)
+    public function actionSpecifications($id, array $categories = [])
     {
         $model = Product::findOne($id) ?: new Product;
-        $categories = json_decode($categories, JSON_UNESCAPED_UNICODE);
         $lang = Yii::$app->language;
         
         $specifications = ProductSpecification::find()

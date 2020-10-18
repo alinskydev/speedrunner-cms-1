@@ -17,28 +17,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index', 'dot-translation'],
+                'only' => ['logout', 'index'],
                 'rules' => [
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['dot-translation'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
                 ],
-            ],
-        ];
-    }
-    
-    public function actions()
-    {
-        return [
-            'dot-translation' => [
-                'class' => 'pavlinter\translation\TranslationAction',
             ],
         ];
     }

@@ -5,15 +5,15 @@ use yii\helpers\Html;
 ?>
 
 <h4 class="mt-4 mb-3">
-    <?= Yii::t('speedrunner', 'View relations') ?>
+    View relations
 </h4>
 
 <table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
-            <th style="width: 45%;"><?= Yii::t('speedrunner', 'Model') ?></th>
-            <th style="width: 45%;"><?= Yii::t('speedrunner', 'Variable name') ?></th>
+            <th style="width: 45%;">Model</th>
+            <th style="width: 45%;">Variable name</th>
             <th style="width: 3%;"></th>
         </tr>
     </thead>

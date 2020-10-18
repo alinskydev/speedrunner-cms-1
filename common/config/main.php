@@ -8,10 +8,8 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'bootstrap' => ['i18n', 'frontendLocalisedRoutes'],
+    'bootstrap' => ['i18n'],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'modules' => [
-    ],
     'components' => [
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
@@ -22,17 +20,13 @@ return [
             'thousandSeparator' => ' ',
         ],
         'i18n' => [
-            'class' => 'pavlinter\translation\I18N',
             'translations' => [
-                '*' => [
-                    'class' => 'pavlinter\translation\DbMessageSource',
-                    'forceTranslation' => true,
-                    'autoInsert' => true, //if message key doesn't exist in the database, message key will be created automatically
-                    'dotMode' => 'show', //default state: show or hide dot
+                'app*' => [
+                    'class' => 'common\components\framework\DbMessageSource',
+                    'sourceMessageTable' => 'TranslationSource',
+                    'messageTable' => 'TranslationMessage',
                 ],
             ],
-            'dialog' => 'bs', //Bootstrap Modal Or jQuery Dialog (bs or jq)
-            'access' => 'admin',  //user permissions or function(){ return true || false; }
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -76,6 +70,5 @@ return [
         
         'settings' => ['class' => 'common\components\Settings'],
         'sr' => ['class' => 'common\helpers\Speedrunner'],
-        'frontendLocalisedRoutes' => ['class' => 'frontend\components\LocalisedRoutes'],
     ],
 ];

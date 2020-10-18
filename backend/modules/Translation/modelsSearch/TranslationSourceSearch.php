@@ -28,7 +28,7 @@ class TranslationSourceSearch extends TranslationSource
     {
         $query = TranslationSource::find()
             ->joinWith(['translations'])
-            ->with(['translations.language'])
+            ->with(['translations.lang'])
             ->distinct();
 
         $dataProvider = new ActiveDataProvider([

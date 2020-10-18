@@ -8,8 +8,6 @@ use backend\modules\System\models\SystemLanguage;
 $this->title = Yii::t('app', 'Translation sources');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-$active_langs = SystemLanguage::find()->andWhere(['active' => 1])->column();
-
 ?>
 
 <h2 class="main-title">
@@ -32,8 +30,8 @@ $active_langs = SystemLanguage::find()->andWhere(['active' => 1])->column();
             [
                 'attribute' => 'translations_tmp',
                 'format' => 'raw',
-                'value' => function ($model) use ($active_langs) {
-                    return $model->translationsColumn($active_langs);
+                'value' => function ($model) {
+                    return $model->translationsColumn();
                 },
                 'contentOptions' => [
                     'style' => 'max-width: 300px; white-space: normal;',

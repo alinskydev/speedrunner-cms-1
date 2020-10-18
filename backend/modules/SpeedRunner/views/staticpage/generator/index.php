@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <h2 class="main-title">
     <?= $this->title ?>
     <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('speedrunner', 'Generate'),
+        Html::tag('i', null, ['class' => 'fas fa-file-code']) . 'Generate',
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>
 </h2>
@@ -28,12 +28,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-information">
-                    <?= Yii::t('speedrunner', 'General') ?>
+                    Information
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-blocks">
-                    <?= Yii::t('speedrunner', 'Blocks') ?>
+                    Blocks
                 </a>
             </li>
         </ul>

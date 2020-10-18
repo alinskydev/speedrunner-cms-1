@@ -12,11 +12,10 @@ class LocalisedRoutes extends Component
     public function init()
     {
 //        $routes = [
-//            Yii::t('routes', 'contact') => 'site/contact',
-//            Yii::t('routes', 'about') => 'site/about',
+//            Yii::t('app_routes', 'contact') => 'site/contact',
 //        ];
 //        
-//        $urlManager = $_SERVER['REDIRECT_APP'] == 'frontend' ? Yii::$app->urlManager : Yii::$app->urlManagerFrontend;
+//        $urlManager = Yii::$app->urlManager->baseUrl == Yii::$app->urlManagerFrontend->baseUrl ? Yii::$app->urlManager : Yii::$app->urlManagerFrontend;
 //        $urlManager->rules = ArrayHelper::index($urlManager->rules, 'route');
 //        
 //        foreach ($routes as $key => $r) {

@@ -11,6 +11,7 @@ use Yii;
 use yii\web\UrlRuleInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 use backend\modules\System\models\SystemLanguage;
 
 /**
@@ -34,11 +35,6 @@ class UrlManager extends \yii\web\UrlManager
      * @var bool Whether to display the source app language in the URL
      */
     public $displaySourceLanguage = false;
-
-    /**
-     * @var string Parameter used to set the language
-     */
-    public $languageParam = 'lang';
     
     /**
      * @var bool Whether to rewrite the baseUrl in th URL
@@ -50,9 +46,7 @@ class UrlManager extends \yii\web\UrlManager
      */
     public function init()
     {
-        $languages = SystemLanguage::find()->andWhere(['active' => 1])->asArray()->all();
-        $this->languages = ArrayHelper::getColumn($languages, 'code');
-        
+        $this->languages = SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
         parent::init();
     }
 
@@ -66,12 +60,18 @@ class UrlManager extends \yii\web\UrlManager
         if ($this->enablePrettyUrl) {
             $pathInfo = $request->getPathInfo();
             $language = explode('/', $pathInfo)[0];
-            $locale = ArrayHelper::getValue($this->aliases, $language, $language);
-            if (in_array($language, $this->languages)) {
+            
+            if (array_key_exists($language, $this->languages)) {
                 $request->setPathInfo(substr_replace($pathInfo, '', 0, (strlen($language) + 1)));
-                Yii::$app->language = $locale;
-                static::$currentLanguage = $language;
+            } else {
+                $language = ArrayHelper::map($this->languages, 'is_main', 'code')[1];
             }
+            
+            $locale = ArrayHelper::getValue($this->aliases, $language, $language);
+            Yii::$app->language = $locale;
+            static::$currentLanguage = $language;
+            
+            new \frontend\components\LocalisedRoutes;
         } else {
             $params = $request->getQueryParams();
             $route = isset($params[$this->routeParam]) ? $params[$this->routeParam] : '';
@@ -80,7 +80,7 @@ class UrlManager extends \yii\web\UrlManager
             }
             $language = explode('/', $route)[0];
             $locale = ArrayHelper::getValue($this->aliases, $language, $language);
-            if (in_array($language, $this->languages)) {
+            if (array_key_exists($language, $this->languages)) {
                 $route = substr_replace($route, '', 0, (strlen($language) + 1));
                 $params[$this->routeParam] = $route;
                 $request->setQueryParams($params);
@@ -88,6 +88,7 @@ class UrlManager extends \yii\web\UrlManager
                 static::$currentLanguage = $language;
             }
         }
+        
         return parent::parseRequest($request);
     }
 
@@ -99,10 +100,9 @@ class UrlManager extends \yii\web\UrlManager
     public function createUrl($params)
     {
         $params = (array)$params;
+        $language = ArrayHelper::remove($params, 'lang', static::$currentLanguage);
         
-        $lang = ArrayHelper::remove($params, $this->languageParam, static::$currentLanguage);
-        
-        return $this->baseUrl . ($lang ? "/$lang" : null) .
+        return $this->baseUrl . ($language ? "/$language" : null) .
             preg_replace('~' . $this->baseUrl . '~', null, parent::createUrl($params), 1);
     }
     

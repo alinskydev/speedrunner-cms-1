@@ -14,8 +14,8 @@ class SystemLanguageSearch extends SystemLanguage
     public function rules()
     {
         return [
-            [['id', 'weight', 'active', 'updated_at'], 'integer'],
-            [['name', 'code', 'image'], 'safe'],
+            [['id', 'is_active', 'is_main'], 'integer'],
+            [['name', 'code', 'image', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -49,14 +49,15 @@ class SystemLanguageSearch extends SystemLanguage
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'weight' => $this->weight,
-            'active' => $this->active,
-            'updated_at' => $this->updated_at,
+            'is_active' => $this->is_active,
+            'is_main' => $this->is_main,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'created', $this->created])
+            ->andFilterWhere(['like', 'updated', $this->updated]);
 
 		$this->afterSearch();
 		return $dataProvider;

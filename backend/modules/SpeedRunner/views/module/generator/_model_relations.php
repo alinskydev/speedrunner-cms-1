@@ -11,18 +11,18 @@ $types = [
 ?>
 
 <h4 class="mt-4 mb-3">
-    <?= Yii::t('speedrunner', 'Model relations') ?>
+    Model relations
 </h4>
 
 <table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
-            <th style="width: 20%;"><?= Yii::t('speedrunner', 'Name') ?></th>
-            <th style="width: 15%;"><?= Yii::t('speedrunner', 'Type') ?></th>
-            <th style="width: 20%;"><?= Yii::t('speedrunner', 'Model') ?></th>
-            <th style="width: 20%;"><?= Yii::t('speedrunner', 'Condition (from)') ?></th>
-            <th style="width: 20%;"><?= Yii::t('speedrunner', 'Condition (to)') ?></th>
+            <th style="width: 20%;">Name</th>
+            <th style="width: 15%;">Type</th>
+            <th style="width: 20%;">Model</th>
+            <th style="width: 20%;">Condition (from)</th>
+            <th style="width: 20%;">Condition (to)</th>
         </tr>
     </thead>
     

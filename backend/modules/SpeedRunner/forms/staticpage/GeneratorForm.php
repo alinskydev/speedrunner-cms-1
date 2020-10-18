@@ -30,9 +30,9 @@ class GeneratorForm extends Model
     public function attributeLabels()
     {
         return [
-            'page_name' => Yii::t('speedrunner', 'Page name'),
-            'has_seo_meta' => Yii::t('speedrunner', 'Has SEO meta'),
-            'blocks' => Yii::t('speedrunner', 'Blocks'),
+            'page_name' => 'Page name',
+            'has_seo_meta' => 'Has SEO meta',
+            'blocks' => 'Blocks',
         ];
     }
     

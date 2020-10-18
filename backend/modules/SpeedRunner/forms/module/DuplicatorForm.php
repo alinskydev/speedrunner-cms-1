@@ -28,9 +28,9 @@ class DuplicatorForm extends Model
     public function attributeLabels()
     {
         return [
-            'duplicate_types' => Yii::t('speedrunner', 'Duplicate types'),
-            'module_name_from' => Yii::t('speedrunner', 'Module name (from)'),
-            'module_name_to' => Yii::t('speedrunner', 'Module name (to)'),
+            'duplicate_types' => 'Duplicate types',
+            'module_name_from' => 'Module name (from)',
+            'module_name_to' => 'Module name (to)',
         ];
     }
     

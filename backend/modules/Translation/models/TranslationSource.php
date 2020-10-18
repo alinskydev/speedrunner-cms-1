@@ -44,28 +44,34 @@ class TranslationSource extends ActiveRecord
     
     public function activeTranslations()
     {
-        $lang_ids = ArrayHelper::getColumn(Yii::$app->i18n->getLanguages(true), 'id');
-        return TranslationMessage::find()->andWhere(['and', ['id' => $this->id], ['in', 'language_id', $lang_ids]])->all();
+        return TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => array_keys(Yii::$app->sr->translation->languages())])->all();
     }
     
-    public function translationsColumn($langs)
+    public function translationsColumn()
     {
+        $result = [];
+        
         foreach ($this->translations as $t) {
-            if ($t->translation && in_array($t->language_id, $langs)) {
-                $result[] = Html::tag('b', $t->language->name) . ': ' . nl2br($t->translation);
+            if ($t->translation && ArrayHelper::getValue($t, 'lang.is_active')) {
+                $result[] = Html::tag('b', $t->lang->name) . ': ' . nl2br($t->translation);
             }
         }
         
-        return isset($result) ? implode('<br>', $result) : null;
+        return implode('<br>', $result);
     }
     
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
+            $available_langs = Yii::$app->sr->translation->languages();
+            
             foreach ($this->translations_tmp as $key => $value) {
-                if ($t_msg = TranslationMessage::find()->andWhere(['counter' => $key])->one()) {
-                    $t_msg->translation = $value;
-                    $t_msg->save();
+                if (array_key_exists($key, $available_langs)) {
+                    $relation_mdl = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $key])->one() ?: new TranslationMessage;
+                    $relation_mdl->id = $this->id;
+                    $relation_mdl->language = $key;
+                    $relation_mdl->translation = $value;
+                    $relation_mdl->save();
                 }
             }
         }

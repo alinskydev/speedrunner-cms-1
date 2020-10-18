@@ -13,7 +13,7 @@ $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action-
 $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 
 $user = Yii::$app->user->identity;
-$langs = Yii::$app->i18n->getLanguages(true);
+$langs = Yii::$app->sr->translation->languages();
 $menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
 
 $flashes = Yii::$app->session->getAllFlashes();

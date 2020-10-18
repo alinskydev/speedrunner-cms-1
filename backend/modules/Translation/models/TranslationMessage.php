@@ -26,13 +26,13 @@ class TranslationMessage extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Id'),
-            'language_id' => Yii::t('app', 'Language'),
+            'language' => Yii::t('app', 'Language'),
             'translation' => Yii::t('app', 'Translation'),
         ];
     }
     
-    public function getLanguage()
+    public function getLang()
     {
-        return $this->hasOne(SystemLanguage::className(), ['id' => 'language_id']);
+        return $this->hasOne(SystemLanguage::className(), ['code' => 'language']);
     }
 }

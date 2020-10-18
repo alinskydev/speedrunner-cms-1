@@ -27,7 +27,7 @@ class DocumentatorForm extends Model
     public function attributeLabels()
     {
         return [
-            'module' => Yii::t('speedrunner', 'Module'),
+            'module' => 'Module',
         ];
     }
     

@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <?php foreach ($action_types as $key => $action_type) { ?>
                 <li class="nav-item">
                     <a class="nav-link <?= !$key ? 'active' : null ?>" data-toggle="pill" href="#tab-<?= $key ?>">
-                        <?= Yii::t('speedrunner', $action_type['label']) ?>
+                        <?= $action_type['label'] ?>
                     </a>
                 </li>
             <?php } ?>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             <div class="col-md-3 p-2">
                                 <a href="<?= Yii::$app->urlManager->createUrl($a['url']) ?>" class="card text-decoration-none">
                                     <div class="card-header bg-<?= $a['bg_class'] ?> text-white text-center">
-                                        <?= Yii::t('speedrunner', $a['label']) ?>
+                                        <?= $a['label'] ?>
                                     </div>
                                     
                                     <div class="card-body text-<?= $a['bg_class'] ?> text-center p-5" style="font-size: 100px;">

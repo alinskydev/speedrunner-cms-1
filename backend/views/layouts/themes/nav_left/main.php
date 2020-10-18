@@ -13,8 +13,7 @@ AppAsset::register($this);
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 $user = Yii::$app->user->identity;
 
-$langs = Yii::$app->i18n->getLanguages(true);
-$lang_curr = Yii::$app->i18n->getLanguage();
+$langs = Yii::$app->sr->translation->languages();
 
 $breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);
 $bookmark_add_value = ArrayHelper::getColumn($breadcrumbs, 'label');
@@ -75,7 +74,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
                 <div class="header-right">
                     <div class="item dropdown">
                         <button type="button" class="btn btn-link dropdown-toggle flag-wrapper" data-toggle="dropdown">
-                            <img src="<?= Yii::$app->sr->image->thumb($lang_curr['image'], [30, 20]) ?>">
+                    <img src="<?= Yii::$app->sr->image->thumb($langs[Yii::$app->language]['image'], [30, 20]) ?>">
                         </button>
                         
                         <div class="dropdown-menu dropdown-menu-right">

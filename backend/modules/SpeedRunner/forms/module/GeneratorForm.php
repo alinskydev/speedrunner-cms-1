@@ -41,15 +41,15 @@ class GeneratorForm extends Model
     public function attributeLabels()
     {
         return [
-            'module_name' => Yii::t('speedrunner', 'Module name'),
-            'generate_files' => Yii::t('speedrunner', 'Generate files'),
-            'controller_name' => Yii::t('speedrunner', 'Controller name'),
-            'controller_actions' => Yii::t('speedrunner', 'Controller actions'),
-            'table_name' => Yii::t('speedrunner', 'Table name'),
-            'has_seo_meta' => Yii::t('speedrunner', 'Has SEO meta'),
-            'model_relations' => Yii::t('speedrunner', 'Model relations'),
-            'view_relations' => Yii::t('speedrunner', 'View relations'),
-            'attrs_fields' => Yii::t('speedrunner', 'Attributes fields'),
+            'module_name' => 'Module name',
+            'generate_files' => 'Generate files',
+            'controller_name' => 'Controller name',
+            'controller_actions' => 'Controller actions',
+            'table_name' => 'Table name',
+            'has_seo_meta' => 'Has SEO meta',
+            'model_relations' => 'Model relations',
+            'view_relations' => 'View relations',
+            'attrs_fields' => 'Attributes fields',
         ];
     }
     

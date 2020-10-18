@@ -43,8 +43,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'name',
             'code',
-            'weight:boolean',
-            'active:boolean',
+            'is_active:boolean',
+            'is_main:boolean',
+            'created',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{update} {delete}',

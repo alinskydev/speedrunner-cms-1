@@ -1,4 +1,5 @@
 <?php
+
 namespace zxbodya\yii2\elfinder;
 
 use Yii;
@@ -13,6 +14,7 @@ use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\InputWidget;
 use zxbodya\yii2\elfinder\ElFinderAsset;
+
 
 class ElFinderInput extends InputWidget
 {

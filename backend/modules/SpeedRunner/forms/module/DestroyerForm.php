@@ -23,7 +23,7 @@ class DestroyerForm extends Model
     public function attributeLabels()
     {
         return [
-            'modules' => Yii::t('speedrunner', 'Modules'),
+            'modules' => 'Modules',
         ];
     }
     

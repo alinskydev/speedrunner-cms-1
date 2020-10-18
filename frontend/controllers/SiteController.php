@@ -26,7 +26,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'request-password-reset', 'reset-password', 'dot-translation'],
+                'only' => ['logout', 'signup', 'request-password-reset', 'reset-password'],
                 'rules' => [
                     [
                         'actions' => ['signup', 'request-password-reset', 'reset-password'],
@@ -38,28 +38,9 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['dot-translation'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
                 ],
             ],
         ];
-    }
-    
-    public function actions()
-    {
-        return [
-            'dot-translation' => [
-                'class' => 'pavlinter\translation\TranslationAction',
-            ],
-        ];
-    }
-    
-    public function beforeAction($action)
-    {
-        return parent::beforeAction($action);
     }
     
     public function actionIndex()

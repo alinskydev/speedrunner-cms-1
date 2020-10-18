@@ -5,10 +5,6 @@ $external_components = [
         'description' => 'RBAC менеджер',
         'link' => 'https://github.com/yii2mod/yii2-rbac',
     ],
-    'pavlinter/yii2-dot-translation' => [
-        'description' => 'Мультиязычность',
-        'link' => 'https://github.com/pavlinter/yii2-dot-translation',
-    ],
     'yurkinx/yii2-image' => [
         'description' => 'Работа с изображениями',
         'link' => 'https://github.com/yurkinx/yii2-image',

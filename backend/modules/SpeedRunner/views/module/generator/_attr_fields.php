@@ -11,17 +11,17 @@ unset($attr_types['groups']);
 ?>
 
 <h4 class="mb-3">
-    <?= Yii::t('speedrunner', 'Attributes') ?>
+    Attributes
 </h4>
 
 <table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
-            <th style="width: 20%;"><?= Yii::t('speedrunner', 'Attribute') ?></th>
-            <th style="width: 3%;"><?= Yii::t('speedrunner', 'GridView') ?></th>
-            <th style="width: 3%;"><?= Yii::t('speedrunner', 'I18N') ?></th>
-            <th style="width: 65%;"><?= Yii::t('speedrunner', 'Type') ?></th>
+            <th style="width: 20%;">Attribute</th>
+            <th style="width: 3%;">GridView</th>
+            <th style="width: 3%;">I18N</th>
+            <th style="width: 65%;">Type</th>
         </tr>
     </thead>
     

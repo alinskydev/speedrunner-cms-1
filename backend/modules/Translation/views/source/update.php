@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div id="tab-information" class="tab-pane active">
                 <?php
                     foreach ($model->activeTranslations() as $t) {
-                        echo $form->field($model, "translations_tmp[$t->counter]")
+                        echo $form->field($model, "translations_tmp[$t->language]")
                             ->textarea(['rows' => 6, 'value' => $t->translation])
-                            ->label($t->language->name);
+                            ->label($t->lang->name);
                     }
                 ?>
             </div>

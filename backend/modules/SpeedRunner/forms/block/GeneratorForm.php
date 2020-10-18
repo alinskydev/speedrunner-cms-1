@@ -24,7 +24,7 @@ class GeneratorForm extends Model
     public function attributeLabels()
     {
         return [
-            'blocks' => Yii::t('speedrunner', 'Blocks'),
+            'blocks' => 'Blocks',
         ];
     }
     

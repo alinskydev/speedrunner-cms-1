@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <h2 class="main-title">
     <?= $this->title ?>
     <?= Html::submitButton(
-        Html::tag('i', null, ['class' => 'fas fa-file-code']) . Yii::t('speedrunner', 'Generate'),
+        Html::tag('i', null, ['class' => 'fas fa-file-code']) . 'Generate',
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>
 </h2>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-information">
-                    <?= Yii::t('speedrunner', 'General') ?>
+                    Information
                 </a>
             </li>
         </ul>
@@ -41,12 +41,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     <thead>
                         <tr>
                             <th style="width: 3%;"></th>
-                            <th style="width: 15%;"><?= Yii::t('speedrunner', 'Name') ?></th>
-                            <th style="width: 15%;"><?= Yii::t('speedrunner', 'Label') ?></th>
-                            <th style="width: 4%;"><?= Yii::t('speedrunner', 'I18N') ?></th>
-                            <th style="width: 15%;"><?= Yii::t('speedrunner', 'Type') ?></th>
-                            <th style="width: 30%;"><?= Yii::t('speedrunner', 'Attrs (for "groups" type)') ?></th>
-                            <th style="width: 15%;"><?= Yii::t('speedrunner', 'Image') ?></th>
+                            <th style="width: 15%;">Name</th>
+                            <th style="width: 15%;">Label</th>
+                            <th style="width: 4%;">I18N</th>
+                            <th style="width: 15%;">Type</th>
+                            <th style="width: 30%;">Attrs (for "groups" type)</th>
+                            <th style="width: 15%;">Image</th>
                             <th style="width: 3%;"></th>
                         </tr>
                     </thead>

@@ -48,15 +48,6 @@ return array (
       '@yii2mod/rbac' => $vendorDir . '/yii2mod/yii2-rbac',
     ),
   ),
-  'pavlinter/yii2-dot-translation' => 
-  array (
-    'name' => 'pavlinter/yii2-dot-translation',
-    'version' => '2.1.0.0',
-    'alias' => 
-    array (
-      '@pavlinter' => $vendorDir . '/pavlinter/yii2-dot-translation',
-    ),
-  ),
   'creocoder/yii2-nested-sets' => 
   array (
     'name' => 'creocoder/yii2-nested-sets',

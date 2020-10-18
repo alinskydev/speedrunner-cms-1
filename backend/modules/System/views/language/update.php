@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'code')->textInput() ?>
                 
-                <?= $form->field($model, 'active', [
+                <?= $form->field($model, 'is_active', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],
                 ])->checkbox([
                     'class' => 'custom-control-input'
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'class' => 'custom-control-label'
                 ]) ?>
                 
-                <?= $form->field($model, 'weight', [
+                <?= $form->field($model, 'is_main', [
                     'checkboxTemplate' => Yii::$app->params['switcher_template'],
                 ])->checkbox([
                     'class' => 'custom-control-input'

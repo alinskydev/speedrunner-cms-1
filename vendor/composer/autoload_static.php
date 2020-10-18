@@ -51,7 +51,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
-            'pavlinter\\' => 10,
         ),
         'k' => 
         array (
@@ -187,10 +186,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-        ),
-        'pavlinter\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/pavlinter/yii2-dot-translation',
         ),
         'kartik\\select2\\' => 
         array (

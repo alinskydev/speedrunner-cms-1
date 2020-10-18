@@ -8,7 +8,7 @@ use yii\helpers\Html;
     <?= Yii::t('speedrunner', 'View relations') ?>
 </h4>
 
-<table class="table table-bordered table-relations">
+<table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -18,7 +18,7 @@ use yii\helpers\Html;
         </tr>
     </thead>
     
-    <tbody>
+    <tbody data-toggle="sortable">
         <tr class="table-new-relation" data-table="view_relations">
             <td>
                 <div class="btn btn-primary table-sorter">

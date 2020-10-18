@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
-$this->title = Yii::t('app', 'Product Specifications');
+$this->title = Yii::t('app', 'Product specifications');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -36,6 +36,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'use_filter:boolean',
             'use_compare:boolean',
             'use_detail:boolean',
+            'created',
+            'updated',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{update} {delete}',

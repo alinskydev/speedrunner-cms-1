@@ -27,7 +27,7 @@ class BlogRate extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'blog_id' => Yii::t('app', 'Blog'),
             'user_id' => Yii::t('app', 'User'),
             'mark' => Yii::t('app', 'Mark'),

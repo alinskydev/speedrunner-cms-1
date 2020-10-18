@@ -9,34 +9,21 @@ use zxbodya\yii2\elfinder\ElFinderInput;
 use kartik\file\FileInput;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block Pages'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'edit-form', 'enctype' => 'multipart/form-data'],
+    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
     'fieldConfig' => [
         'enableClientValidation' => false,
-        'template' => '{label}{input}{error}{hint}'
     ]
 ]); ?>
 
 <h2 class="main-title">
-    <?php
-        $buttons = [
-            Html::button(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
-                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
-            ),
-            Html::submitButton(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-                ['class' => 'btn btn-primary btn-icon']
-            ),
-        ];
-        
-        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
-    ?>
+    <?= $this->title ?>
+    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">

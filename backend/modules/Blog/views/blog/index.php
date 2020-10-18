@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-category']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-categories']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -76,13 +76,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => function ($model) {
                     return ArrayHelper::getValue($model->category, 'name');
                 },
-            ],
-            [
-                'attribute' => 'published',
-                'filterInputOptions' => [
-                    'class' => 'form-control',
-                    'data-toggle' => 'datepicker'
-                ]
             ],
             [
                 'attribute' => 'tag_id',
@@ -96,7 +89,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-tag']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-tags']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -105,6 +98,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]),
                 'value' => 'tagsColumn',
             ],
+            [
+                'attribute' => 'published',
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'data-toggle' => 'datepicker'
+                ]
+            ],
+            'created',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

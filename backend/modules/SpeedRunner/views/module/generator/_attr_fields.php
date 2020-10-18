@@ -14,7 +14,7 @@ unset($attr_types['groups']);
     <?= Yii::t('speedrunner', 'Attributes') ?>
 </h4>
 
-<table class="table table-bordered table-relations">
+<table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -25,7 +25,7 @@ unset($attr_types['groups']);
         </tr>
     </thead>
     
-    <tbody>
+    <tbody data-toggle="sortable">
         <?php foreach ($columns as $c) { ?>
             <tr>
                 <td>

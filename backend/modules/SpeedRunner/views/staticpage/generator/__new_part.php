@@ -6,7 +6,7 @@
             <?= Yii::t('speedrunner', 'Delete') ?>
         </button>
     </h4>
-    <table class="table table-bordered table-relations">
+    <table class="table table-relations">
         <thead>
             <tr>
                 <th style="width: 3%;"></th>
@@ -18,7 +18,9 @@
                 <th style="width: 3%;"></th>
             </tr>
         </thead>
-        <tbody></tbody>
+        
+        <tbody data-toggle="sortable"></tbody>
+        
         <tfoot>
             <tr>
                 <td colspan="7">

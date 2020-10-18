@@ -6,7 +6,7 @@ use common\components\framework\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
-$this->title = Yii::t('app', 'Products Comments');
+$this->title = Yii::t('app', 'Products comments');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/product']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/products']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/user']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/users']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')

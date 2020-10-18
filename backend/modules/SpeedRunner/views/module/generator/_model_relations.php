@@ -14,7 +14,7 @@ $types = [
     <?= Yii::t('speedrunner', 'Model relations') ?>
 </h4>
 
-<table class="table table-bordered table-relations">
+<table class="table table-relations">
     <thead>
         <tr>
             <th style="width: 2%;"></th>
@@ -26,7 +26,7 @@ $types = [
         </tr>
     </thead>
     
-    <tbody>
+    <tbody data-toggle="sortable">
         <?php foreach ($foreign_keys as $fks_key => $fks) { ?>
             <?php foreach ($fks as $key => $fk) { ?>
                 <?php

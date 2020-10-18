@@ -56,7 +56,7 @@ class DocumentatorForm extends Model
             
             //        CONTROLLER
             
-            $controller_basename = basename($file);
+            $controller_basename = StringHelper::basename($file);
             $controller_name = str_replace(['Controller', '.php'], null, $controller_basename);
             $controller_url = Inflector::camel2id($controller_name, '-');
             

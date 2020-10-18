@@ -11,27 +11,6 @@ use Yii\image\drivers\Image as ImageDriver;
 
 class Image
 {
-    public function save($img, $selected_dir = 'uploaded', $width_height = [])
-    {
-        $selected_dir .= '/' . date('Y-m-d');
-        $dir = Yii::getAlias("@frontend/web/$selected_dir");
-        FileHelper::createDirectory($dir);
-        
-        $image_name = md5(strtotime('now') . Yii::$app->security->generateRandomString(16)) . ".$img->extension";
-        $image = Yii::$app->image->load($img->tempName);
-        
-        if ($width_height) {
-            $opacity = in_array($image->mime, ['image/png']) ? 0 : 100;
-            $image->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
-            $image->background('#fff', $opacity);
-            $image->crop($width_height[0], $width_height[1]);
-        }
-        
-        $image->save("$dir/$image_name", 90);
-        
-        return "/$selected_dir/$image_name";
-    }
-    
     public function thumb($image_url, $width_height, $type = 'crop')
     {
         $width_height_string = implode('x', $width_height);

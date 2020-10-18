@@ -9,7 +9,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 
 <?php $form = ActiveForm::begin([
     'options' => [
-        'id' => 'edit-form',
+        'id' => 'update-form',
         'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
         'enctype' => 'multipart/form-data',
@@ -20,8 +20,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
     <div class="col-lg-2 col-md-3">
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= Yii::t('app', 'General') ?>
+                <a class="nav-link active" data-toggle="pill" href="#tab-information">
+                    <?= Yii::t('app', 'Information') ?>
                 </a>
             </li>
         </ul>
@@ -36,13 +36,14 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             </div>
             
             <div class="tab-content p-3">
-                <div id="tab-general" class="tab-pane active">
+                <div id="tab-information" class="tab-pane active">
                     <?= $form->field($model, 'name')->textInput() ?>
                     <?= $form->field($model, 'url')->textInput() ?>
                     
                     <?php
                         if ($model->isNewRecord) {
                             echo $form->field($model, 'parent_id')->dropDownList($model->itemsTree(), [
+                                'class' => 'form-control',
                                 'data-toggle' => 'selectpicker',
                             ]);
                         }

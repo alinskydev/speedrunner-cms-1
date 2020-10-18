@@ -20,11 +20,6 @@ class SessionController extends Controller
         }
         
         switch ($name) {
-            case 'theme_dark':
-                Yii::$app->session->set($name, (bool)$value);
-                Yii::$app->session->addFlash('success', Yii::t('app', 'Theme has been changed'));
-                
-                break;
             case 'bookmarks':
                 $bookmarks = Yii::$app->session->get('bookmarks', []);
                 $bookmarks[Yii::$app->request->referrer] = $value;
@@ -32,12 +27,14 @@ class SessionController extends Controller
                 Yii::$app->session->set($name, $bookmarks);
                 Yii::$app->session->addFlash('success', Yii::t('app', 'Bookmark has been added'));
                 
-                break;
+                return $this->redirect(Yii::$app->request->referrer);
+            case 'nav':
+                Yii::$app->session->set($name, (bool)$value);
+                return true;
             default:
                 Yii::$app->session->addFlash('warning', Yii::t('app', 'Parameter not found'));
+                return $this->redirect(Yii::$app->request->referrer);
         }
-        
-        return $this->redirect(Yii::$app->request->referrer);
     }
     
     public function actionRemove()

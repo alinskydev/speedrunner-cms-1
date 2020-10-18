@@ -5,7 +5,6 @@ namespace common\components\framework;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use yii\helpers\HtmlPurifier;
 use yii\db\Expression;
 use yii\db\JsonExpression;
 
@@ -77,7 +76,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML PURIFIER
         
-        $class_name = basename($this->className());
+        $class_name = StringHelper::basename($this->className());
         
         if (in_array($class_name, ['User', 'UserProfile'])) {
             foreach ($this->attributes as $key => $a) {

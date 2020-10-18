@@ -4,16 +4,9 @@ use yii\helpers\Html;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\Alert;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
-
-if (Yii::$app->settings->use_mobile_grid) {
-    $this->registerCssFile('@web/css/mobile-grid.css', ['depends' => [AppAsset::className()]]);
-}
-
-if (Yii::$app->session->get('theme_dark')) {
-    $this->registerCssFile('@web/css/theme-dark.css', ['depends' => [AppAsset::className()]]);
-}
 
 //-----------------------------------------------------------------------------------
 
@@ -22,8 +15,9 @@ $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action-
 $langs = Yii::$app->i18n->getLanguages(true);
 $lang_curr = Yii::$app->i18n->getLanguage();
 
-$flashes = Yii::$app->session->getAllFlashes();
-$flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
+$menu_items = require __DIR__ . '/_nav.php';
+
+$flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE);
 
 ?>
 
@@ -41,13 +35,20 @@ $flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="nav-wrapper active">
+<div class="nav-wrapper-full opened">
     <a href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>" class="site-logo">
         <img src="<?= Yii::$app->urlManager->createFileUrl('/img/logo.svg') ?>" alt="">
     </a>
     
     <nav class="container-fluid">
-        <?= $this->render('_nav'); ?>
+        <?= Menu::widget([
+            'items' => $menu_items,
+            'options' => ['class' => 'nav-items'],
+            'labelTemplate' => '<div class="parent">{label}</div>',
+            'submenuTemplate' => '<ul class="items">{items}</ul>',
+            'encodeLabels' => false,
+            'activateParents' => true,
+        ]); ?>
     </nav>
 </div>
 

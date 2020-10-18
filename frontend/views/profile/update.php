@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         ]);
     ?>
     
-    <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'full_name')->textInput() ?>
     <?= $form->field($model, 'phone')->textInput() ?>
     <?= $form->field($model, 'address')->textArea(['rows' => 5]) ?>

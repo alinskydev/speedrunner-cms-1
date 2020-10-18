@@ -5,7 +5,7 @@ use common\components\framework\grid\GridView;
 
 use backend\modules\Block\models\BlockType;
 
-$this->title = Yii::t('app', 'Block Pages');
+$this->title = Yii::t('app', 'Block pages');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -49,8 +49,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'buttons' => [
                     'assign' => function($url, $model, $key) {
                         return Html::a(
-                            Html::tag('i', null, ['class' => 'fas fa-th']) . Yii::t('app', 'Assign'),
-                            ['assign', 'id' => $model->id]
+                            Html::tag('i', null, ['class' => 'fas fa-th']),
+                            ['assign', 'id' => $model->id],
+                            [
+                                'title' => Yii::t('app', 'Assign'),
+                                'data-toggle' => 'tooltip',
+                                'data-pjax' => 0,
+                            ]
                         );
                     },
                 ],

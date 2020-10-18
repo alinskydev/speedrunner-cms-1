@@ -4,19 +4,11 @@ namespace common\helpers;
 
 use Yii;
 
-use common\helpers\Speedrunner\ActiveField;
-use common\helpers\Speedrunner\File;
-use common\helpers\Speedrunner\Image;
-use common\helpers\Speedrunner\Mail;
-use common\helpers\Speedrunner\Record;
-use common\helpers\Speedrunner\Seo;
-use common\helpers\Speedrunner\Translation;
-
 
 class Speedrunner
 {
-    public $activeField;
     public $file;
+    public $html;
     public $image;
     public $mail;
     public $record;
@@ -25,12 +17,12 @@ class Speedrunner
     
     public function __construct()
     {
-        $this->activeField = new ActiveField;
-        $this->file = new File;
-        $this->image = new Image;
-        $this->mail = new Mail;
-        $this->record = new Record;
-        $this->seo = new Seo;
-        $this->translation = new Translation;
+        $this->file = new \common\helpers\Speedrunner\File;
+        $this->html = new \common\helpers\Speedrunner\Html;
+        $this->image = new \common\helpers\Speedrunner\Image;
+        $this->mail = new \common\helpers\Speedrunner\Mail;
+        $this->record = new \common\helpers\Speedrunner\Record;
+        $this->seo = new \common\helpers\Speedrunner\Seo;
+        $this->translation = new \common\helpers\Speedrunner\Translation;
     }
 }

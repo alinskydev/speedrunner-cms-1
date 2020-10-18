@@ -36,7 +36,7 @@ class ActionColumn extends Column
     /**
      * {@inheritdoc}
      */
-    public $headerOptions = ['style' => 'width: 65px;'];
+    public $headerOptions = ['style' => 'width: 55px;'];
     public $contentOptions = [];
     /**
      * @var string the ID of the controller that should handle the actions specified here.
@@ -178,13 +178,13 @@ class ActionColumn extends Column
                 
                 $options = array_merge([
                     'aria-label' => $title,
+                    'title' => $title,
+                    'data-toggle' => 'tooltip',
                     'data-pjax' => '0',
                     'class' => 'text-nowrap',
                 ], $additionalOptions, $this->buttonOptions);
                 
-                $icon = Html::tag('i', '&nbsp;', ['class' => $iconName]);
-                
-                return Html::a($icon . $title, $url, $options);
+                return Html::a(Html::tag('i', null, ['class' => "$iconName m-0"]), $url, $options);
             };
         }
     }
@@ -217,7 +217,7 @@ class ActionColumn extends Column
     {
         $buttons = preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
             $name = $matches[1];
-
+            
             if (isset($this->visibleButtons[$name])) {
                 $isVisible = $this->visibleButtons[$name] instanceof \Closure
                     ? call_user_func($this->visibleButtons[$name], $model, $key, $index)
@@ -225,18 +225,15 @@ class ActionColumn extends Column
             } else {
                 $isVisible = true;
             }
-
+            
             if ($isVisible && isset($this->buttons[$name])) {
                 $url = $this->createUrl($name, $model, $key, $index);
                 return call_user_func($this->buttons[$name], $url, $model, $key);
             }
-
+            
             return '';
         }, $this->template);
         
-        $buttons = Html::tag('div', $buttons, ['class' => 'action-buttons']);
-        $toggle_button = Html::button(Html::tag('i', null, ['class' => 'fas fa-ellipsis-v']), ['class' => 'btn btn-primary action-toggle']);
-        
-        return Html::tag('div', $toggle_button . $buttons, ['class' => 'action-content']);
+        return Html::tag('div', $buttons, ['class' => 'action-buttons']);
     }
 }

@@ -9,8 +9,7 @@ AppAsset::register($this);
 
 //-----------------------------------------------------------------------------------
 
-$flashes = Yii::$app->session->getAllFlashes();
-$flashes = json_encode($flashes, JSON_UNESCAPED_UNICODE);
+$flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE);
 
 ?>
 

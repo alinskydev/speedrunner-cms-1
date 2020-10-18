@@ -49,7 +49,7 @@ class Banner extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'location' => Yii::t('app', 'Location'),
             'created' => Yii::t('app', 'Created'),

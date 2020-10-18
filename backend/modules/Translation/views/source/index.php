@@ -5,7 +5,7 @@ use common\components\framework\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
 
-$this->title = Yii::t('app', 'Translation Sources');
+$this->title = Yii::t('app', 'Translation sources');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 $active_langs = SystemLanguage::find()->andWhere(['active' => 1])->column();

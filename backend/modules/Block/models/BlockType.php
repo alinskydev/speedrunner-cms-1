@@ -24,7 +24,7 @@ class BlockType extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'label' => Yii::t('app', 'Label'),
             'type' => Yii::t('app', 'Type'),

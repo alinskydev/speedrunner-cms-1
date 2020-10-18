@@ -2,7 +2,10 @@
 <IfModule mod_rewrite.c>
     # Enable mod_rewrite
     RewriteEngine On
-
+    
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    
     # If a directory or a file exists, use the request directly
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

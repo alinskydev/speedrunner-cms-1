@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 class RelationBehavior extends Behavior
 {
     public $type;
+    
     public $attributes;
     
     public function events()

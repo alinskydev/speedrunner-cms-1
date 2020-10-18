@@ -11,6 +11,9 @@ use yii\web\UploadedFile;
 
 class FilesBehavior extends Behavior
 {
+    public $save_dir = 'uploaded';
+    public $width_height = [];
+    
     public $attributes;
     
     public function events()
@@ -40,7 +43,7 @@ class FilesBehavior extends Behavior
             
             if ($value = UploadedFile::getInstances($this->owner, $a)) {
                 foreach ($value as $v) {
-                    $new_value[] = Yii::$app->sr->file->save($v);
+                    $new_value[] = Yii::$app->sr->file->save($v, $this->save_dir, $this->width_height);
                 }
                 
                 $this->owner->{$a} = array_merge($old_value, $new_value);

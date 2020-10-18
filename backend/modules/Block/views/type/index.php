@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
-$this->title = Yii::t('app', 'Block Types');
+$this->title = Yii::t('app', 'Block types');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

@@ -16,32 +16,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'edit-form', 'enctype' => 'multipart/form-data'],
+    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
 ]); ?>
 
 <h2 class="main-title">
-    <?php
-        $buttons = [
-            Html::button(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
-                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
-            ),
-            Html::submitButton(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-                ['class' => 'btn btn-primary btn-icon']
-            ),
-        ];
-        
-        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
-    ?>
+    <?= $this->title ?>
+    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
     <div class="col-lg-2 col-md-3">
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= Yii::t('app', 'General') ?>
+                <a class="nav-link active" data-toggle="pill" href="#tab-information">
+                    <?= Yii::t('app', 'Information') ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -59,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
-            <div id="tab-general" class="tab-pane active">
+            <div id="tab-information" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
                     'data' => [$model->category_id => ArrayHelper::getValue($model->category, 'name')],
@@ -69,7 +57,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-category']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-categories']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -100,7 +88,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             };
                         }'),
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-tag']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/blog-tags']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -126,7 +114,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'multiple' => true,
                     ],
                     'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                        'deleteUrl' => Yii::$app->urlManager->createUrl(['blog/blog/image-delete', 'id' => $model->id]),
+                        'deleteUrl' => Yii::$app->urlManager->createUrl(['blog/blog/image-delete', 'id' => $model->id, 'attr' => 'images']),
                         'initialPreview' => $model->images ?: [],
                         'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?: [], function ($value) {
                             return ['key' => $value, 'downloadUrl' => $value];
@@ -134,7 +122,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ]),
                     'pluginEvents' => [
                         'filesorted' => new JsExpression("function(event, params) {
-                            $.post('".Yii::$app->urlManager->createUrl(['blog/blog/image-sort', 'id' => $model->id])."', {sort: params});
+                            $.post('".Yii::$app->urlManager->createUrl(['blog/blog/image-sort', 'id' => $model->id, 'attr' => 'images'])."', {sort: params});
                         }")
                     ],
                 ]); ?>

@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/product-brand']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/product-brands']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -86,9 +86,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     return ArrayHelper::getValue($model->mainCategory, 'name');
                 },
                 'filterInputOptions' => [
-                    'data-toggle' => 'selectpicker'
+                    'class' => 'form-control',
+                    'data-toggle' => 'selectpicker',
                 ],
             ],
+            'created',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

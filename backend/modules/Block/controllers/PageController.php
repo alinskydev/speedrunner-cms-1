@@ -22,11 +22,9 @@ class PageController extends Controller
     
     public function actionCreate()
     {
-        $render_params = [
+        return Yii::$app->sr->record->updateModel(new BlockPage, 'assign', [
             'types' => BlockType::find()->all(),
-        ];
-        
-        return Yii::$app->sr->record->updateModel(new BlockPage, 'assign', $render_params);
+        ]);
     }
     
     public function actionUpdate($id)
@@ -47,7 +45,11 @@ class PageController extends Controller
                 }
             }
             
-            return $this->redirect(['index']);
+            if (Yii::$app->request->get('reload-page')) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                return $this->redirect(['index']);
+            }
         }
         
         return $this->render('update', [
@@ -63,15 +65,13 @@ class PageController extends Controller
     
     public function actionAssign($id)
     {
-        if ($model = BlockPage::findOne($id)) {
-            $render_params = [
-                'types' => BlockType::find()->all(),
-            ];
-            
-            return Yii::$app->sr->record->updateModel($model, 'assign', $render_params);
-        } else {
-            return $this->redirect(['index']);
+        if (!($model = BlockPage::findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
         }
+        
+        return Yii::$app->sr->record->updateModel($model, 'assign', [
+            'types' => BlockType::find()->all(),
+        ]);
     }
     
     public function actionImageSort($id)

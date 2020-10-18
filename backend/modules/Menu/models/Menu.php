@@ -57,7 +57,7 @@ class Menu extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'tree' => Yii::t('app', 'Tree'),
             'lft' => Yii::t('app', 'Lft'),
             'rgt' => Yii::t('app', 'Rgt'),

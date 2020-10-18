@@ -13,9 +13,8 @@ use backend\modules\User\models\User;
 class ProfileForm extends Model
 {
     public $user;
-    public $attrs = ['username', 'full_name', 'phone', 'address', 'image'];
+    public $attrs = ['full_name', 'phone', 'address', 'image'];
     
-    public $username;
     public $new_password;
     public $confirm_password;
     
@@ -36,30 +35,25 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
-            [['username'], 'required'],
+            [['full_name'], 'required'],
             [['full_name', 'phone'], 'string', 'max' => 100],
-            [['username', 'address'], 'string', 'max' => 255],
+            [['address'], 'string', 'max' => 255],
+            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 6, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
-            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
-            
-            [['username'], 'unique', 'targetClass' => User::className(), 'filter' => function ($query) {
-                $query->andWhere(['!=', 'id', $this->user->id]);
-            }, 'message' => Yii::t('app', 'This username has already been taken')],
         ];
     }
     
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'Username'),
-            'new_password' => Yii::t('app', 'New password'),
-            'confirm_password' => Yii::t('app', 'Confirm password'),
-            
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
             'image' => Yii::t('app', 'Image'),
+            
+            'new_password' => Yii::t('app', 'New password'),
+            'confirm_password' => Yii::t('app', 'Confirm password'),
         ];
     }
 
@@ -87,7 +81,7 @@ class ProfileForm extends Model
         $old_image = ArrayHelper::getValue($user->profile, 'image', null);
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
-            $user->image = Yii::$app->sr->image->save($image, 'files/profile');
+            $user->image = Yii::$app->sr->file->save($image, 'files/profile');
             Yii::$app->sr->file->delete($old_image);
         }
         

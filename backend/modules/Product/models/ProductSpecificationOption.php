@@ -28,10 +28,9 @@ class ProductSpecificationOption extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'item_id' => Yii::t('app', 'Specification'),
             'name' => Yii::t('app', 'Name'),
-            'sort' => Yii::t('app', 'Sort'),
         ];
     }
     

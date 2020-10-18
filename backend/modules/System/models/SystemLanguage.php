@@ -37,7 +37,7 @@ class SystemLanguage extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'code' => Yii::t('app', 'Code'),
             'image' => Yii::t('app', 'Image'),

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\web\JsExpression;
 use wbraganca\fancytree\FancytreeWidget;
 
-$this->title = Yii::t('app', 'Product Categories');
+$this->title = Yii::t('app', 'Product categories');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

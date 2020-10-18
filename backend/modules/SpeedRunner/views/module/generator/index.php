@@ -5,14 +5,14 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
-$this->title = 'Module Generator';
+$this->title = 'Module generator';
 $this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'edit-form'
+    'id' => 'update-form'
 ]); ?>
 
 <h2 class="main-title">
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-2 col-md-3">
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#tab-general">
+                <a class="nav-link active" data-toggle="pill" href="#tab-information">
                     <?= Yii::t('speedrunner', 'General') ?>
                 </a>
             </li>
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
-            <div id="tab-general" class="tab-pane active">
+            <div id="tab-information" class="tab-pane active">
                 <?= $form->field($model, 'module_name', ['enableClientValidation' => false])->textInput() ?>
                 
                 <?= $form->field($model, 'generate_files')->widget(Select2::classname(), [
@@ -82,8 +82,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-model" class="tab-pane fade">
                 <?= $form->field($model, 'table_name')->dropDownList($tables, [
+                    'class' => 'form-control',
                     'data-toggle' => 'selectpicker',
-                    'prompt' => ' '
+                    'prompt' => ' ',
                 ]) ?>
                 
                 <?= $form->field($model, 'has_seo_meta', [

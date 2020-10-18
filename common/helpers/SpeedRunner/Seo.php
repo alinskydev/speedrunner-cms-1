@@ -11,7 +11,7 @@ class Seo
 {
     public function getMeta($model)
     {
-        $model_class = basename($model->className());
+        $model_class = StringHelper::basename($model->className());
         
         $seo_meta_mdl = SeoMeta::find()
             ->andWhere([
@@ -51,7 +51,7 @@ class Seo
     
     public function saveMeta($model, $value)
     {
-        $model_class = basename($model->className());
+        $model_class = StringHelper::basename($model->className());
         
         $seo_mdl = SeoMeta::find()
             ->andWhere([
@@ -70,7 +70,7 @@ class Seo
     
     public function deleteMeta($model)
     {
-        $model_class = basename($model->className());
+        $model_class = StringHelper::basename($model->className());
         SeoMeta::deleteAll(['model_class' => $model_class, 'model_id' => $model->id]);
     }
 }

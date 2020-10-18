@@ -27,7 +27,7 @@ class ProductRate extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'product_id' => Yii::t('app', 'Product'),
             'user_id' => Yii::t('app', 'User'),
             'mark' => Yii::t('app', 'Mark'),

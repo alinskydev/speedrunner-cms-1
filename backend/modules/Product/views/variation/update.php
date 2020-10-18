@@ -13,7 +13,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <?php $form = ActiveForm::begin([
-            'options' => ['id' => 'variation-edit-form', 'enctype' => 'multipart/form-data'],
+            'options' => ['id' => 'variation-update-form', 'enctype' => 'multipart/form-data'],
         ]); ?>
         
         <div class="modal-header">
@@ -27,7 +27,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     <ul class="nav flex-column nav-pills" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="pill" href="#tab-variations-general">
-                                <?= Yii::t('app', 'General') ?>
+                                <?= Yii::t('app', 'Information') ?>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -55,7 +55,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                                     'multiple' => true,
                                 ],
                                 'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                    'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/image-delete', 'id' => $model->id]),
+                                    'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/image-delete', 'id' => $model->id, 'attr' => 'images']),
                                     'initialPreview' => $model->images ?: [],
                                     'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?: [], function ($value) {
                                         return ['key' => $value, 'downloadUrl' => $value];
@@ -63,7 +63,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                                 ]),
                                 'pluginEvents' => [
                                     'filesorted' => new JsExpression("function(event, params) {
-                                        $.post('".Yii::$app->urlManager->createUrl(['product/variation/image-sort', 'id' => $model->id])."', {sort: params});
+                                        $.post('".Yii::$app->urlManager->createUrl(['product/variation/image-sort', 'id' => $model->id, 'attr' => 'images'])."', {sort: params});
                                     }")
                                 ],
                             ]); ?>
@@ -88,7 +88,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <script>
     var el, action, sendData;
     
-    $('#variation-edit-form').on('submit', function(e) {
+    $('#variation-update-form').on('submit', function(e) {
         e.preventDefault();
         
         el = $(this);

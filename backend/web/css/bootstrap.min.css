@@ -1799,7 +1799,12 @@ pre code {
 .table {
     width: 100%;
     margin-bottom: 1rem;
-    color: #191d1d
+    color: #191d1d;
+    overflow: hidden;
+}
+
+.table tr {
+    border: 1px solid #7fa3a5
 }
 
 .table th {
@@ -1815,7 +1820,8 @@ pre code {
 
 .table thead th {
     vertical-align: bottom;
-    border-bottom: 1px solid #7fa3a5
+    border-top: 0;
+    border-bottom: 1px solid #7fa3a5;
 }
 
 .table tbody + tbody {

@@ -40,7 +40,7 @@ class ProductVariation extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'product_id' => Yii::t('app', 'Product'),
             'specification_id' => Yii::t('app', 'Specification'),
             'option_id' => Yii::t('app', 'Option'),
@@ -48,7 +48,6 @@ class ProductVariation extends ActiveRecord
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'Sku'),
             'images' => Yii::t('app', 'Images'),
-            'sort' => Yii::t('app', 'Sort'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
         ];

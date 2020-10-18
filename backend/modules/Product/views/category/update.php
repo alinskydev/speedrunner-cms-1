@@ -14,7 +14,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 
 <?php $form = ActiveForm::begin([
     'options' => [
-        'id' => 'edit-form',
+        'id' => 'update-form',
         'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
         'enctype' => 'multipart/form-data',
@@ -25,8 +25,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
     <div class="col-lg-2 col-md-3">
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#tab-general">
-                    <?= Yii::t('app', 'General') ?>
+                <a class="nav-link active" data-toggle="pill" href="#tab-information">
+                    <?= Yii::t('app', 'Information') ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -62,7 +62,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             </div>
             
             <div class="tab-content p-3">
-                <div id="tab-general" class="tab-pane active">
+                <div id="tab-information" class="tab-pane active">
                     <?= $form->field($model, 'name')->textInput() ?>
                     <?= $form->field($model, 'slug')->textInput() ?>
                     
@@ -80,6 +80,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     <?php
                         if ($model->isNewRecord) {
                             echo $form->field($model, 'parent_id')->dropDownList($model->itemsTree(), [
+                                'class' => 'form-control',
                                 'data-toggle' => 'selectpicker',
                             ]);
                         }
@@ -97,7 +98,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                             'allowClear' => true,
                             'tags' => true,
                             'ajax' => [
-                                'url' => Yii::$app->urlManager->createUrl(['items-list/product-specification']),
+                                'url' => Yii::$app->urlManager->createUrl(['items-list/product-specifications']),
                                 'dataType' => 'json',
                                 'delay' => 300,
                                 'data' => new JsExpression('function(params) { return {q:params.term}; }')

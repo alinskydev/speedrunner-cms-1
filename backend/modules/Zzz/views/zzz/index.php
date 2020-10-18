@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     return ArrayHelper::getValue($model->category, 'name');
                 },
                 'filterInputOptions' => [
+                    'class' => 'form-control',
                     'data-toggle' => 'selectpicker',
                 ],
             ],

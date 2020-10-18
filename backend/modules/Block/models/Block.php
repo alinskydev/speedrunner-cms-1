@@ -52,11 +52,10 @@ class Block extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'page_id' => Yii::t('app', 'Page'),
             'type_id' => Yii::t('app', 'Type'),
             'value' => Yii::t('app', 'Value'),
-            'sort' => Yii::t('app', 'Sort'),
             'images_tmp' => Yii::t('app', 'Images'),
         ];
     }
@@ -125,9 +124,9 @@ class Block extends ActiveRecord
                 if ($images = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($images as $img) {
                         if ($this->type->has_translation) {
-                            $images_arr[$lang][] = Yii::$app->sr->image->save($img);
+                            $images_arr[$lang][] = Yii::$app->sr->file->save($img);
                         } else {
-                            $images_arr[] = Yii::$app->sr->image->save($img);
+                            $images_arr[] = Yii::$app->sr->file->save($img);
                         }
                     }
                     

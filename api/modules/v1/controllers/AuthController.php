@@ -47,12 +47,7 @@ class AuthController extends Controller
             $model->login();
             
             return [
-                'name' => 'OK',
-                'message' => [
-                    'access_token' => Yii::$app->user->identity->auth_key,
-                ],
-                'code' => 0,
-                'status' => 200,
+                'access_token' => Yii::$app->user->identity->auth_key,
             ];
         } else {
             Yii::$app->response->statusCode = 422;
@@ -76,12 +71,7 @@ class AuthController extends Controller
             $user = $model->signup();
             
             return [
-                'name' => 'OK',
-                'message' => [
-                    'access_token' => $user->auth_key,
-                ],
-                'code' => 0,
-                'status' => 200,
+                'access_token' => Yii::$app->user->identity->auth_key,
             ];
         } else {
             Yii::$app->response->statusCode = 422;
@@ -102,14 +92,7 @@ class AuthController extends Controller
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
-            $model->sendEmail();
-            
-            return [
-                'name' => 'OK',
-                'message' => 'Success',
-                'code' => 0,
-                'status' => 200,
-            ];
+            return $model->sendEmail();
         } else {
             Yii::$app->response->statusCode = 422;
             

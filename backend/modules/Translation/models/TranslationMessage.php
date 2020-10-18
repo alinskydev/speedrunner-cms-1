@@ -25,7 +25,7 @@ class TranslationMessage extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'language_id' => Yii::t('app', 'Language'),
             'translation' => Yii::t('app', 'Translation'),
         ];

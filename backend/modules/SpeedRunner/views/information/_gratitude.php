@@ -71,7 +71,7 @@ $external_components = [
     </div>
     
     <div class="card-body">
-        <table class="table table-bordered">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Название</th>

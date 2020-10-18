@@ -46,6 +46,7 @@ class CheckboxColumn extends Column
     /**
      * @var string the name of the input checkbox input fields. This will be appended with `[]` to ensure it is an array.
      */
+    public $headerOptions = ['style' => 'width: 50px;'];
     public $name = 'selection';
     /**
      * @var array|\Closure the HTML attributes for checkboxes. This can either be an array of

@@ -118,10 +118,11 @@ class ElFinderInput extends InputWidget
             'modal' => true,
             'title' => "Files",
         );
+        
         $settings['editorCallback'] = new JsExpression('function(url) {
             url = decodeURIComponent(url);
             
-            $(\'#\' + aFieldId).attr(\'value\', url);
+            $("#" + aFieldId).attr("value", url);
             
             var html, source,
                 filetypeImageArr = ["png", "jpg", "jpeg", "ico", "bmp", "svg"],
@@ -133,19 +134,20 @@ class ElFinderInput extends InputWidget
             }
             
             if (filetypeAudioArr.includes(url.split(".").pop().toLowerCase())) {
-                source = \' <source src="\' + url + \'">\';
+                source = \'<source src="\' + url + \'">\';
                 html = \'<audio class="preview-elfinder preview-\' + aFieldId + \'" controls>\' + source + \'</audio>\';
             }
             
             if (filetypeVideoArr.includes(url.split(".").pop().toLowerCase())) {
-                source = \' <source src="\' + url + \'">\';
+                source = \'<source src="\' + url + \'">\';
                 html = \'<video class="preview-elfinder preview-\' + aFieldId + \'" controls>\' + source + \'</video>\';
             }
             
-            $(\'.preview-\' + aFieldId).remove();
-            $(\'#\' + aFieldId).parent().prepend(html);
+            $(".preview-" + aFieldId).remove();
+            $("#" + aFieldId).closest(".elfinder-container").prepend(html);
             $(document).unbind("keypress keydown keyup");
         }');
+        
         $settings['closeOnEditorCallback'] = true;
         $connectorUrl = Json::encode($this->settings['url']);
         $settings = Json::encode($settings);

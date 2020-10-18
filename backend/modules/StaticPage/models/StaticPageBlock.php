@@ -52,7 +52,7 @@ class StaticpageBlock extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'label' => Yii::t('app', 'Label'),
             'value' => Yii::t('app', 'Value'),
@@ -142,9 +142,9 @@ class StaticpageBlock extends ActiveRecord
                 if ($images = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($images as $img) {
                         if ($this->has_translation) {
-                            $images_arr[$lang][] = Yii::$app->sr->image->save($img);
+                            $images_arr[$lang][] = Yii::$app->sr->file->save($img);
                         } else {
-                            $images_arr[] = Yii::$app->sr->image->save($img);
+                            $images_arr[] = Yii::$app->sr->file->save($img);
                         }
                     }
                     

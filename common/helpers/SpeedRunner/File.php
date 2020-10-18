@@ -6,20 +6,32 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\FileHelper;
+use Yii\image\drivers\Image as ImageDriver;
 
 
 class File
 {
-    public function save($file, $selected_dir = 'uploaded')
+    public function save($file, $save_dir = 'uploaded', $width_height = [])
     {
-        $selected_dir .= '/' . date('Y-m-d');
-        $dir = Yii::getAlias("@frontend/web/$selected_dir");
+        $save_dir .= '/' . date('Y-m-d');
+        $dir = Yii::getAlias("@frontend/web/$save_dir");
         FileHelper::createDirectory($dir);
         
         $file_name = md5(strtotime('now') . Yii::$app->security->generateRandomString(16)) . ".$file->extension";
-        $file->saveAs("$dir/$file_name");
         
-        return "/$selected_dir/$file_name";
+        if ($width_height) {
+            $image = Yii::$app->image->load($file->tempName);
+            
+            $image->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
+            $image->background('#fff', in_array($image->mime, ['image/png']) ? 0 : 100);
+            $image->crop($width_height[0], $width_height[1]);
+            
+            $image->save("$dir/$file_name", 90);
+        } else {
+            $file->saveAs("$dir/$file_name");
+        }
+        
+        return "/$save_dir/$file_name";
     }
     
     public function delete($file)

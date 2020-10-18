@@ -31,7 +31,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
 
 ?>
 
-<table class="table table-bordered table-relations">
+<table class="table table-relations">
     <thead>
         <tr>
             <th></th>
@@ -42,7 +42,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
         </tr>
     </thead>
     
-    <tbody>
+    <tbody data-toggle="sortable">
         <?= "<?php foreach ($$var_name_relation as \$value) { ?>\n" ?>
             <?= "<?php \$value_id = \$value->isNewRecord ? '__key__' : \$value->id ?>\n" ?>
             
@@ -59,7 +59,6 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
                         'name' => "<?= $model['table_name'] ?>[<?= $relation['var_name'] ?>][$value_id][<?= $key ?>]",
                         'rows' => 5,
                     ]) ?>
-                    <button class="btn btn-info btn-xs btn-view" type="button"><i class="fa fa-eye"></i></button>
                 </td>
                 
 <?php } ?>

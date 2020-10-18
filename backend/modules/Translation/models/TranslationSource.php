@@ -30,7 +30,7 @@ class TranslationSource extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'category' => Yii::t('app', 'Category'),
             'message' => Yii::t('app', 'Message'),
             'translations_tmp' => Yii::t('app', 'Translations'),

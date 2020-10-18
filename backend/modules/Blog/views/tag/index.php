@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use common\components\framework\grid\GridView;
 
-$this->title = Yii::t('app', 'Blog Tags');
+$this->title = Yii::t('app', 'Blog tags');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

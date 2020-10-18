@@ -16,7 +16,7 @@ class SeoMeta extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'model_class' => Yii::t('app', 'Model class'),
             'model_id' => Yii::t('app', 'Model id'),
             'lang' => Yii::t('app', 'Lang'),

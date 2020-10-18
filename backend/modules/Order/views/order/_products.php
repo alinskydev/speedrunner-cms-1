@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 
 ?>
 
-<table class="table table-bordered">
+<table class="table">
     <thead>
         <tr>
             <th style="width: 1%;"></th>

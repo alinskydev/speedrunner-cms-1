@@ -33,7 +33,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'role', 'full_name'], 'required'],
+            [['username', 'email', 'role', 'full_name', 'design_theme', 'design_font'], 'required'],
             [['new_password'], 'required', 'when' => function($model) {
                 return $model->isNewRecord;
             }],
@@ -46,6 +46,12 @@ class User extends ActiveRecord implements IdentityInterface
             [['role'], 'in', 'range' => array_keys($this->roles())],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 6, 'max' => 50],
+            
+            [['design_theme'], 'in', 'range' => array_keys($this->designThemes())],
+            [['design_font'], 'in', 'range' => array_keys($this->designFonts())],
+            [['design_border_radius'], 'integer', 'min' => 0],
+            [['design_border_radius'], 'default', 'value' => 0],
+            
             [['role'], 'adminRoleValidation'],
         ];
     }
@@ -60,11 +66,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'username' => Yii::t('app', 'Username'),
             'role' => Yii::t('app', 'Role'),
             'email' => Yii::t('app', 'Email'),
             'new_password' => Yii::t('app', 'New password'),
+            
+            'design_theme' => Yii::t('app', 'Theme'),
+            'design_font' => Yii::t('app', 'Font'),
+            'design_border_radius' => Yii::t('app', 'Border radius'),
+            
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
@@ -95,6 +106,24 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'admin' => Yii::t('app', 'Admin'),
             'registered' => Yii::t('app', 'Registered'),
+        ];
+    }
+    
+    static function designThemes()
+    {
+        return [
+            'nav_full' => Yii::t('app', 'Full menu'),
+            'nav_left' => Yii::t('app', 'Left menu'),
+        ];
+    }
+    
+    static function designFonts()
+    {
+        return [
+            'oswald' => Yii::t('app', 'Oswald'),
+            'roboto' => Yii::t('app', 'Roboto'),
+            'montserrat' => Yii::t('app', 'Montserrat'),
+            'ibm_plex_sans' => Yii::t('app', 'IBM Plex Sans'),
         ];
     }
     
@@ -154,7 +183,7 @@ class User extends ActiveRecord implements IdentityInterface
         $old_image = ArrayHelper::getValue($this->profile, 'image', null);
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
-            $this->image = Yii::$app->sr->image->save($image, 'files/profile');
+            $this->image = Yii::$app->sr->file->save($image, 'files/profile');
             Yii::$app->sr->file->delete($old_image);
         } else {
             $this->image = $this->image ?: $old_image;

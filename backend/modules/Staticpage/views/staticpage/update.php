@@ -8,33 +8,21 @@ use vova07\imperavi\Widget;
 use zxbodya\yii2\elfinder\ElFinderInput;
 use kartik\file\FileInput;
 
-$this->title = Yii::t('app', 'Static Page: {location}', ['location' => ucfirst($model->location)]);
+$this->title = Yii::t('app', 'Static page: {location}', ['location' => ucfirst($model->location)]);
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'edit-form', 'enctype' => 'multipart/form-data'],
+    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
     'fieldConfig' => [
         'enableClientValidation' => false
     ]
 ]); ?>
 
 <h2 class="main-title">
-    <?php
-        $buttons = [
-            Html::button(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
-                ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
-            ),
-            Html::submitButton(
-                Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save'),
-                ['class' => 'btn btn-primary btn-icon']
-            ),
-        ];
-        
-        echo $this->title . Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
-    ?>
+    <?= $this->title ?>
+    <?= Yii::$app->sr->html->updateButtons(['save']) ?>
 </h2>
 
 <div class="row">

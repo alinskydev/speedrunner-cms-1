@@ -102,7 +102,7 @@ function selectCategories($data, $categories)
             $('#variation-option').html($(this).find(':selected').data('options') ? $(this).find(':selected').data('options') : null);
         });
         
-        $(document).on('submit', '#edit-form', function() {
+        $(document).on('submit', '#update-form', function() {
 			$.ui.fancytree.getTree('#fancyree_product-categories_tmp-tree').generateFormElements('Product[categories_tmp][]');
 		});
     });

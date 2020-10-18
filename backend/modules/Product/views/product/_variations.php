@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-bordered m-0">
+    <table class="table m-0">
         <thead>
             <tr>
                 <th><?= Yii::t('app', 'Specification') ?></th>

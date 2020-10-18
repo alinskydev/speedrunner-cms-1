@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/user', 'role' => 'registered']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/users', 'role' => 'registered']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
@@ -107,10 +107,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'buttons' => [
                     'link' => function($url, $model, $key) {
                         return Html::a(
-                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . Yii::t('app', 'Link'),
+                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
                             Yii::$app->urlManagerFrontend->createUrl(['order/view', 'key' => $model->key]),
                             [
-                                'target' => '_blank'
+                                'target' => '_blank',
+                                'title' => Yii::t('app', 'Link'),
+                                'data-toggle' => 'tooltip',
+                                'data-pjax' => 0,
                             ]
                         );
                     },

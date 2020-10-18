@@ -7,10 +7,6 @@ use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 
-if (Yii::$app->session->get('theme_dark')) {
-    $this->registerCssFile('@web/css/theme-dark.css', ['depends' => [AppAsset::className()]]);
-}
-
 //-----------------------------------------------------------------------------------
 
 $breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);

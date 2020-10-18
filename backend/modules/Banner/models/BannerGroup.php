@@ -32,14 +32,13 @@ class BannerGroup extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Id'),
             'item_id' => Yii::t('app', 'Banner'),
             'text_1' => Yii::t('app', 'Text 1'),
             'text_2' => Yii::t('app', 'Text 2'),
             'text_3' => Yii::t('app', 'Text 3'),
             'link' => Yii::t('app', 'Link'),
             'image' => Yii::t('app', 'Image'),
-            'sort' => Yii::t('app', 'Sort'),
         ];
     }
     

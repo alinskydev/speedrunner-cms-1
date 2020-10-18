@@ -4,6 +4,7 @@ namespace backend\assets;
 
 use Yii;
 use yii\web\AssetBundle;
+use yii\helpers\ArrayHelper;
 
 
 class AppAsset extends AssetBundle
@@ -37,4 +38,11 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
+    
+    public function init()
+    {
+        $this->css[] = 'css/design/fonts/' . ArrayHelper::getValue(Yii::$app->user->identity, 'design_font', 'oswald') . '.css';
+        
+        return parent::init();
+    }
 }

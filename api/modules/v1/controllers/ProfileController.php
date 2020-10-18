@@ -60,25 +60,20 @@ class ProfileController extends Controller
         $model = new $this->forms['update'](['user' => $this->user]);
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
-//        if (isset($_FILES['image'])) {
-//            foreach ($_FILES['image'] as $key => $f) {
-//                $_FILES[$model->formName()][$key]['image'] = $f;
-//            }
-//            
-//            unset($_FILES['image']);
-//        }
+        if (isset($_FILES['image'])) {
+            foreach ($_FILES['image'] as $key => $f) {
+                $_FILES[$model->formName()][$key]['image'] = $f;
+            }
+            
+            unset($_FILES['image']);
+        }
         
         if ($model->validate()) {
             $model->update();
             $this->user->refresh();
             
             return [
-                'name' => 'OK',
-                'message' => [
-                    'access_token' => $this->user->auth_key,
-                ],
-                'code' => 0,
-                'status' => 200,
+                'access_token' => Yii::$app->user->identity->auth_key,
             ];
         } else {
             Yii::$app->response->statusCode = 422;

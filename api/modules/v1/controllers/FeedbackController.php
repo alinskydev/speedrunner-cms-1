@@ -40,14 +40,7 @@ class FeedbackController extends Controller
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
-            $model->sendEmail();
-            
-            return [
-                'name' => 'OK',
-                'message' => 'Success',
-                'code' => 0,
-                'status' => 200,
-            ];
+            return $model->sendEmail();
         } else {
             Yii::$app->response->statusCode = 422;
             

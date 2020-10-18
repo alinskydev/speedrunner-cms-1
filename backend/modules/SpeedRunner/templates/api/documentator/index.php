@@ -34,7 +34,7 @@ $tabs = array_keys($result);
         <div class="col-lg-2 col-md-3">
             <ul class="nav flex-column nav-pills main-shadow" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="pill" href="#tab-general">
+                    <a class="nav-link active" data-toggle="pill" href="#tab-information">
                         General
                     </a>
                 </li>
@@ -51,8 +51,8 @@ $tabs = array_keys($result);
         
         <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
             <div class="tab-content main-shadow p-3">
-                <div id="tab-general" class="tab-pane active">
-                    <table class="table table-bordered">
+                <div id="tab-information" class="tab-pane active">
+                    <table class="table">
                         <tbody>
                             <tr>
                                 <th>
@@ -106,7 +106,7 @@ $tabs = array_keys($result);
                         <?php } ?>
                         
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th style="width: 3%;">#</th>

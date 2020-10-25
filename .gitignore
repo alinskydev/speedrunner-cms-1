@@ -30,5 +30,3 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-# local files
-common/config/main-local.php

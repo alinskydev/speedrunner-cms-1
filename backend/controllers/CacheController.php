@@ -12,9 +12,18 @@ class CacheController extends Controller
 {
     public function actionRemoveThumbs()
     {
-        $dir = Yii::getAlias('@frontend/web/assets/thumbs');
-        FileHelper::removeDirectory($dir);
-        FileHelper::createDirectory($dir);
+        $dirs = [
+            '@frontend/web/assets/elfinder',
+            '@frontend/web/assets/thumbs',
+        ];
+        
+        foreach ($dirs as $d) {
+            if (is_dir(Yii::getAlias($d))) {
+                FileHelper::removeDirectory($d);
+                FileHelper::createDirectory($d);
+            }
+        }
+        
         Yii::$app->session->addFlash('success', Yii::t('app', 'Process has been completed'));
         
         return $this->redirect(Yii::$app->request->referrer);

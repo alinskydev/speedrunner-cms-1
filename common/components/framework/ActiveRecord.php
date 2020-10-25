@@ -43,7 +43,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 if ($json = ArrayHelper::getValue($this->oldAttributes, $a)) {
                     $json[Yii::$app->language] = $this->{$a};
                 } else {
-                    $langs = Yii::$app->sr->translation->languages();
+                    $langs = Yii::$app->sr->translation->languages;
                     
                     foreach ($langs as $l) {
                         $json[$l['code']] = $this->{$a};

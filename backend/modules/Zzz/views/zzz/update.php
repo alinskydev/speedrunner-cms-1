@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ArrayHelper::map(ZzzCategory::itemsList('name', 'translation', null)->asArray()->all(), 'id', 'text'),
                     [
                         'class' => 'form-control',
-                        'data-toggle' => 'selectpicker',
+                        'data-toggle' => 'select2',
                         'prompt' => ' ',
                     ]
                 ) ?>

@@ -92,7 +92,7 @@ class <?= $model->table_name ?> extends ActiveRecord
                         'attribute' => '<?= $r['var_name'] ?>',
                         'properties' => [
                             'main' => 'item_id',
-                            'relational' => [],
+                            'relational' => [// ATTRIBUTES],
                         ],
                     ],
 <?php } ?>

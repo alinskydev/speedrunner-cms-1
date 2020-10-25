@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div id="tab-model" class="tab-pane fade">
                 <?= $form->field($model, 'table_name')->dropDownList($tables, [
                     'class' => 'form-control',
-                    'data-toggle' => 'selectpicker',
+                    'data-toggle' => 'select2',
                     'prompt' => ' ',
                 ]) ?>
                 

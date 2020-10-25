@@ -87,9 +87,9 @@ $(function() {
         }
     });
     
-    //      SELECTPICKER
+    //      SELECT2
     
-    $(document).on('mousedown', '[data-toggle="selectpicker"]', function() {
+    $(document).on('mousedown', '[data-toggle="select2"]', function() {
         if (!$(this).hasClass('select2-hidden-accessible')) {
             $(this).select2({
                 allowClear: true,

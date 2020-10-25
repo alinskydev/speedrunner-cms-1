@@ -44,7 +44,14 @@ class TranslationSource extends ActiveRecord
     
     public function activeTranslations()
     {
-        return TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => array_keys(Yii::$app->sr->translation->languages())])->all();
+        $langs = array_keys(Yii::$app->sr->translation->languages);
+        $messages = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $langs])->indexBy('language')->all();
+        
+        foreach ($langs as $l) {
+            $messages[$l] = isset($messages[$l]) ? $messages[$l] : new TranslationMessage(['id' => $this->id, 'language' => $l]);
+        }
+        
+        return $messages;
     }
     
     public function translationsColumn()
@@ -63,7 +70,7 @@ class TranslationSource extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
-            $available_langs = Yii::$app->sr->translation->languages();
+            $available_langs = Yii::$app->sr->translation->languages;
             
             foreach ($this->translations_tmp as $key => $value) {
                 if (array_key_exists($key, $available_langs)) {

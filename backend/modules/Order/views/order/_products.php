@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
     <thead>
         <tr>
             <th style="width: 1%;"></th>
-            <th>№</th>
+            <th>#</th>
             <th><?= $product_mdl->getAttributeLabel('product_id') ?></th>
             <th><?= $product_mdl->getAttributeLabel('price') ?></th>
             <th><?= $product_mdl->getAttributeLabel('quantity') ?></th>

@@ -13,7 +13,7 @@ AppAsset::register($this);
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 $user = Yii::$app->user->identity;
 
-$langs = Yii::$app->sr->translation->languages();
+$langs = Yii::$app->sr->translation->languages;
 
 $breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);
 $bookmark_add_value = ArrayHelper::getColumn($breadcrumbs, 'label');

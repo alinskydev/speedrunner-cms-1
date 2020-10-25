@@ -10,9 +10,9 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
+    'homeUrl' => '/admin',
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'homeUrl' => '/admin',
     'modules' => [
         'banner' => ['class' => 'backend\modules\Banner\Module'],
         'block' => ['class' => 'backend\modules\Block\Module'],

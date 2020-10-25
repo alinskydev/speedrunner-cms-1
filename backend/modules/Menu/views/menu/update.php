@@ -44,7 +44,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                         if ($model->isNewRecord) {
                             echo $form->field($model, 'parent_id')->dropDownList($model->itemsTree(), [
                                 'class' => 'form-control',
-                                'data-toggle' => 'selectpicker',
+                                'data-toggle' => 'select2',
                             ]);
                         }
                     ?>

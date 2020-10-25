@@ -14,20 +14,21 @@ use backend\modules\Translation\models\TranslationMessage;
 
 class Translation
 {
-    public function languages()
+    public $languages;
+    
+    public function __construct()
     {
-        $langs = SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
-        $lang_current = Yii::$app->language;
+        $languages = SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
+        $current_language = Yii::$app->language;
         
-        foreach ($langs as $key => $l) {
+        foreach ($languages as $key => $l) {
             Yii::$app->language = $key;
             new \frontend\components\LocalisedRoutes;
             
-            $langs[$key]['url'] = Yii::$app->urlManager->createUrl([Yii::$app->requestedRoute, 'lang' => $key]);
+            $languages[$key]['url'] = Yii::$app->urlManager->createUrl([Yii::$app->requestedRoute, 'lang' => $key]);
         }
         
-        Yii::$app->language = $lang_current;
-        
-        return $langs;
+        Yii::$app->language = $current_language;
+        $this->languages = $languages;
     }
 }

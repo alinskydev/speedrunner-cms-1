@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 },
                 'filterInputOptions' => [
                     'class' => 'form-control',
-                    'data-toggle' => 'selectpicker',
+                    'data-toggle' => 'select2',
                 ],
             ],
             'created',

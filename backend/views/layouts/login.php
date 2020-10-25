@@ -27,7 +27,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
 <body>
 <?php $this->beginBody() ?>
 
-<div class="content">
+<div class="content p-3">
     <?= $content ?>
 </div>
 

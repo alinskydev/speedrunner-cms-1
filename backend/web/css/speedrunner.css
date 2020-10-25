@@ -998,6 +998,12 @@ span.fancytree-active span.fancytree-title,
         font-size: 20px;
         line-height: 37px;
     }
+    
+    .login-wrapper {
+        position: static;
+        transform: none;
+        max-width: none;
+    }
 }
 
 @media (max-width: 575px) {

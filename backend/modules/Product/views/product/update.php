@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div id="tab-categories-specifications" class="tab-pane fade">
                 <?= $form->field($model, 'main_category_id')->dropDownList(ProductCategory::itemsTree([1]), [
                     'class' => 'form-control',
-                    'data-toggle' => 'selectpicker',
+                    'data-toggle' => 'select2',
                     'prompt' => ' ',
                 ]) ?>
                 

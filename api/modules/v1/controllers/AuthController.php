@@ -5,7 +5,6 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
 
 
 class AuthController extends Controller
@@ -28,7 +27,7 @@ class AuthController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'login' => ['post'],
                     'signup' => ['post'],

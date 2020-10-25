@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = Yii::t('app', 'Sign In');
+$this->title = Yii::t('app', 'Sign in');
 
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-
 <div class="login-wrapper main-shadow">
+    <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
+    
     <div class="card">
         <div class="card-header bg-primary text-center py-4">
             <img src="<?= Yii::$app->urlManager->createFileUrl('/img/logo.svg') ?>" class="logo">
@@ -35,6 +35,6 @@ $this->title = Yii::t('app', 'Sign In');
             ) ?>
         </div>
     </div>
+    
+    <?php ActiveForm::end(); ?>
 </div>
-
-<?php ActiveForm::end(); ?>

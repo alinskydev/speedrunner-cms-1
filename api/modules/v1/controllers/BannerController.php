@@ -5,7 +5,6 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
 
 use backend\modules\Banner\models\Banner;
 use backend\modules\Banner\modelsSearch\BannerSeach;
@@ -25,7 +24,7 @@ class BannerController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
                 ],

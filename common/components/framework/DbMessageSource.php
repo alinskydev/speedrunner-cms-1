@@ -16,6 +16,7 @@ use yii\db\Query;
 use yii\di\Instance;
 use yii\helpers\ArrayHelper;
 
+use backend\modules\System\models\SystemLanguage;
 use backend\modules\Translation\models\TranslationSource;
 
 
@@ -52,7 +53,7 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
                     $id = $this->db->lastInsertID;
                 }
                 
-                $languages = Yii::$app->sr->translation->languages();
+                $languages = Yii::$app->sr->translation->languages ?? SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
                 
                 foreach ($languages as $language) {
                     $exists = (new Query())->from($this->messageTable)->where([

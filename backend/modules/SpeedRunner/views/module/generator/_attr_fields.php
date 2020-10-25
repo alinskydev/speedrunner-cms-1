@@ -81,19 +81,3 @@ unset($attr_types['groups']);
     </tbody>
 </table>
 <hr>
-
-
-<script>
-    $('.selectpicker-type-2').select2({
-        tags: true,
-        closeOnSelect: false
-    });
-    
-    $('.selectpicker-type-2').on('select2:select', function(e) {
-        $(e.target).data('select2').dropdown.$search.val(e.params.data.text).focus();
-    });
-    
-//    ----------------------------------------------------------------
-    
-    
-</script>

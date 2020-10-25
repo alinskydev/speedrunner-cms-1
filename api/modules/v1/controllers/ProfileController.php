@@ -5,8 +5,6 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\filters\auth\HttpBasicAuth;
 
 use backend\modules\User\models\User;
 
@@ -23,7 +21,7 @@ class ProfileController extends Controller
     {
         return [
             'authenticator' => [
-                'class' => HttpBasicAuth::className(),
+                'class' => \yii\filters\auth\HttpBasicAuth::className(),
             ],
             'format' => [
                 'class' => \yii\filters\ContentNegotiator::className(),
@@ -34,7 +32,7 @@ class ProfileController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
                     'update' => ['post'],

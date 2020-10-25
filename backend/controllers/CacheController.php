@@ -19,8 +19,8 @@ class CacheController extends Controller
         
         foreach ($dirs as $d) {
             if (is_dir(Yii::getAlias($d))) {
-                FileHelper::removeDirectory($d);
-                FileHelper::createDirectory($d);
+                FileHelper::removeDirectory(Yii::getAlias($d));
+                FileHelper::createDirectory(Yii::getAlias($d));
             }
         }
         

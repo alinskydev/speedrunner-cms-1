@@ -76,7 +76,7 @@ class BlogSearch extends Blog
         
         $lang = Yii::$app->language;
         
-        foreach ($this->translation_attributes as $t_a) {
+        foreach ($this->behaviors['translation']->attributes as $t_a) {
             $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT(Blog.$t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
             $query->addSelect([new Expression("Blog.$t_a->>'$.$lang' as json_$t_a")]);
             

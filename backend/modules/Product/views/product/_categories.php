@@ -42,8 +42,14 @@ function selectCategories($data, $categories)
                     'options' => ['class' => 'mb-0'],
                 ])->hiddenInput(['value' => '']) ?>
                 
+                <div class="form-group">
+                    <?= Html::textInput('fancytree_search', null, [
+                        'class' => 'form-control',
+                        'placeholder' => Yii::t('app', 'Search'),
+                    ]) ?>
+                </div>
+                
                 <?= FancytreeWidget::widget([
-                    'id' => 'product-categories_tmp-tree',
                     'pluginOptions' => [
                         'data-action' => Yii::$app->urlManager->createUrl(['product/product/specifications']),
                         'data-id' => ArrayHelper::getValue($model, 'id'),
@@ -51,6 +57,7 @@ function selectCategories($data, $categories)
                     'options' => [
                         'source' => $data,
                         'checkbox' => true,
+                        'extensions' => ['filter'],
                         'init' => new JsExpression('function(event, data) {
                             data.tree.options.select(event, data);
                         }'),
@@ -74,6 +81,11 @@ function selectCategories($data, $categories)
                                 $("#variation-specification").html(data.variations).trigger("change");
                             });
                         }'),
+                        'filter' => [
+                            'autoExpand' => true,
+                            'highlight' => false,
+                            'mode' => 'hide',
+                        ],
                     ],
                 ]); ?>
             </div>
@@ -98,12 +110,22 @@ function selectCategories($data, $categories)
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        var tree;
+        
+        $('input[name="fancytree_search"]').on('keyup', function(e) {
+            tree = $.ui.fancytree.getTree();
+            tree.filterNodes.call(tree, $(this).val(), {});
+        });
+        
+//        ----------------------------------------------------------------------
+        
         $(document).on('change', '#variation-specification', function() {
             $('#variation-option').html($(this).find(':selected').data('options') ? $(this).find(':selected').data('options') : null);
         });
         
         $(document).on('submit', '#update-form', function() {
-			$.ui.fancytree.getTree('#fancyree_product-categories_tmp-tree').generateFormElements('Product[categories_tmp][]');
+            tree = $.ui.fancytree.getTree();
+			tree.generateFormElements('Product[categories_tmp][]');
 		});
     });
 </script>

@@ -9,10 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class ProductSpecification extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-    ];
-    
     public $options_tmp;
     
     public static function tableName()
@@ -23,15 +19,18 @@ class ProductSpecification extends ActiveRecord
     public function behaviors()
     {
         return [
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name'],
+            ],
             'relations_one_many' => [
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
-                    [
+                    'options_tmp' => [
                         'model' => new ProductSpecificationOption,
                         'relation' => 'options',
-                        'attribute' => 'options_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'item_id',
                             'relational' => ['name'],
                         ],

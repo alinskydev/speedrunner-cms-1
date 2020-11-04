@@ -9,6 +9,8 @@ use yii\helpers\ArrayHelper;
 
 class Banner extends ActiveRecord
 {
+    use \api\modules\v1\models\Banner;
+    
     public $groups_tmp;
     
     public static function tableName()
@@ -23,11 +25,10 @@ class Banner extends ActiveRecord
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
-                    [
+                    'groups_tmp' => [
                         'model' => new BannerGroup,
                         'relation' => 'groups',
-                        'attribute' => 'groups_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'item_id',
                             'relational' => ['text_1', 'text_2', 'text_3', 'link', 'image'],
                         ],
@@ -58,20 +59,15 @@ class Banner extends ActiveRecord
         ];
     }
     
-    public function fields()
-    {
-        return [
-            'id',
-            'location',
-            'groups',
-        ];
-    }
-    
     static function locations()
     {
         return [
-            'slider_home' => Yii::t('app', 'Slider home'),
-            'slider_about' => Yii::t('app', 'Slider about'),
+            'slider_home' => [
+                'label' => Yii::t('app', 'Slider home'),
+            ],
+            'slider_about' => [
+                'label' => Yii::t('app', 'Slider about'),
+            ],
         ];
     }
     

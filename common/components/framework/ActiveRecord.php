@@ -6,21 +6,12 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\db\Expression;
-use yii\db\JsonExpression;
 
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     public function afterFind()
     {
-        //        TRANSLATIONS
-        
-        if (isset($this->translation_attributes)) {
-            foreach ($this->translation_attributes as $a) {
-                $this->{$a} = ArrayHelper::getValue($this->{$a}, Yii::$app->language);
-            }
-        }
-        
         //        DATETIME FORMAT
         
         foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
@@ -36,24 +27,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        TRANSLATIONS
-        
-        if (isset($this->translation_attributes)) {
-            foreach ($this->translation_attributes as $a) {
-                if ($json = ArrayHelper::getValue($this->oldAttributes, $a)) {
-                    $json[Yii::$app->language] = $this->{$a};
-                } else {
-                    $langs = Yii::$app->sr->translation->languages;
-                    
-                    foreach ($langs as $l) {
-                        $json[$l['code']] = $this->{$a};
-                    } 
-                }
-                
-                $this->{$a} = new JsonExpression($json);
-            }
-        }
-        
         //        DATETIME FORMAT
         
         foreach (Yii::$app->params['date_format_attributes'] as $key => $d_f_a) {
@@ -76,9 +49,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML PURIFIER
         
-        $class_name = StringHelper::basename($this->className());
+        $model_class = StringHelper::basename($this->className());
         
-        if (in_array($class_name, ['User', 'UserProfile'])) {
+        if (in_array($model_class, ['User', 'UserProfile'])) {
             foreach ($this->attributes as $key => $a) {
                 ($a && is_string($a)) ? $this->{$key} = strip_tags($a) : null;
             }
@@ -89,16 +62,14 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        SEO META
-        
-        if (isset($this->seo_meta) && $value = Yii::$app->request->post('SeoMeta')) {
-            Yii::$app->sr->seo->saveMeta($this, $value);
-        }
-        
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been saved')]);
+            $model_class = StringHelper::basename($this->className());
+            
+            if (!in_array($model_class, ['LogAction', 'LogActionAttr', 'SeoMeta', 'UserNotification'])) {
+                Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been saved')]);
+            }
         }
         
         return parent::afterSave($insert, $changedAttributes);
@@ -106,16 +77,14 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterDelete()
     {
-        //        SEO META
-        
-        if (isset($this->seo_meta)) {
-            Yii::$app->sr->seo->deleteMeta($this);
-        }
-        
         //        ALERTS
         
         if (Yii::$app->id == 'app-backend') {
-            Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been deleted')]);
+            $model_class = StringHelper::basename($this->className());
+            
+            if (!in_array($model_class, ['LogAction', 'LogActionAttr', 'SeoMeta', 'UserNotification'])) {
+                Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been deleted')]);
+            }
         }
         
         return parent::afterDelete();

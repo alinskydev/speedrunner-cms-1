@@ -38,22 +38,10 @@ use yii\helpers\ArrayHelper;
 
 class <?= $model->table_name ?> extends ActiveRecord
 {
-<?php if ($model->attrs_translation) { ?>
-    public $translation_attributes = [
-<?php foreach ($model->attrs_translation as $key => $a) { ?>
-        '<?= $key ?>',
-<?php } ?>
-    ];
-    
-<?php } ?>
 <?php if ($model->view_relations) { ?>
 <?php foreach ($model->view_relations as $r) { ?>
     public $<?= $r['var_name'] ?>;
 <?php } ?>
-    
-<?php } ?>
-<?php if ($model->has_seo_meta) { ?>
-    public $seo_meta = [];
     
 <?php } ?>
     public static function tableName()
@@ -73,11 +61,22 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'immutable' => true,
             ],
 <?php } ?>
+<?php if ($model->attrs_translation) { ?>
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['<?= implode("', '", array_keys($model->attrs_translation)) ?>'],
+            ],
+<?php } ?>
 <?php if (isset($attrs_fields['images'])) { ?>
 <?php $image_attrs = ArrayHelper::getColumn($attrs_fields['images'], 'name') ?>
             'files' => [
                 'class' => \common\behaviors\FilesBehavior::className(),
                 'attributes' => ['<?= implode("', '", $image_attrs) ?>'],
+            ],
+<?php } ?>
+<?php if ($model->has_seo_meta) { ?>
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
 <?php } ?>
 <?php if ($model->view_relations) { ?>
@@ -86,11 +85,10 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'type' => 'oneMany',
                 'attributes' => [
 <?php foreach ($model->view_relations as $r) { ?>
-                    [
+                    '<?= $r['var_name'] ?>' => [
                         'model' => new <?= $r['model'] ?>,
                         'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
-                        'attribute' => '<?= $r['var_name'] ?>',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'item_id',
                             'relational' => [// ATTRIBUTES],
                         ],

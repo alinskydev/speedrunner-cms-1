@@ -9,11 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class ZzzCategory extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'description',
-    ];
-    
     public static function tableName()
     {
         return 'ZzzCategory';
@@ -27,6 +22,10 @@ class ZzzCategory extends ActiveRecord
                 'attribute' => 'name',
                 'slugAttribute' => 'slug',
                 'immutable' => true,
+            ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'description'],
             ],
         ];
     }

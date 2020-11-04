@@ -60,16 +60,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 case 'textInput':
                                     echo $form->field($b, 'value')->textInput([
                                         'name' => "StaticpageBlock[$b->id][value]",
-                                        'id' => "staticpageblock-$b->id"
-                                    ])->label($b->label);
+                                        'id' => "staticpageblock-$b->id",
+                                    ])->label(Yii::t('app', $b->label));
                                     
                                     break;
                                 case 'textArea':
                                     echo $form->field($b, 'value')->textArea([
                                         'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
-                                        'rows' => 5
-                                    ])->label($b->label);
+                                        'rows' => 5,
+                                    ])->label(Yii::t('app', $b->label));
                                     
                                     break;
                                 case 'checkbox':
@@ -80,8 +80,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'id' => "staticpageblock-$b->id",
                                         'class' => 'custom-control-input',
                                         'label' => null,
-                                    ])->label($b->label, [
-                                        'class' => 'custom-control-label'
+                                    ])->label(Yii::t('app', $b->label), [
+                                        'class' => 'custom-control-label',
                                     ]);
                                     
                                     break;
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                             'name' => "StaticpageBlock[$b->id][value]",
                                             'id' => "staticpageblock-$b->id",
                                         ],
-                                    ])->label($b->label);
+                                    ])->label(Yii::t('app', $b->label));
                                     
                                     break;
                                 case 'ElFinder':
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'connectorRoute' => '/connection/elfinder-file-upload',
                                         'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
-                                    ])->label($b->label);
+                                    ])->label(Yii::t('app', $b->label));
                                     
                                     break;
                                 case 'images':
@@ -128,7 +128,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                                 $.post('".Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-sort', 'id' => $b->id])."', {sort: params});
                                             }")
                                         ],
-                                    ])->label($b->label);
+                                    ])->label(Yii::t('app', $b->label));
                                     
                                     break;
                                 case 'groups':
@@ -144,7 +144,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <?php if ($model->has_seo_meta) { ?>
                 <div id="tab-page-seo-meta" class="tab-pane <?= !$blocks ? 'active' : 'fade' ?>">
-                    <?= Yii::$app->sr->seo->getMetaLayout($model) ?>
+                    <?= $this->render('@backend/modules/Seo/views/meta/meta', [
+                        'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                    ]) ?>
                 </div>
             <?php } ?>
         </div>

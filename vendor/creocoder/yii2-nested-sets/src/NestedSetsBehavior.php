@@ -185,22 +185,20 @@ class NestedSetsBehavior extends Behavior
      */
     protected function deleteWithChildrenInternal()
     {
-        if (!$this->owner->beforeDelete()) {
-            return false;
-        }
-
-        $condition = [
+        $children = $this->owner->find()->andWhere([
             'and',
             ['>=', $this->leftAttribute, $this->owner->getAttribute($this->leftAttribute)],
             ['<=', $this->rightAttribute, $this->owner->getAttribute($this->rightAttribute)]
-        ];
-
-        $this->applyTreeAttributeCondition($condition);
-        $result = $this->owner->deleteAll($condition);
+        ])->all();
+        
+        foreach ($children as $c) {
+            $c->delete();
+        }
+        
         $this->owner->setOldAttributes(null);
         $this->owner->afterDelete();
-
-        return $result;
+        
+        return true;
     }
 
     /**

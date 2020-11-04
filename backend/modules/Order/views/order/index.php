@@ -67,17 +67,17 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'delivery_type',
                 'format' => 'raw',
-                'filter' => $modelSearch->deliveryTypes(),
+                'filter' => ArrayHelper::getColumn($modelSearch->deliveryTypes(), 'label'),
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->deliveryTypes(), $model->delivery_type);
+                    return ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label");
                 }
             ],
             [
                 'attribute' => 'payment_type',
                 'format' => 'raw',
-                'filter' => $modelSearch->paymentTypes(),
+                'filter' => ArrayHelper::getColumn($modelSearch->paymentTypes(), 'label'),
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->paymentTypes(), $model->payment_type);
+                    return ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label");
                 }
             ],
             [

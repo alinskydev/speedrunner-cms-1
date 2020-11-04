@@ -32,6 +32,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div class="p-3">
+                <div class="form-group">
+                    <?= Html::textInput('fancytree_search', null, [
+                        'class' => 'form-control',
+                        'placeholder' => Yii::t('app', 'Search'),
+                    ]) ?>
+                </div>
+                
                 <?= FancytreeWidget::widget([
                     'pluginOptions' => [
                         'data-action_create' => Yii::$app->urlManager->createUrl(['product/category/create']),
@@ -41,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                     'options' => [
                         'source' => $data,
-                        'extensions' => ['dnd'],
+                        'extensions' => ['dnd', 'filter'],
                         'init' => new JsExpression('function(event, data) {
                             $("#nav-item-content").load(data.tree.$div.data("action_create"));
                         }'),
@@ -78,9 +85,26 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 });
                             }'),
                         ],
+                        'filter' => [
+                            'autoExpand' => true,
+                            'highlight' => false,
+                            'mode' => 'hide',
+                        ],
                     ],
                 ]); ?>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tree;
+        
+        $('input[name="fancytree_search"]').on('keyup', function(e) {
+            tree = $.ui.fancytree.getTree();
+            tree.filterNodes.call(tree, $(this).val(), {});
+        });
+    });
+</script>

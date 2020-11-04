@@ -11,6 +11,8 @@ use yii\db\JsonExpression;
 
 class StaticpageBlock extends ActiveRecord
 {
+    use \api\modules\v1\models\StaticpageBlock;
+    
     public static function tableName()
     {
         return 'StaticpageBlock';
@@ -57,29 +59,6 @@ class StaticpageBlock extends ActiveRecord
             'label' => Yii::t('app', 'Label'),
             'value' => Yii::t('app', 'Value'),
             'type' => Yii::t('app', 'Type'),
-        ];
-    }
-    
-    public function fields()
-    {
-        return [
-            'name',
-            'label',
-            'part_name',
-            'value' => function ($model) {
-                switch ($model->type) {
-                    case 'images':
-                        foreach ($model->value as $v) {
-                            $result[] = Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($v);
-                        }
-                        
-                        return isset($result) ? $result : [];
-                    case 'groups':
-                        return $model->value;
-                    default:
-                        return $model->value;
-                }
-            },
         ];
     }
     

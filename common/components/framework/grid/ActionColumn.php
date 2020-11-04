@@ -180,8 +180,7 @@ class ActionColumn extends Column
                     'aria-label' => $title,
                     'title' => $title,
                     'data-toggle' => 'tooltip',
-                    'data-pjax' => '0',
-                    'class' => 'text-nowrap',
+                    'data-pjax' => 0,
                 ], $additionalOptions, $this->buttonOptions);
                 
                 return Html::a(Html::tag('i', null, ['class' => "$iconName m-0"]), $url, $options);

@@ -43,9 +43,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'username',
             [
                 'attribute' => 'role',
-                'filter' => $modelSearch->roles(),
+                'filter' => ArrayHelper::getColumn($modelSearch->roles(), 'label'),
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->roles(), $model->role);
+                    return ArrayHelper::getValue($model->roles(), "$model->role.label");
                 },
             ],
             'email:email',

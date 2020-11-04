@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use common\forms\LoginForm;
 
 use backend\modules\User\models\User;
@@ -69,5 +70,25 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
         return $this->redirect(['login']);
+    }
+    
+    public function actionChangePassword()
+    {
+        $model = Yii::$app->user->identity;
+        
+        if ($new_password = ArrayHelper::getValue(Yii::$app->request->post(), 'User.new_password')) {
+            $model->new_password = $new_password;
+            
+            if ($model->save()) {
+                Yii::$app->session->removeFlash('success');
+                Yii::$app->session->addFlash('success', Yii::t('app', 'Password has been changed'));
+                
+                return $this->refresh();
+            }
+        }
+        
+        return $this->render('change_password', [
+            'model' => $model,
+        ]);
     }
 }

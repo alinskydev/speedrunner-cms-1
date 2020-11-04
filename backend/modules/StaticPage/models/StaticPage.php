@@ -8,19 +8,19 @@ use common\components\framework\ActiveRecord;
 
 class Staticpage extends ActiveRecord
 {
-    public $seo_meta = [];
+    use \api\modules\v1\models\Staticpage;
     
     public static function tableName()
     {
         return 'Staticpage';
     }
     
-    public function fields()
+    public function behaviors()
     {
         return [
-            'id',
-            'location',
-            'blocks',
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
+            ],
         ];
     }
     

@@ -10,11 +10,6 @@ use yii\db\Expression;
 
 class Menu extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'url',
-    ];
-    
     public $parent_id;
     
     public static function tableName()
@@ -30,6 +25,10 @@ class Menu extends ActiveRecord
             ],
             'htmlTree'=>[
                 'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
+            ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'url'],
             ],
         ];
     }

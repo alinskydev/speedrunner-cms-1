@@ -11,6 +11,7 @@ class Speedrunner
     public $html;
     public $image;
     public $mail;
+    public $notification;
     public $record;
     public $seo;
     public $translation;
@@ -21,6 +22,7 @@ class Speedrunner
         $this->html = new \common\helpers\Speedrunner\Html;
         $this->image = new \common\helpers\Speedrunner\Image;
         $this->mail = new \common\helpers\Speedrunner\Mail;
+        $this->notification = new \common\helpers\Speedrunner\Notification;
         $this->record = new \common\helpers\Speedrunner\Record;
         $this->seo = new \common\helpers\Speedrunner\Seo;
         $this->translation = new \common\helpers\Speedrunner\Translation;

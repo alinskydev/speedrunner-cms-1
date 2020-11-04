@@ -9,13 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class BlockPage extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-    ];
-    
     public $blocks_tmp;
-    
-    public $seo_meta = [];
     
     public static function tableName()
     {
@@ -31,15 +25,21 @@ class BlockPage extends ActiveRecord
                 'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
+            ],
             'relations_one_many' => [
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
-                    [
+                    'blocks_tmp' => [
                         'model' => new Block,
                         'relation' => 'blocks',
-                        'attribute' => 'blocks_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'page_id',
                             'relational' => ['type_id'],
                         ],

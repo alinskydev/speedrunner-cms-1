@@ -1,9 +1,10 @@
 $(function() {
+    var el, action, sendData,
+        csrf = $('meta[name="csrf-token"]').attr('content');
     
     //      FILE INPUT
     
-    var el, action, sendData,
-        fileName;
+    var fileName;
     
     $(document).on('change', '.custom-file-input', function() {
         fileName = $(this).val().split('\\').pop();
@@ -20,16 +21,16 @@ $(function() {
     //      NAV SIDE
     
     $(document).on('click', '.nav-side-toggle', function() {
-        el = $('.nav-wrapper-side');
-        action = $(this).data('action');
+        el = $(this);
+        action = el.data('action');
         sendData = {
-            "_csrf-backend": $('meta[name="csrf-token"]').attr('content'),
+            "_csrf-backend": csrf,
             name: 'nav',
-            value: el.hasClass('opened') ? 0 : 1
+            value: $('.nav-wrapper-side').hasClass('opened') ? 0 : 1
         };
         
         $.post(action, sendData);
-        el.toggleClass('opened');
+        $('.nav-wrapper-side').toggleClass('opened');
     });
     
     if ($(window).outerWidth() <= 991) {
@@ -126,10 +127,10 @@ $(function() {
                 plugins: ['fontcolor', 'fontsize', 'table', 'clips', 'fullscreen', 'imagemanager'],
                 lang: 'en',
                 uploadImageFields: {
-                    "_csrf-backend": $('meta[name="csrf-token"]').attr('content')
+                    "_csrf-backend": csrf
                 },
                 uploadFileFields: {
-                    "_csrf-backend": $('meta[name="csrf-token"]').attr('content')
+                    "_csrf-backend": csrf
                 },
                 imageUploadErrorCallback: function (response) {
                     alert('An error occurred during the upload process!');
@@ -262,7 +263,7 @@ $(function() {
         el = $(this);
         action = el.data('action');
         sendData = {
-            "_csrf-backend": $('meta[name="csrf-token"]').attr('content'),
+            "_csrf-backend": csrf,
             type: el.data('type'),
             value: el.data('value')
         };

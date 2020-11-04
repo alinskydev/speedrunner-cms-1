@@ -15,6 +15,7 @@ class VariationController extends Controller
     {
         if ($model = ProductVariation::findOne($id)) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->removeFlash('success');
                 return true;
             }
             

@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     return $form->field($model, 'delivery_type', [
                                         'template' => '{input}{hint}{error}',
                                         'options' => ['class' => 'm-0'],
-                                    ])->dropDownList($model->deliveryTypes());
+                                    ])->dropDownList(ArrayHelper::getColumn($model->deliveryTypes(), 'label'));
                                 }
                             ],
                             [
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     return $form->field($model, 'payment_type', [
                                         'template' => '{input}{hint}{error}',
                                         'options' => ['class' => 'm-0'],
-                                    ])->dropDownList($model->paymentTypes());
+                                    ])->dropDownList(ArrayHelper::getColumn($model->paymentTypes(), 'label'));
                                 }
                             ],
                             [

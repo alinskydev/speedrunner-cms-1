@@ -8,16 +8,21 @@ use common\components\framework\ActiveRecord;
 
 class BannerGroup extends ActiveRecord
 {
-    public $translation_attributes = [
-        'text_1',
-        'text_2',
-        'text_3',
-        'link',
-    ];
+    use \api\modules\v1\models\BannerGroup;
     
     public static function tableName()
     {
         return 'BannerGroup';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['text_1', 'text_2', 'text_3', 'link'],
+            ],
+        ];
     }
     
     public function rules()
@@ -39,19 +44,6 @@ class BannerGroup extends ActiveRecord
             'text_3' => Yii::t('app', 'Text 3'),
             'link' => Yii::t('app', 'Link'),
             'image' => Yii::t('app', 'Image'),
-        ];
-    }
-    
-    public function fields()
-    {
-        return [
-            'text_1',
-            'text_2',
-            'text_3',
-            'link',
-            'image' => function ($model) {
-                return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image);
-            },
         ];
     }
 }

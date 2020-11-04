@@ -16,6 +16,7 @@ return [
         'block' => ['class' => 'backend\modules\Block\Module'],
         'blog' => ['class' => 'backend\modules\Blog\Module'],
         'gallery' => ['class' => 'backend\modules\Gallery\Module'],
+        'log' => ['class' => 'backend\modules\Log\Module'],
         'menu' => ['class' => 'backend\modules\Menu\Module'],
         'order' => ['class' => 'backend\modules\Order\Module'],
         'page' => ['class' => 'backend\modules\Page\Module'],

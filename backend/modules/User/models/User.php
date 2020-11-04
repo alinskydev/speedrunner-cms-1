@@ -11,6 +11,8 @@ use yii\web\UploadedFile;
 
 class User extends ActiveRecord implements IdentityInterface
 {
+    use \api\modules\v1\models\User;
+    
     public $new_password;
     
     public $profile_attributes = [
@@ -28,6 +30,36 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'User';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'relations_one_one' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'oneOne',
+                'attributes' => [
+                    'profile' => [
+                        'model' => new UserProfile,
+                        'relation' => 'profile',
+                        'attributes' => [
+                            'main' => 'user_id',
+                            'relational' => $this->profile_attributes,
+                        ],
+                    ],
+                ],
+            ],
+            'log_actions' => [
+                'class' => \common\behaviors\LogActionBehavior::className(),
+                'exclude_attributes' => ['auth_key', 'password_hash', 'password_reset_token', 'user_id'],
+                'relations_one_one' => [
+                    'profile' => [
+                        'relation' => 'profile',
+                        'attributes' => $this->profile_attributes,
+                    ],
+                ],
+            ],
+        ];
     }
     
     public function rules()
@@ -85,45 +117,45 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    public function fields()
-    {
-        return [
-            'id',
-            'username',
-            'access_token' => function ($model) {
-                return $model->auth_key;
-            },
-            'full_name',
-            'phone',
-            'address',
-            'created',
-            'updated',
-        ];
-    }
-    
     static function roles()
     {
         return [
-            'admin' => Yii::t('app', 'Admin'),
-            'registered' => Yii::t('app', 'Registered'),
+            'admin' => [
+                'label' => Yii::t('app', 'Admin'),
+            ],
+            'registered' => [
+                'label' => Yii::t('app', 'Registered'),
+            ],
         ];
     }
     
     static function designThemes()
     {
         return [
-            'nav_full' => Yii::t('app', 'Full menu'),
-            'nav_left' => Yii::t('app', 'Left menu'),
+            'nav_full' => [
+                'label' => Yii::t('app', 'Full menu'),
+            ],
+            'nav_left' => [
+                'label' => Yii::t('app', 'Left menu'),
+            ],
         ];
     }
     
     static function designFonts()
     {
         return [
-            'oswald' => Yii::t('app', 'Oswald'),
-            'roboto' => Yii::t('app', 'Roboto'),
-            'montserrat' => Yii::t('app', 'Montserrat'),
-            'ibm_plex_sans' => Yii::t('app', 'IBM Plex Sans'),
+            'oswald' => [
+                'label' => Yii::t('app', 'Oswald'),
+            ],
+            'roboto' => [
+                'label' => Yii::t('app', 'Roboto'),
+            ],
+            'montserrat' => [
+                'label' => Yii::t('app', 'Montserrat'),
+            ],
+            'ibm_plex_sans' => [
+                'label' => Yii::t('app', 'IBM Plex Sans'),
+            ],
         ];
     }
     
@@ -168,19 +200,16 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function beforeSave($insert)
     {
+        //        NEW PASSWORD
+        
         if ($this->new_password) {
             $this->generateAuthKey();
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
         }
         
-        return parent::beforeSave($insert);
-    }
-    
-    public function afterSave($insert, $changedAttributes)
-    {
         //        IMAGE
         
-        $old_image = ArrayHelper::getValue($this->profile, 'image', null);
+        $old_image = ArrayHelper::getValue($this, 'profile.image');
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
             $this->image = Yii::$app->sr->file->save($image, 'files/profile');
@@ -189,17 +218,11 @@ class User extends ActiveRecord implements IdentityInterface
             $this->image = $this->image ?: $old_image;
         }
         
-        //        PROFILE
-        
-        $profile = $this->profile ?: new UserProfile;
-        $profile->user_id = $this->id;
-        
-        foreach ($this->profile_attributes as $p_a) {
-            $profile->{$p_a} = $this->{$p_a};
-        }
-        
-        $profile->save();
-        
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
         //        ROLE ASSIGN
         
         if (array_key_exists('role', $changedAttributes)) {

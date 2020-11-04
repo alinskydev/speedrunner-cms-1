@@ -39,7 +39,6 @@ class StaticpageController extends Controller
         
         return [
             'data' => $dataProvider,
-            'links' => $dataProvider->pagination->getLinks(true),
         ];
     }
 }

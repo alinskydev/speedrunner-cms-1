@@ -53,16 +53,24 @@ class Order extends ActiveRecord
     static function deliveryTypes()
     {
         return [
-            'pickup' => Yii::t('app', 'Pickup'),
-            'delivery' => Yii::t('app', 'Delivery'),
+            'pickup' => [
+                'label' => Yii::t('app', 'Pickup'),
+            ],
+            'delivery' => [
+                'label' => Yii::t('app', 'Delivery'),
+            ],
         ];
     }
     
     static function paymentTypes()
     {
         return [
-            'cash' => Yii::t('app', 'Cash'),
-            'bank_card' => Yii::t('app', 'Bank card'),
+            'cash' => [
+                'label' => Yii::t('app', 'Cash'),
+            ],
+            'bank_card' => [
+                'label' => Yii::t('app', 'Bank card'),
+            ],
         ];
     }
     
@@ -142,6 +150,23 @@ class Order extends ActiveRecord
         }
         
         return parent::beforeSave($insert);
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        //        NOTIFICATIONS
+        
+        if ($insert) {
+            Yii::$app->sr->notification->create(
+                User::find()->andWhere(['role' => 'admin'])->column(),
+                'order_created', $this->id,
+                [
+                    'id' => $this->id,
+                ]
+            );
+        }
+        
+        return parent::afterSave($insert, $changedAttributes);
     }
     
     public function beforeDelete()

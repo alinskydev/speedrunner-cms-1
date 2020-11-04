@@ -9,8 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class Gallery extends ActiveRecord
 {
-    public $seo_meta = [];
-    
     public static function tableName()
     {
         return 'Gallery';
@@ -28,6 +26,9 @@ class Gallery extends ActiveRecord
             'files' => [
                 'class' => \common\behaviors\FilesBehavior::className(),
                 'attributes' => ['images'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }

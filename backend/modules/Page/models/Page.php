@@ -8,13 +8,6 @@ use common\components\framework\ActiveRecord;
 
 class Page extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'description',
-    ];
-    
-    public $seo_meta = [];
-    
     public static function tableName()
     {
         return 'Page';
@@ -28,6 +21,13 @@ class Page extends ActiveRecord
                 'attribute' => 'name',
                 'slugAttribute' => 'slug',
                 'immutable' => true,
+            ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'description'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }

@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-information" class="tab-pane active">
                 <?= $form->field($model, 'username')->textInput() ?>
-                <?= $form->field($model, 'role')->dropDownList($model->roles()) ?>
+                <?= $form->field($model, 'role')->dropDownList(ArrayHelper::getColumn($model->roles(), 'label')) ?>
                 <?= $form->field($model, 'email')->textInput() ?>
                 <?= $form->field($model, 'new_password', ['enableClientValidation' => false])->passwordInput() ?>
             </div>
@@ -68,8 +68,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-design" class="tab-pane fade">
-                <?= $form->field($model, 'design_theme')->dropDownList($model->designThemes()) ?>
-                <?= $form->field($model, 'design_font')->dropDownList($model->designFonts()) ?>
+                <?= $form->field($model, 'design_theme')->dropDownList(ArrayHelper::getColumn($model->designThemes(), 'label')) ?>
+                <?= $form->field($model, 'design_font')->dropDownList(ArrayHelper::getColumn($model->designFonts(), 'label')) ?>
                 <?= $form->field($model, 'design_border_radius')->textInput() ?>
             </div>
         </div>

@@ -115,7 +115,7 @@ class ProductController extends Controller
         }
     }
     
-    public function actionSpecifications($id, array $categories = [])
+    public function actionSpecifications($id = null, array $categories = [])
     {
         $model = Product::findOne($id) ?: new Product;
         $lang = Yii::$app->language;

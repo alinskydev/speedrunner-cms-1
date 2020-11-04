@@ -8,6 +8,8 @@ use common\components\framework\ActiveRecord;
 
 class SystemSettings extends ActiveRecord
 {
+    use \api\modules\v1\models\SystemSettings;
+    
     public static function tableName()
     {
         return 'SystemSettings';
@@ -30,16 +32,6 @@ class SystemSettings extends ActiveRecord
             'label' => Yii::t('app', 'Label'),
             'value' => Yii::t('app', 'Value'),
             'type' => Yii::t('app', 'Type'),
-        ];
-    }
-    
-    public function fields()
-    {
-        return [
-            'id',
-            'name',
-            'label',
-            'value',
         ];
     }
 }

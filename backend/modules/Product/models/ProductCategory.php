@@ -10,15 +10,8 @@ use yii\db\Expression;
 
 class ProductCategory extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'description',
-    ];
-    
     public $parent_id;
     public $specifications_tmp;
-    
-    public $seo_meta = [];
     
     public static function tableName()
     {
@@ -41,15 +34,21 @@ class ProductCategory extends ActiveRecord
                 'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'description'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
+            ],
             'relations_many_many' => [
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'manyMany',
                 'attributes' => [
-                    [
+                    'specifications_tmp' => [
                         'model' => new ProductCategorySpecificationRef,
                         'relation' => 'specifications',
-                        'attribute' => 'specifications_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'category_id',
                             'relational' => 'specification_id',
                         ],

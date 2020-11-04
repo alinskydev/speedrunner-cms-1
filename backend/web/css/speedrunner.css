@@ -931,6 +931,11 @@ span.fancytree-active span.fancytree-title,
     outline: 0;
 }
 
+.fancytree-ext-filter-hide span.fancytree-active span.fancytree-title,
+.fancytree-ext-filter-hide span.fancytree-selected span.fancytree-title {
+    color: #fff !important;
+}
+
 .login-wrapper {
     position: absolute;
     width: 100%;

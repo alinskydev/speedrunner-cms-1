@@ -9,15 +9,9 @@ use yii\helpers\ArrayHelper;
 
 class Blog extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'short_description',
-        'full_description',
-    ];
+    use \api\modules\v1\models\Blog;
     
     public $tags_tmp;
-    
-    public $seo_meta = [];
     
     public static function tableName()
     {
@@ -33,9 +27,16 @@ class Blog extends ActiveRecord
                 'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'short_description', 'full_description'],
+            ],
             'files' => [
                 'class' => \common\behaviors\FilesBehavior::className(),
                 'attributes' => ['images'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }
@@ -73,20 +74,6 @@ class Blog extends ActiveRecord
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             'tags_tmp' => Yii::t('app', 'Tags'),
-        ];
-    }
-    
-    public function fields()
-    {
-        return [
-            'id',
-            'name',
-            'short_description',
-            'full_description',
-            'image' => function ($model) {
-                return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image);
-            },
-            'created',
         ];
     }
     

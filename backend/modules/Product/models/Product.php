@@ -9,18 +9,10 @@ use yii\helpers\ArrayHelper;
 
 class Product extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-        'short_description',
-        'full_description',
-    ];
-    
     public $categories_tmp;
     public $options_tmp;
     public $related_tmp;
     public $variations_tmp;
-    
-    public $seo_meta = [];
     
     public static function tableName()
     {
@@ -36,19 +28,25 @@ class Product extends ActiveRecord
                 'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'short_description', 'full_description'],
+            ],
             'files' => [
                 'class' => \common\behaviors\FilesBehavior::className(),
                 'attributes' => ['images'],
+            ],
+            'seo_meta' => [
+                'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_one_many' => [
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
-                    [
+                    'variations_tmp' => [
                         'model' => new ProductVariation,
                         'relation' => 'variations',
-                        'attribute' => 'variations_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'product_id',
                             'relational' => ['specification_id', 'option_id'],
                         ],
@@ -59,32 +57,52 @@ class Product extends ActiveRecord
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'manyMany',
                 'attributes' => [
-                    [
+                    'categories_tmp' => [
                         'model' => new ProductCategoryRef,
                         'relation' => 'categories',
-                        'attribute' => 'categories_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'product_id',
                             'relational' => 'category_id',
                         ],
                     ],
-                    [
+                    'options_tmp' => [
                         'model' => new ProductOptionRef,
                         'relation' => 'options',
-                        'attribute' => 'options_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'product_id',
                             'relational' => 'option_id',
                         ],
                     ],
-                    [
+                    'related_tmp' => [
                         'model' => new ProductRelatedRef,
                         'relation' => 'related',
-                        'attribute' => 'related_tmp',
-                        'properties' => [
+                        'attributes' => [
                             'main' => 'product_id',
                             'relational' => 'related_id',
                         ],
+                    ],
+                ],
+            ],
+            'log_actions' => [
+                'class' => \common\behaviors\LogActionBehavior::className(),
+                'relations_one_many' => [
+                    'variations_tmp' => [
+                        'relation' => 'variations',
+                        'attributes' => ['price', 'quantity', 'sku'],
+                    ],
+                ],
+                'relations_many_many' => [
+                    'categories_tmp' => [
+                        'relation' => 'categories',
+                        'attribute' => 'name',
+                    ],
+                    'options_tmp' => [
+                        'relation' => 'options',
+                        'attribute' => 'name',
+                    ],
+                    'related_tmp' => [
+                        'relation' => 'related',
+                        'attribute' => 'name',
                     ],
                 ],
             ],
@@ -109,7 +127,7 @@ class Product extends ActiveRecord
             [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
             [['options_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id']],
             [['related_tmp'], 'each', 'rule' => ['exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'filter' => function ($query) {
-                $query->andWhere(['!=', 'id', $this->id]);
+                $query->andFilterWhere(['!=', 'id', $this->id]);
             }]],
         ];
     }

@@ -1,13 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use backend\modules\Staticpage\models\Staticpage;
-
-
-$staticpages = Staticpage::find()->asArray()->all();
-$staticpage_items = array_map(function($value) {
-    return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/staticpage/staticpage/update', 'location' => $value['location']]];
-}, $staticpages);
 
 return [
     [
@@ -19,13 +14,17 @@ return [
     ],
     [
         'label' => Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Static pages'),
-        'items' => $staticpage_items,
+        'items' => ArrayHelper::getColumn(Staticpage::find()->asArray()->all(), function($value) {
+            return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/staticpage/staticpage/update', 'location' => $value['location']]];
+        }),
     ],
     [
         'label' => Html::tag('i', null, ['class' => 'fas fa-server']) . Yii::t('app', 'Content'),
         'items' => [
             ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/tree']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/page/page/index']],
+            ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],
+            ['label' => Yii::t('app', 'Gallery'), 'url' => ['/gallery/gallery/index']],
         ],
     ],
     [
@@ -62,13 +61,6 @@ return [
             ['label' => Yii::t('app', 'Orders'), 'url' => ['/order/order/index']],
         ],
     ],
-    [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-images']) . Yii::t('app', 'Media'),
-        'items' => [
-            ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],
-            ['label' => Yii::t('app', 'Gallery'), 'url' => ['/gallery/gallery/index']],
-        ],
-    ],
     
     [
         'label' => Html::tag('i', null, ['class' => 'fas fa-cogs']) . Yii::t('app', 'System'),
@@ -76,6 +68,7 @@ return [
             ['label' => Yii::t('app', 'Settings'),'url' => ['/system/settings/update']],
             ['label' => Yii::t('app', 'Languages'), 'url' => ['/system/language/index']],
             ['label' => Yii::t('app', 'Translations'), 'url' => ['/translation/source/index']],
+            ['label' => Yii::t('app', 'Log actions'), 'url' => ['/log/action/index']],
         ],
     ],
     [

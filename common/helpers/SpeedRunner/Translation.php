@@ -25,7 +25,11 @@ class Translation
             Yii::$app->language = $key;
             new \frontend\components\LocalisedRoutes;
             
-            $languages[$key]['url'] = Yii::$app->urlManager->createUrl([Yii::$app->requestedRoute, 'lang' => $key]);
+            $languages[$key]['url'] = Yii::$app->urlManager->createUrl(ArrayHelper::merge(
+                [Yii::$app->requestedRoute],
+                Yii::$app->request->get(),
+                ['lang' => $key]
+            ));
         }
         
         Yii::$app->language = $current_language;

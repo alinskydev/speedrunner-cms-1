@@ -8,13 +8,19 @@ use common\components\framework\ActiveRecord;
 
 class ProductSpecificationOption extends ActiveRecord
 {
-    public $translation_attributes = [
-        'name',
-    ];
-    
     public static function tableName()
     {
         return 'ProductSpecificationOption';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'translation' => [
+                'class' => \common\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name'],
+            ],
+        ];
     }
     
     public function rules()

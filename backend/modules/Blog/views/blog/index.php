@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'class' => 'common\components\framework\grid\CheckboxColumn',
             ],
             [
+                'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'header' => '&nbsp;',
                 'value' => function ($model) {
                     return Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize'));
                 },

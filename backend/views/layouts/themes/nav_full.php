@@ -55,8 +55,8 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
                 
                 <div class="dropdown-menu dropdown-menu-right">
                     <?php foreach ($langs as $l) { ?>
-                        <a class="dropdown-item flag-wrapper" href="<?= $l['url'] ?>">
-                            <img src="<?= Yii::$app->sr->image->thumb($l['image'], [30, 20]) ?>">
+                        <a class="dropdown-item small font-weight-bold" href="<?= $l['url'] ?>">
+                            <img class="mr-1" src="<?= Yii::$app->sr->image->thumb($l['image'], [30, 20]) ?>">
                             <?= $l['name'] ?>
                         </a>
                     <?php } ?>
@@ -208,7 +208,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
         <?= Menu::widget([
             'items' => $menu_items,
             'options' => ['class' => 'nav-items'],
-            'labelTemplate' => '<div class="parent">{label}</div>',
+            'labelTemplate' => '<div class="parent h4 font-weight-normal">{label}</div>',
             'submenuTemplate' => '<ul class="items">{items}</ul>',
             'encodeLabels' => false,
             'activateParents' => true,

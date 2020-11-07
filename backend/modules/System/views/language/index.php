@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
+                'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'header' => '&nbsp;',
                 'value' => function ($model) {
                     return Html::img(Yii::$app->sr->image->thumb($model->image, [25, 25], 'resize'));
                 },

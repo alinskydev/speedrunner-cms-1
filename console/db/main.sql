@@ -39,7 +39,7 @@ CREATE TABLE `Banner` (
 
 LOCK TABLES `Banner` WRITE;
 /*!40000 ALTER TABLE `Banner` DISABLE KEYS */;
-INSERT INTO `Banner` VALUES (2,'r','slider_home','2019-09-22 10:30:00','2020-06-14 14:10:51'),(3,'qwe','slider_about','2019-09-22 10:30:00','2020-10-25 17:36:48');
+INSERT INTO `Banner` VALUES (2,'r','slider_home','2019-09-22 10:30:00','2020-10-29 00:31:12'),(3,'qwe','slider_about','2019-09-22 10:30:00','2020-10-26 02:37:23');
 /*!40000 ALTER TABLE `Banner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `BannerGroup` (
   PRIMARY KEY (`id`),
   KEY `bannerimage_ibfk_1` (`item_id`),
   CONSTRAINT `bannergroup_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `Banner` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `BannerGroup` (
 
 LOCK TABLES `BannerGroup` WRITE;
 /*!40000 ALTER TABLE `BannerGroup` DISABLE KEYS */;
-INSERT INTO `BannerGroup` VALUES (3,2,'{\"de\": \"frs\", \"en\": \"frs\", \"ru\": \"frs\"}','{\"de\": \"fsrfs\", \"en\": \"fsrfs\", \"ru\": \"fsrfs\"}','{\"de\": \"rfs\", \"en\": \"rfs\", \"ru\": \"rfs\"}','{\"de\": \"rfsrf\", \"en\": \"rfsrf\", \"ru\": \"rfsrf\"}','/uploads/media/jpg.jpg',0),(5,3,'{\"de\": \"qwe\", \"en\": \"qwe\", \"ru\": \"qwe\"}','{\"de\": \"fe\", \"en\": \"fe\", \"ru\": \"fe\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"fwef\", \"en\": \"fwef\", \"ru\": \"fwef\"}','/uploads/media/svg_html.svg',0),(6,3,'{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"fewf\", \"en\": \"fewf\", \"ru\": \"fewf\"}','{\"de\": \"fwe\", \"en\": \"fwe\", \"ru\": \"fwe\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','/uploads/media/jpg.jpg',1);
+INSERT INTO `BannerGroup` VALUES (5,3,'{\"de\": \"qwe\", \"en\": \"qwe\", \"ru\": \"qwe\"}','{\"de\": \"fe\", \"en\": \"fef\", \"ru\": \"fe\"}','{\"de\": \"\", \"en\": \"gr\", \"ru\": \"\"}','{\"de\": \"fwef\", \"en\": \"fwef\", \"ru\": \"fwef\"}','/uploads/media/svg_html.svg',0),(6,3,'{\"de\": \"\", \"en\": \"gergerg\", \"ru\": \"\"}','{\"de\": \"fewf\", \"en\": \"\", \"ru\": \"fewf\"}','{\"de\": \"fwe\", \"en\": \"fwe\", \"ru\": \"fwe\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','/uploads/media/jpg.jpg',1),(12,2,'{\"de\": \"qwe\", \"en\": \"qwe\", \"ru\": \"qwe\"}','{\"de\": \"rwer\", \"en\": \"rwer\", \"ru\": \"rwer\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','/uploads/media/jpg.jpg',0);
 /*!40000 ALTER TABLE `BannerGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +197,7 @@ CREATE TABLE `Blog` (
 
 LOCK TABLES `Blog` WRITE;
 /*!40000 ALTER TABLE `Blog` DISABLE KEYS */;
-INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-09-27 14:45:05'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',3,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-10-25 17:22:56');
+INSERT INTO `Blog` VALUES (2,'{\"en\": \"fefs\", \"ru\": \"dde\"}','dde',1,'','{\"en\": \"h6h5h5\\r\\n\\r\\nh5 6h5\", \"ru\": \"\"}','{\"en\": \"h56h56 <p>h56 h5</p><p>6 </p>\", \"ru\": \"\"}','[]','2018-10-19 14:45:00','2018-10-15 15:13:00','2020-09-27 14:45:05'),(8,'{\"de\": \"blog de\", \"en\": \"blog en\", \"ru\": \"blog ru\"}','blog-en',NULL,'/uploads/media/image.png','{\"en\": \"fwef\", \"ru\": \"\"}','{\"en\": \"fwefw<p>ef</p><p>wefw</p>\", \"ru\": \"\"}','[]','2019-09-22 20:17:00','1970-01-01 03:00:00','2020-11-01 11:06:31');
 /*!40000 ALTER TABLE `Blog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +218,7 @@ CREATE TABLE `BlogCategory` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ CREATE TABLE `BlogCategory` (
 
 LOCK TABLES `BlogCategory` WRITE;
 /*!40000 ALTER TABLE `BlogCategory` DISABLE KEYS */;
-INSERT INTO `BlogCategory` VALUES (1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/Blog/1537547338_I9HiIO.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:14'),(2,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:24'),(3,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','/uploads/media/image-1.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-09-21 07:36:07'),(4,'{\"en\": \"fwefwefwe\", \"ru\": \"fwefwefwe\"}','fwefwefwe','','{\"en\": \"\", \"ru\": \"\"}','2020-10-18 16:04:22','2020-10-18 16:04:22'),(5,'{\"en\": \"brtbrt\", \"ru\": \"brtbrt\"}','brtbrt','','{\"en\": \"\", \"ru\": \"\"}','2020-10-18 16:04:00','2020-10-25 17:29:59');
+INSERT INTO `BlogCategory` VALUES (1,'{\"de\": \"Cat 1\", \"en\": \"Cat 1\", \"ru\": \"Cat 1\"}','cat-1','/uploads/Blog/1537547338_I9HiIO.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:14'),(2,'{\"de\": \"Cat 2\", \"en\": \"Cat 2\", \"ru\": \"Cat 2\"}','cat-2','','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-06-14 14:40:24'),(3,'{\"de\": \"Cat 3\", \"en\": \"Cat 3\", \"ru\": \"Cat 3\"}','cat-3','/uploads/media/image-1.png','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2018-10-15 11:17:00','2020-09-21 07:36:07');
 /*!40000 ALTER TABLE `BlogCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,6 +374,66 @@ LOCK TABLES `Gallery` WRITE;
 /*!40000 ALTER TABLE `Gallery` DISABLE KEYS */;
 INSERT INTO `Gallery` VALUES (11,'Gallery','gallery','[]','2019-12-26 06:30:00','2020-06-08 20:58:19');
 /*!40000 ALTER TABLE `Gallery` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LogAction`
+--
+
+DROP TABLE IF EXISTS `LogAction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LogAction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `type` enum('created','updated','deleted') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_class` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `model_class` (`model_class`),
+  KEY `model_id` (`model_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LogAction`
+--
+
+LOCK TABLES `LogAction` WRITE;
+/*!40000 ALTER TABLE `LogAction` DISABLE KEYS */;
+INSERT INTO `LogAction` VALUES (168,1,'created','User',5,'2020-10-29 11:27:57'),(170,1,'updated','User',5,'2020-10-29 11:28:14'),(171,1,'updated','User',5,'2020-10-29 11:28:19'),(172,1,'deleted','User',5,'2020-10-29 11:28:27'),(173,1,'updated','User',1,'2020-10-29 12:41:10'),(174,1,'updated','User',1,'2020-10-29 12:42:41'),(175,1,'updated','User',1,'2020-10-29 12:43:06'),(176,1,'updated','User',1,'2020-10-31 14:40:51'),(177,1,'updated','User',1,'2020-10-31 14:58:25'),(178,1,'updated','User',1,'2020-10-31 14:59:42'),(179,1,'updated','User',1,'2020-10-31 15:00:14'),(182,1,'updated','User',1,'2020-11-01 06:35:29'),(183,1,'updated','User',1,'2020-11-01 06:35:40'),(184,1,'updated','User',1,'2020-11-01 06:35:47'),(186,1,'updated','Product',3,'2020-11-01 06:36:00'),(187,1,'updated','User',2,'2020-11-01 07:18:48'),(188,1,'updated','User',2,'2020-11-01 07:18:56'),(189,1,'created','User',4,'2020-11-01 07:24:04'),(191,1,'updated','User',4,'2020-11-01 07:24:20'),(192,1,'deleted','User',4,'2020-11-01 07:24:26'),(194,1,'updated','Product',3,'2020-11-01 11:21:24'),(195,1,'updated','User',1,'2020-11-03 03:58:43'),(196,1,'updated','User',1,'2020-11-03 03:59:06'),(197,1,'updated','User',1,'2020-11-03 04:00:09'),(198,1,'updated','User',1,'2020-11-03 04:00:14'),(199,1,'updated','User',1,'2020-11-03 04:00:20'),(200,1,'updated','User',1,'2020-11-03 04:00:32'),(201,1,'updated','User',1,'2020-11-03 09:59:51'),(202,1,'updated','User',1,'2020-11-03 10:00:00'),(203,1,'updated','User',1,'2020-11-03 18:05:40'),(204,1,'updated','User',1,'2020-11-05 12:48:48'),(205,1,'updated','User',1,'2020-11-05 12:48:59');
+/*!40000 ALTER TABLE `LogAction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LogActionAttr`
+--
+
+DROP TABLE IF EXISTS `LogActionAttr`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LogActionAttr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value_old` json NOT NULL,
+  `value_new` json NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `logactionattr_ibfk_1` (`action_id`),
+  CONSTRAINT `logactionattr_ibfk_1` FOREIGN KEY (`action_id`) REFERENCES `LogAction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=364 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LogActionAttr`
+--
+
+LOCK TABLES `LogActionAttr` WRITE;
+/*!40000 ALTER TABLE `LogActionAttr` DISABLE KEYS */;
+INSERT INTO `LogActionAttr` VALUES (300,168,'username','\"\"','\"wqqwqdwd\"'),(301,168,'role','\"\"','\"admin\"'),(302,168,'email','\"\"','\"qwdqw@dqdqwd.vrev\"'),(303,168,'design_theme','\"\"','\"nav_full\"'),(304,168,'design_font','\"\"','\"oswald\"'),(305,170,'design_font','\"oswald\"','\"roboto\"'),(306,171,'design_font','\"roboto\"','\"oswald\"'),(307,172,'username','\"wqqwqdwd\"','\"\"'),(308,172,'role','\"admin\"','\"\"'),(309,172,'email','\"qwdqw@dqdqwd.vrev\"','\"\"'),(310,172,'design_theme','\"nav_full\"','\"\"'),(311,172,'design_font','\"oswald\"','\"\"'),(312,173,'design_theme','\"nav_full\"','\"nav_left\"'),(313,173,'design_font','\"oswald\"','\"ibm_plex_sans\"'),(314,174,'design_theme','\"nav_left\"','\"nav_full\"'),(315,174,'design_font','\"ibm_plex_sans\"','\"montserrat\"'),(316,175,'design_font','\"montserrat\"','\"oswald\"'),(317,176,'design_theme','\"nav_full\"','\"nav_left\"'),(318,176,'design_font','\"oswald\"','\"ibm_plex_sans\"'),(319,176,'design_border_radius','\"\"','\"15\"'),(320,177,'design_theme','\"nav_left\"','\"nav_full\"'),(321,177,'design_font','\"ibm_plex_sans\"','\"oswald\"'),(322,177,'design_border_radius','15','\"\"'),(323,178,'design_theme','\"nav_full\"','\"nav_left\"'),(324,178,'design_font','\"oswald\"','\"ibm_plex_sans\"'),(325,178,'design_border_radius','\"\"','\"15\"'),(326,179,'design_border_radius','15','\"20\"'),(327,182,'full_name','\"Administrator 1\"','\"Administrator 12\"'),(328,183,'username','\"admin\"','\"admin2\"'),(329,183,'full_name','\"Administrator 12\"','\"Administrator\"'),(330,184,'username','\"admin2\"','\"admin\"'),(331,186,'options_tmp','[\"Opt 1 en\", \"Opt 2\", \"Opt 3\", \"Opt 1\", \"Opt 4\"]','[\"Opt 1 en\", \"Opt 3\", \"Opt 2\", \"Opt 3\", \"Opt 1\", \"Opt 4\"]'),(332,187,'username','\"test\"','\"test4\"'),(333,188,'username','\"test4\"','\"test\"'),(334,189,'username','\"\"','\"qwe\"'),(335,189,'role','\"\"','\"admin\"'),(336,189,'email','\"\"','\"qwe@qwe.qwe\"'),(337,189,'design_theme','\"\"','\"nav_full\"'),(338,189,'design_font','\"\"','\"oswald\"'),(339,189,'full_name','\"\"','\"qwe qwe\"'),(340,191,'full_name','\"qwe qwe\"','\"qwezzz\"'),(341,192,'username','\"qwe\"','\"\"'),(342,192,'role','\"admin\"','\"\"'),(343,192,'email','\"qwe@qwe.qwe\"','\"\"'),(344,192,'design_theme','\"nav_full\"','\"\"'),(345,192,'design_font','\"oswald\"','\"\"'),(346,192,'full_name','\"qwezzz\"','\"\"'),(347,194,'name','{\"de\": \"das\", \"en\": \"das\", \"ru\": \"das\"}','{\"de\": \"das\", \"en\": \"das 2\", \"ru\": \"das\"}'),(348,195,'design_theme','\"nav_full\"','\"nav_left\"'),(349,195,'design_font','\"oswald\"','\"ibm_plex_sans\"'),(350,195,'design_border_radius','\"\"','\"15\"'),(351,196,'design_border_radius','15','\"10\"'),(352,197,'design_font','\"ibm_plex_sans\"','\"oswald\"'),(353,198,'design_font','\"oswald\"','\"roboto\"'),(354,199,'design_font','\"roboto\"','\"montserrat\"'),(355,200,'design_theme','\"nav_left\"','\"nav_full\"'),(356,200,'design_font','\"montserrat\"','\"oswald\"'),(357,200,'design_border_radius','10','\"\"'),(358,201,'design_theme','\"nav_full\"','\"nav_left\"'),(359,202,'design_theme','\"nav_left\"','\"nav_full\"'),(360,203,'design_theme','\"nav_full\"','\"nav_left\"'),(361,203,'design_font','\"oswald\"','\"ibm_plex_sans\"'),(362,204,'design_theme','\"nav_left\"','\"nav_full\"'),(363,205,'design_font','\"ibm_plex_sans\"','\"oswald\"');
+/*!40000 ALTER TABLE `LogActionAttr` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -546,7 +606,7 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[]',NULL,121,23,NULL,NULL,'','2020-06-14 20:19:00','2020-10-25 17:31:28'),(3,'{\"de\": \"das\", \"en\": \"das\", \"ru\": \"das\"}','das','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','[]',NULL,123,NULL,NULL,NULL,'','2020-08-31 15:48:00','2020-10-02 23:15:42');
+INSERT INTO `Product` VALUES (2,'{\"de\": \"Prod 1\", \"en\": \"Prod 1\", \"ru\": \"Prod 1\"}','prod-1','{\"de\": \"fsrrf\", \"en\": \"fsrrf\", \"ru\": \"fsrrf\"}','{\"de\": \"fsefesfse<p>fsefsef</p>\", \"en\": \"fsefesfse<p>fsefsef</p>\", \"ru\": \"fsefesfse<p>fsefsef</p>\"}','[]',NULL,121,23,NULL,NULL,'','2020-06-14 20:19:00','2020-10-25 17:31:28'),(3,'{\"de\": \"das\", \"en\": \"das 2\", \"ru\": \"das\"}','das','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','[]',NULL,123,NULL,NULL,NULL,'','2020-08-31 15:48:00','2020-11-01 11:21:24');
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -726,7 +786,7 @@ CREATE TABLE `ProductOptionRef` (
 
 LOCK TABLES `ProductOptionRef` WRITE;
 /*!40000 ALTER TABLE `ProductOptionRef` DISABLE KEYS */;
-INSERT INTO `ProductOptionRef` VALUES (2,10),(3,1),(3,5),(3,6),(3,7),(3,10);
+INSERT INTO `ProductOptionRef` VALUES (2,10),(3,1),(3,5),(3,6),(3,7),(3,10),(3,3);
 /*!40000 ALTER TABLE `ProductOptionRef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -879,7 +939,7 @@ CREATE TABLE `ProductVariation` (
 
 LOCK TABLES `ProductVariation` WRITE;
 /*!40000 ALTER TABLE `ProductVariation` DISABLE KEYS */;
-INSERT INTO `ProductVariation` VALUES (6,2,3,7,NULL,NULL,NULL,'[]',0,'2020-09-12 15:00:00','2020-10-25 17:31:28'),(8,3,1,1,43,3,'frf','[]',0,'2020-09-12 21:56:00','2020-10-02 23:15:42'),(9,3,2,4,NULL,NULL,NULL,'[]',1,'2020-09-19 13:12:00','2020-10-02 23:15:42');
+INSERT INTO `ProductVariation` VALUES (6,2,3,7,NULL,NULL,NULL,'[]',0,'2020-09-12 15:00:00','2020-10-25 17:31:28'),(8,3,1,1,43,3,'frf','[]',0,'2020-09-12 21:56:00','2020-11-01 11:21:24'),(9,3,2,4,NULL,NULL,NULL,'[]',1,'2020-09-19 13:12:00','2020-11-01 11:21:24');
 /*!40000 ALTER TABLE `ProductVariation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -895,11 +955,11 @@ CREATE TABLE `SeoMeta` (
   `model_class` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` int(11) NOT NULL,
   `lang` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `model_id` (`model_id`),
   KEY `model_class` (`model_class`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -908,7 +968,7 @@ CREATE TABLE `SeoMeta` (
 
 LOCK TABLES `SeoMeta` WRITE;
 /*!40000 ALTER TABLE `SeoMeta` DISABLE KEYS */;
-INSERT INTO `SeoMeta` VALUES (1,'Product',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"asd\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(10,'ProductCategory',120,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(11,'BlockPage',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(12,'BlogCategory',3,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(13,'Blog',8,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(14,'Blog',2,'ru','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(16,'Blog',8,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(17,'Staticpage',15,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(19,'BlogCategory',4,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(20,'BlogCategory',5,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}'),(21,'Product',2,'en','{\"title\":{\"property\":\"title\",\"content\":\"\"},\"description\":{\"name\":\"description\",\"content\":\"\"},\"og:title\":{\"property\":\"og:title\",\"content\":\"\"},\"og:description\":{\"property\":\"og:description\",\"content\":\"\"},\"og:image\":{\"property\":\"og:image\",\"content\":\"\"}}');
+INSERT INTO `SeoMeta` VALUES (44,'Staticpage',15,'en','{\"title\": \"Home page\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(45,'Blog',8,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(46,'Product',3,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}');
 /*!40000 ALTER TABLE `SeoMeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1056,7 +1116,7 @@ CREATE TABLE `TranslationMessage` (
 
 LOCK TABLES `TranslationMessage` WRITE;
 /*!40000 ALTER TABLE `TranslationMessage` DISABLE KEYS */;
-INSERT INTO `TranslationMessage` VALUES (1,'de',''),(1,'en',''),(1,'ru',''),(2,'de',''),(2,'en',''),(2,'ru',''),(3,'de',''),(3,'en',''),(3,'ru',''),(4,'de',''),(4,'en',''),(4,'ru',''),(5,'de',''),(5,'en',''),(5,'ru',''),(6,'de',''),(6,'en',''),(6,'ru',''),(7,'de',''),(7,'en',''),(7,'ru',''),(8,'de',''),(8,'en',''),(8,'ru',''),(9,'de',''),(9,'en',''),(9,'ru',''),(10,'de',''),(10,'en',''),(10,'ru',''),(11,'de',''),(11,'en',''),(11,'ru',''),(12,'de',''),(12,'en',''),(12,'ru',''),(13,'de',''),(13,'en',''),(13,'ru',''),(14,'de',''),(14,'en',''),(14,'ru',''),(15,'de',''),(15,'en',''),(15,'ru',''),(16,'de',''),(16,'en',''),(16,'ru',''),(17,'de',''),(17,'en',''),(17,'ru',''),(18,'de',''),(18,'en',''),(18,'ru',''),(19,'de',''),(19,'en',''),(19,'ru',''),(20,'de',''),(20,'en',''),(20,'ru',''),(21,'de',''),(21,'en',''),(21,'ru',''),(22,'de',''),(22,'en',''),(22,'ru',''),(23,'de',''),(23,'en',''),(23,'ru',''),(24,'de',''),(24,'en',''),(24,'ru',''),(25,'de',''),(25,'en',''),(25,'ru',''),(26,'de',''),(26,'en',''),(26,'ru',''),(27,'de',''),(27,'en',''),(27,'ru',''),(28,'de',''),(28,'en',''),(28,'ru',''),(29,'de',''),(29,'en',''),(29,'ru',''),(30,'de',''),(30,'en',''),(30,'ru',''),(31,'de',''),(31,'en',''),(31,'ru',''),(32,'de',''),(32,'en',''),(32,'ru',''),(33,'de',''),(33,'en',''),(33,'ru',''),(34,'de',''),(34,'en',''),(34,'ru',''),(35,'de',''),(35,'en',''),(35,'ru',''),(36,'de',''),(36,'en',''),(36,'ru',''),(37,'de',''),(37,'en',''),(37,'ru',''),(38,'de',''),(38,'en',''),(38,'ru',''),(39,'de',''),(39,'en',''),(39,'ru',''),(40,'de',''),(40,'en',''),(40,'ru',''),(41,'de',''),(41,'en',''),(41,'ru',''),(42,'de',''),(42,'en',''),(42,'ru',''),(43,'de',''),(43,'en',''),(43,'ru',''),(44,'de',''),(44,'en',''),(44,'ru',''),(45,'de',''),(45,'en',''),(45,'ru',''),(46,'de',''),(46,'en',''),(46,'ru',''),(47,'de',''),(47,'en',''),(47,'ru',''),(48,'de',''),(48,'en',''),(48,'ru',''),(49,'de',''),(49,'en',''),(49,'ru',''),(50,'de',''),(50,'en',''),(50,'ru',''),(51,'de',''),(51,'en',''),(51,'ru',''),(52,'de',''),(52,'en',''),(52,'ru',''),(53,'de',''),(53,'en',''),(53,'ru',''),(54,'de',''),(54,'en',''),(54,'ru',''),(55,'de',''),(55,'en',''),(55,'ru',''),(56,'de',''),(56,'en',''),(56,'ru',''),(57,'de',''),(57,'en',''),(57,'ru',''),(58,'de',''),(58,'en',''),(58,'ru',''),(59,'de',''),(59,'en',''),(59,'ru',''),(60,'de',''),(60,'en',''),(60,'ru',''),(61,'de',''),(61,'en',''),(61,'ru',''),(62,'de',''),(62,'en',''),(62,'ru',''),(63,'de',''),(63,'en',''),(63,'ru',''),(64,'de',''),(64,'en',''),(64,'ru',''),(65,'de',''),(65,'en',''),(65,'ru',''),(66,'de',''),(66,'en',''),(66,'ru',''),(67,'de',''),(67,'en',''),(67,'ru',''),(68,'de',''),(68,'en',''),(68,'ru',''),(69,'de',''),(69,'en',''),(69,'ru',''),(70,'de',''),(70,'en',''),(70,'ru',''),(71,'de',''),(71,'en',''),(71,'ru',''),(72,'de',''),(72,'en',''),(72,'ru',''),(73,'de',''),(73,'en',''),(73,'ru',''),(74,'de',''),(74,'en',''),(74,'ru',''),(75,'de',''),(75,'en',''),(75,'ru',''),(76,'de',''),(76,'en',''),(76,'ru',''),(77,'de',''),(77,'en',''),(77,'ru',''),(78,'de',''),(78,'en',''),(78,'ru',''),(79,'de',''),(79,'en',''),(79,'ru',''),(80,'de',''),(80,'en',''),(80,'ru',''),(81,'de',''),(81,'en',''),(81,'ru',''),(82,'de',''),(82,'en',''),(82,'ru',''),(83,'de',''),(83,'en',''),(83,'ru',''),(84,'de',''),(84,'en',''),(84,'ru',''),(85,'de',''),(85,'en',''),(85,'ru',''),(86,'de',''),(86,'en',''),(86,'ru',''),(87,'de',''),(87,'en',''),(87,'ru',''),(88,'de',''),(88,'en',''),(88,'ru',''),(89,'de',''),(89,'en',''),(89,'ru',''),(90,'de',''),(90,'en',''),(90,'ru',''),(91,'de',''),(91,'en',''),(91,'ru',''),(92,'de',''),(92,'en',''),(92,'ru',''),(93,'de',''),(93,'en',''),(93,'ru',''),(94,'de',''),(94,'en',''),(94,'ru',''),(95,'de',''),(95,'en',''),(95,'ru',''),(96,'de',''),(96,'en',''),(96,'ru',''),(97,'de',''),(97,'en',''),(97,'ru',''),(98,'de',''),(98,'en',''),(98,'ru',''),(99,'de',''),(99,'en',''),(99,'ru',''),(100,'de',''),(100,'en',''),(100,'ru',''),(101,'de',''),(101,'en',''),(101,'ru',''),(102,'de',''),(102,'en',''),(102,'ru',''),(103,'de',''),(103,'en',''),(103,'ru',''),(104,'de',''),(104,'en',''),(104,'ru',''),(105,'de',''),(105,'en',''),(105,'ru',''),(106,'de',''),(106,'en',''),(106,'ru',''),(107,'de',''),(107,'en',''),(107,'ru',''),(108,'de',''),(108,'en',''),(108,'ru',''),(109,'de',''),(109,'en',''),(109,'ru',''),(110,'de',''),(110,'en',''),(110,'ru',''),(111,'de',''),(111,'en',''),(111,'ru',''),(112,'de',''),(112,'en',''),(112,'ru',''),(113,'de',''),(113,'en',''),(113,'ru',''),(114,'de',''),(114,'en',''),(114,'ru',''),(115,'de',''),(115,'en',''),(115,'ru',''),(116,'de',''),(116,'en',''),(116,'ru',''),(117,'de',''),(117,'en',''),(117,'ru',''),(118,'de',''),(118,'en',''),(118,'ru',''),(119,'de',''),(119,'en',''),(119,'ru',''),(120,'de',''),(120,'en',''),(120,'ru',''),(121,'de',''),(121,'en',''),(121,'ru',''),(122,'de',''),(122,'en',''),(122,'ru',''),(123,'de',''),(123,'en',''),(123,'ru',''),(124,'de',''),(124,'en',''),(124,'ru',''),(125,'de',''),(125,'en',''),(125,'ru',''),(126,'de',''),(126,'en',''),(126,'ru',''),(127,'de',''),(127,'en',''),(127,'ru',''),(128,'de',''),(128,'en',''),(128,'ru',''),(129,'de',''),(129,'en',''),(129,'ru',''),(130,'de',''),(130,'en',''),(130,'ru',''),(131,'de',''),(131,'en',''),(131,'ru',''),(132,'de',''),(132,'en',''),(132,'ru',''),(133,'de',''),(133,'en',''),(133,'ru',''),(134,'de',''),(134,'en',''),(134,'ru',''),(135,'de',''),(135,'en',''),(135,'ru',''),(136,'de',''),(136,'en',''),(136,'ru',''),(137,'de',''),(137,'en',''),(137,'ru',''),(138,'de',''),(138,'en',''),(138,'ru',''),(139,'de',''),(139,'en',''),(139,'ru',''),(140,'de',''),(140,'en',''),(140,'ru',''),(141,'de',''),(141,'en',''),(141,'ru',''),(142,'de',''),(142,'en',''),(142,'ru',''),(143,'de',''),(143,'en',''),(143,'ru',''),(144,'de',''),(144,'en',''),(144,'ru',''),(145,'de',''),(145,'en',''),(145,'ru',''),(146,'de',''),(146,'en',''),(146,'ru',''),(147,'de',''),(147,'en',''),(147,'ru',''),(148,'de',''),(148,'en',''),(148,'ru',''),(149,'de',''),(149,'en',''),(149,'ru',''),(150,'de',''),(150,'en',''),(150,'ru',''),(151,'de',''),(151,'en',''),(151,'ru',''),(152,'de',''),(152,'en',''),(152,'ru',''),(153,'de',''),(153,'en',''),(153,'ru',''),(154,'de',''),(154,'en',''),(154,'ru',''),(155,'de',''),(155,'en',''),(155,'ru',''),(156,'de',''),(156,'en',''),(156,'ru',''),(157,'de',''),(157,'en',''),(157,'ru',''),(158,'de',''),(158,'en',''),(158,'ru',''),(159,'de',''),(159,'en',''),(159,'ru','');
+INSERT INTO `TranslationMessage` VALUES (1,'de',''),(1,'en',''),(1,'ru',''),(2,'de',''),(2,'en',''),(2,'ru',''),(3,'de',''),(3,'en',''),(3,'ru',''),(4,'de',''),(4,'en',''),(4,'ru',''),(5,'de',''),(5,'en',''),(5,'ru',''),(6,'de',''),(6,'en',''),(6,'ru',''),(7,'de',''),(7,'en',''),(7,'ru',''),(8,'de',''),(8,'en',''),(8,'ru',''),(9,'de',''),(9,'en',''),(9,'ru',''),(10,'de',''),(10,'en',''),(10,'ru',''),(11,'de',''),(11,'en',''),(11,'ru',''),(12,'de',''),(12,'en',''),(12,'ru',''),(13,'de',''),(13,'en',''),(13,'ru',''),(14,'de',''),(14,'en',''),(14,'ru',''),(15,'de',''),(15,'en',''),(15,'ru',''),(16,'de',''),(16,'en',''),(16,'ru',''),(17,'de',''),(17,'en',''),(17,'ru',''),(18,'de',''),(18,'en',''),(18,'ru',''),(19,'de',''),(19,'en',''),(19,'ru',''),(20,'de',''),(20,'en',''),(20,'ru',''),(21,'de',''),(21,'en',''),(21,'ru',''),(22,'de',''),(22,'en',''),(22,'ru',''),(23,'de',''),(23,'en',''),(23,'ru',''),(24,'de',''),(24,'en',''),(24,'ru',''),(25,'de',''),(25,'en',''),(25,'ru',''),(26,'de',''),(26,'en',''),(26,'ru',''),(27,'de',''),(27,'en',''),(27,'ru',''),(28,'de',''),(28,'en',''),(28,'ru',''),(29,'de',''),(29,'en',''),(29,'ru',''),(30,'de',''),(30,'en',''),(30,'ru',''),(31,'de',''),(31,'en',''),(31,'ru',''),(32,'de',''),(32,'en',''),(32,'ru',''),(33,'de',''),(33,'en',''),(33,'ru',''),(34,'de',''),(34,'en',''),(34,'ru',''),(35,'de',''),(35,'en',''),(35,'ru',''),(36,'de',''),(36,'en',''),(36,'ru',''),(37,'de',''),(37,'en',''),(37,'ru',''),(38,'de',''),(38,'en',''),(38,'ru',''),(39,'de',''),(39,'en',''),(39,'ru',''),(40,'de',''),(40,'en',''),(40,'ru',''),(41,'de',''),(41,'en',''),(41,'ru',''),(42,'de',''),(42,'en',''),(42,'ru',''),(43,'de',''),(43,'en',''),(43,'ru',''),(44,'de',''),(44,'en',''),(44,'ru',''),(45,'de',''),(45,'en',''),(45,'ru',''),(46,'de',''),(46,'en',''),(46,'ru',''),(47,'de',''),(47,'en',''),(47,'ru',''),(48,'de',''),(48,'en',''),(48,'ru',''),(49,'de',''),(49,'en',''),(49,'ru',''),(50,'de',''),(50,'en',''),(50,'ru',''),(51,'de',''),(51,'en',''),(51,'ru',''),(52,'de',''),(52,'en',''),(52,'ru',''),(53,'de',''),(53,'en',''),(53,'ru',''),(54,'de',''),(54,'en',''),(54,'ru',''),(55,'de',''),(55,'en',''),(55,'ru',''),(56,'de',''),(56,'en',''),(56,'ru',''),(57,'de',''),(57,'en',''),(57,'ru',''),(58,'de',''),(58,'en',''),(58,'ru',''),(59,'de',''),(59,'en',''),(59,'ru',''),(60,'de',''),(60,'en',''),(60,'ru',''),(61,'de',''),(61,'en',''),(61,'ru',''),(62,'de',''),(62,'en',''),(62,'ru',''),(63,'de',''),(63,'en',''),(63,'ru',''),(64,'de',''),(64,'en',''),(64,'ru',''),(65,'de',''),(65,'en',''),(65,'ru',''),(66,'de',''),(66,'en',''),(66,'ru',''),(67,'de',''),(67,'en',''),(67,'ru',''),(68,'de',''),(68,'en',''),(68,'ru',''),(69,'de',''),(69,'en',''),(69,'ru',''),(70,'de',''),(70,'en',''),(70,'ru',''),(71,'de',''),(71,'en',''),(71,'ru',''),(72,'de',''),(72,'en',''),(72,'ru',''),(73,'de',''),(73,'en',''),(73,'ru',''),(74,'de',''),(74,'en',''),(74,'ru',''),(75,'de',''),(75,'en',''),(75,'ru',''),(76,'de',''),(76,'en',''),(76,'ru',''),(77,'de',''),(77,'en',''),(77,'ru',''),(78,'de',''),(78,'en',''),(78,'ru',''),(79,'de',''),(79,'en',''),(79,'ru',''),(80,'de',''),(80,'en',''),(80,'ru',''),(81,'de',''),(81,'en',''),(81,'ru',''),(82,'de',''),(82,'en',''),(82,'ru',''),(83,'de',''),(83,'en',''),(83,'ru',''),(84,'de',''),(84,'en',''),(84,'ru',''),(85,'de',''),(85,'en',''),(85,'ru',''),(86,'de',''),(86,'en',''),(86,'ru',''),(87,'de',''),(87,'en',''),(87,'ru',''),(88,'de',''),(88,'en',''),(88,'ru',''),(89,'de',''),(89,'en',''),(89,'ru',''),(90,'de',''),(90,'en',''),(90,'ru',''),(91,'de',''),(91,'en',''),(91,'ru',''),(92,'de',''),(92,'en',''),(92,'ru',''),(93,'de',''),(93,'en',''),(93,'ru',''),(94,'de',''),(94,'en',''),(94,'ru',''),(95,'de',''),(95,'en',''),(95,'ru',''),(96,'de',''),(96,'en',''),(96,'ru',''),(97,'de',''),(97,'en',''),(97,'ru',''),(98,'de',''),(98,'en',''),(98,'ru',''),(99,'de',''),(99,'en',''),(99,'ru',''),(100,'de',''),(100,'en',''),(100,'ru',''),(101,'de',''),(101,'en',''),(101,'ru',''),(102,'de',''),(102,'en',''),(102,'ru',''),(103,'de',''),(103,'en',''),(103,'ru',''),(104,'de',''),(104,'en',''),(104,'ru',''),(105,'de',''),(105,'en',''),(105,'ru',''),(106,'de',''),(106,'en',''),(106,'ru',''),(107,'de',''),(107,'en',''),(107,'ru',''),(108,'de',''),(108,'en',''),(108,'ru',''),(109,'de',''),(109,'en',''),(109,'ru',''),(110,'de',''),(110,'en',''),(110,'ru',''),(111,'de',''),(111,'en',''),(111,'ru',''),(112,'de',''),(112,'en',''),(112,'ru',''),(113,'de',''),(113,'en',''),(113,'ru',''),(114,'de',''),(114,'en',''),(114,'ru',''),(115,'de',''),(115,'en',''),(115,'ru',''),(116,'de',''),(116,'en',''),(116,'ru',''),(117,'de',''),(117,'en',''),(117,'ru',''),(118,'de',''),(118,'en',''),(118,'ru',''),(119,'de',''),(119,'en',''),(119,'ru',''),(120,'de',''),(120,'en',''),(120,'ru',''),(121,'de',''),(121,'en',''),(121,'ru',''),(122,'de',''),(122,'en',''),(122,'ru',''),(123,'de',''),(123,'en',''),(123,'ru',''),(124,'de',''),(124,'en',''),(124,'ru',''),(125,'de',''),(125,'en',''),(125,'ru',''),(126,'de',''),(126,'en',''),(126,'ru',''),(127,'de',''),(127,'en',''),(127,'ru',''),(128,'de',''),(128,'en',''),(128,'ru',''),(129,'de',''),(129,'en',''),(129,'ru',''),(130,'de',''),(130,'en',''),(130,'ru',''),(131,'de',''),(131,'en',''),(131,'ru',''),(132,'de',''),(132,'en',''),(132,'ru',''),(133,'de',''),(133,'en',''),(133,'ru',''),(134,'de',''),(134,'en',''),(134,'ru',''),(135,'de',''),(135,'en',''),(135,'ru',''),(136,'de',''),(136,'en',''),(136,'ru',''),(137,'de',''),(137,'en',''),(137,'ru',''),(138,'de',''),(138,'en',''),(138,'ru',''),(139,'de',''),(139,'en',''),(139,'ru',''),(140,'de',''),(140,'en',''),(140,'ru',''),(141,'de',''),(141,'en',''),(141,'ru',''),(142,'de',''),(142,'en',''),(142,'ru',''),(143,'de',''),(143,'en',''),(143,'ru',''),(144,'de',''),(144,'en',''),(144,'ru',''),(145,'de',''),(145,'en',''),(145,'ru',''),(146,'de',''),(146,'en',''),(146,'ru',''),(147,'de',''),(147,'en',''),(147,'ru',''),(148,'de',''),(148,'en',''),(148,'ru',''),(149,'de',''),(149,'en',''),(149,'ru',''),(150,'de',''),(150,'en',''),(150,'ru',''),(151,'de',''),(151,'en',''),(151,'ru',''),(152,'de',''),(152,'en',''),(152,'ru',''),(153,'de',''),(153,'en',''),(153,'ru',''),(154,'de',''),(154,'en',''),(154,'ru',''),(155,'de',''),(155,'en',''),(155,'ru',''),(156,'de',''),(156,'en',''),(156,'ru',''),(157,'de',''),(157,'en',''),(157,'ru',''),(158,'de',''),(158,'en',''),(158,'ru',''),(159,'de',''),(159,'en',''),(159,'ru',''),(160,'de',''),(160,'en',''),(160,'ru',''),(161,'de',''),(161,'en',''),(161,'ru',''),(162,'de',''),(162,'en',''),(162,'ru',''),(163,'de',''),(163,'en',''),(163,'ru',''),(164,'de',''),(164,'en',''),(164,'ru',''),(165,'de',''),(165,'en',''),(165,'ru',''),(166,'de',''),(166,'en',''),(166,'ru',''),(167,'de',''),(167,'en',''),(167,'ru',''),(168,'de',''),(168,'en',''),(168,'ru',''),(169,'de',''),(169,'en',''),(169,'ru',''),(170,'de',''),(170,'en',''),(170,'ru',''),(171,'de',''),(171,'en',''),(171,'ru',''),(172,'de',''),(172,'en',''),(172,'ru',''),(173,'de',''),(173,'en',''),(173,'ru',''),(174,'de',''),(174,'en',''),(174,'ru',''),(175,'de',''),(175,'en',''),(175,'ru',''),(176,'de',''),(176,'en',''),(176,'ru',''),(177,'de',''),(177,'en',''),(177,'ru',''),(178,'de',''),(178,'en',''),(178,'ru',''),(179,'de',''),(179,'en',''),(179,'ru',''),(180,'de',''),(180,'en',''),(180,'ru',''),(181,'de',''),(181,'en',''),(181,'ru',''),(182,'de',''),(182,'en',''),(182,'ru',''),(183,'de',''),(183,'en',''),(183,'ru',''),(184,'de',''),(184,'en',''),(184,'ru',''),(185,'de',''),(185,'en',''),(185,'ru',''),(186,'de',''),(186,'en',''),(186,'ru',''),(187,'de',''),(187,'en',''),(187,'ru',''),(188,'de',''),(188,'en',''),(188,'ru',''),(189,'de',''),(189,'en',''),(189,'ru',''),(190,'de',''),(190,'en',''),(190,'ru',''),(191,'de',''),(191,'en',''),(191,'ru',''),(192,'de',''),(192,'en',''),(192,'ru',''),(193,'de',''),(193,'en',''),(193,'ru',''),(194,'de',''),(194,'en',''),(194,'ru',''),(195,'de',''),(195,'en',''),(195,'ru',''),(196,'de',''),(196,'en',''),(196,'ru',''),(197,'de',''),(197,'en',''),(197,'ru',''),(198,'de',''),(198,'en',''),(198,'ru',''),(199,'de',''),(199,'en',''),(199,'ru',''),(200,'de',''),(200,'en',''),(200,'ru',''),(201,'de',''),(201,'en',''),(201,'ru',''),(202,'de',''),(202,'en',''),(202,'ru',''),(203,'de',''),(203,'en',''),(203,'ru',''),(204,'de',''),(204,'en',''),(204,'ru','');
 /*!40000 ALTER TABLE `TranslationMessage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1072,7 +1132,7 @@ CREATE TABLE `TranslationSource` (
   `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `message` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1081,7 +1141,7 @@ CREATE TABLE `TranslationSource` (
 
 LOCK TABLES `TranslationSource` WRITE;
 /*!40000 ALTER TABLE `TranslationSource` DISABLE KEYS */;
-INSERT INTO `TranslationSource` VALUES (1,'app','Id'),(2,'app','Name'),(3,'app','Slug'),(4,'app','Short Description'),(5,'app','Full Description'),(6,'app','Images'),(7,'app','Brand'),(8,'app','Main category'),(9,'app','Price'),(10,'app','Sale'),(11,'app','Quantity'),(12,'app','SKU'),(13,'app','Created'),(14,'app','Updated'),(15,'app','Categories'),(16,'app','Options'),(17,'app','Related'),(18,'app','Variations'),(19,'app','Products'),(20,'app','Create'),(21,'app','Delete all'),(22,'app','Are you sure?'),(23,'app','Home'),(24,'app','Users'),(25,'app','RBAC'),(26,'app','Static pages'),(27,'app','Content'),(28,'app','Menu'),(29,'app','Pages'),(30,'app','Blocks'),(31,'app','Types'),(32,'app','Blogs'),(33,'app','Tags'),(34,'app','Comments'),(35,'app','Rates'),(36,'app','Brands'),(37,'app','Specifications'),(38,'app','Orders'),(39,'app','Media'),(40,'app','Banners'),(41,'app','Gallery'),(42,'app','System'),(43,'app','Settings'),(44,'app','Languages'),(45,'app','Translations'),(46,'app','Cache'),(47,'app','Remove thumbs'),(48,'app','Clear'),(49,'app','Speedrunner'),(50,'app','Information'),(51,'app','Functions'),(52,'app','Bookmarks'),(53,'app','Add'),(54,'app','Admin'),(55,'app','Registered'),(56,'app','Profile'),(57,'app','Logout'),(58,'app','Username'),(59,'app','Role'),(60,'app','Email'),(61,'app','New password'),(62,'app','Theme'),(63,'app','Font'),(64,'app','Border radius'),(65,'app','Full name'),(66,'app','Phone'),(67,'app','Address'),(68,'app','Image'),(69,'app','Category'),(70,'app','Published'),(71,'app','Update: {name}'),(72,'app','Save & reload'),(73,'app','Save'),(74,'app','SEO meta'),(75,'app','Browse'),(76,'app','Error'),(77,'app','Record has been saved'),(78,'app','Update: {username}'),(79,'app','Design'),(80,'app','Field must contain only alphabet and numerical chars'),(81,'app','Full menu'),(82,'app','Left menu'),(83,'app','Oswald'),(84,'app','Roboto'),(85,'app','Montserrat'),(86,'app','IBM Plex Sans'),(87,'app','Static page: {location}'),(88,'app','Label'),(89,'app','Value'),(90,'app','Type'),(91,'app','Title'),(92,'app','Is available'),(93,'app','Description'),(94,'app','Has translation'),(95,'app','Block types'),(96,'app','Update: {label}'),(97,'app','Block pages'),(98,'app','Assign'),(99,'app','Page'),(100,'app','Available'),(101,'app','Blog categories'),(102,'app','Product categories'),(103,'app','Tree'),(104,'app','Product brands'),(105,'app','Lft'),(106,'app','Rgt'),(107,'app','Depth'),(108,'app','Expanded'),(109,'app','Parent'),(110,'app','User'),(111,'app','E-mail'),(112,'app','Delivery type'),(113,'app','Payment type'),(114,'app','Total quantity'),(115,'app','Total price'),(116,'app','Delivery price'),(117,'app','Status'),(118,'app','Key'),(119,'app','Pickup'),(120,'app','Delivery'),(121,'app','Cash'),(122,'app','Bank card'),(123,'app','New'),(124,'app','Confirmed'),(125,'app','Payed'),(126,'app','Completed'),(127,'app','Canceled'),(128,'app','Products price'),(129,'app','Link'),(130,'app','Galleries'),(131,'app','Location'),(132,'app','Groups'),(133,'app','Slider home'),(134,'app','Slider about'),(135,'app','Stock'),(136,'app','Categories & Specifications'),(137,'app','Specification'),(138,'app','Option'),(139,'app','Update'),(140,'app','Delete'),(141,'app','Update: {id}'),(142,'app','Product'),(143,'app','Sku'),(144,'app','Record has been deleted'),(145,'app','Delete with children'),(146,'app','View: {id}'),(147,'app','Total'),(148,'app','Person'),(149,'app','Order'),(150,'app','Banner'),(151,'app','Text 1'),(152,'app','Text 2'),(153,'app','Text 3'),(154,'app','System settings'),(155,'app','Code'),(156,'app','Active'),(157,'app','Main'),(158,'app','System languages'),(159,'app','Process has been completed');
+INSERT INTO `TranslationSource` VALUES (1,'app','Id'),(2,'app','Name'),(3,'app','Slug'),(4,'app','Short Description'),(5,'app','Full Description'),(6,'app','Images'),(7,'app','Brand'),(8,'app','Main category'),(9,'app','Price'),(10,'app','Sale'),(11,'app','Quantity'),(12,'app','SKU'),(13,'app','Created'),(14,'app','Updated'),(15,'app','Categories'),(16,'app','Options'),(17,'app','Related'),(18,'app','Variations'),(19,'app','Products'),(20,'app','Create'),(21,'app','Delete all'),(22,'app','Are you sure?'),(23,'app','Home'),(24,'app','Users'),(25,'app','RBAC'),(26,'app','Static pages'),(27,'app','Content'),(28,'app','Menu'),(29,'app','Pages'),(30,'app','Blocks'),(31,'app','Types'),(32,'app','Blogs'),(33,'app','Tags'),(34,'app','Comments'),(35,'app','Rates'),(36,'app','Brands'),(37,'app','Specifications'),(38,'app','Orders'),(39,'app','Media'),(40,'app','Banners'),(41,'app','Gallery'),(42,'app','System'),(43,'app','Settings'),(44,'app','Languages'),(45,'app','Translations'),(46,'app','Cache'),(47,'app','Remove thumbs'),(48,'app','Clear'),(49,'app','Speedrunner'),(50,'app','Information'),(51,'app','Functions'),(52,'app','Bookmarks'),(53,'app','Add'),(54,'app','Admin'),(55,'app','Registered'),(56,'app','Profile'),(57,'app','Logout'),(58,'app','Username'),(59,'app','Role'),(60,'app','Email'),(61,'app','New password'),(62,'app','Theme'),(63,'app','Font'),(64,'app','Border radius'),(65,'app','Full name'),(66,'app','Phone'),(67,'app','Address'),(68,'app','Image'),(69,'app','Category'),(70,'app','Published'),(71,'app','Update: {name}'),(72,'app','Save & reload'),(73,'app','Save'),(74,'app','SEO meta'),(75,'app','Browse'),(76,'app','Error'),(77,'app','Record has been saved'),(78,'app','Update: {username}'),(79,'app','Design'),(80,'app','Field must contain only alphabet and numerical chars'),(81,'app','Full menu'),(82,'app','Left menu'),(83,'app','Oswald'),(84,'app','Roboto'),(85,'app','Montserrat'),(86,'app','IBM Plex Sans'),(87,'app','Static page: {location}'),(88,'app','Label'),(89,'app','Value'),(90,'app','Type'),(91,'app','Title'),(92,'app','Is available'),(93,'app','Description'),(94,'app','Has translation'),(95,'app','Block types'),(96,'app','Update: {label}'),(97,'app','Block pages'),(98,'app','Assign'),(99,'app','Page'),(100,'app','Available'),(101,'app','Blog categories'),(102,'app','Product categories'),(103,'app','Tree'),(104,'app','Product brands'),(105,'app','Lft'),(106,'app','Rgt'),(107,'app','Depth'),(108,'app','Expanded'),(109,'app','Parent'),(110,'app','User'),(111,'app','E-mail'),(112,'app','Delivery type'),(113,'app','Payment type'),(114,'app','Total quantity'),(115,'app','Total price'),(116,'app','Delivery price'),(117,'app','Status'),(118,'app','Key'),(119,'app','Pickup'),(120,'app','Delivery'),(121,'app','Cash'),(122,'app','Bank card'),(123,'app','New'),(124,'app','Confirmed'),(125,'app','Payed'),(126,'app','Completed'),(127,'app','Canceled'),(128,'app','Products price'),(129,'app','Link'),(130,'app','Galleries'),(131,'app','Location'),(132,'app','Groups'),(133,'app','Slider home'),(134,'app','Slider about'),(135,'app','Stock'),(136,'app','Categories & Specifications'),(137,'app','Specification'),(138,'app','Option'),(139,'app','Update'),(140,'app','Delete'),(141,'app','Update: {id}'),(142,'app','Product'),(143,'app','Sku'),(144,'app','Record has been deleted'),(145,'app','Delete with children'),(146,'app','View: {id}'),(147,'app','Total'),(148,'app','Person'),(149,'app','Order'),(150,'app','Banner'),(151,'app','Text 1'),(152,'app','Text 2'),(153,'app','Text 3'),(154,'app','System settings'),(155,'app','Code'),(156,'app','Active'),(157,'app','Main'),(158,'app','System languages'),(159,'app','Process has been completed'),(160,'app','You cannot change role for this user'),(161,'app','This username has already been taken'),(162,'app','This email has already been taken'),(163,'app','There is no user with this email address'),(164,'app','Log actions'),(165,'app','Пользователь'),(166,'app','Тип'),(167,'app','Действие'),(168,'app','Создано'),(169,'app','Значения (старые)'),(170,'app','Значения (новые)'),(171,'app','Лог действий'),(172,'app','Изменено'),(173,'app','Удалено'),(174,'app','Бухгалтерия'),(175,'app','Аккаунты'),(176,'app','Action'),(177,'app','Old value'),(178,'app','New value'),(179,'app','Deleted'),(180,'app','View'),(181,'app','Log actions #{id}'),(182,'app','Blog'),(183,'app','Url'),(184,'app','Bookmark has been added'),(185,'app','Bookmark has been deleted'),(186,'app','Change password'),(187,'app','Password changing'),(188,'app','Password has been changed'),(189,'app','Search'),(190,'app','Сategories'),(191,'app','{length} symbols'),(192,'app','Text'),(193,'app','Mark'),(194,'app','Comments & rates: {name}'),(195,'app','Title 1'),(196,'app','Title 2'),(197,'app','Images 1'),(198,'app','Images 2'),(199,'app','{attribute} is incorrect'),(200,'app_notification','You have new order'),(201,'app','No notifications'),(202,'app','Sign in'),(203,'app','Password'),(204,'app','Remember me');
 /*!40000 ALTER TABLE `TranslationSource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1100,9 +1160,9 @@ CREATE TABLE `User` (
   `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password_reset_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `design_theme` enum('nav_full','nav_left') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'nav_full',
-  `design_font` enum('oswald','roboto','montserrat','ibm_plex_sans') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'oswald',
-  `design_border_radius` int(11) NOT NULL DEFAULT '0',
+  `design_theme` enum('nav_full','nav_left') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'nav_left',
+  `design_font` enum('oswald','roboto','montserrat','ibm_plex_sans') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ibm_plex_sans',
+  `design_border_radius` int(11) NOT NULL DEFAULT '15',
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -1120,8 +1180,37 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'admin','admin','jD0czNGZqoDKV7tb52CWQhD2XUEoXGGC','$2y$13$ECDfdov0xht1ftt9TFalhebJ2C.SLGxVJwTnOT7dYG1hTyNrBYDEC','nzROrR5Spm1pqlxn8gDaslHW09s560dN_1580274498','admin@local.host','nav_full','oswald',0,'2020-02-21 04:58:00','2020-10-17 18:26:47'),(2,'test','admin','X5eTT0uZIQcL6RinZg2jgwMpv5ozzssx','$2y$13$OdebIN7Cvm1eRKLsR8NiUeFzLdRvwJgJIak9tWfHg8.vtYlMizt1u',NULL,'test@test.com','nav_full','oswald',0,'2020-10-09 08:59:00','2020-10-12 13:35:44');
+INSERT INTO `User` VALUES (1,'admin','admin','WudOvU-q_Oxth8_vGzexS7-aqBidUE1k','$2y$13$soaIiqO9peegeTcgqOgCV.x9SWqQ82UXNNXKTx/w1BeyGHupbgtJ.','nzROrR5Spm1pqlxn8gDaslHW09s560dN_1580274498','admin@local.host','nav_full','oswald',0,'2020-02-21 04:58:00','2020-11-05 12:48:59'),(2,'test','admin','X5eTT0uZIQcL6RinZg2jgwMpv5ozzssx','$2y$13$OdebIN7Cvm1eRKLsR8NiUeFzLdRvwJgJIak9tWfHg8.vtYlMizt1u',NULL,'test@test.com','nav_left','ibm_plex_sans',15,'2020-10-09 08:59:00','2020-11-01 07:32:44');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `UserNotification`
+--
+
+DROP TABLE IF EXISTS `UserNotification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `UserNotification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `action_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `action_id` int(11) NOT NULL,
+  `params` json NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `usernotification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `UserNotification`
+--
+
+LOCK TABLES `UserNotification` WRITE;
+/*!40000 ALTER TABLE `UserNotification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UserNotification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1150,7 +1239,7 @@ CREATE TABLE `UserProfile` (
 
 LOCK TABLES `UserProfile` WRITE;
 /*!40000 ALTER TABLE `UserProfile` DISABLE KEYS */;
-INSERT INTO `UserProfile` VALUES (4,1,'Administrator','2231','addr',NULL),(5,2,'test123','','',NULL);
+INSERT INTO `UserProfile` VALUES (4,1,'Administrator','2231','addr',NULL),(5,2,'test123 qwe','','',NULL);
 /*!40000 ALTER TABLE `UserProfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1240,7 +1329,7 @@ CREATE TABLE `auth_assignment` (
 
 LOCK TABLES `auth_assignment` WRITE;
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
-INSERT INTO `auth_assignment` VALUES ('admin','1',1568293594),('admin','2',1602509744);
+INSERT INTO `auth_assignment` VALUES ('admin','1',1568293594),('admin','2',1602509744),('admin','3',1604215344);
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1362,4 +1451,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-25 23:15:33
+-- Dump completed on 2020-11-07 15:32:11

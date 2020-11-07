@@ -69,9 +69,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 break;
             case 'ElFinder':
                 echo "            [
+                'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'header' => '&nbsp;',
                 'value' => function(\$model) {
                     return Html::img(Yii::\$app->sr->image->thumb(\$model->$key, [40, 40], 'resize'));
                 },

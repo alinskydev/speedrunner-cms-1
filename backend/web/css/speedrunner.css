@@ -155,19 +155,27 @@ textarea::-webkit-scrollbar-thumb:hover {
     background: #7fa3a5;
 }
 
-input[aria-invalid=false],
-textarea[aria-invalid=false] {
+input.form-control[aria-invalid=false],
+textarea.form-control[aria-invalid=false] {
     border-color: #009e62;
     background: url(../img/input-success.svg) no-repeat right 7px top 10px / 16px;
 }
 
-input[aria-invalid=true],
-textarea[aria-invalid=true] {
+input.form-control[aria-invalid=true],
+textarea.form-control[aria-invalid=true] {
     border-color: #ea4900;
     background: url(../img/input-error.svg) no-repeat right 7px top 10px / 16px;
 }
 
+input.form-control[aria-invalid=false]:focus,
+textarea.form-control[aria-invalid=false]:focus {
+    outline-color: #009e62;
+}
 
+input.form-control[aria-invalid=true]:focus,
+textarea.form-control[aria-invalid=true]:focus {
+    outline-color: #ea4900;
+}
 
 header {
     display: inline-block;
@@ -183,7 +191,6 @@ header .header-left {
 header .breadcrumbs {
     padding: 0;
     margin: 0;
-    font-size: 16px;
     font-weight: 500;
 }
 
@@ -233,7 +240,6 @@ header .header-right {
 
 header .item {
     display: inline-block;
-    font-size: 20px;
 }
 
 header .item > button,
@@ -252,36 +258,8 @@ header .item > a:hover {
     color: #fff;
 }
 
-header .header-right .profile-info {
-    padding: 4px 24px;
-    white-space: nowrap;
-}
-
-header .header-right .profile-info .username {
-    font-size: 18px;
-    font-weight: 500;
-}
-
-header .header-right .profile-info .role {
-    font-size: 13px;
-}
-
 header .dropdown-toggle::after {
     display: none;
-}
-
-header .flag-wrapper {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-header .flag-wrapper img {
-    width: 30px;
-    vertical-align: middle;
-}
-
-header .dropdown-menu .flag-wrapper img {
-    margin-right: 5px;
 }
 
 .nav-wrapper-full {
@@ -302,9 +280,9 @@ header .dropdown-menu .flag-wrapper img {
 
 .nav-wrapper-full .nav-full-toggle {
     position: absolute;
-    top: 0px;
+    top: 1px;
     right: 20px;
-    font-size: 20px;
+    font-size: 1.2rem;
     color: #7fa3a5;
     width: 50px;
     height: 50px;
@@ -347,12 +325,6 @@ header .dropdown-menu .flag-wrapper img {
 
 .nav-wrapper-full nav::-webkit-scrollbar-thumb:hover {
     background: #067a7d;
-}
-
-.nav-wrapper-full nav .parent {
-    font-size: 25px;
-    margin-bottom: 7px;
-    font-weight: 400;
 }
 
 .nav-wrapper-full nav .parent i {
@@ -420,8 +392,6 @@ header .dropdown-menu .flag-wrapper img {
 .nav-wrapper-side .site-logo img {
     width: 100%;
     height: 50px;
-    text-align: center;
-    font-size: 20px;
     padding: 10px 0;
     display: none;
 }
@@ -551,7 +521,7 @@ header .dropdown-menu .flag-wrapper img {
     content: "\f0a9";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    font-size: 14px;
+    font-size: 0.9rem;
     position: absolute;
     top: 9px;
     left: 9px;
@@ -868,7 +838,7 @@ body .select2-container .select2-selection--multiple .select2-selection__choice_
 }
 
 body .select2-container .select2-selection--multiple .select2-selection__clear {
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 .file-input {
@@ -909,13 +879,13 @@ body .select2-container .select2-selection--multiple .select2-selection__clear {
     font-family: "Main";
     letter-spacing: 1.5px;
     color: #fff;
-    font-size: 16px;
+    font-size: 1rem;
     margin: 0;
 }
 
 .close-jq-toast-single {
     color: #fff;
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 ul.fancytree-container {
@@ -1000,7 +970,7 @@ span.fancytree-active span.fancytree-title,
     }
     
     .main-title {
-        font-size: 20px;
+        font-size: 1.3rem;
         line-height: 37px;
     }
     

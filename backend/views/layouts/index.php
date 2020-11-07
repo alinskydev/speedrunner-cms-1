@@ -41,7 +41,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
         <?= Menu::widget([
             'items' => $menu_items,
             'options' => ['class' => 'nav-items'],
-            'labelTemplate' => '<div class="parent">{label}</div>',
+            'labelTemplate' => '<div class="parent h4 font-weight-normal">{label}</div>',
             'submenuTemplate' => '<ul class="items">{items}</ul>',
             'encodeLabels' => false,
             'activateParents' => true,

@@ -64,7 +64,6 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -96,6 +95,8 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
         }
         
 <?php } ?>
+        $dataProvider->pagination->totalCount = $query->count();
+        
 		$this->afterSearch();
 		return $dataProvider;
     }

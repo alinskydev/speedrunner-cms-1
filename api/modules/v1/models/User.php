@@ -13,9 +13,7 @@ trait User
         return [
             'id',
             'username',
-            'access_token' => function ($model) {
-                return $model->auth_key;
-            },
+            'access_token' => fn ($model) => $model->auth_key,
             'full_name',
             'phone',
             'address',

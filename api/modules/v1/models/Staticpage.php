@@ -12,7 +12,8 @@ trait Staticpage
     {
         return [
             'id',
-            'location',
+            'name',
+            'label',
             'blocks',
         ];
     }

@@ -30,7 +30,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                         </div>
                     </td>
                     
-                    <td style="width: 100%;">
+                    <td class="w-100">
                         <?php foreach ($attrs as $a_key => $a_value) { ?>
                             <div class="form-group mb-3">
                                 <label>

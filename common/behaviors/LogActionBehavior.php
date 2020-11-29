@@ -116,7 +116,7 @@ class LogActionBehavior extends Behavior
             return Yii::$app->session->addFlash('warning', Yii::t('app', "Record hasn't been saved to the actions log"));
         }
         
-        $relations = ArrayHelper::getValue($action->helper->modelClasses(), "$action->model_class.relations", []);
+        $relations = ArrayHelper::getValue($action->modelClasses(), "$action->model_class.relations", []);
         $counter = 0;
         
         foreach ($changedAttributes as $key => $a) {

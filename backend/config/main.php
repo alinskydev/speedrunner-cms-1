@@ -15,7 +15,6 @@ return [
         'banner' => ['class' => 'backend\modules\Banner\Module'],
         'block' => ['class' => 'backend\modules\Block\Module'],
         'blog' => ['class' => 'backend\modules\Blog\Module'],
-        'gallery' => ['class' => 'backend\modules\Gallery\Module'],
         'log' => ['class' => 'backend\modules\Log\Module'],
         'menu' => ['class' => 'backend\modules\Menu\Module'],
         'order' => ['class' => 'backend\modules\Order\Module'],
@@ -27,7 +26,6 @@ return [
         'system' => ['class' => 'backend\modules\System\Module'],
         'translation' => ['class' => 'backend\modules\Translation\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],
-        'zzz' => ['class' => 'backend\modules\Zzz\Module'],
         
         'rbac' => ['class' => 'yii2mod\rbac\Module'],
     ],

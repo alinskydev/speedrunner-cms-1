@@ -35,7 +35,6 @@ class OrderSearch extends Order
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -72,6 +71,8 @@ class OrderSearch extends Order
             ['like', 'phone', $this->full_name],
             ['like', 'email', $this->full_name],
         ]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

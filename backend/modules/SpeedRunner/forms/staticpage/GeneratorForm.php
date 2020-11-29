@@ -6,13 +6,14 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\StaticPage\models\StaticPage;
-use backend\modules\StaticPage\models\StaticPageBlock;
+use backend\modules\Staticpage\models\Staticpage;
+use backend\modules\Staticpage\models\StaticpageBlock;
 
 
 class GeneratorForm extends Model
 {
-    public $page_name;
+    public $name;
+    public $label;
     public $has_seo_meta;
     
     public $blocks = [];
@@ -20,8 +21,8 @@ class GeneratorForm extends Model
     public function rules()
     {
         return [
-            [['page_name'], 'required'],
-            [['page_name'], 'string', 'max' => 100],
+            [['name', 'label'], 'required'],
+            [['name', 'label'], 'string', 'max' => 100],
             [['has_seo_meta'], 'boolean'],
             [['blocks'], 'safe'],
         ];
@@ -30,7 +31,8 @@ class GeneratorForm extends Model
     public function attributeLabels()
     {
         return [
-            'page_name' => 'Page name',
+            'name' => 'Name',
+            'label' => 'Label',
             'has_seo_meta' => 'Has SEO meta',
             'blocks' => 'Blocks',
         ];
@@ -38,19 +40,20 @@ class GeneratorForm extends Model
     
     public function process()
     {
-        if ($page = StaticPage::find()->andWhere(['location' => $this->page_name])->one()) {
+        if ($page = Staticpage::find()->andWhere(['name' => $this->name])->one()) {
             $page->delete();
         }
         
-        $page = new StaticPage;
-        $page->location = $this->page_name;
+        $page = new Staticpage;
+        $page->name = $this->name;
+        $page->label = $this->label;
         $page->has_seo_meta = $this->has_seo_meta;
         
         if ($page->save()) {
             $attrs = ['name', 'label', 'type', 'part_name', 'part_index', 'has_translation'];
             
             foreach ($this->blocks as $b) {
-                $block = new StaticPageBlock;
+                $block = new StaticpageBlock;
                 $block->item_id = $page->id;
                 
                 foreach ($attrs as $a) {

@@ -8,8 +8,6 @@ use common\components\framework\ActiveRecord;
 
 class BannerGroup extends ActiveRecord
 {
-    use \api\modules\v1\models\BannerGroup;
-    
     public static function tableName()
     {
         return 'BannerGroup';

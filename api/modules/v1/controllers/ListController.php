@@ -6,8 +6,9 @@ use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
 
+use backend\modules\System\models\SystemSettings;
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\System\modelsSearch\SystemLanguageSearch;
+use backend\modules\Staticpage\models\Staticpage;
 
 
 class ListController extends Controller
@@ -26,26 +27,18 @@ class ListController extends Controller
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'languages' => ['get'],
+                    'index' => ['get'],
                 ],
             ],
         ];
     }
     
-    public function actionLanguages()
+    public function actionIndex()
     {
-        $searchModel = new SystemLanguageSearch;
-        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
-        
         return [
-            'data' => $dataProvider,
-            'links' => $dataProvider->pagination->getLinks(true),
-            'pagination' => [
-                'total_count' => (int)$dataProvider->pagination->totalCount,
-                'page_count' => $dataProvider->pagination->pageCount,
-                'current_page' => $dataProvider->pagination->page + 1,
-                'page_size' => $dataProvider->pagination->pageSize,
-            ],
+            'settings' => SystemSettings::find()->andWhere(['not in', 'name', ['delete_model_file']])->all(),
+            'languages' => SystemLanguage::find()->all(),
+            'static_pages' => Staticpage::find()->select(['name', 'label'])->asArray()->all(),
         ];
     }
 }

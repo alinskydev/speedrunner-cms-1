@@ -35,7 +35,7 @@ $tabs = array_keys($result);
             <ul class="nav flex-column nav-pills main-shadow" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="pill" href="#tab-information">
-                        General
+                        Information
                     </a>
                 </li>
                 
@@ -52,11 +52,11 @@ $tabs = array_keys($result);
         <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
             <div class="tab-content main-shadow p-3">
                 <div id="tab-information" class="tab-pane active">
-                    <table class="table">
+                    <table class="table m-0">
                         <tbody>
                             <tr>
                                 <th>
-                                    Host url
+                                    Base url
                                 </th>
                                 <td>
                                     <?= Url::base(true); ?>
@@ -90,7 +90,7 @@ $tabs = array_keys($result);
                                 </th>
                                 <td>
                                     Basic (send <b>access_token</b> as <b>username</b>)<br>
-                                    <b>Access_token</b> can be recieved after login and changes when password has been changed
+                                    <b>Access_token</b> will be sent after sign in and when password has been changed
                                 </td>
                             </tr>
                         </tbody>

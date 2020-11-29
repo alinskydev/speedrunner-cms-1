@@ -27,7 +27,7 @@ class UserController extends Controller
         return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
     
-    public function actionDelete()
+    public function actionDelete($id)
     {
         return Yii::$app->sr->record->deleteModel(new User);
     }

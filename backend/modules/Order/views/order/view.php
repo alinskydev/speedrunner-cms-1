@@ -115,9 +115,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             ],
                             [
                                 'attribute' => 'user_id',
-                                'value' => function ($model) {
-                                    return ArrayHelper::getValue($model->user, 'username');
-                                }
+                                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
                             ],
                             'full_name',
                             'phone',

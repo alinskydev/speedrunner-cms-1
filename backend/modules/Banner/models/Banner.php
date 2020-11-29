@@ -9,8 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class Banner extends ActiveRecord
 {
-    use \api\modules\v1\models\Banner;
-    
     public $groups_tmp;
     
     public static function tableName()

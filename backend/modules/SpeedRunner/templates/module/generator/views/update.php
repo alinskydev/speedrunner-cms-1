@@ -101,7 +101,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 break;
             case 'images':
                 echo "                <?= \$form->field(\$model, '$key',[
-                    'template' => '{label}{error}{hint}{input}',
+                    'template' => '{label}{hint}{error}{input}',
                 ])->widget(FileInput::className(), [
                     'options' => [
                         'accept' => 'image/*',
@@ -110,9 +110,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'pluginOptions' => array_merge(Yii::\$app->params['fileInput_pluginOptions'], [
                         'deleteUrl' => Yii::\$app->urlManager->createUrl(['$controller_url/image-delete', 'id' => \$model->id, 'attr' => '$key']),
                         'initialPreview' => \$model->$key ?: [],
-                        'initialPreviewConfig' => ArrayHelper::getColumn(\$model->$key ?: [], function (\$value) {
-                            return ['key' => \$value, 'downloadUrl' => \$value];
-                        }),
+                        'initialPreviewConfig' => ArrayHelper::getColumn(\$model->$key ?: [], fn (\$value) => ['key' => \$value, 'downloadUrl' => \$value]),
                     ]),
                     'pluginEvents' => [
                         'filesorted' => new JsExpression(" . '"function(event, params) {

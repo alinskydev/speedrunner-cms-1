@@ -7,5 +7,5 @@ return [
     'error' => 'site/error',
     'change-password' => 'site/change-password',
     
-    'staticpage/update/<location>' => 'staticpage/static-page/update',
+    'staticpage/update/<name>' => 'staticpage/staticpage/update',
 ];

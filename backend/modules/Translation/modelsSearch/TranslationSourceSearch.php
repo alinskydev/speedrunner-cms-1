@@ -29,14 +29,13 @@ class TranslationSourceSearch extends TranslationSource
         $query = TranslationSource::find()
             ->joinWith(['translations'])
             ->with(['translations.lang'])
-            ->distinct();
+            ->groupBy('TranslationSource.id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -57,6 +56,8 @@ class TranslationSourceSearch extends TranslationSource
         $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
             ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
             ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

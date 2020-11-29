@@ -27,9 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => function ($model) {
-                    return Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize'));
-                },
+                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -44,9 +42,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'role',
                 'filter' => ArrayHelper::getColumn($modelSearch->roles(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->roles(), "$model->role.label");
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->roles(), "$model->role.label"),
             ],
             'email:email',
             'full_name',

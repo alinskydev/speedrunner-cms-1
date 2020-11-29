@@ -30,12 +30,6 @@ class SiteController extends Controller
         ];
     }
     
-    public function actionIndex()
-    {
-        $this->layout = 'index';
-        return $this->render('index');
-    }
-    
     public function actionError()
     {
         $this->layout = 'error';
@@ -43,6 +37,12 @@ class SiteController extends Controller
         return $this->render('error', [
             'exception' => Yii::$app->errorHandler->exception
         ]);
+    }
+    
+    public function actionIndex()
+    {
+        $this->layout = 'index';
+        return $this->render('index');
     }
     
     public function actionLogin()

@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-images" class="tab-pane fade">
                 <?= $form->field($model, 'images', [
-                    'template' => '{label}{error}{hint}{input}',
+                    'template' => '{label}{hint}{error}{input}',
                 ])->widget(FileInput::classname(), [
                     'options' => [
                         'accept' => 'image/*',
@@ -114,10 +114,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                     'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
                         'deleteUrl' => Yii::$app->urlManager->createUrl(['product/product/image-delete', 'id' => $model->id, 'attr' => 'images']),
-                        'initialPreview' => $model->images ?: [],
-                        'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?: [], function ($value) {
-                            return ['key' => $value, 'downloadUrl' => $value];
-                        }),
+                        'initialPreview' => $model->images ?? [],
+                        'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
                     ]),
                     'pluginEvents' => [
                         'filesorted' => new JsExpression("function(event, params) {

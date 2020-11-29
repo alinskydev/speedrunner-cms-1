@@ -19,11 +19,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     Благодарность
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-guide-structure">
-                    Структура
-                </a>
-            </li>
         </ul>
     </div>
     
@@ -31,10 +26,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-gratitude" class="tab-pane active">
                 <?= $this->render('_gratitude'); ?>
-            </div>
-            
-            <div id="tab-guide-structure" class="tab-pane fade">
-                <?= $this->render('guide/structure'); ?>
             </div>
         </div>
     </div>

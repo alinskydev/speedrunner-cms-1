@@ -69,12 +69,10 @@ class ProductCategory extends ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
             [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['description'], 'string'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['parent_id'], 'required', 'when' => function ($model) {
-                return $model->isNewRecord;
-            }],
             
             [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
             [['specifications_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id']],

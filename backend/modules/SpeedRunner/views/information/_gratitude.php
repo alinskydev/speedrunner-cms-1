@@ -2,15 +2,15 @@
 
 $external_components = [
     'yii2mod/yii2-rbac' => [
-        'description' => 'RBAC менеджер',
+        'description' => 'RBAC manager',
         'link' => 'https://github.com/yii2mod/yii2-rbac',
     ],
     'yurkinx/yii2-image' => [
-        'description' => 'Работа с изображениями',
+        'description' => 'Image helper component',
         'link' => 'https://github.com/yurkinx/yii2-image',
     ],
     'creocoder/yii2-nested-sets' => [
-        'description' => 'Работа с вложенными списками',
+        'description' => 'Nested sets component',
         'link' => 'https://github.com/creocoder/yii2-nested-sets',
     ],
     'wokster/yii2-nested-sets-tree-behavior' => [
@@ -18,23 +18,23 @@ $external_components = [
         'link' => 'https://github.com/wokster/yii2-nested-sets-tree-behavior',
     ],
     'wbraganca/yii2-fancytree-widget' => [
-        'description' => 'Виджет Fancytree',
+        'description' => 'Fancytree widget',
         'link' => 'https://github.com/wbraganca/yii2-fancytree-widget',
     ],
     'vova07/yii2-imperavi-widget' => [
-        'description' => 'Виджет для редактора Imperavi',
+        'description' => 'Imperavi widget',
         'link' => 'https://github.com/vova07/yii2-imperavi-widget',
     ],
     'kartik-v/yii2-widget-select2' => [
-        'description' => 'Виджет для jQuery плагина Select2',
+        'description' => 'Select2 widget',
         'link' => 'https://github.com/kartik-v/yii2-widget-select2',
     ],
     'kartik-v/yii2-widget-fileinput' => [
-        'description' => 'Виджет FileInput',
+        'description' => 'FileInput widget',
         'link' => 'https://github.com/kartik-v/yii2-widget-fileinput',
     ],
     'zxbodya/yii2-elfinder' => [
-        'description' => 'Виджет elFinder',
+        'description' => 'ElFinder widget',
         'link' => 'https://github.com/zxbodya/yii2-elfinder',
     ],
 ];

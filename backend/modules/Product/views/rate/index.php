@@ -47,9 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->product, 'name');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->product, 'name'),
             ],
             [
                 'attribute' => 'user_id',
@@ -69,9 +67,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->user, 'username');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             'mark',
             'created',

@@ -44,7 +44,6 @@ class ProductSearch extends Product
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -85,6 +84,8 @@ class ProductSearch extends Product
                 'desc' => ["json_$t_a" => SORT_DESC],
             ];
         }
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

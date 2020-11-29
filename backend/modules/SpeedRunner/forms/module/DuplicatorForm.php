@@ -50,7 +50,7 @@ class DuplicatorForm extends Model
             }
         }
         
-        return $result;
+        return $result ?? [];
     }
     
     public function process()

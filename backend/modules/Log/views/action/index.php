@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'user_id',
-                    'data' => isset($modelSearch->user) ? [$modelSearch->user_id => $modelSearch->user->full_name] : [],
+                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'full_name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -44,24 +44,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return $model->user ? $model->user->full_name : null;
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'full_name'),
             ],
             [
                 'attribute' => 'type',
                 'filter' => ArrayHelper::getColumn($modelSearch->types(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->types(), "$model->type.label");
-                }
+                'value' => fn ($model) => ArrayHelper::getValue($model->types(), "$model->type.label"),
             ],
             [
                 'attribute' => 'model_class',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map($modelSearch->helper->modelClasses(), 'name', 'label', 'module'),
+                'filter' => ArrayHelper::map($modelSearch->modelClasses(), 'name', 'label', 'module'),
                 'value' => function ($model) {
-                    $result[] = Html::tag('b', ArrayHelper::getValue($model->helper->modelClasses(), "$model->model_class.label"));
-                    $result[] = '(' . ArrayHelper::getValue($model->helper->modelClasses(), "$model->model_class.module") . ')';
+                    $result[] = Html::tag('b', ArrayHelper::getValue($model->modelClasses(), "$model->model_class.label"));
+                    $result[] = '(' . ArrayHelper::getValue($model->modelClasses(), "$model->model_class.module") . ')';
                     $result[] = "Id: $model->model_id";
                     
                     return implode('<br>', $result);
@@ -74,9 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_old',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return $model->attrsColumn('old', 'short');
-                },
+                'value' => fn ($model) => $model->attrsColumn('old', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
@@ -84,9 +78,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_new',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return $model->attrsColumn('new', 'short');
-                },
+                'value' => fn ($model) => $model->attrsColumn('new', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
@@ -115,7 +107,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'link' => function ($url, $model, $key) {
                         return Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
-                            ArrayHelper::getValue($model->helper->modelClasses($model), "$model->model_class.index_url"),
+                            ArrayHelper::getValue($model->modelClasses($model), "$model->model_class.index_url"),
                             [
                                 'target' => '_blank',
                                 'title' => Yii::t('app', 'Link'),
@@ -127,7 +119,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ],
                 'visibleButtons' => [
                     'link' => function ($model, $key, $index) {
-                        return $model->type != 'deleted' && ArrayHelper::getValue($model->helper->modelClasses($model), "$model->model_class.index_url");
+                        return $model->type != 'deleted' && ArrayHelper::getValue($model->modelClasses($model), "$model->model_class.index_url");
                     },
                 ]
             ],

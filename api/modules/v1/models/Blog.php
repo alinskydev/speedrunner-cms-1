@@ -15,9 +15,7 @@ trait Blog
             'name',
             'short_description',
             'full_description',
-            'image' => function ($model) {
-                return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image);
-            },
+            'image' => fn ($model) => Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image),
             'created',
         ];
     }

@@ -15,7 +15,7 @@ return [
     [
         'label' => Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Static pages'),
         'items' => ArrayHelper::getColumn(Staticpage::find()->asArray()->all(), function($value) {
-            return ['label' => Yii::t('app', ucfirst($value['location'])), 'url' => ['/staticpage/staticpage/update', 'location' => $value['location']]];
+            return ['label' => $value['label'], 'url' => ['/staticpage/staticpage/update', 'name' => $value['name']]];
         }),
     ],
     [
@@ -24,7 +24,6 @@ return [
             ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/tree']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/page/page/index']],
             ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],
-            ['label' => Yii::t('app', 'Gallery'), 'url' => ['/gallery/gallery/index']],
         ],
     ],
     [

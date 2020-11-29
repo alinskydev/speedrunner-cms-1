@@ -118,14 +118,12 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
             $messages = $this->getCommandQuery($category, $language)->queryAll();
         }
         
-        $result = [];
-        
         foreach ($messages as $message) {
             $result[$message['message']] = nl2br($message['translation']);
             $this->addMessageId($category, $message['message'], $message['id']);
         }
         
-        return $result;
+        return $result ?? [];
     }
     
     protected function createFallbackQuery($category, $language, $fallbackLanguage)

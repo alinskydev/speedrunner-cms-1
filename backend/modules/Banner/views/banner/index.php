@@ -28,9 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'location',
                 'filter' => ArrayHelper::getColumn($modelSearch->locations(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->locations(), "$model->location.label");
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->locations(), "$model->location.label"),
             ],
             'created',
             'updated',

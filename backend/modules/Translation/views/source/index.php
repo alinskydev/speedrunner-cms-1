@@ -30,9 +30,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'translations_tmp',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return $model->translationsColumn();
-                },
+                'value' => fn ($model) => $model->translationsColumn(),
                 'contentOptions' => [
                     'style' => 'max-width: 300px; white-space: normal;',
                 ],

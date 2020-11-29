@@ -32,9 +32,7 @@ class GeneratorForm extends Model
             [['module_name', 'generate_files', 'controller_name', 'controller_actions', 'table_name'], 'required'],
             [['has_seo_meta'], 'boolean'],
             [['model_relations', 'view_relations', 'attrs_fields'], 'safe'],
-            [['module_name'], 'in', 'range' => $this->modulesList(), 'not' => true, 'when' => function ($model) {
-                return in_array('module', $this->generate_files);
-            }],
+            [['module_name'], 'in', 'range' => $this->modulesList(), 'not' => true, 'when' => fn ($model) => in_array('module', $this->generate_files)],
         ];
     }
     
@@ -71,7 +69,7 @@ class GeneratorForm extends Model
             $result[ucfirst($key)] = ucfirst($key);
         }
         
-        return $result;
+        return $result ?? [];
     }
     
     public function process()
@@ -84,9 +82,7 @@ class GeneratorForm extends Model
         
         FileHelper::createDirectory($folder_module, $mode = 0644);
         
-        $this->attrs_translation = array_filter($this->attrs_fields, function ($value) {
-            return ArrayHelper::getValue($value, 'has_translation');
-        }) ?: [];
+        $this->attrs_translation = array_filter($this->attrs_fields, fn ($value) => ArrayHelper::getValue($value, 'has_translation')) ?: [];
         
         //        MODULE
         

@@ -33,15 +33,14 @@ class LogActionSearch extends LogAction
     {
         $query = LogAction::find()
             ->joinWith(['attrs'])
-            ->with([
-                'user.profile',
-            ])
-            ->distinct();
+            ->with(['user.profile'])
+            ->groupBy('LogAction.id');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 20
+                'defaultPageSize' => 30,
+                'pageSizeLimit' => [1, 30],
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -66,6 +65,8 @@ class LogActionSearch extends LogAction
             ->andFilterWhere(['like', 'LogAction.created', $this->created])
             ->andFilterWhere(['like', new Expression('LOWER(LogActionAttr.value_old)'), strtolower($this->attrs_old)])
             ->andFilterWhere(['like', new Expression('LOWER(LogActionAttr.value_new)'), strtolower($this->attrs_new)]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
         
 		$this->afterSearch();
 		return $dataProvider;

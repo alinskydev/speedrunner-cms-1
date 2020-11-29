@@ -45,9 +45,7 @@ class Menu extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name', 'url'], 'string', 'max' => 100],
-            [['parent_id'], 'required', 'when' => function ($model) {
-                return $model->isNewRecord;
-            }],
+            [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
             
             [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
         ];

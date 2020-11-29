@@ -34,9 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => function ($model) {
-                    return Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize'));
-                },
+                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -51,9 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'slug' => $model->slug]), ['target' => '_blank']);
-                }
+                'value' => fn ($model) => Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'slug' => $model->slug]), ['target' => '_blank']),
             ],
             [
                 'attribute' => 'category_id',
@@ -73,9 +69,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->category, 'name');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->category, 'name'),
             ],
             [
                 'attribute' => 'tag_id',

@@ -42,7 +42,6 @@ class BlockPageSearch extends BlockPage
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -77,6 +76,8 @@ class BlockPageSearch extends BlockPage
                 'desc' => ["json_$t_a" => SORT_DESC],
             ];
         }
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

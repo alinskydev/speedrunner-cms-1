@@ -32,7 +32,7 @@ class SeoMetaBehavior extends Behavior
                 'model_id' => $this->owner->id,
                 'lang' => Yii::$app->language,
             ])
-            ->one() ?: new SeoMeta([
+            ->one() ?? new SeoMeta([
                 'model_class' => $model_class,
                 'model_id' => $this->owner->id,
                 'lang' => Yii::$app->language,

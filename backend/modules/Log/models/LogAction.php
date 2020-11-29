@@ -8,18 +8,12 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 
-use backend\modules\Log\helpers\LogActionHelper;
 use backend\modules\User\models\User;
 
 
 class LogAction extends ActiveRecord
 {
-    public $helper;
-    
-    public function __construct()
-    {
-        $this->helper = new LogActionHelper;
-    }
+    use \backend\modules\Log\helpers\LogActionHelper;
     
     public static function tableName()
     {
@@ -31,7 +25,7 @@ class LogAction extends ActiveRecord
         return [
             [['type', 'model_class'], 'required'],
             [['type'], 'in', 'range' => array_keys($this->types())],
-            [['model_class'], 'in', 'range' => array_keys($this->helper->modelClasses())],
+            [['model_class'], 'in', 'range' => array_keys($this->modelClasses())],
         ];
     }
     
@@ -67,12 +61,12 @@ class LogAction extends ActiveRecord
     public function attrsColumn($attrs_type, $view_type)
     {
         $result = [];
-        $model = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.model");
-        $translation_attrs = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.attributes.translation", []);
-        $boolean_attrs = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.attributes.boolean", []);
-        $select_attrs = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.attributes.select", []);
-        $text_attrs = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.attributes.text", []);
-        $json_attrs = ArrayHelper::getValue($this->helper->modelClasses(), "$this->model_class.attributes.json", []);
+        $model = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.model");
+        $translation_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.translation", []);
+        $boolean_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.boolean", []);
+        $select_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.select", []);
+        $text_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.text", []);
+        $json_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.json", []);
         
         foreach (Yii::$app->params['date_format_attributes'] as $d_f_a) {
             foreach ($d_f_a['attributes'] as $d_a) {

@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 
-class LogActionHelper
+trait LogActionHelper
 {
     public function modelClasses($model = null)
     {

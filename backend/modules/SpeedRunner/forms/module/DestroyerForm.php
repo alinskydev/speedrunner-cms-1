@@ -35,7 +35,7 @@ class DestroyerForm extends Model
             }
         }
         
-        return $result;
+        return $result ?? [];
     }
     
     public function process()

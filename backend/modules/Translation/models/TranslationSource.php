@@ -48,7 +48,7 @@ class TranslationSource extends ActiveRecord
         $messages = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $langs])->indexBy('language')->all();
         
         foreach ($langs as $l) {
-            $messages[$l] = isset($messages[$l]) ? $messages[$l] : new TranslationMessage(['id' => $this->id, 'language' => $l]);
+            $messages[$l] = $messages[$l] ?? new TranslationMessage(['id' => $this->id, 'language' => $l]);
         }
         
         return $messages;
@@ -56,15 +56,13 @@ class TranslationSource extends ActiveRecord
     
     public function translationsColumn()
     {
-        $result = [];
-        
         foreach ($this->translations as $t) {
             if ($t->translation && ArrayHelper::getValue($t, 'lang.is_active')) {
                 $result[] = Html::tag('b', $t->lang->name) . ': ' . nl2br($t->translation);
             }
         }
         
-        return implode('<br>', $result);
+        return implode('<br>', $result ?? []);
     }
     
     public function afterSave($insert, $changedAttributes)

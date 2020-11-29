@@ -16,12 +16,14 @@ trait StaticpageBlock
             'part_name',
             'value' => function ($model) {
                 switch ($model->type) {
+                    case 'ElFinder':
+                        return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->value);
                     case 'images':
                         foreach ($model->value as $v) {
                             $result[] = Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($v);
                         }
                         
-                        return isset($result) ? $result : [];
+                        return $result ?? [];
                     case 'groups':
                         return $model->value;
                     default:

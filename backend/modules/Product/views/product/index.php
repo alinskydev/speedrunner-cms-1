@@ -34,9 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => function ($model) {
-                    return $model->images ? Html::img(Yii::$app->sr->image->thumb($model->images[0], [40, 40], 'resize')) : null;
-                },
+                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->images[0] ?? null, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -51,9 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]), ['target' => '_blank']);
-                }
+                'value' => fn ($model) => Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]), ['target' => '_blank']),
             ],
             'price',
             [
@@ -74,17 +70,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->brand, 'name');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->brand, 'name'),
             ],
             [
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
                 'filter' => ProductCategory::itemsTree([1]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->mainCategory, 'name');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
                     'data-toggle' => 'select2',

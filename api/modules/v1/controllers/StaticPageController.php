@@ -7,7 +7,6 @@ use yii\rest\Controller;
 use yii\web\Response;
 
 use backend\modules\Staticpage\models\Staticpage;
-use backend\modules\Staticpage\modelsSearch\StaticpageSearch;
 
 
 class StaticpageController extends Controller
@@ -26,19 +25,18 @@ class StaticpageController extends Controller
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'index' => ['get'],
+                    'view' => ['get'],
                 ],
             ],
         ];
     }
     
-    public function actionIndex()
+    public function actionView($name)
     {
-        $searchModel = new StaticpageSearch;
-        $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
-        
-        return [
-            'data' => $dataProvider,
-        ];
+        if ($model = StaticPage::find()->andWhere(['name' => $name])->one()) {
+            return $model;
+        } else {
+            throw new \yii\web\NotFoundHttpException;
+        }
     }
 }

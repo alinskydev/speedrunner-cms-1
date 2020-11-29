@@ -34,7 +34,6 @@ class UserSearch extends User
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -67,6 +66,8 @@ class UserSearch extends User
                 'desc' => ["UserProfile.$p_a" => SORT_DESC],
             ];
         }
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

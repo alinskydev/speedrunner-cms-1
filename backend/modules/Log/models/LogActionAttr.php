@@ -19,8 +19,8 @@ class LogActionAttr extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['value_old'], 'required', 'when' => function ($model) { return empty($model->value_new); }],
-            [['value_new'], 'required', 'when' => function ($model) { return empty($model->value_old); }],
+            [['value_old'], 'required', 'when' => fn ($model) => empty($model->value_new)],
+            [['value_new'], 'required', 'when' => fn ($model) => empty($model->value_old)],
             [['name'], 'string', 'max' => 100],
             
             [['name'], 'in', 'not' => true, 'range' => [

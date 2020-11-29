@@ -33,7 +33,6 @@ class BlockTypeSearch extends BlockType
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -55,6 +54,8 @@ class BlockTypeSearch extends BlockType
             ->andFilterWhere(['like', 'label', $this->label])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'has_translation', $this->has_translation]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

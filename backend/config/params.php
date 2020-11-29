@@ -38,8 +38,8 @@ return [
         ]
     ],
     
-    'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{error}{hint}</div>',
-    'switcher_template' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{error}{hint}</div>',
+    'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
+    'switcher_template' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
     
     'pager_options' => [
         'options' => ['class' => 'pagination'],

@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 Yii::setAlias('@root', dirname(dirname(__DIR__)));
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/api');
 Yii::setAlias('@backend', dirname(dirname(__DIR__)) . '/backend');

@@ -34,7 +34,6 @@ class BlogCommentSearch extends BlogComment
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -57,6 +56,8 @@ class BlogCommentSearch extends BlogComment
 
         $query->andFilterWhere(['like', 'text', $this->text])
             ->andFilterWhere(['like', 'created', $this->created]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

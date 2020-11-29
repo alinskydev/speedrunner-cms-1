@@ -33,7 +33,6 @@ class BlogTagSearch extends BlogTag
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -53,6 +52,8 @@ class BlogTagSearch extends BlogTag
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'created', $this->created]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

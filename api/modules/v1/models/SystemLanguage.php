@@ -14,9 +14,7 @@ trait SystemLanguage
             'id',
             'name',
             'code',
-            'image' => function ($model) {
-                return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image);
-            },
+            'image' => fn ($model) => Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image),
             'is_active',
             'is_main',
         ];

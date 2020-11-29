@@ -47,7 +47,7 @@ $flashes = Yii::$app->session->getAllFlashes();
 <?php } ?>
 
 <?= Breadcrumbs::widget([
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    'links' => $this->params['breadcrumbs'] ?? [],
     'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
     'options' => ['class' => 'breadcrumbs'],
 ]) ?>

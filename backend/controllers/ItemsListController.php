@@ -55,7 +55,7 @@ class ItemsListController extends Controller
     
     public function actionUsers($q = null, $role = null)
     {
-        $out['results'] = User::itemsList('username', 'self', $q)->andFilterWhere(['User.role' => $role])->asArray()->all();
+        $out['results'] = User::itemsList('full_name', 'profile', $q)->andFilterWhere(['User.role' => $role])->asArray()->all();
         return $this->asJson($out);
     }
 }

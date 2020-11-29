@@ -12,9 +12,9 @@ use backend\modules\Staticpage\models\StaticpageBlock;
 
 class StaticpageController extends Controller
 {
-    public function actionUpdate($location)
+    public function actionUpdate($name)
     {
-        $model = Staticpage::find()->with(['blocks'])->andWhere(['location' => $location])->one();
+        $model = Staticpage::find()->with(['blocks'])->andWhere(['name' => $name])->one();
         
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);

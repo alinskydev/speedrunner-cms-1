@@ -14,7 +14,7 @@ $options = ArrayHelper::merge($model->options, [new ProductSpecificationOption])
     <thead>
         <tr>
             <th></th>
-            <th style="width: 100%;"><?= $options[0]->getAttributeLabel('name') ?></th>
+            <th class="w-100"><?= $options[0]->getAttributeLabel('name') ?></th>
             <th></th>
         </tr>
     </thead>

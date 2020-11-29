@@ -16,16 +16,18 @@ class ProductController extends Controller
         $slug = explode('/', $url);
         $slug = end($slug);
         
-        if (!($cat = ProductCategory::find()->andWhere(['slug' => $slug])->one())) {
+        if (!($possible_cats = ProductCategory::find()->andWhere(['slug' => $slug])->all())) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        if ($cat->url() != $url) {
-            return $this->redirect(Yii::$app->request->referrer);
+        foreach ($possible_cats as $cat) {
+            if ($cat->url() == $url) {
+                return $this->render('catalog', [
+                    'cat' => $cat,
+                ]);
+            }
         }
         
-        return $this->render('catalog', [
-            'cat' => $cat,
-        ]);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

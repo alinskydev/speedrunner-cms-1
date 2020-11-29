@@ -47,9 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->blog, 'name');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->blog, 'name'),
             ],
             [
                 'attribute' => 'user_id',
@@ -69,19 +67,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->user, 'username');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             'text:ntext',
             [
                 'attribute' => 'status',
-                'filter' => ArrayHelper::getColumn(Yii::$app->params['comment_statuses'], function ($value) {
-                    return Yii::t('app', $value);
-                }),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue(Yii::$app->params['comment_statuses'], $model->status);
-                }
+                'filter' => ArrayHelper::getColumn(Yii::$app->params['comment_statuses'], fn ($value) => Yii::t('app', $value)),
+                'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['comment_statuses'], $model->status),
             ],
             'created',
             [

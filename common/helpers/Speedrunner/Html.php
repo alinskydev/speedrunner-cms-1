@@ -11,8 +11,6 @@ class Html
 {
     public function updateButtons($buttons)
     {
-        $result = [];
-        
         foreach ($buttons as $b) {
             switch ($b) {
                 case 'save_reload':
@@ -32,6 +30,6 @@ class Html
             }
         }
         
-        return YiiHtml::tag('div', implode(' ', $result), ['class' => 'float-right']);
+        return YiiHtml::tag('div', implode(' ', $result ?? []), ['class' => 'float-right']);
     }
 }

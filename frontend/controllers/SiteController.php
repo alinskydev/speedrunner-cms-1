@@ -10,7 +10,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 use common\forms\LoginForm;
-use frontend\forms\PasswordResetRequestForm;
+use frontend\forms\ResetPasswordRequestForm;
 use frontend\forms\ResetPasswordForm;
 use frontend\forms\SignupForm;
 use frontend\forms\ContactForm;
@@ -43,6 +43,13 @@ class SiteController extends Controller
         ];
     }
     
+    public function actionError()
+    {
+        return $this->render('error', [
+            'exception' => Yii::$app->errorHandler->exception
+        ]);
+    }
+    
     public function actionIndex()
     {
         $page = Yii::$app->sr->record->staticpage('home');
@@ -51,13 +58,6 @@ class SiteController extends Controller
             'page' => $page['page'],
             'blocks' => $page['blocks'],
             'categories' => ProductCategory::find()->all(),
-        ]);
-    }
-    
-    public function actionError()
-    {
-        return $this->render('error', [
-            'exception' => Yii::$app->errorHandler->exception
         ]);
     }
     
@@ -121,9 +121,9 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionRequestPasswordReset()
+    public function actionResetPasswordRequest()
     {
-        $model = new PasswordResetRequestForm;
+        $model = new ResetPasswordRequestForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -134,7 +134,7 @@ class SiteController extends Controller
             }
         }
         
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('reset_password_request', [
             'model' => $model,
         ]);
     }
@@ -154,7 +154,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
         
-        return $this->render('resetPassword', [
+        return $this->render('reset_password', [
             'model' => $model,
         ]);
     }

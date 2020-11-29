@@ -40,7 +40,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         //        DATETIME
         
         if (array_key_exists('created', $this->attributes)) {
-            $this->created = $this->created ?: date('Y-m-d H:i:s');
+            $this->created = $this->created ?? date('Y-m-d H:i:s');
         }
         
         if (array_key_exists('updated', $this->attributes)) {
@@ -119,17 +119,18 @@ class ActiveRecord extends \yii\db\ActiveRecord
     static function itemsList($attr, $type, $q = null, $limit = 20)
     {
         $query = static::find()->limit($limit);
+        $model_class = StringHelper::basename($query->modelClass);
         $lang = Yii::$app->language;
         
         switch ($type) {
             case 'self':
-                $query->select(['id', "$attr as text"])
-                    ->andFilterWhere(['like', $attr, $q]);
+                $query->select(["$model_class.id", "$model_class.$attr as text"])
+                    ->andFilterWhere(['like', "$model_class.$attr", $q]);
                 
                 break;
             case 'translation':
-                $query->select(['id', new Expression("$attr->>'$.$lang' as text")])
-                    ->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($attr, '$.$lang'))"), strtolower($q)]);
+                $query->select(["$model_class.id", new Expression("$model_class.$attr->>'$.$lang' as text")])
+                    ->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($model_class.$attr, '$.$lang'))"), strtolower($q)]);
                 
                 break;
         }

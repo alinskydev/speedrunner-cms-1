@@ -36,6 +36,8 @@ class ProfileForm extends Model
     {
         return [
             [['full_name'], 'required'],
+            [['confirm_password'], 'required', 'when' => fn ($model) => $model->new_password],
+            
             [['full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 255],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
@@ -78,7 +80,7 @@ class ProfileForm extends Model
         
         //        IMAGE
         
-        $old_image = ArrayHelper::getValue($user->profile, 'image', null);
+        $old_image = ArrayHelper::getValue($user->profile, 'image');
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
             $user->image = Yii::$app->sr->file->save($image, 'files/profile');

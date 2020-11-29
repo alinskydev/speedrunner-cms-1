@@ -39,13 +39,11 @@ class DocumentatorForm extends Model
             $result[$m['class']] = $key;
         }
         
-        return $result;
+        return $result ?? [];
     }
     
     public function process()
     {
-        $result = [];
-        
         //        MODULE
         
         $module_name = $this->modulesList()[$this->module];

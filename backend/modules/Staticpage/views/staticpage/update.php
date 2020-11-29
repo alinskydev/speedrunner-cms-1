@@ -8,7 +8,7 @@ use vova07\imperavi\Widget;
 use zxbodya\yii2\elfinder\ElFinderInput;
 use kartik\file\FileInput;
 
-$this->title = Yii::t('app', 'Static page: {location}', ['location' => ucfirst($model->location)]);
+$this->title = Yii::t('app', 'Static page: {label}', ['label' => $model->label]);
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     break;
                                 case 'images':
                                     echo $form->field($b, 'value', [
-                                        'template' => '{label}{error}{hint}{input}',
+                                        'template' => '{label}{hint}{error}{input}',
                                     ])->widget(FileInput::className(), [
                                         'options' => [
                                             'accept' => 'image/*',
@@ -119,9 +119,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
                                             'deleteUrl' => Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-delete', 'id' => $b->id]),
                                             'initialPreview' => $b->value ?: [],
-                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?: [], function ($value) {
-                                                return ['key' => $value, 'downloadUrl' => $value];
-                                            }),
+                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
                                         ]),
                                         'pluginEvents' => [
                                             'filesorted' => new JsExpression("function(event, params) {

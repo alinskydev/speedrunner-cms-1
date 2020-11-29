@@ -36,7 +36,6 @@ class BlogRateSearch extends BlogRate
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -58,6 +57,8 @@ class BlogRateSearch extends BlogRate
         ]);
 
         $query->andFilterWhere(['like', 'created', $this->created]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
 
 		$this->afterSearch();
 		return $dataProvider;

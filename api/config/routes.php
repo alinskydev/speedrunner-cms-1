@@ -9,4 +9,6 @@ return [
 //        'only' => ['index', 'view'],
 //        'pluralize' => false,
 //    ],
+    
+    '<module>/staticpage/<name>' => '<module>/staticpage/view',
 ];

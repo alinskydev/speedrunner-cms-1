@@ -49,9 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->user, 'username');
-                },
+                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             [
                 'attribute' => 'full_name',
@@ -68,17 +66,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'delivery_type',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($modelSearch->deliveryTypes(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label");
-                }
+                'value' => fn ($model) => ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label"),
             ],
             [
                 'attribute' => 'payment_type',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($modelSearch->paymentTypes(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label");
-                }
+                'value' => fn ($model) => ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label"),
             ],
             [
                 'attribute' => 'total_price',
@@ -96,9 +90,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'status',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($modelSearch->statuses(), 'label'),
-                'value' => function ($model) {
-                    return ArrayHelper::getValue($model->statuses(), "$model->status.label");
-                }
+                'value' => fn ($model) => ArrayHelper::getValue($model->statuses(), "$model->status.label"),
             ],
             'created',
             [

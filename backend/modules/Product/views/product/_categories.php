@@ -10,8 +10,6 @@ $data = selectCategories($data, $categories);
 
 function selectCategories($data, $categories)
 {
-    $result = [];
-    
     foreach ($data as $key => $d) {
         $result[] = [
             'key' => $d['id'],
@@ -22,7 +20,7 @@ function selectCategories($data, $categories)
         ];
     }
     
-    return $result;
+    return $result ?? [];
 }
 
 ?>

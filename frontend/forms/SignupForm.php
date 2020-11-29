@@ -20,7 +20,7 @@ class SignupForm extends Model
     {
         return [
             [['username', 'email', 'full_name', 'password', 'confirm_password'], 'required'],
-            [['username'], 'string', 'max' => 255],
+            [['username'], 'string', 'max' => 100],
             [['email'], 'email'],
             [['email', 'full_name', 'phone'], 'string', 'max' => 100],
             

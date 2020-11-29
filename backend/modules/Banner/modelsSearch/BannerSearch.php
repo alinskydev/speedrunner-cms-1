@@ -33,7 +33,6 @@ class BannerSearch extends Banner
             'pagination' => [
                 'defaultPageSize' => 30,
                 'pageSizeLimit' => [1, 30],
-                'totalCount' => $query->count(),
             ],
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC]
@@ -55,6 +54,8 @@ class BannerSearch extends Banner
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
+        
+        $dataProvider->pagination->totalCount = $query->count();
         
 		$this->afterSearch();
 		return $dataProvider;

@@ -48,7 +48,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                         
                         <div id="tab-variations-images" class="tab-pane fade">
                             <?= $form->field($model, 'images', [
-                                'template' => '{label}{error}{hint}{input}',
+                                'template' => '{label}{hint}{error}{input}',
                             ])->widget(FileInput::classname(), [
                                 'options' => [
                                     'accept' => 'image/*',
@@ -56,10 +56,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                                 ],
                                 'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
                                     'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/image-delete', 'id' => $model->id, 'attr' => 'images']),
-                                    'initialPreview' => $model->images ?: [],
-                                    'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?: [], function ($value) {
-                                        return ['key' => $value, 'downloadUrl' => $value];
-                                    }),
+                                    'initialPreview' => $model->images ?? [],
+                                    'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
                                 ]),
                                 'pluginEvents' => [
                                     'filesorted' => new JsExpression("function(event, params) {

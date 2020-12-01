@@ -108,9 +108,9 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 </div>
                 
                 <div id="tab-seo-meta" class="tab-pane fade">
-                <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                    'seo_meta' => Yii::$app->sr->seo->getMeta($model),
-                ]) ?>
+                    <?= $this->render('@backend/modules/Seo/views/meta/meta', [
+                        'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                    ]) ?>
                 </div>
             </div>
             

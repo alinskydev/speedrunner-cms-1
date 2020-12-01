@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 use yii\web\JsExpression;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {id}', ['id' => $model->id]);
+$this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
 
 ?>
 

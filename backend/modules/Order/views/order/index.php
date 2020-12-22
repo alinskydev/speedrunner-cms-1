@@ -79,9 +79,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'value' => function ($model) {
                     $result[] = $model->getAttributeLabel('total_quantity') . ": $model->total_quantity";
-                    $result[] = Yii::t('app', 'Products price') . ": $model->total_price";
+                    $result[] = $model->getAttributeLabel('total_price') . ": $model->total_price";
                     $result[] = $model->getAttributeLabel('delivery_price') . ": $model->delivery_price";
-                    $result[] = $model->getAttributeLabel('total_price') . ": " . $model->realTotalPrice();
+                    $result[] = Yii::t('app', 'Checkout price') . ": " . $model->realTotalPrice();
                     
                     return implode('<br>', $result);
                 }

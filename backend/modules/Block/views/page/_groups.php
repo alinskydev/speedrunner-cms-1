@@ -34,7 +34,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                         <?php foreach ($attrs as $a_key => $a_value) { ?>
                             <div class="form-group mb-3">
                                 <label>
-                                    <?= Yii::t('app', $a_value['label']) ?>
+                                    <?= $a_value['label'] ?>
                                 </label>
                                 
                                 <?php
@@ -102,7 +102,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                     
                     <td>
                         <button type="button" class="btn btn-danger btn-remove">
-                            <i class="fa fa-times"></i>
+                            <i class="fas fa-times"></i>
                         </button>
                     </td>
                 </tr>
@@ -113,7 +113,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
             <tr>
                 <td colspan="3">
                     <button type="button" class="btn btn-success btn-block btn-add" data-table="<?= "groups-$model->id" ?>">
-                        <i class="fa fa-plus"></i>
+                        <i class="fas fa-plus"></i>
                     </button>
                 </td>
             </tr>

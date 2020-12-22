@@ -5,7 +5,6 @@ namespace backend\modules\Log\modelsSearch;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 
 use backend\modules\Log\models\LogAction;
 
@@ -63,8 +62,8 @@ class LogActionSearch extends LogAction
         
         $query->andFilterWhere(['like', 'LogAction.type', $this->type])
             ->andFilterWhere(['like', 'LogAction.created', $this->created])
-            ->andFilterWhere(['like', new Expression('LOWER(LogActionAttr.value_old)'), strtolower($this->attrs_old)])
-            ->andFilterWhere(['like', new Expression('LOWER(LogActionAttr.value_new)'), strtolower($this->attrs_new)]);
+            ->andFilterWhere(['like', 'LogActionAttr.name', $this->attrs_old])
+            ->andFilterWhere(['like', 'LogActionAttr.name', $this->attrs_new]);
         
         $dataProvider->pagination->totalCount = $query->count();
         

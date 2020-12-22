@@ -88,7 +88,8 @@ class SiteController extends Controller
         
         $model = new LoginForm;
         
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->login();
             return $this->goBack();
         } else {
             $model->password = null;
@@ -127,7 +128,7 @@ class SiteController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email inbox for further instructions'));
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
@@ -141,11 +142,7 @@ class SiteController extends Controller
     
     public function actionResetPassword($token)
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
+        $model = new ResetPasswordForm($token);
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->resetPassword();

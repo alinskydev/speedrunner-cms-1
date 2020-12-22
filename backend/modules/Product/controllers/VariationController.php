@@ -37,7 +37,6 @@ class VariationController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $images = $model->{$attr};
         $stack = Yii::$app->request->post('sort')['stack'];
         $images = ArrayHelper::getColumn($stack, 'key');
         

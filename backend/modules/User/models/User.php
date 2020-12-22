@@ -65,7 +65,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'role', 'full_name', 'design_theme', 'design_font'], 'required'],
+            [['username', 'email', 'role', 'full_name'], 'required'],
             [['new_password'], 'required', 'when' => function($model) {
                 return $model->isNewRecord;
             }],
@@ -278,13 +278,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function findByPasswordResetToken($token)
     {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return false;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-        ]);
+        return static::isPasswordResetTokenValid($token) ? static::findOne(['password_reset_token' => $token]) : false;
     }
     
     public static function isPasswordResetTokenValid($token)
@@ -292,7 +286,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-
+        
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();

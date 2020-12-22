@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Информация';
+$this->title = 'Information';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-gratitude">
-                    Благодарность
+                    Gratitude
                 </a>
             </li>
         </ul>

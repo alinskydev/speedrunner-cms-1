@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <?= $this->title ?>
 
-<?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+<?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'phone')->textInput() ?>

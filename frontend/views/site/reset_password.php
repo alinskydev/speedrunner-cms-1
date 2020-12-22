@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <?= $this->title ?>
 
-<?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
+<?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'confirm_password')->passwordInput() ?>
     

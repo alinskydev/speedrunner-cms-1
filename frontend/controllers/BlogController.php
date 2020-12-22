@@ -29,17 +29,17 @@ class BlogController extends Controller
     
     public function actionIndex()
     {
-        $blogs = Blog::find()->orderBy('published DESC');
+        $query = Blog::find()->orderBy('published DESC');
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $blogs,
+        $blogs = new ActiveDataProvider([
+            'query' => $query,
             'pagination' => [
                 'pageSize' => 1
             ],
         ]);
         
         return $this->render('index', [
-            'blogs' => $dataProvider,
+            'blogs' => $blogs,
         ]);
     }
     

@@ -6,7 +6,6 @@ use Yii;
 use common\components\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use yii\db\JsonExpression;
 
 
 class StaticpageBlock extends ActiveRecord
@@ -96,15 +95,15 @@ class StaticpageBlock extends ActiveRecord
             if ($this->has_translation) {
                 $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 $json[$lang] = array_values($this->value);
-                $this->value = new JsonExpression($json);
+                $this->value = $json;
             } else {
-                $this->value = new JsonExpression(array_values($this->value));
+                $this->value = array_values($this->value);
             }
         } else {
             if ($this->has_translation) {
                 $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 $json[$lang] = $this->value;
-                $this->value = new JsonExpression($json);
+                $this->value = $json;
             }
         }
         

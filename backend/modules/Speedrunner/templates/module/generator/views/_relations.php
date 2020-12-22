@@ -27,7 +27,7 @@ use yii\helpers\ArrayHelper;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $relation['model'] ?>;
 
-$<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>]);
+$relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>]);
 
 ?>
 
@@ -36,14 +36,14 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
         <tr>
             <th></th>
 <?php foreach ($columns as $key => $c) { ?>
-            <th><?= '<?= ' ?>$<?= $var_name_relation ?>[0]->getAttributeLabel('<?= $key ?>') ?></th>
+            <th><?= '<?= ' ?>$relations[0]->getAttributeLabel('<?= $key ?>') ?></th>
 <?php } ?>
             <th></th>
         </tr>
     </thead>
     
     <tbody data-toggle="sortable">
-        <?= "<?php foreach ($$var_name_relation as \$value) { ?>\n" ?>
+        <?= "<?php foreach (\$relations as \$value) { ?>\n" ?>
             <?= "<?php \$value_id = \$value->isNewRecord ? '__key__' : \$value->id ?>\n" ?>
             
             <tr class="<?= "<?= \$value->isNewRecord ? 'table-new-relation' : null ?>" ?>" data-table="<?= $var_name_relation ?>">
@@ -64,7 +64,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
 <?php } ?>
                 <td>
                     <button type="button" class="btn btn-danger btn-remove">
-                        <i class="fa fa-times"></i>
+                        <i class="fas fa-times"></i>
                     </button>
                 </td>
             </tr>
@@ -75,7 +75,7 @@ $<?= $var_name_relation ?> = ArrayHelper::merge($model-><?= $var_name_relation ?
         <tr>
             <td colspan="<?= count($columns) + 2 ?>">
                 <button type="button" class="btn btn-success btn-block btn-add" data-table="<?= $var_name_relation ?>">
-                    <i class="fa fa-plus"></i>
+                    <i class="fas fa-plus"></i>
                 </button>
             </td>
         </tr>

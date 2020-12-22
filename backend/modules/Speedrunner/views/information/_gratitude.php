@@ -44,25 +44,21 @@ $external_components = [
 <div class="card">
     <div class="card-header bg-primary text-white">
         <h5 class="m-0">
-            Фундамент
+            Foundation
         </h5>
     </div>
     
     <div class="card-body">
-        Выражаем особую благодарность всем разработчикам, которые участвовали при создании
-        <a href="https://www.yiiframework.com" target="_blank">Yii2 Framework</a>.<br>
-        Если Вам нравится данная CMS, то Вы можете
-        <a href="https://www.yiiframework.com/contribute" target="_blank">помочь</a>
-        либо
-        <a href="https://opencollective.com/yiisoft" target="_blank">поддержать</a>
-        команду Yii.
+        Special thanks to the <a href="https://www.yiiframework.com" target="_blank">Yii2 Framework</a> developerment group.<br>
+        If you liked this CMS, then you can <a href="https://www.yiiframework.com/contribute" target="_blank">help</a> or
+        <a href="https://opencollective.com/yiisoft" target="_blank">donate</a> to Yii Framework team.
     </div>
 </div>
 
 <div class="card mt-3">
     <div class="card-header bg-primary text-white">
         <h5 class="m-0">
-            Сторонние компоненты
+            Third-party components
         </h5>
     </div>
     
@@ -70,8 +66,8 @@ $external_components = [
         <table class="table">
             <thead>
                 <tr>
-                    <th>Название</th>
-                    <th>Ссылка</th>
+                    <th>Title</th>
+                    <th>Link</th>
                 </tr>
             </thead>
             

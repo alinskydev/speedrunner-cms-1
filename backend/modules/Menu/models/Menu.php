@@ -17,13 +17,14 @@ class Menu extends ActiveRecord
         return 'Menu';
     }
     
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'tree' => [
                 'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
                 'treeAttribute' => 'tree',
             ],
-            'htmlTree'=>[
+            'htmlTree' => [
                 'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
             ],
             'translation' => [

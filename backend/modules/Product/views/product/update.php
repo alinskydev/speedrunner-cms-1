@@ -98,10 +98,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-stock" class="tab-pane fade">
-                <?= $form->field($model, 'price')->textInput() ?>
-                <?= $form->field($model, 'quantity')->textInput() ?>
                 <?= $form->field($model, 'sku')->textInput() ?>
-                <?= $form->field($model, 'sale')->textInput() ?>
+                <?= $form->field($model, 'quantity')->textInput() ?>
+                <?= $form->field($model, 'price')->textInput() ?>
+                <?= $form->field($model, 'discount')->textInput() ?>
             </div>
             
             <div id="tab-images" class="tab-pane fade">

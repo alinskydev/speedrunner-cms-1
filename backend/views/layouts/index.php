@@ -12,7 +12,7 @@ AppAsset::register($this);
 
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 
-$menu_items = require __DIR__ . '/_nav.php';
+$menu_items = require '_nav.php';
 
 $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE);
 

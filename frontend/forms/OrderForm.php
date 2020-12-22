@@ -15,8 +15,8 @@ class OrderForm extends Model
 {
     const EXCEPT_ATTRIBUTES = ['user', 'order'];
     
-    public $user;
-    public $order;
+    private $user;
+    private $order;
     
     public $full_name;
     public $email;
@@ -66,7 +66,7 @@ class OrderForm extends Model
         $order = $this->order;
         
         foreach ($this->attributes as $key => $a) {
-            if (!in_array($key, self::EXCEPT_ATTRIBUTES)) {
+            if (!in_array($key, static::EXCEPT_ATTRIBUTES)) {
                 $order->{$key} = $a;
             }
         }

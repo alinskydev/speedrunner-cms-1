@@ -18,7 +18,7 @@ unset($attr_types['images'], $attr_types['groups']);
         ); ?>
         
         <button type="button" class="btn btn-danger btn-attr-remove">
-            <i class="fa fa-times"></i>
+            <i class="fas fa-times"></i>
         </button>
     </div>
     

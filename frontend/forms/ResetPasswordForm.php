@@ -10,21 +10,16 @@ use backend\modules\User\models\User;
 
 class ResetPasswordForm extends Model
 {
+    private $user;
+    
     public $password;
     public $confirm_password;
     
-    private $_user;
-    
-    public function __construct($token, $config = [])
+    public function __construct($token)
     {
-        if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException(Yii::t('app', 'Password reset token cannot be blank'));
-        }
-        $this->_user = User::findByPasswordResetToken($token);
-        if (!$this->_user) {
+        if (!($this->user = User::findByPasswordResetToken($token))) {
             throw new InvalidParamException(Yii::t('app', 'Wrong password reset token'));
         }
-        parent::__construct($config);
     }
     
     public function rules()
@@ -46,10 +41,10 @@ class ResetPasswordForm extends Model
     
     public function resetPassword()
     {
-        $user = $this->_user;
+        $user = $this->user;
         $user->new_password = $this->password;
         $user->removePasswordResetToken();
-        $user->save(false);
+        $user->save();
         
         return Yii::$app->user->login($user, 3600 * 24 * 30);
     }

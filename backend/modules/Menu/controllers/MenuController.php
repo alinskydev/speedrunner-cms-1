@@ -101,11 +101,6 @@ class MenuController extends Controller
     public function actionExpand($id)
     {
         $model = Menu::findOne($id);
-        
-        if (!$model || $model->depth == 0) {
-            return false;
-        }
-        
-        return $model->updateAttributes(['expanded' => intval(!$model->expanded)]);
+        return $model ? $model->updateAttributes(['expanded' => intval(!$model->expanded)]) : false;
     }
 }

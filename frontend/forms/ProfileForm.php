@@ -12,21 +12,22 @@ use backend\modules\User\models\User;
 
 class ProfileForm extends Model
 {
-    public $user;
-    public $attrs = ['full_name', 'phone', 'address', 'image'];
+    const PROFILE_ATTRIBUTES = ['full_name', 'phone', 'address', 'image'];
     
-    public $new_password;
-    public $confirm_password;
+    public $user;
     
     public $full_name;
     public $phone;
     public $address;
     public $image;
     
+    public $new_password;
+    public $confirm_password;
+    
     public function init()
     {
         if ($this->user) {
-            foreach ($this->attrs as $a) {
+            foreach (static::PROFILE_ATTRIBUTES as $a) {
                 $this->{$a} = $this->user->{$a};
             }
         }
@@ -72,7 +73,7 @@ class ProfileForm extends Model
     {
         $user = $this->user;
         
-        foreach ($this->attrs as $a) {
+        foreach (static::PROFILE_ATTRIBUTES as $a) {
             $user->{$a} = $this->{$a};
         }
         

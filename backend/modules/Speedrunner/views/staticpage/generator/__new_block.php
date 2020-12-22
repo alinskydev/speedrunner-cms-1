@@ -41,7 +41,7 @@ $rnd_number = round(microtime(true) * 1000);
                 class="btn btn-success btn-block btn-attr-add"
                 data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-attr', 'block' => $rnd_number]) ?>"
         >
-            <i class="fa fa-plus"></i>
+            <i class="fas fa-plus"></i>
         </button>
     </td>
     <td class="text-right">
@@ -49,7 +49,7 @@ $rnd_number = round(microtime(true) * 1000);
         <?= Html::hiddenInput('GeneratorForm[blocks]['.$rnd_number.'][part_index]', $part_index); ?>
 
         <button type="button" class="btn btn-danger btn-block-remove">
-            <i class="fa fa-times"></i>
+            <i class="fas fa-times"></i>
         </button>
     </td>
 </tr>

@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     </button>
                                     
                                     <button class="btn btn-danger btn-remove d-none" type="button">
-                                        <span class="fa fa-times"></span>
+                                        <span class="fas fa-times"></span>
                                     </button>
                                 </li>
                             <?php } ?>
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         </button>
                                         
                                         <button class="btn btn-danger btn-remove" type="button">
-                                            <span class="fa fa-times"></span>
+                                            <span class="fas fa-times"></span>
                                         </button>
                                         
                                         <input type="hidden" name="BlockPage[blocks_tmp][<?= $b->id ?>][type_id]" value="<?= $b->type_id ?>">
@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 
                 <div class="btn-remove-wrap d-none">
                     <button class="btn btn-danger btn-remove" type="button">
-                        <span class="fa fa-times"></span>
+                        <span class="fas fa-times"></span>
                     </button>
                 </div>
             </div>

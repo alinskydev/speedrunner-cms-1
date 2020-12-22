@@ -26,6 +26,11 @@ return [
                     'sourceMessageTable' => 'TranslationSource',
                     'messageTable' => 'TranslationMessage',
                 ],
+                'yii2*' => [
+                    'class' => 'common\components\framework\DbMessageSource',
+                    'sourceMessageTable' => 'TranslationSource',
+                    'messageTable' => 'TranslationMessage',
+                ],
             ],
         ],
         'cache' => [

@@ -25,14 +25,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ]); ?>
             
             <div class="cart-quantity-wrapper">
-                <?= Html::button(Html::tag('i', null, ['class' => 'fa fa-minus']), [
+                <?= Html::button(Html::tag('i', null, ['class' => 'fas fa-minus']), [
                     'data-toggle' => 'cart-quantity-change',
                     'data-type' => 'minus',
                 ]) ?>
                 <?= Html::textInput('quantity', $p['total_quantity'], [
                     'onchange' => '$(this).parents("form").submit();',
                 ]); ?>
-                <?= Html::button(Html::tag('i', null, ['class' => 'fa fa-plus']), [
+                <?= Html::button(Html::tag('i', null, ['class' => 'fas fa-plus']), [
                     'data-toggle' => 'cart-quantity-change',
                     'data-type' => 'plus',
                 ]) ?>

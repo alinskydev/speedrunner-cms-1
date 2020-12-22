@@ -35,7 +35,6 @@ class RuleController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'index' => ['get'],
-                    'view' => ['get'],
                     'create' => ['get', 'post'],
                     'update' => ['get', 'post'],
                     'delete' => ['post'],
@@ -58,20 +57,6 @@ class RuleController extends Controller
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
-    }
-
-    /**
-     * Displays a single Rule item.
-     *
-     * @param string $id
-     *
-     * @return mixed
-     */
-    public function actionView(string $id)
-    {
-        $model = $this->findModel($id);
-
-        return $this->render('view', ['model' => $model]);
     }
 
     /**

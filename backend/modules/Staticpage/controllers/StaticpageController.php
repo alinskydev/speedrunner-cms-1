@@ -51,7 +51,6 @@ class StaticpageController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $images = $model->value;
         $stack = Yii::$app->request->post('sort')['stack'];
         $images = ArrayHelper::getColumn($stack, 'key');
         

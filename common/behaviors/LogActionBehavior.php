@@ -74,7 +74,7 @@ class LogActionBehavior extends Behavior
     
     public function beforeDelete($event)
     {
-        $attributes = $this->owner->attributes;
+        $attributes = $this->owner->oldAttributes;
         
         foreach ($this->relations_one_one as $r_key => $r) {
             $relation_mdl = $this->owner->{$r_key};

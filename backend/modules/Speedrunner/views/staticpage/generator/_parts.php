@@ -16,7 +16,7 @@ use yii\helpers\Html;
                 class="btn btn-success btn-block btn-icon btn-part-add"
                 data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/staticpage/generator/new-part']) ?>"
         >
-            <i class="fa fa-plus"></i>
+            <i class="fas fa-plus"></i>
             Add
         </button>
     </div>

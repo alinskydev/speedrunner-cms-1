@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     echo $form->field($b, 'value')->textInput([
                                         'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
-                                    ])->label(Yii::t('app', $b->label));
+                                    ])->label($b->label);
                                     
                                     break;
                                 case 'textArea':
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
                                         'rows' => 5,
-                                    ])->label(Yii::t('app', $b->label));
+                                    ])->label($b->label);
                                     
                                     break;
                                 case 'checkbox':
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'id' => "staticpageblock-$b->id",
                                         'class' => 'custom-control-input',
                                         'label' => null,
-                                    ])->label(Yii::t('app', $b->label), [
+                                    ])->label($b->label, [
                                         'class' => 'custom-control-label',
                                     ]);
                                     
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                             'name' => "StaticpageBlock[$b->id][value]",
                                             'id' => "staticpageblock-$b->id",
                                         ],
-                                    ])->label(Yii::t('app', $b->label));
+                                    ])->label($b->label);
                                     
                                     break;
                                 case 'ElFinder':
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'connectorRoute' => '/connection/elfinder-file-upload',
                                         'name' => "StaticpageBlock[$b->id][value]",
                                         'id' => "staticpageblock-$b->id",
-                                    ])->label(Yii::t('app', $b->label));
+                                    ])->label($b->label);
                                     
                                     break;
                                 case 'images':
@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                                 $.post('".Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-sort', 'id' => $b->id])."', {sort: params});
                                             }")
                                         ],
-                                    ])->label(Yii::t('app', $b->label));
+                                    ])->label($b->label);
                                     
                                     break;
                                 case 'groups':

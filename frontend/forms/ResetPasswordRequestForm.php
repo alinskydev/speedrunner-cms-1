@@ -14,13 +14,9 @@ class ResetPasswordRequestForm extends Model
     public function rules()
     {
         return [
-            [['email'], 'trim'],
             [['email'], 'required'],
             [['email'], 'email'],
-            [['email'], 'exist',
-                'targetClass' => '\backend\modules\User\models\User',
-                'message' => Yii::t('app', 'There is no user with this email address')
-            ],
+            [['email'], 'exist', 'targetClass' => '\backend\modules\User\models\User', 'message' => Yii::t('app', 'There is no user with this email address')],
         ];
     }
     

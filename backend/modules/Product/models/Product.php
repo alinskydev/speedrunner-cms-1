@@ -112,9 +112,9 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'main_category_id'], 'required'],
-            [['price', 'sale', 'quantity'], 'integer', 'min' => 0],
-            [['sale'], 'compare', 'compareAttribute' => 'price', 'operator' => '<=', 'type' => 'number'],
+            [['name', 'main_category_id', 'price'], 'required'],
+            [['price', 'quantity'], 'integer', 'min' => 0],
+            [['discount'], 'integer', 'min' => 0, 'max' => 100],
             [['name', 'slug', 'sku'], 'string', 'max' => 100],
             [['short_description'], 'string', 'max' => 255],
             [['full_description'], 'string'],
@@ -146,7 +146,7 @@ class Product extends ActiveRecord
             'brand_id' => Yii::t('app', 'Brand'),
             'main_category_id' => Yii::t('app', 'Main category'),
             'price' => Yii::t('app', 'Price'),
-            'sale' => Yii::t('app', 'Sale'),
+            'discount' => Yii::t('app', 'Discount'),
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'SKU'),
             'created' => Yii::t('app', 'Created'),
@@ -156,6 +156,11 @@ class Product extends ActiveRecord
             'related_tmp' => Yii::t('app', 'Related'),
             'variations_tmp' => Yii::t('app', 'Variations'),
         ];
+    }
+    
+    public function realPrice()
+    {
+        return round($this->price * (1 - $this->discount / 100));
     }
     
     public function getBrand()

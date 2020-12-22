@@ -30,7 +30,7 @@
                             data-part_name="<?= $part_name ?>"
                             data-part_index="<?= $part_index ?>"
                     >
-                        <i class="fa fa-plus"></i>
+                        <i class="fas fa-plus"></i>
                     </button>
                 </td>
             </tr>

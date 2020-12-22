@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         class="btn btn-success btn-block btn-attr-add"
                                         data-action="<?= Yii::$app->urlManager->createUrl(['speedrunner/block/generator/new-attr', 'block' => '__key__']) ?>"
                                 >
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fas fa-plus"></i>
                                 </button>
                             </td>
                             
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             
                             <td>
                                 <button type="button" class="btn btn-danger btn-remove">
-                                    <i class="fa fa-times"></i>
+                                    <i class="fas fa-times"></i>
                                 </button>
                             </td>
                         </tr>
@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         <tr>
                             <td colspan="8">
                                 <button type="button" class="btn btn-success btn-block btn-add" data-table="blocks">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fas fa-plus"></i>
                                 </button>
                             </td>
                         </tr>

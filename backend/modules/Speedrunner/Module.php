@@ -7,9 +7,4 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'backend\modules\Speedrunner\controllers';
     public $defaultRoute = 'speedrunner';
-    
-    public function init()
-    {
-        parent::init();
-    }
 }

@@ -13,25 +13,27 @@ use yii\helpers\ArrayHelper;
         </div>
         
         <div class="modal-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th><?= $model->getAttributeLabel('attrs_old') ?></th>
-                        <th><?= $model->getAttributeLabel('attrs_new') ?></th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>
-                            <?= $model->attrsColumn('old', 'full') ?>
-                        </td>
-                        <td>
-                            <?= $model->attrsColumn('new', 'full') ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><?= $model->getAttributeLabel('attrs_old') ?></th>
+                            <th><?= $model->getAttributeLabel('attrs_new') ?></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td>
+                                <?= $model->attrsColumn('old', 'full') ?>
+                            </td>
+                            <td>
+                                <?= $model->attrsColumn('new', 'full') ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -69,16 +69,23 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                 <div class="dropdown-menu dropdown-menu-right main-shadow">
                     <?php
                         if ($notifications) {
-                            foreach ($notifications as $n) {
+                            foreach ($notifications as $key => $n) {
                                 echo Html::a(
                                     Html::tag('i', '&nbsp;', ['class' => 'fas fa-check-circle']) . ArrayHelper::getValue($n->actionType(), 'label'),
                                     ['/user/notification/view', 'id' => $n->id],
                                     [
-                                        'target' => '_blank',
                                         'class' => 'dropdown-item px-3',
                                     ]
-                                );
+                                ) . Html::tag('div', null, ['class' => 'dropdown-divider']);
                             }
+                            
+                            echo Html::a(
+                                Html::tag('i', '&nbsp;', ['class' => 'fas fa-trash']) . Yii::t('app', 'Clear all'),
+                                ['/user/notification/clear'],
+                                [
+                                    'class' => 'dropdown-item bg-primary text-white px-3 py-3',
+                                ]
+                            );
                         } else {
                             echo Html::tag('div', Yii::t('app', 'No notifications'), ['class' => 'px-4']);
                         }
@@ -123,7 +130,7 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                                     ),
                                 ];
                                 
-                                echo Html::tag('div', implode('', $buttons), ['class' => 'btn-group btn-block text-nowrap']);
+                                echo Html::tag('div', implode(null, $buttons), ['class' => 'btn-group btn-block text-nowrap']);
                             }
                         ?>
                     </div>

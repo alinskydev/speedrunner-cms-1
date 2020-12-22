@@ -143,6 +143,10 @@ textarea.form-control:focus {
     outline: 4px #067a7d double;
 }
 
+select.form-control[multiple] {
+    overflow: auto;
+}
+
 textarea::-webkit-scrollbar {
     width: 3px;
 }

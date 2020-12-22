@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-general" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => 64]); ?>
-                <?= $form->field($model, 'description')->textarea(['rows' => 2]); ?>
+                <?= $form->field($model, 'description')->textarea(['rows' => 5]); ?>
                 
                 <?= $form->field($model, 'ruleName')->widget('yii\jui\AutoComplete', [
                     'options' => [

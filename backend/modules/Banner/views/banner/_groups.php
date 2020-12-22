@@ -6,7 +6,7 @@ use zxbodya\yii2\elfinder\ElFinderInput;
 
 use backend\modules\Banner\models\BannerGroup;
 
-$groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
+$relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
 
 ?>
 
@@ -14,17 +14,17 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
     <thead>
         <tr>
             <th></th>
-            <th><?= $groups[0]->getAttributeLabel('text_1') ?></th>
-            <th><?= $groups[0]->getAttributeLabel('text_2') ?></th>
-            <th><?= $groups[0]->getAttributeLabel('text_3') ?></th>
-            <th><?= $groups[0]->getAttributeLabel('link') ?></th>
-            <th><?= $groups[0]->getAttributeLabel('image') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('text_1') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('text_2') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('text_3') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('link') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('image') ?></th>
             <th></th>
         </tr>
     </thead>
     
     <tbody data-toggle="sortable">
-        <?php foreach ($groups as $value) { ?>
+        <?php foreach ($relations as $value) { ?>
             <?php $value_id = $value->isNewRecord ? '__key__' : $value->id ?>
             
             <tr class="<?= $value->isNewRecord ? 'table-new-relation' : null ?>" data-table="groups">
@@ -77,7 +77,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 
                 <td>
                     <button type="button" class="btn btn-danger btn-remove">
-                        <i class="fa fa-times"></i>
+                        <i class="fas fa-times"></i>
                     </button>
                 </td>
             </tr>
@@ -88,7 +88,7 @@ $groups = ArrayHelper::merge($model->groups, [new BannerGroup]);
         <tr>
             <td colspan="7">
                 <button type="button" class="btn btn-success btn-block btn-add" data-table="groups">
-                    <i class="fa fa-plus"></i>
+                    <i class="fas fa-plus"></i>
                 </button>
             </td>
         </tr>

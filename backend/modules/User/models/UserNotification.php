@@ -30,8 +30,6 @@ class UserNotification extends ActiveRecord
                     'label' => Yii::t('app_notification', 'You have new order'),
                     'url' => ['/order/order/index', 'OrderSearch[id]' => $this->action_id],
                 ];
-            default:
-                return null;
         }
     }
     

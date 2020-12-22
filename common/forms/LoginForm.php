@@ -9,11 +9,11 @@ use backend\modules\User\models\User;
 
 class LoginForm extends Model
 {
+    private $user;
+    
     public $username;
     public $password;
     public $remember_me = true;
-    
-    private $_user;
     
     public function rules()
     {
@@ -35,29 +35,15 @@ class LoginForm extends Model
     
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('app', 'Incorrect password'));
-            }
+        $this->user = User::findByUsername($this->username);
+        
+        if (!$this->user || !$this->user->validatePassword($this->password)) {
+            $this->addError($attribute, Yii::t('app', 'Incorrect password'));
         }
     }
     
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->remember_me ? 3600 * 24 * 30 : 0);
-        }
-        
-        return false;
-    }
-    
-    protected function getUser()
-    {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
-        }
-        
-        return $this->_user;
+        return Yii::$app->user->login($this->user, $this->remember_me ? 3600 * 24 * 30 : 0);
     }
 }

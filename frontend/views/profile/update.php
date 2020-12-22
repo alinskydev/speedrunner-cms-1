@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= $form->field($model, 'address')->textArea(['rows' => 5]) ?>
     
     <?= $form->field($model, 'new_password')->passwordInput() ?>
-    <?= $form->field($model, 'confirm_password')->passwordInput() ?>
+    <?= $form->field($model, 'confirm_password', ['enableClientValidation' => false])->passwordInput() ?>
     
     <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary btn-block']) ?>
 <?php ActiveForm::end(); ?>

@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         
         $('input[name="fancytree_search"]').on('keyup', function(e) {
             tree = $.ui.fancytree.getTree();
-            tree.filterNodes.call(tree, $(this).val(), {});
+            tree.filterBranches.call(tree, $(this).val(), {});
         });
     });
 </script>

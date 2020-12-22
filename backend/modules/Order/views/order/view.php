@@ -54,6 +54,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 'contentOptions' => ['class' => 'd-none'],
                             ],
                             'id',
+                            'total_quantity',
+                            'total_price',
                             [
                                 'attribute' => 'delivery_type',
                                 'format' => 'raw',
@@ -94,8 +96,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ])->dropDownList(ArrayHelper::getColumn($model->statuses(), 'label'));
                                 }
                             ],
-                            'total_quantity',
-                            'total_price',
                             'created',
                             'updated',
                         ],

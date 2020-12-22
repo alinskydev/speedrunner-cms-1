@@ -36,7 +36,7 @@ use yii\helpers\Html;
             
             <td class="text-right">
                 <button type="button" class="btn btn-danger btn-remove">
-                    <span class="fa fa-times"></span>
+                    <span class="fas fa-times"></span>
                 </button>
             </td>
         </tr>
@@ -45,7 +45,7 @@ use yii\helpers\Html;
         <tr>
             <td colspan="7">
                 <button type="button" class="btn btn-success btn-block btn-add" data-table="view_relations">
-                    <i class="fa fa-plus"></i>
+                    <i class="fas fa-plus"></i>
                 </button>
             </td>
         </tr>

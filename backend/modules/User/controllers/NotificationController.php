@@ -15,11 +15,19 @@ class NotificationController extends Controller
     {
         $model = UserNotification::findOne($id);
         
-        if (!$model || $model->user_id != Yii::$app->user->identity->id) {
+        if (!$model || $model->user_id != Yii::$app->user->id) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
         $model->delete();
         return $this->redirect(ArrayHelper::getValue($model->actionType(), 'url'));
+    }
+    
+    public function actionClear()
+    {
+        UserNotification::deleteAll(['user_id' => Yii::$app->user->id]);
+        Yii::$app->session->addFlash('success', Yii::t('app', 'All notifications removed'));
+        
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

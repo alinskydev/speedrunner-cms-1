@@ -8,7 +8,6 @@
 namespace yii\web;
 
 use Yii;
-use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\base\InlineAction;
 use yii\helpers\Url;
@@ -17,6 +16,9 @@ use yii\helpers\Url;
  * Controller is the base class of web controllers.
  *
  * For more details and usage information on Controller, see the [guide article on controllers](guide:structure-controllers).
+ *
+ * @property Request $request
+ * @property Response $response
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -130,7 +132,12 @@ class Controller extends \yii\base\Controller
             $name = $param->getName();
             if (array_key_exists($name, $params)) {
                 $isValid = true;
-                if ($param->isArray()) {
+                if (PHP_VERSION_ID >= 80000) {
+                    $isArray = ($type = $param->getType()) instanceof \ReflectionNamedType && $type->getName() === 'array';
+                } else {
+                    $isArray = $param->isArray();
+                }
+                if ($isArray) {
                     $params[$name] = (array)$params[$name];
                 } elseif (is_array($params[$name])) {
                     $isValid = false;

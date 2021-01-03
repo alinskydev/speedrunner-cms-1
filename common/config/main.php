@@ -1,6 +1,6 @@
 <?php
 
-$app = explode('/', $_SERVER['SCRIPT_NAME'])[1];
+$app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
 
 return [
     'timeZone' => 'UTC',

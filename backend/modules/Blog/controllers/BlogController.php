@@ -5,6 +5,8 @@ namespace backend\modules\Blog\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Blog\models\Blog;
 use backend\modules\Blog\modelsSearch\BlogSearch;
@@ -14,17 +16,52 @@ use backend\modules\Blog\modelsSearch\BlogRateSearch;
 
 class BlogController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlogSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogSearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new Blog(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new Blog(),
+            ],
+            'image-sort' => [
+                'class' => ImageSortAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['images'],
+            ],
+            'image-delete' => [
+                'class' => ImageDeleteAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['images'],
+            ],
+        ];
+    }
+    
+    private function findModel()
+    {
+        if ($model = Blog::find()->with(['tags'])->andWhere(['id' => Yii::$app->request->get('id')])->one()) {
+            $model->tags_tmp = $model->tags;
+            return $model;
+        }
     }
     
     public function actionView($id)
     {
         if ($model = Blog::findOne($id)) {
             $search_models = [
-                'comments' => new BlogCommentSearch,
-                'rates' => new BlogRateSearch
+                'comments' => new BlogCommentSearch(),
+                'rates' => new BlogRateSearch(),
             ];
             
             foreach ($search_models as $key => $s_m) {
@@ -43,63 +80,6 @@ class BlogController extends Controller
             ]);
         } else {
             $this->redirect(['index']);
-        }
-    }
-    
-    public function actionCreate()
-    {
-        return Yii::$app->sr->record->updateModel(new Blog);
-    }
-    
-    public function actionUpdate($id)
-    {
-        if ($model = Blog::find()->with(['tags'])->andWhere(['id' => $id])->one()) {
-            $model->tags_tmp = $model->tags;
-            return Yii::$app->sr->record->updateModel($model);
-        } else {
-            return $this->redirect(['index']);
-        }
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new Blog);
-    }
-    
-    public function actionImageSort($id, $attr)
-    {
-        if (!in_array($attr, ['images'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = Blog::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        return $model->updateAttributes([$attr => array_values($images)]);
-    }
-    
-    public function actionImageDelete($id, $attr)
-    {
-        if (!in_array($attr, ['images'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = Blog::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->{$attr};
-        $key = array_search(Yii::$app->request->post('key'), $images);
-        
-        if ($key !== false) {
-            Yii::$app->sr->file->delete($images[$key]);
-            unset($images[$key]);
-            
-            return $model->updateAttributes([$attr => array_values($images)]);
         }
     }
 }

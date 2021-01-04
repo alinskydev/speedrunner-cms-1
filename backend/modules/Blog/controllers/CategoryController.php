@@ -4,6 +4,7 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Blog\models\BlogCategory;
 use backend\modules\Blog\modelsSearch\BlogCategorySearch;
@@ -11,24 +12,30 @@ use backend\modules\Blog\modelsSearch\BlogCategorySearch;
 
 class CategoryController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlogCategorySearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogCategorySearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new BlogCategory(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlogCategory(),
+            ],
+        ];
     }
     
-    public function actionCreate()
+    private function findModel()
     {
-        return Yii::$app->sr->record->updateModel(new BlogCategory);
-    }
-    
-    public function actionUpdate($id)
-    {
-        $model = BlogCategory::findOne($id);
-        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new BlogCategory);
+        return BlogCategory::findOne(Yii::$app->request->get('id'));
     }
 }

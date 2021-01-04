@@ -37,7 +37,7 @@ class BlockPage extends ActiveRecord
                 'type' => 'oneMany',
                 'attributes' => [
                     'blocks_tmp' => [
-                        'model' => new Block,
+                        'model' => new Block(),
                         'relation' => 'blocks',
                         'attributes' => [
                             'main' => 'page_id',

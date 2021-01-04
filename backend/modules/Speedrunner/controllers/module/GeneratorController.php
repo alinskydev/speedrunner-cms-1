@@ -22,7 +22,7 @@ class GeneratorController extends Controller
     
     public function actionIndex()
     {
-        $model = new GeneratorForm;
+        $model = new GeneratorForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
@@ -72,7 +72,7 @@ class GeneratorController extends Controller
         $columns = $table_schema->columns;
         
         $data['attrs'] = $this->renderAjax('_attr_fields', [
-            'model' => new GeneratorForm,
+            'model' => new GeneratorForm(),
             'table_name' => $table_name,
             'columns' => $columns,
         ]);

@@ -44,7 +44,7 @@ class GeneratorForm extends Model
             $page->delete();
         }
         
-        $page = new Staticpage;
+        $page = new Staticpage();
         $page->name = $this->name;
         $page->label = $this->label;
         $page->has_seo_meta = $this->has_seo_meta;
@@ -53,7 +53,7 @@ class GeneratorForm extends Model
             $attrs = ['name', 'label', 'type', 'part_name', 'part_index', 'has_translation'];
             
             foreach ($this->blocks as $b) {
-                $block = new StaticpageBlock;
+                $block = new StaticpageBlock();
                 $block->item_id = $page->id;
                 
                 foreach ($attrs as $a) {

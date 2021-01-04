@@ -14,7 +14,7 @@ class DocumentatorController extends Controller
     {
         //        FORM
         
-        $model = new DocumentatorForm;
+        $model = new DocumentatorForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {

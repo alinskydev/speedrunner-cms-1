@@ -5,6 +5,7 @@ namespace backend\modules\Block\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\modelsSearch\BlockPageSearch;
@@ -15,16 +16,39 @@ use backend\modules\Block\models\BlockImage;
 
 class PageController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlockPageSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlockPageSearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new BlockPage(),
+                'view' => 'assign',
+                'params' => [
+                    'types' => BlockType::find()->all(),
+                ],
+            ],
+            'assign' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->assign(),
+                'view' => 'assign',
+                'params' => [
+                    'types' => BlockType::find()->all(),
+                ],
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlockPage(),
+            ],
+        ];
     }
     
-    public function actionCreate()
+    private function assign()
     {
-        return Yii::$app->sr->record->updateModel(new BlockPage, 'assign', [
-            'types' => BlockType::find()->all(),
-        ]);
+        return BlockPage::findOne(Yii::$app->request->get('id'));
     }
     
     public function actionUpdate($id)
@@ -58,29 +82,13 @@ class PageController extends Controller
         ]);
     }
     
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new BlockPage);
-    }
-    
-    public function actionAssign($id)
-    {
-        if (!($model = BlockPage::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        return Yii::$app->sr->record->updateModel($model, 'assign', [
-            'types' => BlockType::find()->all(),
-        ]);
-    }
-    
     public function actionImageSort($id)
     {
         if (!($model = Block::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $stack = Yii::$app->request->post('sort')['stack'];
+        $stack = Yii::$app->request->post('sort')['stack'] ?? [];
         $images = ArrayHelper::getColumn($stack, 'key');
         
         if ($model->type->has_translation) {

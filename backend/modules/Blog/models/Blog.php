@@ -122,13 +122,13 @@ class Blog extends ActiveRecord
                 $tag_mdl = BlogTag::findOne($value);
                 
                 if (!$tag_mdl) {
-                    $tag_mdl = new BlogTag();
+                    $tag_mdl = new BlogTag;
                     $tag_mdl->name = $value;
                     $tag_mdl->save();
                 }
                 
                 if (!in_array($value, $tags)) {
-                    $relation_mdl = new BlogTagRef();
+                    $relation_mdl = new BlogTagRef;
                     $relation_mdl->blog_id = $this->id;
                     $relation_mdl->tag_id = $tag_mdl->id;
                     $relation_mdl->lang = Yii::$app->language;

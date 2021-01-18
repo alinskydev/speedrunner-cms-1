@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Product\models\ProductSpecification;
 use backend\modules\Product\modelsSearch\ProductSpecificationSearch;
@@ -12,30 +11,24 @@ use backend\modules\Product\modelsSearch\ProductSpecificationSearch;
 
 class SpecificationController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new ProductSpecificationSearch(),
-            ],
-            'create' => [
-                'class' => UpdateAction::className(),
-                'model' => new ProductSpecification(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => DeleteAction::className(),
-                'model' => new ProductSpecification(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new ProductSpecificationSearch);
     }
     
-    private function findModel()
+    public function actionCreate()
     {
-        return ProductSpecification::find()->with(['options'])->andWhere(['id' => $id])->one();
+        return Yii::$app->sr->record->updateModel(new ProductSpecification);
+    }
+    
+    public function actionUpdate($id)
+    {
+        $model = ProductSpecification::find()->with(['options'])->andWhere(['id' => $id])->one();
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
+    }
+    
+    public function actionDelete()
+    {
+        return Yii::$app->sr->record->deleteModel(new ProductSpecification);
     }
 }

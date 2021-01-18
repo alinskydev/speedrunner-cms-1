@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div id="tab-products" class="tab-pane fade">
                 <?= $this->render('_products', [
                     'model' => $model,
-                    'product_mdl' => new OrderProduct(),
+                    'product_mdl' => new OrderProduct,
                 ]); ?>
             </div>
         </div>

@@ -90,7 +90,7 @@ class DocumentatorForm extends Model
                     $properties = $controller_reflection->getDefaultProperties();
                     
                     if (isset($properties['forms'][$a_key])) {
-                        $form = new $properties['forms'][$a_key]();
+                        $form = new $properties['forms'][$a_key];
                         
                         foreach ($form->rules() as $rule) {
                             foreach ($rule[0] as $r) {

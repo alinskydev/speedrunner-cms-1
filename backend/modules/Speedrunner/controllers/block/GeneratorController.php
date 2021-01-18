@@ -14,7 +14,7 @@ class GeneratorController extends Controller
 {
     public function actionIndex()
     {
-        $model = new GeneratorForm();
+        $model = new GeneratorForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {

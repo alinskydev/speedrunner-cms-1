@@ -28,7 +28,7 @@ class ProductSpecification extends ActiveRecord
                 'type' => 'oneMany',
                 'attributes' => [
                     'options_tmp' => [
-                        'model' => new ProductSpecificationOption(),
+                        'model' => new ProductSpecificationOption,
                         'relation' => 'options',
                         'attributes' => [
                             'main' => 'item_id',

@@ -19,7 +19,7 @@ class CategoryController extends Controller
     
     public function actionCreate()
     {
-        $model = new ProductCategory();
+        $model = new ProductCategory;
         
         if ($model->load(Yii::$app->request->post()) && $model->makeRoot()) {
             if ($parent = ProductCategory::findOne($model->parent_id)) {

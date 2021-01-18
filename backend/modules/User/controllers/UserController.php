@@ -4,7 +4,6 @@ namespace backend\modules\User\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\User\models\User;
 use backend\modules\User\modelsSearch\UserSearch;
@@ -12,30 +11,24 @@ use backend\modules\User\modelsSearch\UserSearch;
 
 class UserController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new UserSearch(),
-            ],
-            'create' => [
-                'class' => UpdateAction::className(),
-                'model' => new User(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => DeleteAction::className(),
-                'model' => new User(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new UserSearch);
     }
     
-    private function findModel()
+    public function actionCreate()
     {
-        return User::findOne(Yii::$app->request->get('id'));
+        return Yii::$app->sr->record->updateModel(new User);
+    }
+    
+    public function actionUpdate($id)
+    {
+        $model = User::findOne($id);
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
+    }
+    
+    public function actionDelete($id)
+    {
+        return Yii::$app->sr->record->deleteModel(new User);
     }
 }

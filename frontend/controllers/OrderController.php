@@ -31,7 +31,7 @@ class OrderController extends Controller
     
     public function actionCreate()
     {
-        $model = new OrderForm();
+        $model = new OrderForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($key = $model->save()) {

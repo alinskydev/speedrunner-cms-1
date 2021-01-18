@@ -4,7 +4,6 @@ namespace backend\modules\Translation\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Translation\models\TranslationSource;
 use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
@@ -12,22 +11,14 @@ use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
 
 class SourceController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new TranslationSourceSearch(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new TranslationSourceSearch);
     }
     
-    private function findModel()
+    public function actionUpdate($id)
     {
-        return TranslationSource::findOne(Yii::$app->request->get('id'));
+        $model = TranslationSource::findOne($id);
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
 }

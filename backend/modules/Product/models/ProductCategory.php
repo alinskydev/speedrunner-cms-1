@@ -46,7 +46,7 @@ class ProductCategory extends ActiveRecord
                 'type' => 'manyMany',
                 'attributes' => [
                     'specifications_tmp' => [
-                        'model' => new ProductCategorySpecificationRef(),
+                        'model' => new ProductCategorySpecificationRef,
                         'relation' => 'specifications',
                         'attributes' => [
                             'main' => 'category_id',

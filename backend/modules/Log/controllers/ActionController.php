@@ -4,7 +4,8 @@ namespace backend\modules\Log\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\modelsSearch\LogActionSearch;
@@ -12,14 +13,9 @@ use backend\modules\Log\modelsSearch\LogActionSearch;
 
 class ActionController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new LogActionSearch(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new LogActionSearch);
     }
     
     public function actionView($id)

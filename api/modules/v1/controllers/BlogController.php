@@ -34,7 +34,7 @@ class BlogController extends Controller
     
     public function actionIndex()
     {
-        $searchModel = new BlogSearch();
+        $searchModel = new BlogSearch;
         $dataProvider = $searchModel->search([$searchModel->formName() => Yii::$app->request->get('filter')]);
         
         return [

@@ -4,7 +4,6 @@ namespace backend\modules\Banner\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Banner\models\Banner;
 use backend\modules\Banner\modelsSearch\BannerSearch;
@@ -12,22 +11,14 @@ use backend\modules\Banner\modelsSearch\BannerSearch;
 
 class BannerController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new BannerSearch(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new BannerSearch);
     }
     
-    private function findModel()
+    public function actionUpdate($id)
     {
-        return Banner::find()->with(['groups'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        $model = Banner::find()->with(['groups'])->andWhere(['id' => $id])->one();
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
     }
 }

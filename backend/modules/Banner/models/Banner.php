@@ -24,7 +24,7 @@ class Banner extends ActiveRecord
                 'type' => 'oneMany',
                 'attributes' => [
                     'groups_tmp' => [
-                        'model' => new BannerGroup(),
+                        'model' => new BannerGroup,
                         'relation' => 'groups',
                         'attributes' => [
                             'main' => 'item_id',

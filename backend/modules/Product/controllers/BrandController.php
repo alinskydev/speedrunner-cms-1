@@ -4,7 +4,6 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Product\models\ProductBrand;
 use backend\modules\Product\modelsSearch\ProductBrandSearch;
@@ -12,30 +11,24 @@ use backend\modules\Product\modelsSearch\ProductBrandSearch;
 
 class BrandController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new ProductBrandSearch(),
-            ],
-            'create' => [
-                'class' => UpdateAction::className(),
-                'model' => new ProductBrand(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => DeleteAction::className(),
-                'model' => new ProductBrand(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new ProductBrandSearch);
     }
     
-    private function findModel()
+    public function actionCreate()
     {
-        return ProductBrand::findOne(Yii::$app->request->get('id'));
+        return Yii::$app->sr->record->updateModel(new ProductBrand);
+    }
+    
+    public function actionUpdate($id)
+    {
+        $model = ProductBrand::findOne($id);
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
+    }
+    
+    public function actionDelete()
+    {
+        return Yii::$app->sr->record->deleteModel(new ProductBrand);
     }
 }

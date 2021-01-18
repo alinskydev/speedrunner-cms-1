@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             [
                 'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{link} {update} {delete}',
+                'template' => '{link} {view} {delete}',
                 'buttons' => [
                     'link' => function($url, $model, $key) {
                         return Html::a(

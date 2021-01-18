@@ -44,7 +44,7 @@ class Product extends ActiveRecord
                 'type' => 'oneMany',
                 'attributes' => [
                     'variations_tmp' => [
-                        'model' => new ProductVariation(),
+                        'model' => new ProductVariation,
                         'relation' => 'variations',
                         'attributes' => [
                             'main' => 'product_id',
@@ -58,7 +58,7 @@ class Product extends ActiveRecord
                 'type' => 'manyMany',
                 'attributes' => [
                     'categories_tmp' => [
-                        'model' => new ProductCategoryRef(),
+                        'model' => new ProductCategoryRef,
                         'relation' => 'categories',
                         'attributes' => [
                             'main' => 'product_id',
@@ -66,7 +66,7 @@ class Product extends ActiveRecord
                         ],
                     ],
                     'options_tmp' => [
-                        'model' => new ProductOptionRef(),
+                        'model' => new ProductOptionRef,
                         'relation' => 'options',
                         'attributes' => [
                             'main' => 'product_id',
@@ -74,7 +74,7 @@ class Product extends ActiveRecord
                         ],
                     ],
                     'related_tmp' => [
-                        'model' => new ProductRelatedRef(),
+                        'model' => new ProductRelatedRef,
                         'relation' => 'related',
                         'attributes' => [
                             'main' => 'product_id',

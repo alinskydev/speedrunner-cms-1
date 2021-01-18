@@ -4,7 +4,6 @@ namespace backend\modules\Page\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Page\models\Page;
 use backend\modules\Page\modelsSearch\PageSearch;
@@ -12,30 +11,24 @@ use backend\modules\Page\modelsSearch\PageSearch;
 
 class PageController extends Controller
 {
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'index' => [
-                'class' => IndexAction::className(),
-                'modelSearch' => new PageSearch(),
-            ],
-            'create' => [
-                'class' => UpdateAction::className(),
-                'model' => new Page(),
-            ],
-            'update' => [
-                'class' => UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => DeleteAction::className(),
-                'model' => new Page(),
-            ],
-        ];
+        return Yii::$app->sr->record->dataProvider(new PageSearch);
     }
     
-    private function findModel()
+    public function actionCreate()
     {
-        return Page::findOne(Yii::$app->request->get('id'));
+        return Yii::$app->sr->record->updateModel(new Page);
+    }
+    
+    public function actionUpdate($id)
+    {
+        $model = Page::findOne($id);
+        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
+    }
+    
+    public function actionDelete()
+    {
+        return Yii::$app->sr->record->deleteModel(new Page);
     }
 }

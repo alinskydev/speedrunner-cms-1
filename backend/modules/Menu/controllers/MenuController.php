@@ -19,7 +19,7 @@ class MenuController extends Controller
     
     public function actionCreate()
     {
-        $model = new Menu();
+        $model = new Menu;
         
         if ($model->load(Yii::$app->request->post()) && $model->makeRoot()) {
             if ($parent = Menu::findOne($model->parent_id)) {

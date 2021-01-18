@@ -104,7 +104,7 @@ class LogActionBehavior extends Behavior
     
     private function save($model, $type, $changedAttributes, $extraAttributes)
     {
-        $action = new LogAction();
+        $action = new LogAction;
         $action->user_id = Yii::$app->user->id;
         $action->type = $type;
         $action->model_class = StringHelper::basename($model->className());
@@ -134,7 +134,7 @@ class LogActionBehavior extends Behavior
                 $value_new = $model->{$key};
             }
             
-            $attr = new LogActionAttr();
+            $attr = new LogActionAttr;
             $attr->action_id = $action->id;
             $attr->name = $key;
             $attr->value_old = $value_old;
@@ -143,7 +143,7 @@ class LogActionBehavior extends Behavior
         }
         
         foreach ($extraAttributes as $key => $a) {
-            $attr = new LogActionAttr();
+            $attr = new LogActionAttr;
             $attr->action_id = $action->id;
             $attr->name = $key;
             $attr->value_old = $a['old'];

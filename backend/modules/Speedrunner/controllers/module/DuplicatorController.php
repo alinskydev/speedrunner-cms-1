@@ -13,7 +13,7 @@ class DuplicatorController extends Controller
 {
     public function actionIndex()
     {
-        $model = new DuplicatorForm();
+        $model = new DuplicatorForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {

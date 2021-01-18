@@ -63,7 +63,7 @@ class SiteController extends Controller
     
     public function actionContact()
     {
-        $model = new ContactForm();
+        $model = new ContactForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -86,7 +86,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
         
-        $model = new LoginForm();
+        $model = new LoginForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->login();
@@ -108,7 +108,7 @@ class SiteController extends Controller
     
     public function actionSignup()
     {
-        $model = new SignupForm();
+        $model = new SignupForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->signup();
@@ -124,7 +124,7 @@ class SiteController extends Controller
     
     public function actionResetPasswordRequest()
     {
-        $model = new ResetPasswordRequestForm();
+        $model = new ResetPasswordRequestForm;
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {

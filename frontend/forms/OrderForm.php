@@ -26,7 +26,7 @@ class OrderForm extends Model
     
     public function init()
     {
-        $this->order = new Order();
+        $this->order = new Order;
         
         if ($this->user = Yii::$app->user->identity) {
             $this->full_name = $this->user->full_name;
@@ -90,7 +90,7 @@ class OrderForm extends Model
                     continue;
                 }
                 
-                $order_product = new OrderProduct();
+                $order_product = new OrderProduct;
                 $order_product->order_id = $order->id;
                 $order_product->product_id  = $p->id;
                 $order_product->product_json = $p->attributes;

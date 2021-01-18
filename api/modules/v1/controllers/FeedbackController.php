@@ -35,7 +35,7 @@ class FeedbackController extends Controller
     
     public function actionSend()
     {
-        $model = new $this->forms['send']();
+        $model = new $this->forms['send'];
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {

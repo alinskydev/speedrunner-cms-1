@@ -12,7 +12,7 @@ class AuthController extends Controller
     protected $forms = [
         'login' => '\common\forms\LoginForm',
         'signup' => '\frontend\forms\SignupForm',
-        'request-password-reset' => '\frontend\forms\PasswordResetRequestForm',
+        'request-password-reset' => '\frontend\forms\ResetPasswordRequestForm',
     ];
     
     public function behaviors()

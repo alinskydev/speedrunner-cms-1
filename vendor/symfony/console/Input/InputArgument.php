@@ -21,9 +21,9 @@ use Symfony\Component\Console\Exception\LogicException;
  */
 class InputArgument
 {
-    const REQUIRED = 1;
-    const OPTIONAL = 2;
-    const IS_ARRAY = 4;
+    public const REQUIRED = 1;
+    public const OPTIONAL = 2;
+    public const IS_ARRAY = 4;
 
     private $name;
     private $mode;
@@ -38,11 +38,11 @@ class InputArgument
      *
      * @throws InvalidArgumentException When argument mode is not valid
      */
-    public function __construct($name, $mode = null, $description = '', $default = null)
+    public function __construct(string $name, int $mode = null, string $description = '', $default = null)
     {
         if (null === $mode) {
             $mode = self::OPTIONAL;
-        } elseif (!\is_int($mode) || $mode > 7 || $mode < 1) {
+        } elseif ($mode > 7 || $mode < 1) {
             throw new InvalidArgumentException(sprintf('Argument mode "%s" is not valid.', $mode));
         }
 

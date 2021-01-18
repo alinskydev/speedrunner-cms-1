@@ -25,7 +25,7 @@ final class ConsoleEvents
      *
      * @Event("Symfony\Component\Console\Event\ConsoleCommandEvent")
      */
-    const COMMAND = 'console.command';
+    public const COMMAND = 'console.command';
 
     /**
      * The TERMINATE event allows you to attach listeners after a command is
@@ -33,20 +33,7 @@ final class ConsoleEvents
      *
      * @Event("Symfony\Component\Console\Event\ConsoleTerminateEvent")
      */
-    const TERMINATE = 'console.terminate';
-
-    /**
-     * The EXCEPTION event occurs when an uncaught exception appears
-     * while executing Command#run().
-     *
-     * This event allows you to deal with the exception or
-     * to modify the thrown exception.
-     *
-     * @Event("Symfony\Component\Console\Event\ConsoleExceptionEvent")
-     *
-     * @deprecated The console.exception event is deprecated since version 3.3 and will be removed in 4.0. Use the console.error event instead.
-     */
-    const EXCEPTION = 'console.exception';
+    public const TERMINATE = 'console.terminate';
 
     /**
      * The ERROR event occurs when an uncaught exception or error appears.
@@ -56,5 +43,5 @@ final class ConsoleEvents
      *
      * @Event("Symfony\Component\Console\Event\ConsoleErrorEvent")
      */
-    const ERROR = 'console.error';
+    public const ERROR = 'console.error';
 }

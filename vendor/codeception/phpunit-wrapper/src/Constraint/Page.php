@@ -23,7 +23,7 @@ class Page extends \PHPUnit\Framework\Constraint\Constraint
      *
      * @return bool
      */
-    protected function matches($other)
+    protected function matches($other) : bool
     {
         $other = $this->normalizeText($other);
         return mb_stripos($other, $this->string, null, 'UTF-8') !== false;
@@ -44,7 +44,7 @@ class Page extends \PHPUnit\Framework\Constraint\Constraint
      *
      * @return string
      */
-    public function toString()
+    public function toString() : string
     {
         return sprintf(
             'contains "%s"',
@@ -52,12 +52,12 @@ class Page extends \PHPUnit\Framework\Constraint\Constraint
         );
     }
 
-    protected function failureDescription($pageContent)
+    protected function failureDescription($pageContent) : string
     {
         $message = $this->uriMessage('on page');
         $message->append("\n--> ");
-        $message->append(substr($pageContent, 0, 300));
-        if (strlen($pageContent) > 300) {
+        $message->append(mb_substr($pageContent, 0, 300, 'utf-8'));
+        if (mb_strlen($pageContent, 'utf-8') > 300) {
             $debugMessage = new Message(
                 "[Content too long to display. See complete response in '" . codecept_output_dir() . "' directory]"
             );

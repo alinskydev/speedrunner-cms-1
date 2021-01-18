@@ -28,9 +28,6 @@ Use following urls to get application you need:
 * `<your-domain>/admin` for **backend** (login: admin, password: admin123)
 * `<your-domain>/` for **frontend**
 
-## Important notes
-* Do not use update command `composer update-all`, framework only (!) updating is allowed. Example: `composer update yiisoft/yii2`
-
 ## Documentation
 In progress...
 

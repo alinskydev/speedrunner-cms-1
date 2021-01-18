@@ -7,6 +7,8 @@ use yii\web\Controller;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
@@ -17,17 +19,60 @@ use backend\modules\Product\modelsSearch\ProductRateSearch;
 
 class ProductController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new ProductSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new ProductSearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new Product(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new Product(),
+            ],
+            'image-sort' => [
+                'class' => ImageSortAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['images'],
+            ],
+            'image-delete' => [
+                'class' => ImageDeleteAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['images'],
+            ],
+        ];
+    }
+    
+    private function findModel()
+    {
+        $model = Product::find()
+            ->with([
+                'brand', 'categories',
+                'variations.specification', 'variations.option'
+            ])
+            ->andWhere(['id' => $id])
+            ->one();
+        
+        if ($model) {
+            $model->related_tmp = $model->related;
+            return $model;
+        }
     }
     
     public function actionView($id)
     {
         if ($model = Product::findOne($id)) {
             $search_models = [
-                'comments' => new ProductCommentSearch,
-                'rates' => new ProductRateSearch
+                'comments' => new ProductCommentSearch(),
+                'rates' => new ProductRateSearch(),
             ];
             
             foreach ($search_models as $key => $s_m) {
@@ -46,71 +91,6 @@ class ProductController extends Controller
             ]);
         } else {
             $this->redirect(['index']);
-        }
-    }
-    
-    public function actionCreate()
-    {
-        return Yii::$app->sr->record->updateModel(new Product);
-    }
-    
-    public function actionUpdate($id)
-    {
-        $model = Product::find()
-            ->with([
-                'brand', 'categories',
-                'variations.specification', 'variations.option'
-            ])
-            ->andWhere(['id' => $id])
-            ->one();
-        
-        if ($model) {
-            $model->related_tmp = $model->related;
-            return Yii::$app->sr->record->updateModel($model);
-        } else {
-            return $this->redirect(['index']);
-        }
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new Product);
-    }
-    
-    public function actionImageSort($id, $attr)
-    {
-        if (!in_array($attr, ['images'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = Product::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        return $model->updateAttributes([$attr => array_values($images)]);
-    }
-    
-    public function actionImageDelete($id, $attr)
-    {
-        if (!in_array($attr, ['images'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = Product::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->{$attr};
-        $key = array_search(Yii::$app->request->post('key'), $images);
-        
-        if ($key !== false) {
-            Yii::$app->sr->file->delete($images[$key]);
-            unset($images[$key]);
-            
-            return $model->updateAttributes([$attr => array_values($images)]);
         }
     }
     

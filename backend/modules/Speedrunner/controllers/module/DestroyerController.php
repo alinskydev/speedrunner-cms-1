@@ -13,7 +13,7 @@ class DestroyerController extends Controller
 {
     public function actionIndex()
     {
-        $model = new DestroyerForm;
+        $model = new DestroyerForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {

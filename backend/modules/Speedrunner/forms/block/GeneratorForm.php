@@ -36,7 +36,7 @@ class GeneratorForm extends Model
         $attrs = ['name', 'label', 'type', 'image', 'has_translation'];
         
         foreach ($this->blocks as $b) {
-            $block = new BlockType;
+            $block = new BlockType();
             
             foreach ($attrs as $a) {
                 $block->{$a} = $b[$a];

@@ -4,7 +4,7 @@ namespace backend\modules\Order\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\helpers\ArrayHelper;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Order\models\Order;
 use backend\modules\Order\modelsSearch\OrderSearch;
@@ -12,32 +12,26 @@ use backend\modules\Order\modelsSearch\OrderSearch;
 
 class OrderController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new OrderSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new OrderSearch(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new Order(),
+            ],
+        ];
     }
     
-    public function actionView($id)
+    private function findModel()
     {
-        if (!($model = Order::find()->with(['products'])->andWhere(['id' => $id])->one())) {
-            return $this->redirect(['index']);
-        }
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->get('reload-page')) {
-                return $this->redirect(Yii::$app->request->referrer);
-            } else {
-                return $this->redirect(['index']);
-            }
-        }
-        
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new Order);
+        return Order::find()->with(['products'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
 }

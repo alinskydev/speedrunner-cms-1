@@ -39,7 +39,7 @@ class AuthController extends Controller
     
     public function actionLogin()
     {
-        $model = new $this->forms['login'];
+        $model = new $this->forms['login']();
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
@@ -63,7 +63,7 @@ class AuthController extends Controller
     
     public function actionSignup()
     {
-        $model = new $this->forms['signup'];
+        $model = new $this->forms['signup']();
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {
@@ -87,7 +87,7 @@ class AuthController extends Controller
     
     public function actionRequestPasswordReset()
     {
-        $model = new $this->forms['reset-password'];
+        $model = new $this->forms['reset-password']();
         $model->load([$model->formName() => Yii::$app->request->post()]);
         
         if ($model->validate()) {

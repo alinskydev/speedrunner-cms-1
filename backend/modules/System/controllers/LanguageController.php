@@ -4,6 +4,7 @@ namespace backend\modules\System\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\System\models\SystemLanguage;
 use backend\modules\System\modelsSearch\SystemLanguageSearch;
@@ -11,24 +12,30 @@ use backend\modules\System\modelsSearch\SystemLanguageSearch;
 
 class LanguageController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new SystemLanguageSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new SystemLanguageSearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new SystemLanguage(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new SystemLanguage(),
+            ],
+        ];
     }
     
-    public function actionCreate()
+    private function findModel()
     {
-        return Yii::$app->sr->record->updateModel(new SystemLanguage);
-    }
-    
-    public function actionUpdate($id)
-    {
-        $model = SystemLanguage::findOne($id);
-        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
-    }
-    
-    public function actionDelete($id)
-    {
-        return Yii::$app->sr->record->deleteModel(new SystemLanguage);
+        return SystemLanguage::findOne(Yii::$app->request->get('id'));
     }
 }

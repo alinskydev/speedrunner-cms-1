@@ -4,6 +4,7 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Blog\models\BlogComment;
 use backend\modules\Blog\modelsSearch\BlogCommentSearch;
@@ -11,9 +12,18 @@ use backend\modules\Blog\modelsSearch\BlogCommentSearch;
 
 class CommentController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlogCommentSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogCommentSearch(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlogComment(),
+            ],
+        ];
     }
     
     public function actionView($id)
@@ -29,10 +39,5 @@ class CommentController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new BlogComment);
     }
 }

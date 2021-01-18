@@ -16,7 +16,10 @@ namespace backend\modules\<?= $model->module_name ?>\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\helpers\ArrayHelper;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+<?php if (isset($attrs_fields['images'])) { ?>
+use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
+<?php } ?>
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;
 use backend\modules\<?= $model->module_name ?>\modelsSearch\<?= $model->table_name ?>Search;
@@ -24,85 +27,59 @@ use backend\modules\<?= $model->module_name ?>\modelsSearch\<?= $model->table_na
 
 class <?= $model->controller_name ?>Controller extends Controller
 {
-<?php if (in_array('index', $model->controller_actions)) { ?>
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new <?= $model->table_name ?>Search);
-    }
+        return [
+<?php if (in_array('index', $model->controller_actions)) { ?>
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogCategorySearch(),
+            ],
 <?php } ?>
 <?php if (in_array('view', $model->controller_actions)) { ?>
-    
-    public function actionView($id)
-    {
-        if ($model = <?= $model->table_name ?>::findOne($id)) {
-            return $this->render('view', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->redirect(['index']);
-        }
-    }
+            'view' => [
+                'class' => ViewAction::className(),
+                'model' => $this->findModel(),
+            ],
 <?php } ?>
 <?php if (in_array('create', $model->controller_actions)) { ?>
-    
-    public function actionCreate()
-    {
-        return Yii::$app->sr->record->updateModel(new <?= $model->table_name ?>);
-    }
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new BlogCategory(),
+            ],
 <?php } ?>
 <?php if (in_array('update', $model->controller_actions)) { ?>
-    
-    public function actionUpdate($id)
-    {
-        $model = <?= $model->table_name ?>::findOne($id);
-        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
-    }
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
 <?php } ?>
 <?php if (in_array('delete', $model->controller_actions)) { ?>
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new <?= $model->table_name ?>);
-    }
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlogCategory(),
+            ],
 <?php } ?>
 <?php if (isset($attrs_fields['images'])) { ?>
-<?php $image_attrs = ArrayHelper::getColumn($attrs_fields['images'], 'name') ?>
-    
-    public function actionImageSort($id, $attr)
-    {
-        if (!in_array($attr, ['<?= implode("', '", $image_attrs) ?>'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = <?= $model->table_name ?>::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $stack = Yii::$app->request->post('sort')['stack'];
-        $images = ArrayHelper::getColumn($stack, 'key');
-        
-        return $model->updateAttributes([$attr => array_values($images)]);
+<?php $image_attrs = ArrayHelper::getColumn($attrs_fields['images'], 'name'); ?>
+            'image-sort' => [
+                'class' => ImageSortAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['<?= implode("', '", $image_attrs) ?>'],
+            ],
+            'image-delete' => [
+                'class' => ImageDeleteAction::className(),
+                'model' => $this->findModel(),
+                'allowed_attributes' => ['<?= implode("', '", $image_attrs) ?>'],
+            ],
+<?php } ?>
+        ];
     }
+<?php if (in_array('view', $model->controller_actions) || in_array('update', $model->controller_actions)) { ?>
     
-    public function actionImageDelete($id, $attr)
+    private function findModel()
     {
-        if (!in_array($attr, ['<?= implode("', '", $image_attrs) ?>'])) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        if (!($model = <?= $model->table_name ?>::findOne($id))) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        $images = $model->{$attr};
-        $key = array_search(Yii::$app->request->post('key'), $images);
-        
-        if ($key !== false) {
-            Yii::$app->sr->file->delete($images[$key]);
-            unset($images[$key]);
-            
-            return $model->updateAttributes([$attr => array_values($images)]);
-        }
+        return <?= $model->table_name ?>::findOne(Yii::$app->request->get('id'));
     }
 <?php } ?>
 <?php foreach ($controller_extra_actions as $action) { ?>

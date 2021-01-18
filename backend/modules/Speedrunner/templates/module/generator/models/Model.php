@@ -12,7 +12,7 @@ $attrs_fields = ArrayHelper::index($model->attrs_fields, null, 'type');
 //        RULES
 
 foreach ($model->view_relations as $r) {
-    $columns[$r['var_name']] = new ColumnSchema;
+    $columns[$r['var_name']] = new ColumnSchema();
     $columns[$r['var_name']]->name = $r['var_name'];
     $columns[$r['var_name']]->allowNull = true;
     $columns[$r['var_name']]->type = 'json';
@@ -86,7 +86,7 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'attributes' => [
 <?php foreach ($model->view_relations as $r) { ?>
                     '<?= $r['var_name'] ?>' => [
-                        'model' => new <?= $r['model'] ?>,
+                        'model' => new <?= $r['model'] ?>(),
                         'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
                         'attributes' => [
                             'main' => 'item_id',

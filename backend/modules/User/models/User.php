@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'type' => 'oneOne',
                 'attributes' => [
                     'profile' => [
-                        'model' => new UserProfile,
+                        'model' => new UserProfile(),
                         'relation' => 'profile',
                         'attributes' => [
                             'main' => 'user_id',

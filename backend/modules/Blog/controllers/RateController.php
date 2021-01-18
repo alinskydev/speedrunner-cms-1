@@ -4,6 +4,7 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Blog\models\BlogRate;
 use backend\modules\Blog\modelsSearch\BlogRateSearch;
@@ -11,13 +12,17 @@ use backend\modules\Blog\modelsSearch\BlogRateSearch;
 
 class RateController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlogRateSearch);
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new BlogRate);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogRateSearch(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlogRate(),
+            ],
+        ];
     }
 }

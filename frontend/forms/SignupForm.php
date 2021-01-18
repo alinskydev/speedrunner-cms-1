@@ -47,7 +47,7 @@ class SignupForm extends Model
     
     public function signup()
     {
-        $user = new User;
+        $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->role = 'registered';

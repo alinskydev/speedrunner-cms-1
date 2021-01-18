@@ -4,6 +4,7 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Blog\models\BlogTag;
 use backend\modules\Blog\modelsSearch\BlogTagSearch;
@@ -11,24 +12,30 @@ use backend\modules\Blog\modelsSearch\BlogTagSearch;
 
 class TagController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlogTagSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlogTagSearch(),
+            ],
+            'create' => [
+                'class' => UpdateAction::className(),
+                'model' => new BlogTag(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'model' => new BlogTag(),
+            ],
+        ];
     }
     
-    public function actionCreate()
+    private function findModel()
     {
-        return Yii::$app->sr->record->updateModel(new BlogTag);
-    }
-    
-    public function actionUpdate($id)
-    {
-        $model = BlogTag::findOne($id);
-        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
-    }
-    
-    public function actionDelete()
-    {
-        return Yii::$app->sr->record->deleteModel(new BlogTag);
+        return BlogTag::findOne(Yii::$app->request->get('id'));
     }
 }

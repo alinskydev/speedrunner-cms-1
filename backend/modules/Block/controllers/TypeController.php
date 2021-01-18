@@ -4,6 +4,7 @@ namespace backend\modules\Block\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Block\models\BlockType;
 use backend\modules\Block\modelsSearch\BlockTypeSearch;
@@ -11,14 +12,22 @@ use backend\modules\Block\modelsSearch\BlockTypeSearch;
 
 class TypeController extends Controller
 {
-    public function actionIndex()
+    public function actions()
     {
-        return Yii::$app->sr->record->dataProvider(new BlockTypeSearch);
+        return [
+            'index' => [
+                'class' => IndexAction::className(),
+                'modelSearch' => new BlockTypeSearch(),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'model' => $this->findModel(),
+            ],
+        ];
     }
     
-    public function actionUpdate($id)
+    private function findModel()
     {
-        $model = BlockType::findOne($id);
-        return $model ? Yii::$app->sr->record->updateModel($model) : $this->redirect(['index']);
+        return BlockType::findOne(Yii::$app->request->get('id'));
     }
 }

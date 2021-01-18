@@ -14,7 +14,7 @@
  * Add a child counter bubble to tree nodes.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2019, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
@@ -56,7 +56,7 @@
 	// New member functions can be added to the `Fancytree` class.
 	// This function will be available for every tree instance:
 	//
-	//     var tree = $("#tree").fancytree("getTree");
+	//     var tree = $.ui.fancytree.getTree("#tree");
 	//     tree.countSelected(false);
 
 	$.ui.fancytree._FancytreeClass.prototype.countSelected = function(topOnly) {
@@ -101,7 +101,7 @@
 		} else {
 			$badge.remove();
 		}
-		if (extOpts.deep && !node.isTopLevel() && !node.isRoot()) {
+		if (extOpts.deep && !node.isTopLevel() && !node.isRootNode()) {
 			node.parent.updateCounters();
 		}
 	};

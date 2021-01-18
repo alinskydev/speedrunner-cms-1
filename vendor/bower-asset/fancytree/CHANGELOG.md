@@ -1,4 +1,56 @@
-# 2.33.1-0 / Unreleased
+# 2.37.1-0 / Unreleased
+
+# 2.37.0 / 2020-09-11
+  * [Changed] #871, #1032 ext-glyph:
+    * Support for SVG tags as used by fontawesome 5 with `all.js` library
+    * Improved padding and alignment for skin-awesome icons
+    * Allow to pass a callback() as `glyph.map<TYPE>` option
+    * Update Fontwesome demos to v5.0.13
+  * [Changed] #1025 ext-dnd5: changed behavior when `dndOpts.multiSource` is
+    true. Now dragging an unselected node will only drag that single node (while
+    keeping the other nodes selected). You have to drag one of the *selected*
+    nodes in order to drag the whole group.
+  * [Fixed] #1022 ext-persist: Handle 'Access is denied for this document'
+  * [Fixed] #1028 Uncaught TypeError: apply is not a function (regression of #1019)
+  * [Fixed] #1029 Fast expand/collapse of folder leads to inconsistent state
+
+# 2.36.1 / 2020-07-25
+  * [Fixed] #1021 ext-dnd5 Regression (#1012) in drop marker
+
+# 2.36.0 / 2020-07-15
+  * [Changed] #1005 Cast key to string in getNodeByKey()
+  * [Changed] #1013 ext-dnd5: log warning when jQuery is too old
+  * [Added] #1012 `dnd5.dropMarkerParent` allows usage in Webcomponents (i.e. shadow DOM)
+  * [Added] #1017 `copyFunctionsToData` allows also copying functions to the data property of the node
+  * [Fixed] #921 ext-edit / focus handling: Internet Explorer scrolls briefly
+    to the top/left after editing if the tree container is partially outside the viewport
+  * [Fixed] #1001 Invalid urls in skin-xp CSS
+  * [Fixed] ext-dnd5: dropEffectCallback=none was not reset in some cases
+  * [Fixed] #1018 ContextMenu extension always focuses the first node in the tree
+
+# 2.35.0 / 2020-03-27
+  * [Changed] The `enableAspx` option will default to 'false' in the future.
+    For now, a warning is emitted, to explicitly set it or use the `postProcess`
+    event instead.
+  * [Added] #988 New option `dnd5.preventLazyParents` prevents dropping items on
+    unloaded lazy nodes (defaults to true)
+  * [Fixed] #983 lazyLoad with promise not calling postProcess
+  * [Fixed] #984 ext-edit: Exception when cancelling addSibling() or addChildren()
+  * [Fixed] #987 Lazy load puts "Load error" for content outside tree div
+    if parent folder is removed before loads ends
+  * [Fixed] #989 `node.toDict()` keeps empty `children` array
+  * [Fixed] #998 dnd5 triggering multiple loads of lazy nodes on hover
+
+# 2.34.0 / 2019-12-26
+  * [DEPRECATED] jQuery UI widget methods:
+    Use `tree.METHOD()` instead of `$().fancytree("METHOD")`.
+  * [Added] `tree.debugTime()`, `tree.debugTimeEnd()` for debugging.
+  * [Added] `tree.destroy()` as alternative for `tree.widget.destroy()`.
+  * [Fixed] `$.ui.fancytree.getTree()` for Element arg.
+  * [Fixed] #973 when use ext-grid in one tree, other tree not use ext-grid has error on click.
+  * [Fixed] #974 ext-grid: too much output in production mode.
+  * [Fixed] #975 ext-grid: fix `tree.visitRows()` for empty tree.
+  * [Fixed] #978 ext-grid: addChildren() throws error when grid is hidden.
 
 # 2.33.0 / 2019-10-29
   * [Added] event `preInit` (fired before nodes are loaded).
@@ -6,11 +58,11 @@
   * [Changed] ext-grid: `updateViewport` event is now also triggered for 'renumber' (i.e. expand, collapse)
   * [Fixed] #963: tree.setExpanded() fails when autoScroll is enabled
   * [Fixed] #964: handle case when `source` is not passed and no `<ul>` is embedded.
-  * [Fixed] #966: Ext-dnd5: bug in function onDropEvent (case 'dragover')
+  * [Fixed] #966: ext-dnd5: bug in function onDropEvent (case 'dragover')
   * [Fixed] ext-filter: sub-match counter is one too high.
 
 # 2.32.0 / 2019-09-10
-  * [Added] `node.hasClass(className)`
+  * [Added] `node.hasClass()`
   * [Added] `tree.applyCommand()` and `node.applyCommand()` (experimental!)
   * [Added] `tree.isLoading()`
   * [Added] `tree.toDict(includeRoot, callback)` and `node.toDict(recursive, callback)`:

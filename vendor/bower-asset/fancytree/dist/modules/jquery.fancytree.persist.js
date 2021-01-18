@@ -6,13 +6,13 @@
  *
  * @depends: js-cookie or jquery-cookie
  *
- * Copyright (c) 2008-2019, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.33.0
- * @date 2019-10-29T08:00:07Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 (function(factory) {
@@ -35,37 +35,48 @@
 	 * Private functions and variables
 	 */
 	var cookieStore = null,
-		localStorageStore = window.localStorage
-			? {
-					get: function(key) {
-						return window.localStorage.getItem(key);
-					},
-					set: function(key, value) {
-						window.localStorage.setItem(key, value);
-					},
-					remove: function(key) {
-						window.localStorage.removeItem(key);
-					},
-			  }
-			: null,
-		sessionStorageStore = window.sessionStorage
-			? {
-					get: function(key) {
-						return window.sessionStorage.getItem(key);
-					},
-					set: function(key, value) {
-						window.sessionStorage.setItem(key, value);
-					},
-					remove: function(key) {
-						window.sessionStorage.removeItem(key);
-					},
-			  }
-			: null,
+		localStorageStore = null,
+		sessionStorageStore = null,
 		_assert = $.ui.fancytree.assert,
 		ACTIVE = "active",
 		EXPANDED = "expanded",
 		FOCUS = "focus",
 		SELECTED = "selected";
+
+	// Accessing window.xxxStorage may raise security exceptions (see #1022)
+	try {
+		_assert(window.localStorage && window.localStorage.getItem);
+		localStorageStore = {
+			get: function(key) {
+				return window.localStorage.getItem(key);
+			},
+			set: function(key, value) {
+				window.localStorage.setItem(key, value);
+			},
+			remove: function(key) {
+				window.localStorage.removeItem(key);
+			},
+		};
+	} catch (e) {
+		$.ui.fancytree.warn("Could not access window.localStorage", e);
+	}
+
+	try {
+		_assert(window.sessionStorage && window.sessionStorage.getItem);
+		sessionStorageStore = {
+			get: function(key) {
+				return window.sessionStorage.getItem(key);
+			},
+			set: function(key, value) {
+				window.sessionStorage.setItem(key, value);
+			},
+			remove: function(key) {
+				window.sessionStorage.removeItem(key);
+			},
+		};
+	} catch (e) {
+		$.ui.fancytree.warn("Could not access window.sessionStorage", e);
+	}
 
 	if (typeof Cookies === "function") {
 		// Assume https://github.com/js-cookie/js-cookie
@@ -152,7 +163,7 @@
 	/**
 	 * [ext-persist] Remove persistence data of the given type(s).
 	 * Called like
-	 *     $("#tree").fancytree("getTree").clearCookies("active expanded focus selected");
+	 *     $.ui.fancytree.getTree("#tree").clearCookies("active expanded focus selected");
 	 *
 	 * @alias Fancytree#clearPersistData
 	 * @requires jquery.fancytree.persist.js
@@ -189,7 +200,7 @@
 	 * [ext-persist] Return persistence information from cookies
 	 *
 	 * Called like
-	 *     $("#tree").fancytree("getTree").getPersistData();
+	 *     $.ui.fancytree.getTree("#tree").getPersistData();
 	 *
 	 * @alias Fancytree#getPersistData
 	 * @requires jquery.fancytree.persist.js
@@ -212,7 +223,7 @@
 	 */
 	$.ui.fancytree.registerExtension({
 		name: "persist",
-		version: "2.33.0",
+		version: "2.37.0",
 		// Default options for this extension.
 		options: {
 			cookieDelimiter: "~",

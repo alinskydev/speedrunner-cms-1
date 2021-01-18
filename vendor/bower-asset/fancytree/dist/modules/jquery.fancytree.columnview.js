@@ -4,13 +4,13 @@
  * Render tree like a Mac Finder's column view.
  * (Extension module for jquery.fancytree.js: https://github.com/mar10/fancytree/)
  *
- * Copyright (c) 2008-2019, Martin Wendt (https://wwWendt.de)
+ * Copyright (c) 2008-2020, Martin Wendt (https://wwWendt.de)
  *
  * Released under the MIT license
  * https://github.com/mar10/fancytree/wiki/LicenseInfo
  *
- * @version 2.33.0
- * @date 2019-10-29T08:00:07Z
+ * @version 2.37.0
+ * @date 2020-09-11T18:58:08Z
  */
 
 (function(factory) {
@@ -39,7 +39,7 @@
 	 */
 	$.ui.fancytree.registerExtension({
 		name: "columnview",
-		version: "2.33.0",
+		version: "2.37.0",
 		// Default options for this extension.
 		options: {},
 		// Overide virtual methods for this extension.

@@ -1,6 +1,41 @@
 Yii Framework 2 debug extension Change Log
 ==========================================
 
+2.1.16 December 23, 2020
+------------------------
+
+- Bug #446: Fix bug with simple action config detection (bizley)
+- Bug #449: Fix bug with scanned controllers being unnecessarily initiated (bizley)
+- Enh #441: Added PHP 7.4 and 8.0 compatibility for tests (bizley)
+
+
+2.1.15 November 13, 2020
+------------------------
+
+- Bug #443: Fix bug with fetching wrong URL rule name (bizley)
+
+
+2.1.14 November 10, 2020
+------------------------
+
+- Bug #434: Toolbar logo could have the wrong size (brandonkelly)
+- Enh #428: Extra routing data in Router panel (bizley)
+- Enh #433: Add ability for toolbar to skip URLs of AJAX requests from being displayed (naduvko)
+
+
+2.1.13 January 17, 2020
+-----------------------
+
+- Bug #427: Fix missing import yii\helpers\Html in DumpPanel (zhukovra)
+
+
+2.1.12 November 19, 2019
+------------------------
+
+- Bug #424: Fixes missing timeline panel tooltips (My6UoT9)
+- Enh #425: Add warning message related to `traceLevel` on db panel (kjusupov)
+
+
 2.1.11 November 05, 2019
 ------------------------
 

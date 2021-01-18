@@ -159,13 +159,16 @@ var TreePatch = {};
  *     Recommended place to store shared data for column rendering.
  *     See also <a href="https://github.com/mar10/fancytree/wiki/ExtTable">table extension</a>.
  *     @since 2.27
+ * @property {boolean} copyFunctionsToData Copy also functions to the node's data property (default: false)
  * @property {Integer} debugLevel 0..4 (null: use global setting $.ui.fancytree.debugLevel)
  * @property {function} defaultKey callback(node) is called for new nodes without a key. Must return a new unique key. (default null: generates default keys like that: "_" + counter)
- * @property {boolean} enableAspx Accept passing ajax data in a property named `d` (default: true).
+ * @property {boolean} <del>enableAspx</del> Accept passing ajax data in a property named `d` (default: true).
+ *     @deprecated Call `data.result = data.response.d` in the `postProcess`event instead
  * @property {boolean} escapeTitles Make sure all HTML tags are escaped (default: false).
  * @property {string[]} extensions List of active extensions (default: [])
  * @property {boolean} focusOnSelect Set focus when node is checked by a mouse click (default: false)
- * @property {boolean} generateIds Add `id="..."` to node markup (default: false).
+ * @property {boolean} generateIds Add `id="..."` to node markup (default: false).<br>
+ *     The id is constructed from `options.idPrefix` + `node.key`, e.g. `id="ft_1234"`.
  * @property {boolean|function} icon Display node icons (default: true)<br>
  *     true: use default icons, depending on `node.folder` and `node.expanded`<br>
  *     false: hide icons<br>

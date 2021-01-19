@@ -33,7 +33,7 @@ class <?= $model->controller_name ?>Controller extends Controller
 <?php if (in_array('index', $model->controller_actions)) { ?>
             'index' => [
                 'class' => IndexAction::className(),
-                'modelSearch' => new BlogCategorySearch(),
+                'modelSearch' => new <?= $model->table_name ?>Search(),
             ],
 <?php } ?>
 <?php if (in_array('view', $model->controller_actions)) { ?>
@@ -45,7 +45,7 @@ class <?= $model->controller_name ?>Controller extends Controller
 <?php if (in_array('create', $model->controller_actions)) { ?>
             'create' => [
                 'class' => UpdateAction::className(),
-                'model' => new BlogCategory(),
+                'model' => new <?= $model->table_name ?>(),
             ],
 <?php } ?>
 <?php if (in_array('update', $model->controller_actions)) { ?>
@@ -57,7 +57,7 @@ class <?= $model->controller_name ?>Controller extends Controller
 <?php if (in_array('delete', $model->controller_actions)) { ?>
             'delete' => [
                 'class' => DeleteAction::className(),
-                'model' => new BlogCategory(),
+                'model' => new <?= $model->table_name ?>(),
             ],
 <?php } ?>
 <?php if (isset($attrs_fields['images'])) { ?>

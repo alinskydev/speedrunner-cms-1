@@ -58,7 +58,7 @@ class ProductController extends Controller
                 'brand', 'categories',
                 'variations.specification', 'variations.option'
             ])
-            ->andWhere(['id' => $id])
+            ->andWhere(['id' => Yii::$app->request->get('id')])
             ->one();
         
         if ($model) {

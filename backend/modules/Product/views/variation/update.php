@@ -26,7 +26,7 @@ $this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
                 <div class="col-lg-2 col-md-3">
                     <ul class="nav flex-column nav-pills" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#tab-variations-general">
+                            <a class="nav-link active" data-toggle="pill" href="#tab-variations-information">
                                 <?= Yii::t('app', 'Information') ?>
                             </a>
                         </li>
@@ -40,7 +40,7 @@ $this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
                 
                 <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
                     <div class="tab-content p-3">
-                        <div id="tab-variations-general" class="tab-pane active">
+                        <div id="tab-variations-information" class="tab-pane active">
                             <?= $form->field($model, 'price')->textInput() ?>
                             <?= $form->field($model, 'quantity')->textInput() ?>
                             <?= $form->field($model, 'sku')->textInput() ?>

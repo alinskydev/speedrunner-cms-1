@@ -34,12 +34,18 @@ class TranslationSource extends ActiveRecord
             'category' => Yii::t('app', 'Category'),
             'message' => Yii::t('app', 'Message'),
             'translations_tmp' => Yii::t('app', 'Translations'),
+            'has_translation' => Yii::t('app', 'Has translation'),
         ];
     }
     
     public function getTranslations()
     {
         return $this->hasMany(TranslationMessage::className(), ['id' => 'id']);
+    }
+    
+    public function getCurrentTranslation()
+    {
+        return $this->hasOne(TranslationMessage::className(), ['id' => 'id'])->onCondition(['language' => Yii::$app->language]);
     }
     
     public function activeTranslations()
@@ -52,17 +58,6 @@ class TranslationSource extends ActiveRecord
         }
         
         return $messages;
-    }
-    
-    public function translationsColumn()
-    {
-        foreach ($this->translations as $t) {
-            if ($t->translation && ArrayHelper::getValue($t, 'lang.is_active')) {
-                $result[] = Html::tag('b', $t->lang->name) . ': ' . nl2br($t->translation);
-            }
-        }
-        
-        return implode('<br>', $result ?? []);
     }
     
     public function afterSave($insert, $changedAttributes)

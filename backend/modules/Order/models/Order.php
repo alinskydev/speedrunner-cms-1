@@ -33,7 +33,7 @@ class Order extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'user_id' => Yii::t('app', 'User'),
             'full_name' => Yii::t('app', 'Full name'),
-            'email' => Yii::t('app', 'E-mail'),
+            'email' => Yii::t('app', 'Email'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
             'delivery_type' => Yii::t('app', 'Delivery type'),

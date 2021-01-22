@@ -78,7 +78,7 @@ return [
         ],
     ],
     [
-        'label' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']) . Yii::t('app', 'Speedrunner'),
+        'label' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']) . 'Speedrunner',
         'visible' => YII_ENV_DEV,
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],

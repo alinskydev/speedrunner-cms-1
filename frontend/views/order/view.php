@@ -13,10 +13,10 @@ $attrs = ['full_name', 'phone', 'email', 'address', 'created'];
 <?= ArrayHelper::getValue($model->statuses(), "$model->status.label"); ?>
 
 <?= $model->getAttributeLabel('delivery_type'); ?>:
-<?= ArrayHelper::getValue($model->deliveryTypes(), $model->delivery_type); ?>
+<?= ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label"); ?>
 
 <?= $model->getAttributeLabel('payment_type'); ?>:
-<?= ArrayHelper::getValue($model->paymentTypes(), $model->payment_type); ?>
+<?= ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label"); ?>
 
 <?php foreach ($attrs as $a) { ?>
     <?= $model->getAttributeLabel($a) . ': ' . $model->{$a}; ?>

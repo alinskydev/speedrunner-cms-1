@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use common\components\framework\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
@@ -30,10 +31,15 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'translations_tmp',
                 'format' => 'raw',
-                'value' => fn ($model) => $model->translationsColumn(),
+                'value' => fn ($model) => ArrayHelper::getValue($model, 'currentTranslation.translation'),
                 'contentOptions' => [
                     'style' => 'max-width: 300px; white-space: normal;',
                 ],
+            ],
+            [
+                'attribute' => 'has_translation',
+                'format' => 'boolean',
+                'value' => fn ($model) => (bool)ArrayHelper::getValue($model, 'currentTranslation.translation'),
             ],
             [
                 'class' => 'common\components\framework\grid\ActionColumn',

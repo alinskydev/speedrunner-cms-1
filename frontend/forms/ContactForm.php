@@ -27,7 +27,7 @@ class ContactForm extends Model
     {
         return [
             'name' => Yii::t('app', 'Name'),
-            'email' => Yii::t('app', 'E-mail'),
+            'email' => Yii::t('app', 'Email'),
             'phone' => Yii::t('app', 'Phone'),
             'message' => Yii::t('app', 'Message'),
         ];

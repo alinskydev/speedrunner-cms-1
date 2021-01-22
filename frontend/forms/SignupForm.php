@@ -36,7 +36,7 @@ class SignupForm extends Model
     {
         return [
             'username' => Yii::t('app', 'Username'),
-            'email' => Yii::t('app', 'E-mail'),
+            'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'Password'),
             'confirm_password' => Yii::t('app', 'Confirm password'),
             

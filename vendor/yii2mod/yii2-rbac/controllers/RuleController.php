@@ -69,9 +69,12 @@ class RuleController extends Controller
     public function actionCreate()
     {
         $model = new BizRuleModel();
-        $model->className = 'yii2mod\rbac\rules\UserRule';
         
-        return Yii::$app->sr->record->updateModel($model);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+        
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -87,13 +90,11 @@ class RuleController extends Controller
     {
         $model = $this->findModel($id);
         
-        if ($model) {
-            $model->className = 'yii2mod\rbac\rules\UserRule';
-            
-            return Yii::$app->sr->record->updateModel($model);
-        } else {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+        
+        return $this->render('update', ['model' => $model]);
     }
 
     /**

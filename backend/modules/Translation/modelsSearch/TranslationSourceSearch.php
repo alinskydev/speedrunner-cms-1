@@ -7,14 +7,17 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 use backend\modules\Translation\models\TranslationSource;
+use backend\modules\Translation\models\TranslationMessage;
 
 
 class TranslationSourceSearch extends TranslationSource
 {
+    public $has_translation;
+    
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'has_translation'], 'integer'],
             [['category', 'message', 'translations_tmp'], 'safe'],
         ];
     }
@@ -27,8 +30,7 @@ class TranslationSourceSearch extends TranslationSource
     public function search($params)
     {
         $query = TranslationSource::find()
-            ->joinWith(['translations'])
-            ->with(['translations.lang'])
+            ->joinWith(['currentTranslation'])
             ->groupBy('TranslationSource.id');
 
         $dataProvider = new ActiveDataProvider([
@@ -55,7 +57,8 @@ class TranslationSourceSearch extends TranslationSource
 
         $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
             ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
-            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp]);
+            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp])
+            ->andFilterWhere(['like', 'IF(LENGTH(TranslationMessage.translation) > 0, true, false)', $this->has_translation]);
         
         $dataProvider->pagination->totalCount = $query->count();
 

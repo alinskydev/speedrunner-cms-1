@@ -145,16 +145,16 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'oswald' => [
-                'label' => Yii::t('app', 'Oswald'),
+                'label' => 'Oswald',
             ],
             'roboto' => [
-                'label' => Yii::t('app', 'Roboto'),
+                'label' => 'Roboto',
             ],
             'montserrat' => [
-                'label' => Yii::t('app', 'Montserrat'),
+                'label' => 'Montserrat',
             ],
             'ibm_plex_sans' => [
-                'label' => Yii::t('app', 'IBM Plex Sans'),
+                'label' => 'IBM Plex Sans',
             ],
         ];
     }

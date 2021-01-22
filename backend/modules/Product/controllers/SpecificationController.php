@@ -36,6 +36,6 @@ class SpecificationController extends Controller
     
     private function findModel()
     {
-        return ProductSpecification::find()->with(['options'])->andWhere(['id' => $id])->one();
+        return ProductSpecification::find()->with(['options'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
 }

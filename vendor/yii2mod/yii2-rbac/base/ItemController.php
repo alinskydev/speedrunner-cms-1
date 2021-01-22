@@ -106,7 +106,11 @@ class ItemController extends Controller
         $model = new AuthItemModel();
         $model->type = $this->type;
         
-        return Yii::$app->sr->record->updateModel($model);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+        
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -121,7 +125,12 @@ class ItemController extends Controller
     public function actionUpdate(string $id)
     {
         $model = $this->findModel($id);
-        return Yii::$app->sr->record->updateModel($model);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+        
+        return $this->render('update', ['model' => $model]);
     }
 
     /**

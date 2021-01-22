@@ -8,9 +8,6 @@ return [
             'username' => 'root',
             'password' => 'root',
             'charset' => 'utf8',
-            'schemaCache' => 'cache',
-            'schemaCacheDuration' => 84000,
-            'enableSchemaCache' => false,
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

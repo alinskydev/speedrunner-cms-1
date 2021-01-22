@@ -9,7 +9,7 @@ return [
         'label' => Html::tag('i', null, ['class' => 'fas fa-user']) . Yii::t('app', 'Users'),
         'items' => [
             ['label' => Yii::t('app', 'Users'), 'url' => ['/user/user/index']],
-            ['label' => Yii::t('app', 'RBAC'), 'url' => ['/rbac/rbac/index']],
+            ['label' => Yii::t('app', 'RBAC'), 'url' => ['/rbac/rbac/index'], 'visible' => YII_ENV_DEV],
         ],
     ],
     [
@@ -79,6 +79,7 @@ return [
     ],
     [
         'label' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']) . Yii::t('app', 'Speedrunner'),
+        'visible' => YII_ENV_DEV,
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],
             ['label' => Yii::t('app', 'Functions'), 'url' => ['/speedrunner/speedrunner/index']],

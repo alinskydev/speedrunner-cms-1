@@ -21,13 +21,10 @@ return [
         'page' => ['class' => 'backend\modules\Page\Module'],
         'product' => ['class' => 'backend\modules\Product\Module'],
         'seo' => ['class' => 'backend\modules\Seo\Module'],
-        'speedrunner' => ['class' => 'backend\modules\Speedrunner\Module'],
         'staticpage' => ['class' => 'backend\modules\Staticpage\Module'],
         'system' => ['class' => 'backend\modules\System\Module'],
         'translation' => ['class' => 'backend\modules\Translation\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],
-        
-        'rbac' => ['class' => 'yii2mod\rbac\Module'],
     ],
     'as access' => [
        'class' => 'yii2mod\rbac\filters\AccessControl',

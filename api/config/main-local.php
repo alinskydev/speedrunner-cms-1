@@ -1,17 +1,19 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => 'KkYlBx33UD4_1j2utpYAEVmxSb3oXbRr',
         ],
     ],
-    'bootstrap' => ['debug'],
-    'modules' => [
-        'debug' => [
-            'class' => 'yii\debug\Module',
-            'allowedIPs' => ['127.0.0.1', '::1'],
-            'dataPath' => '@frontend/runtime/debug',
-        ],
-    ],
 ];
+
+if (YII_ENV_DEV) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'dataPath' => '@frontend/runtime/debug',
+    ];
+}
+
+return $config;

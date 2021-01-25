@@ -6,9 +6,10 @@ use yii\widgets\Breadcrumbs;
 use yii\widgets\Menu;
 
 use backend\modules\User\models\UserNotification;
+use backend\modules\User\services\UserNotificationService;
 
 $user = Yii::$app->user->identity;
-$langs = Yii::$app->sr->translation->languages;
+$langs = Yii::$app->services->i18n::$languages;
 
 $breadcrumbs = $this->params['breadcrumbs'] ?? [];
 $bookmark_add_value = implode(' &rsaquo; ', ArrayHelper::getColumn($breadcrumbs, 'label'));
@@ -22,13 +23,13 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
         <div class="header-right">
             <div class="item dropdown">
                 <button type="button" class="btn btn-link dropdown-toggle flag-wrapper" data-toggle="dropdown">
-                    <img src="<?= Yii::$app->sr->image->thumb($langs[Yii::$app->language]['image'], [30, 20]) ?>">
+                    <img src="<?= Yii::$app->services->image->thumb($langs[Yii::$app->language]['image'], [30, 20]) ?>">
                 </button>
                 
                 <div class="dropdown-menu dropdown-menu-right">
                     <?php foreach ($langs as $l) { ?>
                         <a class="dropdown-item small font-weight-bold" href="<?= $l['url'] ?>">
-                            <img class="mr-1" src="<?= Yii::$app->sr->image->thumb($l['image'], [30, 20]) ?>">
+                            <img class="mr-1" src="<?= Yii::$app->services->image->thumb($l['image'], [30, 20]) ?>">
                             <?= $l['name'] ?>
                         </a>
                     <?php } ?>
@@ -70,8 +71,11 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                     <?php
                         if ($notifications) {
                             foreach ($notifications as $key => $n) {
+                                $notification_service = new UserNotificationService($n);
+                                $label = ArrayHelper::getValue($notification_service->actionData(), 'label');
+                                
                                 echo Html::a(
-                                    Html::tag('i', '&nbsp;', ['class' => 'fas fa-check-circle']) . ArrayHelper::getValue($n->actionType(), 'label'),
+                                    Html::tag('i', '&nbsp;', ['class' => 'fas fa-check-circle']) . $label,
                                     ['/user/notification/view', 'id' => $n->id],
                                     [
                                         'class' => 'dropdown-item px-3',

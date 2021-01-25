@@ -3,9 +3,8 @@
 namespace backend\modules\Menu\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\db\Expression;
 
 
 class Menu extends ActiveRecord
@@ -26,6 +25,8 @@ class Menu extends ActiveRecord
             ],
             'htmlTree' => [
                 'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
+                'labelAttribute' => 'name',
+                'isAttributeTranslatable' => true,
             ],
             'translation' => [
                 'class' => \common\behaviors\TranslationBehavior::className(),
@@ -67,24 +68,8 @@ class Menu extends ActiveRecord
         ];
     }
     
-    static function itemsTree($excepts = [])
-    {
-        $lang = Yii::$app->language;
-        
-        $result = static::find()
-            ->select([
-                'id',
-                new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name"),
-            ])
-            ->andWhere(['not in', 'id', $excepts])
-            ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
-            ->asArray()->all();
-        
-        return ArrayHelper::map($result, 'id', 'name');
-    }
-    
     public static function find()
     {
-        return new MenuQuery(get_called_class());
+        return new \common\query\NestedSetsQuery(get_called_class());
     }
 }

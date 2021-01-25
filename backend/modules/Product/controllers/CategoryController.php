@@ -32,6 +32,7 @@ class CategoryController extends Controller
         
         return $this->renderAjax('update', [
             'model' => $model,
+            'categories_list' => ProductCategory::find()->itemsTree('name', 'translation'),
         ]);
     }
     

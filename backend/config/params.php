@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
+    'switcher_template' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
+    
     'fileInput_pluginOptions' => [
         'initialPreviewAsData' => true,
         'overwriteInitial' => false,
@@ -37,9 +40,6 @@ return [
             'close' => '<i class="fas fa-times"></i>',
         ]
     ],
-    
-    'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
-    'switcher_template' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
     
     'pager_options' => [
         'options' => ['class' => 'pagination'],

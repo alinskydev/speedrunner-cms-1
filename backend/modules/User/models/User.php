@@ -3,15 +3,18 @@
 namespace backend\modules\User\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use common\services\FileService;
 
 
 class User extends ActiveRecord implements IdentityInterface
 {
-    use \api\modules\v1\models\User;
+    use \api\modules\v1\models\user\User;
+    
+    const PASSWORD_RESET_TOKEN_EXPIRE = 3600;
     
     public $new_password;
     
@@ -117,7 +120,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    static function roles()
+    public static function roles()
     {
         return [
             'admin' => [
@@ -129,7 +132,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    static function designThemes()
+    public static function designThemes()
     {
         return [
             'nav_full' => [
@@ -141,7 +144,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    static function designFonts()
+    public static function designFonts()
     {
         return [
             'oswald' => [
@@ -159,25 +162,14 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    static function itemsList($attr, $type, $q = null, $limit = 20)
-    {
-        $query = static::find()->joinWith(['profile'])->limit($limit);
-        
-        switch ($type) {
-            case 'self':
-                $query->select(['User.id', "User.$attr as text"])->andFilterWhere(['like', "User.$attr", $q]);
-                break;
-            case 'profile':
-                $query->select(['User.id', "UserProfile.$attr as text"])->andFilterWhere(['like', "UserProfile.$attr", $q]);
-                break;
-        }
-        
-        return $query;
-    }
-    
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+    
+    public static function find()
+    {
+        return new \backend\modules\User\models\query\UserQuery(get_called_class());
     }
     
     public function afterFind()
@@ -212,8 +204,8 @@ class User extends ActiveRecord implements IdentityInterface
         $old_image = ArrayHelper::getValue($this, 'profile.image');
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
-            $this->image = Yii::$app->sr->file->save($image, 'files/profile');
-            Yii::$app->sr->file->delete($old_image);
+            $this->image = (new FileService($image))->save('files/profile');
+            FileService::delete($old_image);
         } else {
             $this->image = $this->image ?: $old_image;
         }
@@ -251,7 +243,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterDelete()
     {
-        Yii::$app->sr->file->delete($this->image);
+        FileService::delete($this->image);
         
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
@@ -259,7 +251,7 @@ class User extends ActiveRecord implements IdentityInterface
         return parent::afterDelete();
     }
     
-    //        SYSTEM
+    //        YII2 DEFAULT FUNCTIONS
     
     public static function findIdentity($id)
     {
@@ -287,8 +279,8 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
         
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
+        $expire = static::PASSWORD_RESET_TOKEN_EXPIRE;
         return $timestamp + $expire >= time();
     }
     

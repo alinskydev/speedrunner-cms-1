@@ -57,7 +57,8 @@ class SignupForm extends Model
         $user->phone = $this->phone;
         
         if ($user->save()) {
-            return Yii::$app->user->login($user);
+            Yii::$app->user->login($user);
+            return $user;
         } else {
             return false;
         }

@@ -35,19 +35,19 @@ class ContactForm extends Model
     
     public function sendEmail()
     {
-        if ($admin_email = Yii::$app->settings->admin_email) {
-            $data = [];
-            
-            foreach ($this->attributes as $key => $a) {
-                $data[$key] = [
-                    'label' => $this->getAttributeLabel($key),
-                    'value' => $a
-                ];
-            }
-            
-            return Yii::$app->sr->mail->send($admin_email, Yii::t('email', 'Feedback'), 'feedback', $data);
-        } else {
+        if (!($admin_email = Yii::$app->services->settings->admin_email)) {
             return false;
         }
+        
+        $data = [];
+        
+        foreach ($this->attributes as $key => $a) {
+            $data[$key] = [
+                'label' => $this->getAttributeLabel($key),
+                'value' => $a
+            ];
+        }
+        
+        return Yii::$app->services->mail->send($admin_email, Yii::t('app_email', 'Feedback'), 'feedback', $data);
     }
 }

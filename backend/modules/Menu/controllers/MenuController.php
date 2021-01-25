@@ -32,6 +32,7 @@ class MenuController extends Controller
         
         return $this->renderAjax('update', [
             'model' => $model,
+            'menu_list' => Menu::find()->itemsTree('name', 'translation')->asArray()->all(),
         ]);
     }
     

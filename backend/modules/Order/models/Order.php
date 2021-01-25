@@ -3,10 +3,11 @@
 namespace backend\modules\Order\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\User\models\User;
+use backend\modules\User\services\UserNotificationService;
 
 
 class Order extends ActiveRecord
@@ -50,7 +51,7 @@ class Order extends ActiveRecord
         ];
     }
     
-    static function deliveryTypes()
+    public static function deliveryTypes()
     {
         return [
             'pickup' => [
@@ -62,7 +63,7 @@ class Order extends ActiveRecord
         ];
     }
     
-    static function paymentTypes()
+    public static function paymentTypes()
     {
         return [
             'cash' => [
@@ -74,7 +75,7 @@ class Order extends ActiveRecord
         ];
     }
     
-    static function statuses()
+    public static function statuses()
     {
         return [
             'new' => [
@@ -123,8 +124,8 @@ class Order extends ActiveRecord
     public function beforeSave($insert)
     {
         if (!$insert && $this->status != $this->oldAttributes['status']) {
-            $new_status_action = $this->statuses()[$this->status]['save_action'];
-            $old_status_action = $this->statuses()[$this->oldAttributes['status']]['save_action'];
+            $new_status_action = ArrayHelper::getValue($this->statuses(), "$this->status.save_action");
+            $old_status_action = ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action");
             
             if ($new_status_action != $old_status_action) {
                 $transaction = Yii::$app->db->beginTransaction();
@@ -157,7 +158,7 @@ class Order extends ActiveRecord
         //        NOTIFICATIONS
         
         if ($insert) {
-            Yii::$app->sr->notification->create(
+            UserNotificationService::create(
                 User::find()->andWhere(['role' => 'admin'])->column(),
                 'order_created', $this->id,
                 [

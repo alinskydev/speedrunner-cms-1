@@ -3,12 +3,13 @@
 namespace backend\modules\System\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 
 class SystemSettings extends ActiveRecord
 {
-    use \api\modules\v1\models\SystemSettings;
+    use \api\modules\v1\models\system\SystemSettings;
     
     public static function tableName()
     {

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-$this->title = Yii::$app->settings->site_name . ' API';
+$this->title = Yii::$app->services->settings->site_name . ' API';
 
 $tabs = array_keys($result);
 

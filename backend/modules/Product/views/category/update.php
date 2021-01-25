@@ -79,10 +79,13 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     
                     <?php
                         if ($model->isNewRecord) {
-                            echo $form->field($model, 'parent_id')->dropDownList($model->itemsTree(), [
-                                'class' => 'form-control',
-                                'data-toggle' => 'select2',
-                            ]);
+                            echo $form->field($model, 'parent_id')->dropDownList(
+                                ArrayHelper::map($categories_list, 'id', 'text'),
+                                [
+                                    'class' => 'form-control',
+                                    'data-toggle' => 'select2',
+                                ]
+                            );
                         }
                     ?>
                 </div>
@@ -109,7 +112,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 
                 <div id="tab-seo-meta" class="tab-pane fade">
                     <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                        'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                        'model' => $model,
                     ]) ?>
                 </div>
             </div>

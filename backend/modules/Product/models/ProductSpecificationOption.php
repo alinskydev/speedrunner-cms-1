@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 
 
 class ProductSpecificationOption extends ActiveRecord

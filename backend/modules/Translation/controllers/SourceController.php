@@ -4,7 +4,7 @@ namespace backend\modules\Translation\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Translation\models\TranslationSource;
 use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
@@ -28,6 +28,6 @@ class SourceController extends Controller
     
     private function findModel()
     {
-        return TranslationSource::findOne(Yii::$app->request->get('id'));
+        return TranslationSource::find()->with(['translations'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
 }

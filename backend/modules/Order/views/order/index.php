@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'created',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{link} {update} {delete}',
                 'buttons' => [
                     'link' => function($url, $model, $key) {

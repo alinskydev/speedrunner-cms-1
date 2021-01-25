@@ -34,7 +34,7 @@ class DuplicatorForm extends Model
         ];
     }
     
-    static function duplicateTypes()
+    public static function duplicateTypes()
     {
         return [
             'files' => 'Files',
@@ -42,7 +42,7 @@ class DuplicatorForm extends Model
         ];
     }
     
-    static function modulesList()
+    public static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner'])) {

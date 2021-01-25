@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-profile" class="tab-pane fade">
                 <?php
-                    $img = $model->image ? Html::img(Yii::$app->sr->image->thumb($model->image, [300, 300], 'resize'), [
+                    $img = $model->image ? Html::img(Yii::$app->services->image->thumb($model->image, [300, 300], 'resize'), [
                         'class' => 'img-fluid d-block my-3 image-placeholder'
                     ]) : null;
                     

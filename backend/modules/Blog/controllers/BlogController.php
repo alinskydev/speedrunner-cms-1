@@ -5,8 +5,8 @@ namespace backend\modules\Blog\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
-use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Blog\models\Blog;
 use backend\modules\Blog\modelsSearch\BlogSearch;

@@ -3,13 +3,13 @@
 namespace backend\modules\System\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
 class SystemLanguage extends ActiveRecord
 {
-    use \api\modules\v1\models\SystemLanguage;
+    use \api\modules\v1\models\system\SystemLanguage;
     
     public static function tableName()
     {

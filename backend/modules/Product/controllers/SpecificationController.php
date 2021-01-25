@@ -4,7 +4,7 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Product\models\ProductSpecification;
 use backend\modules\Product\modelsSearch\ProductSpecificationSearch;

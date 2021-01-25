@@ -3,7 +3,7 @@
 namespace backend\modules\Seo\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 
 
 class SeoMeta extends ActiveRecord
@@ -23,9 +23,11 @@ class SeoMeta extends ActiveRecord
     
     public function valueValidation($attribute, $params, $validator)
     {
-        $value = is_array($this->value) ? $this->value : [];
+        if (!is_array($this->value)) {
+            $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $attribute]));
+        }
         
-        foreach ($value as $key => $v) {
+        foreach ((array)$this->value as $key => $v) {
             if (!array_key_exists($key, $this->types()) || !is_string($v)) {
                 $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $attribute]));
             }
@@ -43,7 +45,7 @@ class SeoMeta extends ActiveRecord
         ];
     }
     
-    static function types()
+    public static function types()
     {
         return [
             'title' => [

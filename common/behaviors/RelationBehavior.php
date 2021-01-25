@@ -4,7 +4,7 @@ namespace common\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 

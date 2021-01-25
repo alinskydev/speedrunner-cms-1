@@ -29,12 +29,6 @@ return [
                 ],
             ],
         ],
-        'urlManager' => [
-            'class' => 'common\components\framework\UrlManager',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [],
-        ],
     ],
     'params' => $params,
 ];

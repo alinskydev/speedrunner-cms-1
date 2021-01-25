@@ -33,12 +33,12 @@ class CacheController extends Controller
     {
         $dirs = [
             '@api/runtime', '@backend/runtime', '@frontend/runtime',
-            '@backend/web/assets', '@frontend/web/assets',
+            '@api/web/assets', '@backend/web/assets', '@frontend/web/assets',
         ];
         
         foreach ($dirs as $d) {
             if (is_dir(Yii::getAlias($d))) {
-                $sub_dirs = FileHelper::findDirectories(Yii::getAlias($d));
+                $sub_dirs = FileHelper::findDirectories(Yii::getAlias($d), ['recursive' => false]);
                 
                 foreach ($sub_dirs as $s) {
                     FileHelper::removeDirectory($s);

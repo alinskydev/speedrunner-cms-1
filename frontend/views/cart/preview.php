@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 <?php if (isset($cart['products'])) { ?>
     <?php foreach ($cart['products'] as $p) { ?>
         <?= $p['name'] ?>
-        <?= Yii::$app->sr->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100], 'resize') ?>
+        <?= Yii::$app->services->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100], 'resize') ?>
         
         <?= Yii::t('app', 'Price: {price}', [
             'price' => Yii::$app->formatter->asDecimal($p['total_price'])

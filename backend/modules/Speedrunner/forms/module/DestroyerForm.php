@@ -27,7 +27,7 @@ class DestroyerForm extends Model
         ];
     }
     
-    static function modulesList()
+    public static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             if (!in_array($key, ['rbac', 'debug', 'gii', 'seo', 'speedrunner', 'staticpage', 'system', 'translation', 'user'])) {

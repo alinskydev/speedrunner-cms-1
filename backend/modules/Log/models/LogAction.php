@@ -3,18 +3,15 @@
 namespace backend\modules\Log\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
-use yii\helpers\Html;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\helpers\StringHelper;
 
+use backend\modules\Log\lists\LogActionModelsList;
 use backend\modules\User\models\User;
 
 
 class LogAction extends ActiveRecord
 {
-    use \backend\modules\Log\helpers\LogActionHelper;
-    
     public static function tableName()
     {
         return 'LogAction';
@@ -25,7 +22,7 @@ class LogAction extends ActiveRecord
         return [
             [['type', 'model_class'], 'required'],
             [['type'], 'in', 'range' => array_keys($this->types())],
-            [['model_class'], 'in', 'range' => array_keys($this->modelClasses())],
+            [['model_class'], 'in', 'range' => array_keys((new LogActionModelsList)::$models)],
         ];
     }
     
@@ -43,7 +40,7 @@ class LogAction extends ActiveRecord
         ];
     }
     
-    static function types()
+    public static function types()
     {
         return [
             'created' => [
@@ -56,60 +53,6 @@ class LogAction extends ActiveRecord
                 'label' => Yii::t('app', 'Deleted'),
             ],
         ];
-    }
-    
-    public function attrsColumn($attrs_type, $view_type)
-    {
-        $result = [];
-        $model = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.model");
-        $translation_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.translation", []);
-        $boolean_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.boolean", []);
-        $select_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.select", []);
-        $text_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.text", []);
-        $json_attrs = ArrayHelper::getValue($this->modelClasses(), "$this->model_class.attributes.json", []);
-        
-        foreach (Yii::$app->params['date_format_attributes'] as $d_f_a) {
-            foreach ($d_f_a['attributes'] as $d_a) {
-                $date_attributes[$d_a] = $d_f_a['formats']['afterFind'];
-            }
-        }
-        
-        foreach ($this->attrs as $a) {
-            if (!$a->name) { continue; };
-            if ($attrs_type == 'old' && $this->type == 'created') { continue; };
-            if ($attrs_type == 'new' && $this->type == 'deleted') { continue; };
-            
-            $value = $a->{"value_$attrs_type"};
-            
-            if (isset($date_attributes[$a->name]))
-                $value = date($date_attributes[$a->name], strtotime($value));
-            if (in_array($a->name, $translation_attrs))
-                $value = ArrayHelper::getValue($value, Yii::$app->language);
-            if (in_array($a->name, $boolean_attrs))
-                $value = Yii::$app->formatter->asBoolean($value);
-            if (isset($select_attrs[$a->name]))
-                $value = ArrayHelper::getValue($model->{$select_attrs[$a->name]}(), "$value.label");
-            
-            if (in_array($a->name, $text_attrs) && $view_type == 'short') {
-                $value = Yii::t('app', '{length} symbols', ['length' => strlen($value)]);
-            }
-            
-            if (in_array($a->name, $json_attrs)) {
-                if ($view_type == 'short') {
-                    $value = count($value);
-                } else {
-                    $value = str_replace(['{', '}', '"'], null, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-                }
-            }
-            
-            if (is_array($value)) {
-                $value = implode(', ', $value);
-            }
-            
-            $result[] = Html::tag('b', $model->getAttributeLabel($a->name)) . ': ' . nl2br($value);
-        }
-        
-        return implode($view_type == 'short' ? '<br>' : '<hr>', $result);
     }
     
     public function getUser()

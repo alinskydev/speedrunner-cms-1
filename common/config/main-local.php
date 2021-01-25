@@ -1,6 +1,6 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -12,9 +12,12 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
-        ],
     ],
 ];
+
+if (YII_DEBUG) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = 'yii\debug\Module';
+}
+
+return $config;

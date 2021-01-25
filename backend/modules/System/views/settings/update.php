@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save']) ?>
 </h2>
 
 <div class="row">

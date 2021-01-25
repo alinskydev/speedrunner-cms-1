@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use common\services\FileService;
 
 use backend\modules\User\models\User;
 
@@ -26,10 +27,10 @@ class ProfileForm extends Model
     
     public function init()
     {
-        if ($this->user) {
-            foreach (static::PROFILE_ATTRIBUTES as $a) {
-                $this->{$a} = $this->user->{$a};
-            }
+        $this->user = $this->user ?: Yii::$app->user->identity;
+        
+        foreach (static::PROFILE_ATTRIBUTES as $a) {
+            $this->{$a} = $this->user->{$a};
         }
     }
     
@@ -84,10 +85,10 @@ class ProfileForm extends Model
         $old_image = ArrayHelper::getValue($user->profile, 'image');
         
         if ($image = UploadedFile::getInstance($this, 'image')) {
-            $user->image = Yii::$app->sr->file->save($image, 'files/profile');
-            Yii::$app->sr->file->delete($old_image);
+            $user->image = (new FileService($image))->save('files/profile');
+            FileService::delete($old_image);
         }
         
-        return $this->user->save();
+        return $user->save() ? $user : false;
     }
 }

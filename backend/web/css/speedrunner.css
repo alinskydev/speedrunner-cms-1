@@ -183,6 +183,7 @@ textarea.form-control[aria-invalid=true]:focus {
 
 header {
     display: inline-block;
+    vertical-align: top;
     width: 100%;
     background: #067a7d;
     color: #eee;
@@ -536,7 +537,7 @@ header .dropdown-toggle::after {
 }
 
 .content {
-    padding: 15px 15px 30px;
+    padding: 30px 15px 30px;
 }
 
 .ui-sortable-helper {

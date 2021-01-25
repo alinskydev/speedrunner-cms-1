@@ -13,7 +13,7 @@ $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action-
 $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 
 $user = Yii::$app->user->identity;
-$langs = Yii::$app->sr->translation->languages;
+$langs = Yii::$app->services->i18n::$languages;
 $menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
 
 $flashes = Yii::$app->session->getAllFlashes();
@@ -27,9 +27,9 @@ $flashes = Yii::$app->session->getAllFlashes();
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="<?= Yii::$app->settings->site_favicon ?>">
     <link rel="canonical" href="<?= $curr_url ?>">
-    <meta property="og:site_name" content="<?= Yii::$app->settings->site_name ?>">
+    <link rel="icon" href="<?= Yii::$app->services->settings->site_favicon ?>">
+    <meta property="og:site_name" content="<?= Yii::$app->services->settings->site_name ?>">
     <meta property="og:url" content="<?= $curr_url ?>">
     <meta property="og:locale" content="<?= Yii::$app->language ?>">
     <meta property="og:type" content="website">

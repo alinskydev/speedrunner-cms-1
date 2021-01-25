@@ -3,7 +3,7 @@
 namespace backend\modules\Log\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\db\JsonExpression;
 

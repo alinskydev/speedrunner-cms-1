@@ -3,7 +3,7 @@
 namespace backend\modules\Page\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 
 
 class Page extends ActiveRecord

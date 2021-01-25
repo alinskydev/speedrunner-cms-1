@@ -63,7 +63,7 @@ class GeneratorForm extends Model
         return array_combine($result, $result);
     }
     
-    static function modulesList()
+    public static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
             $result[ucfirst($key)] = ucfirst($key);

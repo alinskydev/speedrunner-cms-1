@@ -16,9 +16,9 @@ namespace backend\modules\<?= $model->module_name ?>\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 <?php if (isset($attrs_fields['images'])) { ?>
-use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
+use common\actions\web\{ImageSortAction, ImageDeleteAction};
 <?php } ?>
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;

@@ -16,9 +16,5 @@ return [
             'class' => 'yii\rbac\DbManager',
             'cache' => 'yii\caching\FileCache',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
-        ],
     ],
 ];

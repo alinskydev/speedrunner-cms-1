@@ -11,12 +11,11 @@ use backend\modules\Speedrunner\forms\module\GeneratorForm;
 
 class GeneratorController extends Controller
 {
-    protected $dbSchema;
+    private $dbSchema;
     
     public function beforeAction($action)
     {
         $this->dbSchema = Yii::$app->db->schema;
-        
         return parent::beforeAction($action);
     }
     

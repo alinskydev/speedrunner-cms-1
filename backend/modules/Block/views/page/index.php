@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 use backend\modules\Block\models\BlockType;
 
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\components\framework\grid\CheckboxColumn',
+                'class' => 'common\framework\grid\CheckboxColumn',
             ],
             [
                 'attribute' => 'id',
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             'updated',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{assign} {update} {delete}',
                 'buttons' => [
                     'assign' => function($url, $model, $key) {

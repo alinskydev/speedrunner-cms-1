@@ -5,6 +5,7 @@ namespace backend\modules\Staticpage\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use common\services\FileService;
 
 use backend\modules\Staticpage\models\Staticpage;
 use backend\modules\Staticpage\models\StaticpageBlock;
@@ -74,7 +75,7 @@ class StaticpageController extends Controller
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            Yii::$app->sr->file->delete($images[$key]);
+            FileService::delete($images[$key]);
             unset($images[$key]);
             
             if ($model->has_translation) {

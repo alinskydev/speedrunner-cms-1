@@ -2,9 +2,12 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
+
+use backend\modules\Log\lists\LogActionModelsList;
+use backend\modules\Log\services\LogActionService;
 
 $this->title = Yii::t('app', 'Log actions');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -32,7 +35,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
                     'attribute' => 'user_id',
-                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'full_name')],
+                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'username')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -44,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'full_name'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             [
                 'attribute' => 'type',
@@ -54,10 +57,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'model_class',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map($modelSearch->modelClasses(), 'name', 'label', 'module'),
-                'value' => function ($model) {
-                    $result[] = Html::tag('b', ArrayHelper::getValue($model->modelClasses(), "$model->model_class.label"));
-                    $result[] = '(' . ArrayHelper::getValue($model->modelClasses(), "$model->model_class.module") . ')';
+                'filter' => ArrayHelper::map($log_action_modules_list, 'name', 'label', 'module'),
+                'value' => function ($model) use ($log_action_modules_list) {
+                    $result[] = Html::tag('b', ArrayHelper::getValue($log_action_modules_list, "$model->model_class.label"));
+                    $result[] = '(' . ArrayHelper::getValue($log_action_modules_list, "$model->model_class.module") . ')';
                     $result[] = "Id: $model->model_id";
                     
                     return implode('<br>', $result);
@@ -70,7 +73,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_old',
                 'format' => 'raw',
-                'value' => fn ($model) => $model->attrsColumn('old', 'short'),
+                'value' => fn ($model) => (new LogActionService($model))->attrsColumn('old', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
@@ -78,14 +81,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_new',
                 'format' => 'raw',
-                'value' => fn ($model) => $model->attrsColumn('new', 'short'),
+                'value' => fn ($model) => (new LogActionService($model))->attrsColumn('new', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
             ],
             'created',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{view} {link}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
@@ -107,7 +110,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'link' => function ($url, $model, $key) {
                         return Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
-                            ArrayHelper::getValue($model->modelClasses($model), "$model->model_class.index_url"),
+                            ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url'),
                             [
                                 'target' => '_blank',
                                 'title' => Yii::t('app', 'Link'),
@@ -119,7 +122,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ],
                 'visibleButtons' => [
                     'link' => function ($model, $key, $index) {
-                        return $model->type != 'deleted' && ArrayHelper::getValue($model->modelClasses($model), "$model->model_class.index_url");
+                        return $model->type != 'deleted' && ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url');
                     },
                 ]
             ],

@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
         <?php foreach ($model->products as $key => $p) { ?>
             <tr>
                 <td>
-                    <img src="<?= Yii::$app->sr->image->thumb(ArrayHelper::getValue($p->product_json, 'image'), [100, 100]) ?>">
+                    <img src="<?= Yii::$app->services->image->thumb(ArrayHelper::getValue($p->product_json, 'image'), [100, 100]) ?>">
                 </td>
                 <td><?= $key + 1 ?></td>
                 <td><?= ArrayHelper::getValue($p->product_json, 'name') ?></td>

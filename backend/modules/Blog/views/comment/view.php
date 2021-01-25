@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 return $form->field($model, 'status', [
                                     'template' => '{input}{hint}{error}',
                                     'options' => ['class' => 'm-0'],
-                                ])->dropDownList(ArrayHelper::getColumn(Yii::$app->params['comment_statuses'], fn ($value) => Yii::t('app', $value)));
+                                ])->dropDownList(ArrayHelper::getColumn($model->statuses(), 'label'));
                             },
                         ],
                         'created',

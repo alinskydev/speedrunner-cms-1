@@ -5,25 +5,18 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
+use common\actions\rest\{FormAction};
 
 
 class FeedbackController extends Controller
 {
-    protected $forms = [
+    const FORMS = [
         'send' => '\frontend\forms\ContactForm',
     ];
     
     public function behaviors()
     {
         return [
-            'format' => [
-                'class' => \yii\filters\ContentNegotiator::className(),
-                'formatParam' => 'format',
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                    'text/xml' => Response::FORMAT_XML,
-                ],
-            ],
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
@@ -33,23 +26,13 @@ class FeedbackController extends Controller
         ];
     }
     
-    public function actionSend()
+    public function actions()
     {
-        $model = new $this->forms['send']();
-        $model->load([$model->formName() => Yii::$app->request->post()]);
-        
-        if ($model->validate()) {
-            return $model->sendEmail();
-        } else {
-            Yii::$app->response->statusCode = 422;
-            
-            return [
-                'name' => 'Unprocessable entity',
-                'message' => $model->errors,
-                'code' => 0,
-                'status' => 422,
-                'type' => 'yii\\web\\UnprocessableEntityHttpException',
-            ];
-        }
+        return [
+            'send' => [
+                'class' => FormAction::className(),
+                'run_method' => 'sendEmail',
+            ],
+        ];
     }
 }

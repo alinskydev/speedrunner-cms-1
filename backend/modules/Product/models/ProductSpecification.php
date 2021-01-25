@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -73,5 +73,10 @@ class ProductSpecification extends ActiveRecord
     {
         return $this->hasMany(ProductCategory::className(), ['id' => 'category_id'])
             ->viaTable('ProductCategorySpecificationRef', ['specification_id' => 'id']);
+    }
+    
+    public static function find()
+    {
+        return new \backend\modules\Product\models\query\ProductSpecificationQuery(get_called_class());
     }
 }

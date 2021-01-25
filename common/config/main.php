@@ -22,12 +22,12 @@ return [
         'i18n' => [
             'translations' => [
                 'app*' => [
-                    'class' => 'common\components\framework\DbMessageSource',
+                    'class' => 'common\framework\DbMessageSource',
                     'sourceMessageTable' => 'TranslationSource',
                     'messageTable' => 'TranslationMessage',
                 ],
                 'yii2*' => [
-                    'class' => 'common\components\framework\DbMessageSource',
+                    'class' => 'common\framework\DbMessageSource',
                     'sourceMessageTable' => 'TranslationSource',
                     'messageTable' => 'TranslationMessage',
                 ],
@@ -40,40 +40,54 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+        ],
 
         //        URL MANAGERS
 
         'urlManager' => [
-            'class' => 'common\components\framework\UrlManager',
+            'class' => 'common\framework\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => $app ? require __DIR__ . "/../../$app/config/routes.php" : [],
         ],
         'urlManagerApi' => [
-            'class' => 'common\components\framework\UrlManager',
+            'class' => 'common\framework\UrlManager',
             'baseUrl' => '/api',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../api/config/routes.php',
         ],
         'urlManagerBackend' => [
-            'class' => 'common\components\framework\UrlManager',
+            'class' => 'common\framework\UrlManager',
             'baseUrl' => '/admin',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../backend/config/routes.php',
         ],
         'urlManagerFrontend' => [
-            'class' => 'common\components\framework\UrlManager',
+            'class' => 'common\framework\UrlManager',
             'baseUrl' => '',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../frontend/config/routes.php',
         ],
         
-        //        HELPERS
+        //        SERVICES
         
-        'settings' => ['class' => 'common\components\Settings'],
-        'sr' => ['class' => 'common\helpers\Speedrunner'],
+        'services' => [
+            'class' => 'common\bootstrap\Services',
+            'services' => [
+                'html' => 'common\services\HtmlService',
+                'i18n' => 'common\services\I18NService',
+                'image' => 'common\services\ImageService',
+                'mail' => 'common\services\MailService',
+                
+                'settings' => 'backend\modules\System\services\SystemSettingsService',
+                'staticpage' => 'backend\modules\Staticpage\services\StaticpageService',
+            ],
+        ],
     ],
 ];

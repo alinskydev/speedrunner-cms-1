@@ -3,13 +3,13 @@
 namespace backend\modules\Blog\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
 class Blog extends ActiveRecord
 {
-    use \api\modules\v1\models\Blog;
+    use \api\modules\v1\models\blog\Blog;
     
     public $tags_tmp;
     
@@ -88,11 +88,6 @@ class Blog extends ActiveRecord
             ->viaTable('BlogTagRef', ['blog_id' => 'id'], function ($query) {
                 $query->onCondition(['lang' => Yii::$app->language]);
             });
-    }
-    
-    public function getTagsColumn()
-    {
-        return implode(', ', ArrayHelper::getColumn($this->tags, 'name'));
     }
     
     public function getComments()

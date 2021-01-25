@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
 
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => (bool)ArrayHelper::getValue($model, 'currentTranslation.translation'),
             ],
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update}',
                 'buttons' => [],
             ],

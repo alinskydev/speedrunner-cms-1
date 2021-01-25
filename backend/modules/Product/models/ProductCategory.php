@@ -3,9 +3,8 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\db\Expression;
 
 
 class ProductCategory extends ActiveRecord
@@ -25,8 +24,10 @@ class ProductCategory extends ActiveRecord
                 'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
                 'treeAttribute' => 'tree',
             ],
-            'htmlTree'=>[
+            'htmlTree' => [
                 'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
+                'labelAttribute' => 'name',
+                'isAttributeTranslatable' => true,
             ],
             'sluggable' => [
                 'class' => \yii\behaviors\SluggableBehavior::className(),
@@ -105,22 +106,6 @@ class ProductCategory extends ActiveRecord
         return $result ? "$result/$this->slug" : $this->slug;
     }
     
-    static function itemsTree($excepts = [])
-    {
-        $lang = Yii::$app->language;
-        
-        $result = static::find()
-            ->select([
-                'id',
-                new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as name")
-            ])
-            ->andWhere(['not in', 'id', $excepts])
-            ->orderBy(['lft' => SORT_ASC, 'tree' => SORT_DESC])
-            ->asArray()->all();
-        
-        return ArrayHelper::map($result, 'id', 'name');
-    }
-    
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])
@@ -135,6 +120,6 @@ class ProductCategory extends ActiveRecord
     
     public static function find()
     {
-        return new ProductCategoryQuery(get_called_class());
+        return new \common\query\NestedSetsQuery(get_called_class());
     }
 }

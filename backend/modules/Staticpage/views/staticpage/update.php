@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save']) ?>
 </h2>
 
 <div class="row">
@@ -143,7 +143,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <?php if ($model->has_seo_meta) { ?>
                 <div id="tab-page-seo-meta" class="tab-pane <?= !$blocks ? 'active' : 'fade' ?>">
                     <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                        'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                        'model' => $model,
                     ]) ?>
                 </div>
             <?php } ?>

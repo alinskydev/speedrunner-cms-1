@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 use yii\widgets\Pjax;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'text:ntext',
                         [
                             'attribute' => 'status',
-                            'filter' => ArrayHelper::getColumn(Yii::$app->params['comment_statuses'], fn ($value) => Yii::t('app', $value)),
-                            'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['comment_statuses'], $model->status),
+                            'filter' => ArrayHelper::getColumn($modelSearch['comments']->statuses(), 'label'),
+                            'value' => fn ($model) => ArrayHelper::getValue($modelSearch['comments']->statuses(), "$model->status.label"),
                         ],
                         'created',
                     ],

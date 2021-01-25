@@ -50,8 +50,6 @@ return [
             ['label' => Yii::t('app', 'Categories'), 'url' => ['/product/category/tree']],
             ['label' => Yii::t('app', 'Brands'), 'url' => ['/product/brand/index']],
             ['label' => Yii::t('app', 'Specifications'), 'url' => ['/product/specification/index']],
-            ['label' => Yii::t('app', 'Comments'), 'url' => ['/product/comment/index']],
-            ['label' => Yii::t('app', 'Rates'), 'url' => ['/product/rate/index']],
         ],
     ],
     [

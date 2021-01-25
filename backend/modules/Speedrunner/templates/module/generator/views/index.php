@@ -20,7 +20,7 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 $this->title = Yii::t('app', '<?= $title ?>s');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\components\framework\grid\CheckboxColumn',
+                'class' => 'common\framework\grid\CheckboxColumn',
             ],
 <?php
     foreach ($attrs as $key => $a) {
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     }
 ?>
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '<?= implode(null, $buttons_template) ?>',
                 'buttons' => [],
             ],

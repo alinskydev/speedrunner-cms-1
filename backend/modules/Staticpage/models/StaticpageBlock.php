@@ -3,14 +3,15 @@
 namespace backend\modules\Staticpage\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use common\services\FileService;
 
 
 class StaticpageBlock extends ActiveRecord
 {
-    use \api\modules\v1\models\StaticpageBlock;
+    use \api\modules\v1\models\staticpage\StaticpageBlock;
     
     public static function tableName()
     {
@@ -119,10 +120,12 @@ class StaticpageBlock extends ActiveRecord
                 
                 if ($images = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($images as $img) {
+                        $file_url = (new FileService($img))->save();
+                        
                         if ($this->has_translation) {
-                            $images_arr[$lang][] = Yii::$app->sr->file->save($img);
+                            $images_arr[$lang][] = $file_url;
                         } else {
-                            $images_arr[] = Yii::$app->sr->file->save($img);
+                            $images_arr[] = $file_url;
                         }
                     }
                     
@@ -140,7 +143,7 @@ class StaticpageBlock extends ActiveRecord
     {
         if ($this->type == 'images') {
             foreach ($this->value as $v) {
-                Yii::$app->sr->file->delete($v);
+                FileService::delete($v);
             }
         }
         

@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -187,22 +187,12 @@ class Product extends ActiveRecord
     
     public function getRelated()
     {
-        return $this->hasMany(Product::className(), ['id' => 'related_id'])
+        return $this->hasMany(static::className(), ['id' => 'related_id'])
             ->viaTable('ProductRelatedRef', ['product_id' => 'id']);
     }
     
     public function getVariations()
     {
         return $this->hasMany(ProductVariation::className(), ['product_id' => 'id'])->orderBy('sort');
-    }
-    
-    public function getComments()
-    {
-        return $this->hasMany(ProductComment::className(), ['product_id' => 'id']);
-    }
-    
-    public function getRates()
-    {
-        return $this->hasMany(ProductRate::className(), ['product_id' => 'id']);
     }
 }

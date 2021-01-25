@@ -3,7 +3,7 @@
 namespace backend\modules\Banner\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -57,7 +57,7 @@ class Banner extends ActiveRecord
         ];
     }
     
-    static function locations()
+    public static function locations()
     {
         return [
             'slider_home' => [

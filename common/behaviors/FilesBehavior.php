@@ -4,9 +4,10 @@ namespace common\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use common\services\FileService;
 
 
 class FilesBehavior extends Behavior
@@ -43,7 +44,7 @@ class FilesBehavior extends Behavior
             
             if ($value = UploadedFile::getInstances($this->owner, $a)) {
                 foreach ($value as $v) {
-                    $new_value[] = Yii::$app->sr->file->save($v, $this->save_dir, $this->width_height);
+                    $new_value[] = (new FileService($v))->save($this->save_dir, $this->width_height);
                 }
                 
                 $this->owner->{$a} = array_merge($old_value, $new_value);
@@ -57,7 +58,7 @@ class FilesBehavior extends Behavior
     {
         foreach ($this->attributes as $a) {
             foreach ($this->owner->{$a} as $value) {
-                Yii::$app->sr->file->delete($value);
+                FileService::delete($value);
             }
         }
     }

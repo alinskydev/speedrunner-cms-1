@@ -32,7 +32,7 @@ class LogActionSearch extends LogAction
     {
         $query = LogAction::find()
             ->joinWith(['attrs'])
-            ->with(['user.profile'])
+            ->with(['user'])
             ->groupBy('LogAction.id');
         
         $dataProvider = new ActiveDataProvider([

@@ -15,7 +15,7 @@ class CartController extends Controller
 {
     public function actionIndex()
     {
-        $page = Yii::$app->sr->record->staticpage('cart');
+        $page = Yii::$app->services->staticpage->cart;
         
         $render_type = Yii::$app->request->isAjax ? 'renderPartial' : 'render';
         

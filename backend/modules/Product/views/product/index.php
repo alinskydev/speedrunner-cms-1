@@ -2,11 +2,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
-
-use backend\modules\Product\models\ProductCategory;
 
 $this->title = Yii::t('app', 'Products');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -28,13 +26,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\components\framework\grid\CheckboxColumn',
+                'class' => 'common\framework\grid\CheckboxColumn',
             ],
             [
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->images[0] ?? null, [40, 40], 'resize')),
+                'value' => fn ($model) => Html::img(Yii::$app->services->image->thumb($model->images[0] ?? null, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -84,7 +82,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
-                'filter' => ProductCategory::itemsTree([1]),
+                'filter' => ArrayHelper::map($categories_list, 'id', 'text'),
                 'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
@@ -93,8 +91,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'created',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'class' => 'common\framework\grid\ActionColumn',
+                'template' => '{update} {delete}',
                 'buttons' => [],
             ],
         ],

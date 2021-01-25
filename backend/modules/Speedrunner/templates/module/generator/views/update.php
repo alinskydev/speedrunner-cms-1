@@ -137,8 +137,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-seo-meta" class="tab-pane fade">
                 <?= '<?= ' ?>$this->render('@backend/modules/Seo/views/meta/meta', [
-                        'seo_meta' => Yii::$app->sr->seo->getMeta($model),
-                ]); ?>
+                    'model' => $model,
+                ]) ?>
             </div>
 <?php } ?>
         </div>

@@ -217,7 +217,7 @@ class Select2 extends InputWidget
     public function renderWidget()
     {
         if (!isset($this->theme)) {
-            $this->theme = $this->isBs4() ? self::THEME_KRAJEE_BS4 : self::THEME_KRAJEE;
+            $this->theme = $this->isBs4() ? self::THEME_KRAJEE_BS4 : self::THEME_DEFAULT;
         }
         $this->initI18N(__DIR__);
         $this->pluginOptions['theme'] = $this->theme;

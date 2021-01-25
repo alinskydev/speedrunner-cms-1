@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 $this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->image, [40, 40], 'resize')),
+                'value' => fn ($model) => Html::img(Yii::$app->services->image->thumb($model->image, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             'updated',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'buttons' => [],
             ],

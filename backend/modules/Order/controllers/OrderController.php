@@ -4,7 +4,7 @@ namespace backend\modules\Order\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Order\models\Order;
 use backend\modules\Order\modelsSearch\OrderSearch;

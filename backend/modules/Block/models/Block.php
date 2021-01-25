@@ -3,9 +3,10 @@
 namespace backend\modules\Block\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use common\services\FileService;
 
 
 class Block extends ActiveRecord
@@ -122,10 +123,12 @@ class Block extends ActiveRecord
                 
                 if ($images = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($images as $img) {
+                        $file_url = (new FileService($img))->save();
+                        
                         if ($this->type->has_translation) {
-                            $images_arr[$lang][] = Yii::$app->sr->file->save($img);
+                            $images_arr[$lang][] = $file_url;
                         } else {
-                            $images_arr[] = Yii::$app->sr->file->save($img);
+                            $images_arr[] = $file_url;
                         }
                     }
                     
@@ -143,7 +146,7 @@ class Block extends ActiveRecord
     {
         if ($this->type->type == 'images') {
             foreach ($this->value as $v) {
-                Yii::$app->sr->file->delete($v);
+                FileService::delete($v);
             }
         }
         

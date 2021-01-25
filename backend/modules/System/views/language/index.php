@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
 
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->sr->image->thumb($model->image, [25, 25], 'resize')),
+                'value' => fn ($model) => Html::img(Yii::$app->services->image->thumb($model->image, [25, 25], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 40px;'
                 ],
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'is_main:boolean',
             'created',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update} {delete}',
             ],
         ],

@@ -4,12 +4,13 @@ namespace common\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\models\LogActionAttr;
+use backend\modules\Log\lists\LogActionModelsList;
 
 
 class LogActionBehavior extends Behavior
@@ -104,19 +105,19 @@ class LogActionBehavior extends Behavior
     
     private function save($model, $type, $changedAttributes, $extraAttributes)
     {
-        $action = new LogAction();
-        $action->user_id = Yii::$app->user->id;
-        $action->type = $type;
-        $action->model_class = StringHelper::basename($model->className());
-        $action->model_id = $model->id;
+        $log_action = new LogAction();
+        $log_action->user_id = Yii::$app->user->id;
+        $log_action->type = $type;
+        $log_action->model_class = StringHelper::basename($model->className());
+        $log_action->model_id = $model->id;
         
         $transaction = Yii::$app->db->beginTransaction();
         
-        if (!$action->save()) {
+        if (!$log_action->save()) {
             return Yii::$app->session->addFlash('warning', Yii::t('app', "Record hasn't been saved to the actions log"));
         }
         
-        $relations = ArrayHelper::getValue($action->modelClasses(), "$action->model_class.relations", []);
+        $relations = ArrayHelper::getValue((new LogActionModelsList())->findAndFill($log_action), 'relations', []);
         $counter = 0;
         
         foreach ($changedAttributes as $key => $a) {
@@ -135,7 +136,7 @@ class LogActionBehavior extends Behavior
             }
             
             $attr = new LogActionAttr();
-            $attr->action_id = $action->id;
+            $attr->action_id = $log_action->id;
             $attr->name = $key;
             $attr->value_old = $value_old;
             $attr->value_new = $type != 'deleted' ? $value_new : null;
@@ -144,7 +145,7 @@ class LogActionBehavior extends Behavior
         
         foreach ($extraAttributes as $key => $a) {
             $attr = new LogActionAttr();
-            $attr->action_id = $action->id;
+            $attr->action_id = $log_action->id;
             $attr->name = $key;
             $attr->value_old = $a['old'];
             $attr->value_new = $a['new'];

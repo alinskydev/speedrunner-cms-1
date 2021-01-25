@@ -14,14 +14,6 @@ class StaticpageController extends Controller
     public function behaviors()
     {
         return [
-            'format' => [
-                'class' => \yii\filters\ContentNegotiator::className(),
-                'formatParam' => 'format',
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                    'text/xml' => Response::FORMAT_XML,
-                ],
-            ],
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [

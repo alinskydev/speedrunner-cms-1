@@ -7,7 +7,9 @@ use vova07\imperavi\Widget;
 use zxbodya\yii2\elfinder\ElFinderInput;
 
 use backend\modules\Seo\models\SeoMeta;
+use backend\modules\Seo\services\SeoMetaService;
 
+$seo_meta = (new SeoMetaService($model))->getMetaValue();
 $seo_meta_types = SeoMeta::types();
 
 ?>

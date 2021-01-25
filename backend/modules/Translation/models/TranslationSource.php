@@ -3,7 +3,7 @@
 namespace backend\modules\Translation\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -48,22 +48,10 @@ class TranslationSource extends ActiveRecord
         return $this->hasOne(TranslationMessage::className(), ['id' => 'id'])->onCondition(['language' => Yii::$app->language]);
     }
     
-    public function activeTranslations()
-    {
-        $langs = array_keys(Yii::$app->sr->translation->languages);
-        $messages = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $langs])->indexBy('language')->all();
-        
-        foreach ($langs as $l) {
-            $messages[$l] = $messages[$l] ?? new TranslationMessage(['id' => $this->id, 'language' => $l]);
-        }
-        
-        return $messages;
-    }
-    
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
-            $available_langs = Yii::$app->sr->translation->languages;
+            $available_langs = Yii::$app->services->i18n::$languages;
             
             foreach ($this->translations_tmp as $key => $value) {
                 if (array_key_exists($key, $available_langs)) {

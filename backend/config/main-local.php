@@ -9,8 +9,6 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = 'yii\debug\Module';
     $config['modules']['gii'] = 'yii\gii\Module';
     $config['modules']['rbac'] = 'yii2mod\rbac\Module';
     $config['modules']['speedrunner'] = 'backend\modules\Speedrunner\Module';

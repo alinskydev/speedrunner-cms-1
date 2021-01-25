@@ -4,20 +4,44 @@ namespace backend\modules\Log\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\modelsSearch\LogActionSearch;
+use backend\modules\Log\lists\LogActionModelsList;
 
 
 class ActionController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'cache' => [
+                'class' => \yii\filters\PageCache::className(),
+                'duration' => 0,
+                'only' => ['index', 'view'],
+                'dependency' => [
+                    'class' => \yii\caching\DbDependency::className(),
+                    'sql' => LogAction::find()->select('COUNT(*)')->createCommand()->getRawSql(),
+                ],
+                'variations' => [
+                    Yii::$app->language,
+                    Yii::$app->user,
+                    Yii::$app->request->get(),
+                ],
+            ],
+        ];
+    }
+    
     public function actions()
     {
         return [
             'index' => [
                 'class' => IndexAction::className(),
                 'modelSearch' => new LogActionSearch(),
+                'params' => [
+                    'log_action_modules_list' => (new LogActionModelsList)::$models,
+                ]
             ],
         ];
     }

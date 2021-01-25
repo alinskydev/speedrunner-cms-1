@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 $this->title = Yii::t('app', 'Blog tags');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\components\framework\grid\CheckboxColumn',
+                'class' => 'common\framework\grid\CheckboxColumn',
             ],
             [
                 'attribute' => 'id',
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'name',
             'created',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [],
             ],

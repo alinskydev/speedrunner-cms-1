@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
@@ -126,11 +126,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             
             <div id="tab-categories-specifications" class="tab-pane fade">
-                <?= $form->field($model, 'main_category_id')->dropDownList(ProductCategory::itemsTree([1]), [
-                    'class' => 'form-control',
-                    'data-toggle' => 'select2',
-                    'prompt' => ' ',
-                ]) ?>
+                <?= $form->field($model, 'main_category_id')->dropDownList(
+                    ArrayHelper::map($categories_list, 'id', 'text'),
+                    [
+                        'class' => 'form-control',
+                        'data-toggle' => 'select2',
+                        'prompt' => ' ',
+                    ]
+                ) ?>
                 
                 <?= $this->render('_categories', [
                     'model' => $model,
@@ -167,7 +170,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-seo-meta" class="tab-pane fade">
                 <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                    'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                    'model' => $model,
                 ]) ?>
             </div>
         </div>

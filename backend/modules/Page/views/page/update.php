@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             
             <div id="tab-seo-meta" class="tab-pane fade">
                 <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                    'seo_meta' => Yii::$app->sr->seo->getMeta($model),
+                    'model' => $model,
                 ]) ?>
             </div>
         </div>

@@ -8,6 +8,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use common\services\DataService;
 
 use common\forms\LoginForm;
 use frontend\forms\ResetPasswordRequestForm;
@@ -52,12 +53,15 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $page = Yii::$app->sr->record->staticpage('home');
+        $page = Yii::$app->services->staticpage->home;
+        
+        $categories_tree = ProductCategory::find()->andWhere(['depth' => 0])->one()->setJsonAttributes(['name'])->tree();
+        $categories = (new DataService($categories_tree))->buildFullPath('slug');
         
         return $this->render('index', [
             'page' => $page['page'],
             'blocks' => $page['blocks'],
-            'categories' => ProductCategory::find()->all(),
+            'categories' => $categories,
         ]);
     }
     
@@ -113,7 +117,6 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->signup();
             Yii::$app->session->setFlash('success', Yii::t('app', 'You have been registered successfully'));
-            
             return $this->goHome();
         }
         
@@ -129,10 +132,11 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email inbox for further instructions'));
-                return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
             }
+            
+            return $this->goHome();
         }
         
         return $this->render('reset_password_request', [
@@ -147,7 +151,6 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->resetPassword();
             Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved'));
-            
             return $this->goHome();
         }
         

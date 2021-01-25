@@ -36,9 +36,6 @@ return [
                 ],
             ],
         ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
             'cachePath' => '@frontend/runtime/cache',

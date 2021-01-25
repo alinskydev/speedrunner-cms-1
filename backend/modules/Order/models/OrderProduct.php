@@ -3,7 +3,7 @@
 namespace backend\modules\Order\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\Product;
@@ -49,9 +49,7 @@ class OrderProduct extends ActiveRecord
     
     public function afterDelete()
     {
-        $product = $this->product;
-        $product->updateAttributes(['quantity' => $product->quantity + $this->quantity]);
-
+        $this->product->updateCounters(['quantity' => $this->quantity]);
         return parent::afterDelete();
     }
 }

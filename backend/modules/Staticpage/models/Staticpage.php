@@ -3,12 +3,12 @@
 namespace backend\modules\Staticpage\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 
 
 class Staticpage extends ActiveRecord
 {
-    use \api\modules\v1\models\Staticpage;
+    use \api\modules\v1\models\staticpage\Staticpage;
     
     public static function tableName()
     {

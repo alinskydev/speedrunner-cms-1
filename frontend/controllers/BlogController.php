@@ -11,22 +11,6 @@ use backend\modules\Blog\models\Blog;
 
 class BlogController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'cache' => [
-                'class' => 'yii\filters\PageCache',
-                'duration' => 0,
-                'only' => ['index', 'view'],
-                'variations' => [
-                    Yii::$app->language,
-                    Yii::$app->user,
-                    Yii::$app->request->get(),
-                ],
-            ],
-        ];
-    }
-    
     public function actionIndex()
     {
         $query = Blog::find()->orderBy('published DESC');

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use backend\modules\Translation\services\TranslationService;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {message}', ['message' => $model->message]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Translation sources'), 'url' => ['index']];
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->sr->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
 </h2>
 
 <div class="row">
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tab-content main-shadow p-3">
             <div id="tab-information" class="tab-pane active">
                 <?php
-                    foreach ($model->activeTranslations() as $t) {
+                    foreach ((new TranslationService($model))->activeTranslations() as $t) {
                         echo $form->field($model, "translations_tmp[$t->language]")
                             ->textarea(['rows' => 6, 'value' => $t->translation])
                             ->label($t->lang->name);

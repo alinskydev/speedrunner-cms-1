@@ -65,7 +65,7 @@ class ElFinderInput extends InputWidget
         
         if (strpos($file_mime_type, 'image') !== false) {
             if (strpos($file_mime_type, 'icon') === false) {
-                $file_url = $value ? Yii::$app->sr->image->thumb($value, [100, 100], 'resize') : '';
+                $file_url = $value ? Yii::$app->services->image->thumb($value, [100, 100], 'resize') : '';
                 $html = Html::img($file_url, ['class' => 'preview-elfinder preview-' . $this->options['id']]);
             } else {
                 $file_url = $value;

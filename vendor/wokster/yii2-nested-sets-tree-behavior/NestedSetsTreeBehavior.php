@@ -47,6 +47,8 @@ class NestedSetsTreeBehavior extends Behavior
     /**
      * @var array
      */
+    
+    public $isAttributeTranslatable = false;
     public $jsonAttributes = [];
 
     public function tree()
@@ -68,9 +70,13 @@ class NestedSetsTreeBehavior extends Behavior
             ->select([
                 '*',
                 new Expression("IF(expanded, 1, null) as expanded"),
-                new Expression("name->>'$.$lang' as name"),
-                new Expression("name->>'$.$lang' as title"),
             ]);
+        
+        if ($this->isAttributeTranslatable) {
+            $collection->addSelect(new Expression("$this->labelAttribute->>'$.$lang' as title"));
+        } else {
+            $collection->addSelect("$this->labelAttribute as title");
+        }
         
         foreach ($this->jsonAttributes as $a) {
             $collection->addSelect([new Expression("$a->>'$.$lang' as $a")]);
@@ -116,7 +122,7 @@ class NestedSetsTreeBehavior extends Behavior
         return $trees;
     }
     
-    public function setJsonAttributes($attributes)
+    public function setJsonAttributes(array $attributes)
     {
         $this->jsonAttributes = $attributes;
         return $this->owner;

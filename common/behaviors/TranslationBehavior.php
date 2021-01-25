@@ -4,7 +4,7 @@ namespace common\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 
@@ -35,7 +35,7 @@ class TranslationBehavior extends Behavior
             if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
                 $json[Yii::$app->language] = $this->owner->{$a};
             } else {
-                $langs = Yii::$app->sr->translation->languages;
+                $langs = Yii::$app->services->i18n::$languages;
                 
                 foreach ($langs as $l) {
                     $json[$l['code']] = $this->owner->{$a};

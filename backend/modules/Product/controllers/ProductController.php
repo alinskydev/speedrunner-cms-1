@@ -6,15 +6,13 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\db\Expression;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
-use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
+use backend\modules\Product\models\ProductCategory;
 use backend\modules\Product\models\ProductSpecification;
-use backend\modules\Product\modelsSearch\ProductCommentSearch;
-use backend\modules\Product\modelsSearch\ProductRateSearch;
 
 
 class ProductController extends Controller
@@ -25,14 +23,23 @@ class ProductController extends Controller
             'index' => [
                 'class' => IndexAction::className(),
                 'modelSearch' => new ProductSearch(),
+                'params' => [
+                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
+                ],
             ],
             'create' => [
                 'class' => UpdateAction::className(),
                 'model' => new Product(),
+                'params' => [
+                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
+                ],
             ],
             'update' => [
                 'class' => UpdateAction::className(),
                 'model' => $this->findModel(),
+                'params' => [
+                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
+                ],
             ],
             'delete' => [
                 'class' => DeleteAction::className(),
@@ -56,7 +63,7 @@ class ProductController extends Controller
         $model = Product::find()
             ->with([
                 'brand', 'categories',
-                'variations.specification', 'variations.option'
+                'variations.specification', 'variations.option',
             ])
             ->andWhere(['id' => Yii::$app->request->get('id')])
             ->one();
@@ -67,51 +74,10 @@ class ProductController extends Controller
         }
     }
     
-    public function actionView($id)
-    {
-        if ($model = Product::findOne($id)) {
-            $search_models = [
-                'comments' => new ProductCommentSearch(),
-                'rates' => new ProductRateSearch(),
-            ];
-            
-            foreach ($search_models as $key => $s_m) {
-                $modelSearch[$key] = $s_m;
-                $dataProvider[$key] = $modelSearch[$key]->search(Yii::$app->request->queryParams);
-                $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
-                $dataProvider[$key]->pagination->pageSize = 20;
-                $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
-                $dataProvider[$key]->query->andWhere(['product_id' => $id]);
-            }
-            
-            return $this->render('view', [
-                'model' => $model,
-                'modelSearch' => $modelSearch,
-                'dataProvider' => $dataProvider,
-            ]);
-        } else {
-            $this->redirect(['index']);
-        }
-    }
-    
     public function actionSpecifications($id = null, array $categories = [])
     {
         $model = Product::findOne($id) ?: new Product;
-        $lang = Yii::$app->language;
-        
-        $specifications = ProductSpecification::find()
-            ->joinWith([
-                'categories',
-                'options' => fn ($query) => $query->select(['*', new Expression("ProductSpecificationOption.name->>'$.$lang' as name")]),
-            ])
-            ->andWhere(['ProductCategory.id' => $categories])
-            ->select([
-                'ProductSpecification.*',
-                new Expression("ProductSpecification.name->>'$.$lang' as name"),
-                'ProductSpecificationOption.sort',
-            ])
-            ->groupBy('ProductSpecification.id')
-            ->asArray()->all();
+        $specifications = ProductSpecification::find()->assignedToCategies($categories)->asArray()->all();
         
         $variations = [
             'items' => ArrayHelper::map($specifications, 'id', 'name'),
@@ -119,7 +85,6 @@ class ProductController extends Controller
         ];
         
         foreach ($specifications as $s) {
-            $options = Html::renderSelectOptions(null, ArrayHelper::map($s['options'], 'id', 'name'));
             $variations['data_options']['options'][$s['id']] = [
                 'data-options' => Html::renderSelectOptions(null, ArrayHelper::map($s['options'], 'id', 'name')),
             ];

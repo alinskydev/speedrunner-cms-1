@@ -31,7 +31,7 @@ class DocumentatorForm extends Model
         ];
     }
     
-    static function modulesList()
+    public static function modulesList()
     {
         $config = require(Yii::getAlias('@api/config/main.php'));
         
@@ -87,10 +87,10 @@ class DocumentatorForm extends Model
                     //        POST PARAMS
                     
                     $params['post'] = [];
-                    $properties = $controller_reflection->getDefaultProperties();
+                    $forms = $controller_reflection->getConstant('FORMS');
                     
-                    if (isset($properties['forms'][$a_key])) {
-                        $form = new $properties['forms'][$a_key]();
+                    if (isset($forms[$a_key])) {
+                        $form = new $forms[$a_key]();
                         
                         foreach ($form->rules() as $rule) {
                             foreach ($rule[0] as $r) {

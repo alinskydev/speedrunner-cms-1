@@ -1,15 +1,6 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
-    'user.passwordResetTokenExpire' => 3600,
-    
-    'comment_statuses' => [
-        'new' => 'New',
-        'published' => 'Published',
-    ],
-    
     'input_types' => [
         'textInput' => 'Text field',
         'textArea' => 'Text area',
@@ -20,7 +11,7 @@ return [
         'groups' => 'Groups',
     ],
     
-    'date_format_attributes' => [
+    'date_formats' => [
         'datetime' => [
             'formats' => [
                 'afterFind' => 'd.m.Y H:i',

@@ -5,7 +5,7 @@ namespace backend\modules\Product\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\helpers\Speedrunner\controller\actions\{ImageSortAction, ImageDeleteAction};
+use common\actions\web\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Product\models\ProductVariation;
 

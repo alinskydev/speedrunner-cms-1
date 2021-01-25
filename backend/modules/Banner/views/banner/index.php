@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 
 $this->title = Yii::t('app', 'Banners');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             'updated',
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update}',
                 'buttons' => [],
             ],

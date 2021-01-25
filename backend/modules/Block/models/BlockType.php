@@ -3,7 +3,7 @@
 namespace backend\modules\Block\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 
 
 class BlockType extends ActiveRecord

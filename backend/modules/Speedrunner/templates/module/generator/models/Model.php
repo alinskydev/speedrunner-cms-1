@@ -32,7 +32,7 @@ echo '<?php';
 namespace backend\modules\<?= $model->module_name ?>\models;
 
 use Yii;
-use common\components\framework\ActiveRecord;
+use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 

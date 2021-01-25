@@ -5,7 +5,8 @@ namespace backend\modules\Block\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\services\FileService;
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\modelsSearch\BlockPageSearch;
@@ -111,7 +112,7 @@ class PageController extends Controller
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            Yii::$app->sr->file->delete($images[$key]);
+            FileService::delete($images[$key]);
             unset($images[$key]);
             
             if ($model->type->has_translation) {

@@ -4,7 +4,7 @@ namespace backend\modules\Page\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\helpers\Speedrunner\controller\actions\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
 
 use backend\modules\Page\models\Page;
 use backend\modules\Page\modelsSearch\PageSearch;

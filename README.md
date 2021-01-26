@@ -10,7 +10,7 @@ Speedrunner CMS, based on Yii2 framework, aims to speed up and simplify developm
 **Downloading**  
 Clone repository by using
 ```
-git clone https://github.com/sr-projects/speedrunner-cms.git
+git clone https://github.com/sr-projects/speedrunner-cms.git <your-folder>
 ```
 or download as [zip file](https://github.com/sr-projects/speedrunner-cms/archive/master.zip).
 

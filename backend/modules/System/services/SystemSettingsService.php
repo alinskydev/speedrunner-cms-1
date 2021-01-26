@@ -23,7 +23,7 @@ class SystemSettingsService
         if ($attribute = ArrayHelper::getValue(static::$attributes, $name)) {
             return $attribute;
         } else {
-            throw new \yii\web\HttpException(404, 'The requested attribute not found');
+            throw new \yii\web\HttpException(404, "The requested attribute '$name' not found");
         }
     }
 }

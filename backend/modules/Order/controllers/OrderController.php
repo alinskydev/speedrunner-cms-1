@@ -4,7 +4,7 @@ namespace backend\modules\Order\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Order\models\Order;
 use backend\modules\Order\modelsSearch\OrderSearch;
@@ -16,15 +16,15 @@ class OrderController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new OrderSearch(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new Order(),
             ],
         ];

@@ -24,7 +24,7 @@ class FileService
         $dir = Yii::getAlias("@frontend/web/$save_dir");
         FileHelper::createDirectory($dir);
         
-        $file_name = md5(strtotime('now') . Yii::$app->security->generateRandomString(16)) . '.' . $this->file->extension;
+        $file_name = md5(strtotime('now') . Yii::$app->security->generateRandomString()) . '.' . $this->file->extension;
         
         if ($width_height) {
             $image = Yii::$app->image->load($this->file->tempName);

@@ -10,7 +10,7 @@ return [
         'maxFileSize' => 1024,
         'showCaption' => false,
         'showUpload' => false,
-        'showRemove' => true,
+        'showRemove' => false,
         'showDelete' => false,
         'showCancel' => false,
         'showClose' => false,

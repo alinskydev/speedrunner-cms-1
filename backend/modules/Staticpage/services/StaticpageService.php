@@ -27,7 +27,7 @@ class StaticpageService
                 'blocks' => ArrayHelper::map($page->blocks, 'name', 'value'),
             ];
         } else {
-            throw new \yii\web\HttpException(404, 'The requested static page not found');
+            throw new \yii\web\HttpException(404, "The requested static page '$name' not found");
         }
     }
 }

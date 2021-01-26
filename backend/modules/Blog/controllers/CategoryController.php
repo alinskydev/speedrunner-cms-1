@@ -4,7 +4,7 @@ namespace backend\modules\Blog\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Blog\models\BlogCategory;
 use backend\modules\Blog\modelsSearch\BlogCategorySearch;
@@ -16,19 +16,19 @@ class CategoryController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new BlogCategorySearch(),
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new BlogCategory(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new BlogCategory(),
             ],
         ];

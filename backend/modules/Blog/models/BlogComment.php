@@ -58,11 +58,4 @@ class BlogComment extends ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
-    
-    public function beforeSave($insert)
-    {
-        $this->text = strip_tags($this->text);
-        
-        return parent::beforeSave($insert);
-    }
 }

@@ -4,7 +4,7 @@ namespace backend\modules\System\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\System\models\SystemLanguage;
 use backend\modules\System\modelsSearch\SystemLanguageSearch;
@@ -16,19 +16,19 @@ class LanguageController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new SystemLanguageSearch(),
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new SystemLanguage(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new SystemLanguage(),
             ],
         ];

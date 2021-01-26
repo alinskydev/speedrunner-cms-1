@@ -5,7 +5,7 @@ return [
     'login' => 'site/login',
     'signup' => 'site/signup',
     'logout' => 'site/logout',
-    'reset-password-request' => 'site/reset-password-request',
+    'request-reset-password' => 'site/request-reset-password',
     'reset-password' => 'site/reset-password',
     
     'contact' => 'site/contact',

@@ -4,7 +4,7 @@ namespace backend\modules\Page\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Page\models\Page;
 use backend\modules\Page\modelsSearch\PageSearch;
@@ -16,19 +16,19 @@ class PageController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new PageSearch(),
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new Page(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new Page(),
             ],
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace console\controllers\sr;
+namespace console\controllers\speedrunner;
 
 use Yii;
 use yii\helpers\Console;

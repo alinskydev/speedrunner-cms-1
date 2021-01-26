@@ -50,15 +50,20 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                             <?= ArrayHelper::getValue($user->roles(), "$user->role.label") ?>
                         </small>
                     </div>
+                    
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item px-3" href="<?= Yii::$app->urlManager->createUrl(['site/change-password']) ?>">
-                        <i class="fas fa-key">&nbsp;</i>
-                        <?= Yii::t('app', 'Change password') ?>
-                    </a>
-                    <a class="dropdown-item px-3" href="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>">
-                        <i class="fas fa-sign-out-alt">&nbsp;</i>
-                        <?= Yii::t('app', 'Logout') ?>
-                    </a>
+                    
+                    <?= Html::a(
+                        Html::tag('i', '&nbsp;', ['class' => 'fas fa-key']) . Yii::t('app', 'Change password'),
+                        ['/site/change-password'],
+                        ['class' => 'dropdown-item px-3']
+                    ) ?>
+                    
+                    <?= Html::a(
+                        Html::tag('i', '&nbsp;', ['class' => 'fas fa-sign-out-alt']) . Yii::t('app', 'Logout'),
+                        ['/site/logout'],
+                        ['class' => 'dropdown-item px-3', 'data-method' => 'POST']
+                    ) ?>
                 </div>
             </div>
             

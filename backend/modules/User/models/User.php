@@ -80,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['email'], 'email'],
             [['role'], 'in', 'range' => array_keys($this->roles())],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
-            [['new_password'], 'string', 'min' => 6, 'max' => 50],
+            [['new_password'], 'string', 'min' => 8, 'max' => 50],
             
             [['design_theme'], 'in', 'range' => array_keys($this->designThemes())],
             [['design_font'], 'in', 'range' => array_keys($this->designFonts())],

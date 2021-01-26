@@ -26,7 +26,7 @@ class ResetPasswordForm extends Model
     {
         return [
             [['password', 'confirm_password'], 'required'],
-            [['password'], 'string', 'min' => 6, 'max' => 50],
+            [['password'], 'string', 'min' => 8, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'password'],
         ];
     }

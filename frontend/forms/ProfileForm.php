@@ -43,7 +43,7 @@ class ProfileForm extends Model
             [['full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 255],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
-            [['new_password'], 'string', 'min' => 6, 'max' => 50],
+            [['new_password'], 'string', 'min' => 8, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
         ];
     }

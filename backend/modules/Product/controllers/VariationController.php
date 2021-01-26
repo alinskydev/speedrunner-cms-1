@@ -5,7 +5,6 @@ namespace backend\modules\Product\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\actions\web\{ImageSortAction, ImageDeleteAction};
 
 use backend\modules\Product\models\ProductVariation;
 
@@ -16,12 +15,12 @@ class VariationController extends Controller
     {
         return [
             'image-sort' => [
-                'class' => ImageSortAction::className(),
+                'class' => Actions\ImageSortAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],
             'image-delete' => [
-                'class' => ImageDeleteAction::className(),
+                'class' => Actions\ImageDeleteAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],

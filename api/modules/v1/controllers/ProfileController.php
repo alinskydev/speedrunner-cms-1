@@ -3,9 +3,9 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\rest\Controller;
-use yii\web\Response;
-use common\actions\rest\{FormAction};
+use yii\helpers\ArrayHelper;
+use common\controllers\RestController as Controller;
+use common\actions\rest as Actions;
 
 use backend\modules\User\models\User;
 
@@ -18,32 +18,32 @@ class ProfileController extends Controller
     
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'authenticator' => [
                 'class' => \yii\filters\auth\HttpBasicAuth::className(),
             ],
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'index' => ['get'],
+                    'information' => ['get'],
                     'update' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
     
     public function actions()
     {
         return [
             'update' => [
-                'class' => FormAction::className(),
+                'class' => Actions\FormAction::className(),
                 'run_method' => 'update',
                 'file_attributes' => ['image'],
             ],
         ];
     }
     
-    public function actionIndex()
+    public function actionInformation()
     {
         return Yii::$app->user->identity;
     }

@@ -4,7 +4,7 @@ namespace backend\modules\Banner\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Banner\models\Banner;
 use backend\modules\Banner\modelsSearch\BannerSearch;
@@ -16,11 +16,11 @@ class BannerController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new BannerSearch(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
         ];

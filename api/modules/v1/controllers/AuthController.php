@@ -3,9 +3,9 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\rest\Controller;
-use yii\web\Response;
-use common\actions\rest\{FormAction};
+use yii\helpers\ArrayHelper;
+use common\controllers\RestController as Controller;
+use common\actions\rest as Actions;
 
 
 class AuthController extends Controller
@@ -13,36 +13,39 @@ class AuthController extends Controller
     const FORMS = [
         'login' => '\common\forms\LoginForm',
         'signup' => '\frontend\forms\SignupForm',
-        'request-password-reset' => '\frontend\forms\ResetPasswordRequestForm',
+        'request-reset-password' => '\frontend\forms\RequestResetPasswordForm',
     ];
     
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
+            'authenticator' => [
+                'class' => \yii\filters\auth\HttpBasicAuth::className(),
+            ],
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'login' => ['post'],
                     'signup' => ['post'],
-                    'request-password-reset' => ['post'],
+                    'request-reset-password' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
     
     public function actions()
     {
         return [
             'login' => [
-                'class' => FormAction::className(),
+                'class' => Actions\FormAction::className(),
                 'run_method' => 'login',
             ],
             'signup' => [
-                'class' => FormAction::className(),
+                'class' => Actions\FormAction::className(),
                 'run_method' => 'signup',
             ],
-            'request-password-reset' => [
-                'class' => FormAction::className(),
+            'request-reset-password' => [
+                'class' => Actions\FormAction::className(),
                 'run_method' => 'sendEmail',
             ],
         ];

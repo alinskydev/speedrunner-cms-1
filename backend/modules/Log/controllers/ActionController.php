@@ -4,7 +4,7 @@ namespace backend\modules\Log\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\modelsSearch\LogActionSearch;
@@ -37,7 +37,7 @@ class ActionController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new LogActionSearch(),
                 'params' => [
                     'log_action_modules_list' => (new LogActionModelsList)::$models,

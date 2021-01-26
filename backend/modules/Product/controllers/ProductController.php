@@ -6,8 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
-use common\actions\web\{ImageSortAction, ImageDeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
@@ -21,37 +20,37 @@ class ProductController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new ProductSearch(),
                 'params' => [
                     'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
                 ],
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new Product(),
                 'params' => [
                     'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
                 ],
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
                 'params' => [
                     'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
                 ],
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new Product(),
             ],
             'image-sort' => [
-                'class' => ImageSortAction::className(),
+                'class' => Actions\ImageSortAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],
             'image-delete' => [
-                'class' => ImageDeleteAction::className(),
+                'class' => Actions\ImageDeleteAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],
@@ -77,7 +76,7 @@ class ProductController extends Controller
     public function actionSpecifications($id = null, array $categories = [])
     {
         $model = Product::findOne($id) ?: new Product;
-        $specifications = ProductSpecification::find()->assignedToCategies($categories)->asArray()->all();
+        $specifications = ProductSpecification::find()->byAssignedCategies($categories)->asArray()->all();
         
         $variations = [
             'items' => ArrayHelper::map($specifications, 'id', 'name'),

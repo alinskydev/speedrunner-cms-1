@@ -32,9 +32,11 @@ class ConnectionController extends Controller
                     'URL' => '/uploads/',
                     'rootAlias' => 'Home',
                     'uploadDeny' => [
-                        'text/x-'
+                        'text/x-',
+                        'text/javascript',
+                        'application/x-',
                     ],
-                    'disabled' => ['read', 'rename'],
+                    'disabled' => ['read', 'edit', 'rename', 'extract'],
                     'tmbDir' => '../assets/elfinder',
                 ],
             ],

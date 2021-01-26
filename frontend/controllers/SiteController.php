@@ -7,11 +7,12 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use common\services\DataService;
 
 use common\forms\LoginForm;
-use frontend\forms\ResetPasswordRequestForm;
+use frontend\forms\RequestResetPasswordForm;
 use frontend\forms\ResetPasswordForm;
 use frontend\forms\SignupForm;
 use frontend\forms\ContactForm;
@@ -27,10 +28,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'request-password-reset', 'reset-password'],
+                'only' => ['logout', 'signup', 'request-reset-password', 'reset-password'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'request-password-reset', 'reset-password'],
+                        'actions' => ['signup', 'request-reset-password', 'reset-password'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -39,6 +40,12 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -125,9 +132,9 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionResetPasswordRequest()
+    public function actionRequestResetPassword()
     {
-        $model = new ResetPasswordRequestForm();
+        $model = new RequestResetPasswordForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {

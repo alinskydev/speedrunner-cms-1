@@ -5,11 +5,12 @@ namespace common\framework;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
+use yii\helpers\HtmlPurifier;
 
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
-    const HTML_PURIFY_CLASSES = ['User', 'UserProfile'];
+    const HTMLPURIFY_EXCLUDE_CLASSES = [];
     const ALERT_EXCLUDE_CLASSES = ['LogAction', 'LogActionAttr', 'SeoMeta', 'UserNotification'];
     
     public static function find()
@@ -54,13 +55,14 @@ class ActiveRecord extends \yii\db\ActiveRecord
             $this->updated = date('Y-m-d H:i:s');
         }
         
-        //        HTML PURIFY
+        //        HTML PURIFIER
         
         $model_class = StringHelper::basename($this->className());
         
-        if (in_array($model_class, static::HTML_PURIFY_CLASSES)) {
+        if (!in_array($model_class, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
             foreach ($this->attributes as $key => $a) {
-                ($a && is_string($a)) ? $this->{$key} = strip_tags($a) : null;
+                ($a && is_string($a)) ? $this->{$key} = HtmlPurifier::process($a) : null;
+//                ($a && is_string($a)) ? $this->{$key} = htmlspecialchars($a, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : null;
             }
         }
         

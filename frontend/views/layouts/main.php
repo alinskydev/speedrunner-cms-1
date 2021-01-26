@@ -46,6 +46,12 @@ $flashes = Yii::$app->session->getAllFlashes();
     <?= $l['url'] ?>
 <?php } ?>
 
+<?= Html::a(
+    Html::tag('i', '&nbsp;', ['class' => 'fas fa-sign-out-alt']) . Yii::t('app', 'Logout'),
+    ['/site/logout'],
+    ['class' => 'dropdown-item px-3', 'data-method' => 'POST']
+) ?>
+
 <?= Breadcrumbs::widget([
     'links' => $this->params['breadcrumbs'] ?? [],
     'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],

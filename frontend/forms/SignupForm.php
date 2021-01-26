@@ -27,7 +27,7 @@ class SignupForm extends Model
             [['username'], 'unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This username has already been taken')],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
             [['email'], 'unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This email has already been taken')],
-            [['password'], 'string', 'min' => 6, 'max' => 50],
+            [['password'], 'string', 'min' => 8, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'password'],
         ];
     }

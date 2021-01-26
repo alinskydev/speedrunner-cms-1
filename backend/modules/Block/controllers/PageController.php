@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
 use common\services\FileService;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\modelsSearch\BlockPageSearch;
@@ -21,11 +21,11 @@ class PageController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new BlockPageSearch(),
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new BlockPage(),
                 'view' => 'assign',
                 'params' => [
@@ -33,7 +33,7 @@ class PageController extends Controller
                 ],
             ],
             'assign' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->assign(),
                 'view' => 'assign',
                 'params' => [
@@ -41,7 +41,7 @@ class PageController extends Controller
                 ],
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new BlockPage(),
             ],
         ];

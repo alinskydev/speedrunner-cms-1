@@ -15,7 +15,7 @@ class Services
         if ($service = ArrayHelper::getValue($this->services, $name)) {
             return new $service;
         } else {
-            throw new \yii\web\HttpException(404, 'The requested service not found');
+            throw new \yii\web\HttpException(404, "The requested service '$name' not found");
         }
     }
 }

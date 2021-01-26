@@ -63,7 +63,7 @@ class LogActionModelsList
             
             return $model;
         } else {
-            throw new \yii\web\HttpException(404, 'The requested model not found');
+            throw new \yii\web\HttpException(404, "The requested model '$name' not found");
         }
     }
 }

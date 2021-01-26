@@ -63,8 +63,16 @@ class DocumentatorForm extends Model
             
             $controller_reflection = new \ReflectionClass($controller_class);
             $controller = new $controller_class($controller_class, $module);
+            $methods = ArrayHelper::index($controller_reflection->getMethods(), 'name');
             
-            $result[$controller_name]['behaviors'] = [];
+            if ($controller_comment = $controller_reflection->getDocComment()) {
+                $controller_comment = explode(PHP_EOL, $controller_comment);
+                array_shift($controller_comment);
+                array_pop($controller_comment);
+                $controller_comment = implode(PHP_EOL, $controller_comment);
+                
+                $result[$controller_name]['comment'] = str_replace('* ', null, $controller_comment);
+            }
             
             if (isset($controller->behaviors['authenticator'])) {
                 $result[$controller_name]['behaviors'][] = 'Need authentication';
@@ -74,19 +82,22 @@ class DocumentatorForm extends Model
                 $actions = $controller->behaviors['verbs']->actions;
                 
                 foreach ($actions as $a_key => $a) {
+                    $params = ['get' => [], 'post' => []];
                     
                     //        GET PARAMS
                     
                     $method_name = 'action' . Inflector::id2camel($a_key, '-');
-                    $params['get'] = $controller_reflection->getMethod($method_name)->getParameters();
-                    $params['get'] = ArrayHelper::getColumn($params['get'], 'name');
+                    
+                    if ($method_reflection = ArrayHelper::getValue($methods, $method_name)) {
+                        $params['get'] = $method_reflection->getParameters();
+                        $params['get'] = ArrayHelper::getColumn($params['get'], 'name');
+                    }
                     
                     $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $params['get']));
                     $url = Yii::$app->urlManagerApi->createFileUrl($link);
                     
                     //        POST PARAMS
                     
-                    $params['post'] = [];
                     $forms = $controller_reflection->getConstant('FORMS');
                     
                     if (isset($forms[$a_key])) {
@@ -103,7 +114,7 @@ class DocumentatorForm extends Model
                                     if (is_callable($value)) {
                                         $value = "$key: FUNCTION";
                                     } elseif (is_array($value)) {
-                                        $value = "$key: [" . $this->implodeRecursive(', ', $value) . ']';
+                                        $value = "$key: [" . static::implodeRecursive(', ', $value) . ']';
                                     } else {
                                         $value = "$key: $value";
                                     }
@@ -126,7 +137,7 @@ class DocumentatorForm extends Model
         
         $folder_template = Yii::getAlias('@backend/modules/Speedrunner/templates/api/documentator');
         $folder_template_render = '@backend/modules/Speedrunner/templates/api/documentator/';
-        $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result]);
+        $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result ?? []]);
         
         //        ZIP ARCHIVE
         
@@ -151,8 +162,9 @@ class DocumentatorForm extends Model
         
         $zip->close();
         
+        $file_name = Yii::$app->services->settings->site_name . ' API.zip';
         header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename="api.zip"');
+        header("Content-Disposition: attachment; filename=$file_name");
         readfile($file);
         unlink($file); 
         die;
@@ -160,7 +172,7 @@ class DocumentatorForm extends Model
         return true;
     }
     
-    protected function implodeRecursive($separator, $arrayvar)
+    private static function implodeRecursive($separator, $arrayvar)
     {
         $output = null;
         
@@ -168,7 +180,7 @@ class DocumentatorForm extends Model
             $output .= (!is_int($key) ? "$key: " : null);
             
             if (is_array($av)) {
-                $output .= $this->implodeRecursive($separator, $av);
+                $output .= static::implodeRecursive($separator, $av);
             } else {
                 $output .= $separator . $av;
             }

@@ -101,7 +101,8 @@ select {
     display: inline-block;
     width: 100%;
     vertical-align: top;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
 }
 
 .alert .close {

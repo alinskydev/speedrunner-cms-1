@@ -3,9 +3,9 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\rest\Controller;
-use yii\web\Response;
-use common\actions\rest\{FormAction};
+use yii\helpers\ArrayHelper;
+use common\controllers\RestController as Controller;
+use common\actions\rest as Actions;
 
 
 class FeedbackController extends Controller
@@ -16,21 +16,21 @@ class FeedbackController extends Controller
     
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'send' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
     
     public function actions()
     {
         return [
             'send' => [
-                'class' => FormAction::className(),
+                'class' => Actions\FormAction::className(),
                 'run_method' => 'sendEmail',
             ],
         ];

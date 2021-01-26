@@ -90,7 +90,7 @@ $tabs = array_keys($result);
                                 </th>
                                 <td>
                                     Basic (send <b>access_token</b> as <b>username</b>)<br>
-                                    <b>Access_token</b> will be sent after sign in and when password has been changed
+                                    <b>Access_token</b> will be changed after setting a new password
                                 </td>
                             </tr>
                         </tbody>
@@ -99,10 +99,15 @@ $tabs = array_keys($result);
                 
                 <?php foreach ($result as $key => $r) { ?>
                     <div id="tab-<?= $key ?>" class="tab-pane fade">
-                        <?php if ($r['behaviors']) { ?>
-                            <h5 class="mb-3 text-danger">
-                                <?= implode('<br>', $r['behaviors']) ?>
-                            </h5>
+                        <?php if (isset($r['behaviors'])) { ?>
+                            <?= Html::tag('h5', implode('<br>', $r['behaviors']), ['class' => 'mb-3 text-danger']) ?>
+                        <?php } ?>
+                        
+                        <?php if (isset($r['comment'])) { ?>
+                            <?= Html::tag('h6', $r['comment'], [
+                                'class' => 'mb-4 text-secondary',
+                                'style' => 'white-space: pre;',
+                            ]) ?>
                         <?php } ?>
                         
                         <div class="table-responsive">
@@ -128,20 +133,17 @@ $tabs = array_keys($result);
                                                 </code>
                                             </td>
                                             <td>
-                                                <div class="font-weight-bold">
-                                                    <?= strtoupper(implode('<br>', $a['methods'])) ?>
-                                                </div>
+                                                <?= strtoupper(implode('<br>', $a['methods'])) ?>
                                             </td>
                                             <td>
                                                 <?php
                                                     $params = $a['params'];
                                                     
                                                     if ($params['get']) {
-                                                        echo Html::tag('b', 'GET') . ' {' . implode(', ', $params['get']) . '}<hr>';
+                                                        echo '{' . implode(', ', $params['get']) . '}';
                                                     }
                                                     
                                                     if ($params['post']) {
-                                                        echo Html::tag('b', 'POST') . '<br>';
                                                         echo Html::tag('pre', json_encode($params['post'], JSON_PRETTY_PRINT));
                                                     }
                                                 ?>

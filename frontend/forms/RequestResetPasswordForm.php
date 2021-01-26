@@ -7,7 +7,7 @@ use yii\base\Model;
 use backend\modules\User\models\User;
 
 
-class ResetPasswordRequestForm extends Model
+class RequestResetPasswordForm extends Model
 {
     public $email;
     

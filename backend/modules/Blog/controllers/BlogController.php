@@ -5,8 +5,7 @@ namespace backend\modules\Blog\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\actions\web\{IndexAction, ViewAction, UpdateAction, DeleteAction};
-use common\actions\web\{ImageSortAction, ImageDeleteAction};
+use common\actions\web as Actions;
 
 use backend\modules\Blog\models\Blog;
 use backend\modules\Blog\modelsSearch\BlogSearch;
@@ -20,28 +19,28 @@ class BlogController extends Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::className(),
+                'class' => Actions\IndexAction::className(),
                 'modelSearch' => new BlogSearch(),
             ],
             'create' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => new Blog(),
             ],
             'update' => [
-                'class' => UpdateAction::className(),
+                'class' => Actions\UpdateAction::className(),
                 'model' => $this->findModel(),
             ],
             'delete' => [
-                'class' => DeleteAction::className(),
+                'class' => Actions\DeleteAction::className(),
                 'model' => new Blog(),
             ],
             'image-sort' => [
-                'class' => ImageSortAction::className(),
+                'class' => Actions\ImageSortAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],
             'image-delete' => [
-                'class' => ImageDeleteAction::className(),
+                'class' => Actions\ImageDeleteAction::className(),
                 'model' => $this->findModel(),
                 'allowed_attributes' => ['images'],
             ],

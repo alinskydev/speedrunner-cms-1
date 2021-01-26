@@ -9,7 +9,7 @@ use common\framework\ActiveQuery;
 
 class ProductSpecificationQuery extends ActiveQuery
 {
-    public function assignedToCategies($categories)
+    public function byAssignedCategies($categories)
     {
         $lang = Yii::$app->language;
         

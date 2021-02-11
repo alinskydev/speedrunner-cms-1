@@ -6,8 +6,12 @@ use common\framework\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
+use backend\modules\Product\models\ProductCategory;
+
 $this->title = Yii::t('app', 'Products');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
+$categories_list = ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all();
 
 ?>
 
@@ -47,17 +51,21 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn ($model) => Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]), ['target' => '_blank']),
+                'value' => fn ($model) => Html::a(
+                    $model->slug,
+                    Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]),
+                    ['target' => '_blank']
+                ),
             ],
             [
-                'attribute' => 'price',
+                'attribute' => 'main_category_id',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    $result[] = $model->price ? $model->getAttributeLabel('price') . ": $model->price" : null;
-                    $result[] = $model->discount ? $model->getAttributeLabel('discount') . ": $model->discount%" : null;
-                    
-                    return implode('<br>', $result) . '<hr>' . Yii::t('app', 'Total price') . ': ' . $model->realPrice();
-                }
+                'filter' => ArrayHelper::map($categories_list, 'id', 'text'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'data-toggle' => 'select2',
+                ],
             ],
             [
                 'attribute' => 'brand_id',
@@ -80,15 +88,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue($model->brand, 'name'),
             ],
             [
-                'attribute' => 'main_category_id',
+                'attribute' => 'price',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map($categories_list, 'id', 'text'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
-                'filterInputOptions' => [
-                    'class' => 'form-control',
-                    'data-toggle' => 'select2',
-                ],
+                'value' => function ($model) {
+                    $result[] = $model->price ? $model->getAttributeLabel('price') . ": $model->price" : null;
+                    $result[] = $model->discount ? $model->getAttributeLabel('discount') . ": $model->discount%" : null;
+                    
+                    return implode('<br>', $result) . '<hr>' . Yii::t('app', 'Total price') . ': ' . $model->realPrice();
+                }
             ],
+            'quantity',
             'created',
             [
                 'class' => 'common\framework\grid\ActionColumn',

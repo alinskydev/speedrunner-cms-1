@@ -115,7 +115,7 @@ function selectCategories($data, $categories)
             tree.filterBranches.call(tree, $(this).val(), {});
         });
         
-//        ----------------------------------------------------------------------
+        //        ----------------------------------------------------------------------
         
         $(document).on('change', '#variation-specification', function() {
             $('#variation-option').html($(this).find(':selected').data('options') ? $(this).find(':selected').data('options') : null);

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'data-type' => 'minus',
                 ]) ?>
                 <?= Html::textInput('quantity', $p['total_quantity'], [
-                    'onchange' => '$(this).parents("form").submit();',
+                    'onchange' => '$(this).closest("form").submit();',
                 ]); ?>
                 <?= Html::button(Html::tag('i', null, ['class' => 'fas fa-plus']), [
                     'data-toggle' => 'cart-quantity-change',

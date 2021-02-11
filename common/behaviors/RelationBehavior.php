@@ -34,7 +34,9 @@ class RelationBehavior extends Behavior
             $relation_mdl->{$a['attributes']['main']} = $this->owner->id;
             
             foreach ($a['attributes']['relational'] as $a_r) {
-                $relation_mdl->{$a_r} = $this->owner->{$a_r};
+                if ($this->owner->isAttributeActive($a_r)) {
+                    $relation_mdl->{$a_r} = $this->owner->{$a_r};
+                }
             }
             
             $relation_mdl->save();
@@ -44,6 +46,10 @@ class RelationBehavior extends Behavior
     public function oneMany()
     {
         foreach ($this->attributes as $a_key => $a) {
+            if (!$this->owner->isAttributeActive($a_key)) {
+                continue;
+            }
+            
             $relations = ArrayHelper::index($this->owner->{$a['relation']}, 'id');
             $attribute = $this->owner->{$a_key};
             
@@ -55,7 +61,7 @@ class RelationBehavior extends Behavior
                     $relation_mdl->{$a['attributes']['main']} = $this->owner->id;
                     
                     foreach ($a['attributes']['relational'] as $p) {
-                        $relation_mdl->{$p} = ArrayHelper::getValue($value, $p);
+                        isset($value[$p]) ? $relation_mdl->{$p} = $value[$p] : null;
                     }
                     
                     $relation_mdl->sort = $counter;
@@ -73,6 +79,10 @@ class RelationBehavior extends Behavior
     public function manyMany()
     {
         foreach ($this->attributes as $a_key => $a) {
+            if (!$this->owner->isAttributeActive($a_key)) {
+                continue;
+            }
+            
             $relations = ArrayHelper::map($this->owner->{$a['relation']}, 'id', 'id');
             $attribute = $this->owner->{$a_key};
             

@@ -11,7 +11,6 @@ use yii\helpers\HtmlPurifier;
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     const HTMLPURIFY_EXCLUDE_CLASSES = [];
-    const ALERT_EXCLUDE_CLASSES = ['LogAction', 'LogActionAttr', 'SeoMeta', 'UserNotification'];
     
     public static function find()
     {
@@ -20,7 +19,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterFind()
     {
-        //        DATETIME FORMAT
+        //        Changing date formats
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -35,7 +34,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        DATETIME FORMAT
+        //        Changing date formats
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -45,7 +44,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             }
         }
         
-        //        DATETIME
+        //        Setting values to default attributes
         
         if (array_key_exists('created', $this->attributes)) {
             $this->created = $this->created ?? date('Y-m-d H:i:s');
@@ -55,7 +54,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             $this->updated = date('Y-m-d H:i:s');
         }
         
-        //        HTML PURIFIER
+        //        HTML purifier
         
         $model_class = StringHelper::basename($this->className());
         
@@ -69,39 +68,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
     
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        ALERTS
-        
-        if (Yii::$app->id == 'app-backend') {
-            $model_class = StringHelper::basename($this->className());
-            
-            if (!in_array($model_class, static::ALERT_EXCLUDE_CLASSES)) {
-                Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been saved')]);
-            }
-        }
-        
-        return parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        //        ALERTS
-        
-        if (Yii::$app->id == 'app-backend') {
-            $model_class = StringHelper::basename($this->className());
-            
-            if (!in_array($model_class, static::ALERT_EXCLUDE_CLASSES)) {
-                Yii::$app->session->setFlash('success', [0 => Yii::t('app', 'Record has been deleted')]);
-            }
-        }
-        
-        return parent::afterDelete();
-    }
-    
     public function beforeSearch()
     {
-        //        DATETIME FORMAT
+        //        Changing date formats
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -114,7 +83,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterSearch()
     {
-        //        DATETIME FORMAT
+        //        Changing date formats
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {

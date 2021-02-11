@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use zxbodya\yii2\elfinder\ElFinderInput;
+use alexantr\elfinder\InputFile;
 
 use backend\modules\Banner\models\BannerGroup;
+
 
 $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
 
@@ -13,13 +14,13 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
 <table class="table table-relations">
     <thead>
         <tr>
-            <th></th>
+            <th style="width: 50px;"></th>
             <th><?= $relations[0]->getAttributeLabel('text_1') ?></th>
             <th><?= $relations[0]->getAttributeLabel('text_2') ?></th>
             <th><?= $relations[0]->getAttributeLabel('text_3') ?></th>
             <th><?= $relations[0]->getAttributeLabel('link') ?></th>
             <th><?= $relations[0]->getAttributeLabel('image') ?></th>
-            <th></th>
+            <th style="width: 50px;"></th>
         </tr>
     </thead>
     
@@ -64,13 +65,14 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 
                 <td>
                     <?= $form->field($value, 'image', [
-                        'template' => '{input}'
-                    ])->widget(ElFinderInput::className(), [
-                        'connectorRoute' => '/connection/elfinder-file-upload',
-                        'name' => "Banner[groups_tmp][$value_id][image]",
-                        'id' => "elfinder-$value_id-1",
+                        'template' => '{input}',
                         'options' => [
                             'data-toggle' => 'elfinder',
+                        ],
+                    ])->widget(InputFile::className(), [
+                        'options' => [
+                            'id' => "elfinder-$value_id-1",
+                            'name' => "Banner[groups_tmp][$value_id][image]",
                         ]
                     ]) ?>
                 </td>

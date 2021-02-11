@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = $exception->getMessage();
+$this->title = Yii::t('app', 'An error occurred');
 
 ?>
 
@@ -10,6 +10,6 @@ $this->title = $exception->getMessage();
     <h1><?= $exception->statusCode ?></h1>
     
     <div class="alert alert-danger">
-        <?= $this->title ?>
+        <?= nl2br(Html::encode($exception->getMessage())) ?>
     </div>
 </div>

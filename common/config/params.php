@@ -2,12 +2,14 @@
 
 return [
     'input_types' => [
-        'textInput' => 'Text field',
-        'textArea' => 'Text area',
+        'text_input' => 'Text field',
+        'text_area' => 'Text area',
         'checkbox' => 'Checkbox',
-        'CKEditor' => 'Text editor',
-        'ElFinder' => 'File manager',
-        'images' => 'Images',
+        'select' => 'Select',
+        'select2_ajax' => 'Select 2 (AJAX)',
+        'elfinder' => 'File manager',
+        'imperavi' => 'Text editor',
+        'files' => 'Files',
         'groups' => 'Groups',
     ],
     

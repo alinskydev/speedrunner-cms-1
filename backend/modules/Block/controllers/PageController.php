@@ -3,53 +3,53 @@
 namespace backend\modules\Block\controllers;
 
 use Yii;
-use yii\web\Controller;
+use common\controllers\CrudController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 use common\services\FileService;
-use common\actions\web as Actions;
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\modelsSearch\BlockPageSearch;
 use backend\modules\Block\models\BlockType;
 use backend\modules\Block\models\Block;
-use backend\modules\Block\models\BlockImage;
 
 
-class PageController extends Controller
+class PageController extends CrudController
 {
+    public function beforeAction($action)
+    {
+        $this->model = new BlockPage();
+        $this->modelSearch = new BlockPageSearch();
+        
+        return parent::beforeAction($action);
+    }
+    
     public function actions()
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlockPageSearch(),
-            ],
+        $block_types = BlockType::find()->all();
+        $actions = ArrayHelper::filter(parent::actions(), ['index', 'delete']);
+        
+        return ArrayHelper::merge($actions, [
             'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new BlockPage(),
-                'view' => 'assign',
-                'params' => [
-                    'types' => BlockType::find()->all(),
+                'class' => Actions\crud\CreateAction::className(),
+                'render_view' => 'assign',
+                'render_params' => [
+                    'types' => $block_types,
                 ],
             ],
             'assign' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->assign(),
-                'view' => 'assign',
-                'params' => [
-                    'types' => BlockType::find()->all(),
+                'class' => Actions\crud\UpdateAction::className(),
+                'render_view' => 'assign',
+                'render_params' => [
+                    'types' => $block_types,
                 ],
             ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new BlockPage(),
-            ],
-        ];
+        ]);
     }
     
-    private function assign()
+    public function findModel()
     {
-        return BlockPage::findOne(Yii::$app->request->get('id'));
+        return BlockPage::find()->with(['blocks.type'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
     
     public function actionUpdate($id)
@@ -70,7 +70,7 @@ class PageController extends Controller
                 }
             }
             
-            if (Yii::$app->request->get('reload-page')) {
+            if (Yii::$app->request->get('save-and-update')) {
                 return $this->redirect(['update', 'id' => $model->id]);
             } else {
                 return $this->redirect(['index']);
@@ -80,10 +80,11 @@ class PageController extends Controller
         return $this->render('update', [
             'model' => $model,
             'blocks' => $model->blocks,
+            'new_block' => new Block,
         ]);
     }
     
-    public function actionImageSort($id)
+    public function actionFileSort($id)
     {
         if (!($model = Block::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
@@ -102,7 +103,7 @@ class PageController extends Controller
         }
     }
     
-    public function actionImageDelete($id)
+    public function actionFileDelete($id)
     {
         if (!($model = Block::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);

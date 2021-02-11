@@ -3,74 +3,51 @@
 namespace backend\modules\Product\controllers;
 
 use Yii;
-use yii\web\Controller;
-use yii\helpers\Html;
+use common\controllers\CrudController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\actions\web as Actions;
+use yii\helpers\Html;
 
 use backend\modules\Product\models\Product;
 use backend\modules\Product\modelsSearch\ProductSearch;
-use backend\modules\Product\models\ProductCategory;
 use backend\modules\Product\models\ProductSpecification;
 
 
-class ProductController extends Controller
+class ProductController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new ProductSearch(),
-                'params' => [
-                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
-                ],
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new Product(),
-                'params' => [
-                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
-                ],
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-                'params' => [
-                    'categories_list' => ProductCategory::find()->itemsTree('name', 'translation')->andWhere('depth > 0')->asArray()->all(),
-                ],
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new Product(),
-            ],
-            'image-sort' => [
-                'class' => Actions\ImageSortAction::className(),
-                'model' => $this->findModel(),
-                'allowed_attributes' => ['images'],
-            ],
-            'image-delete' => [
-                'class' => Actions\ImageDeleteAction::className(),
-                'model' => $this->findModel(),
-                'allowed_attributes' => ['images'],
-            ],
-        ];
+        $this->model = new Product();
+        $this->modelSearch = new ProductSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
     {
-        $model = Product::find()
+        $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+        
+        return ArrayHelper::merge($actions, [
+            'file-sort' => [
+                'class' => Actions\crud\FileSortAction::className(),
+                'allowed_attributes' => ['images'],
+            ],
+            'file-delete' => [
+                'class' => Actions\crud\FileDeleteAction::className(),
+                'allowed_attributes' => ['images'],
+            ],
+        ]);
+    }
+    
+    public function findModel()
+    {
+        return Product::find()
             ->with([
-                'brand', 'categories',
+                'categories',
                 'variations.specification', 'variations.option',
             ])
             ->andWhere(['id' => Yii::$app->request->get('id')])
             ->one();
-        
-        if ($model) {
-            $model->related_tmp = $model->related;
-            return $model;
-        }
     }
     
     public function actionSpecifications($id = null, array $categories = [])

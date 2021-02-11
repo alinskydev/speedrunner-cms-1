@@ -12,15 +12,6 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  'zxbodya/yii2-elfinder' => 
-  array (
-    'name' => 'zxbodya/yii2-elfinder',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@zxbodya/yii2/elfinder' => $vendorDir . '/zxbodya/yii2-elfinder',
-    ),
-  ),
   '2amigos/yii2-arrayquery-component' => 
   array (
     'name' => '2amigos/yii2-arrayquery-component',
@@ -155,6 +146,15 @@ return array (
     'alias' => 
     array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker/src',
+    ),
+  ),
+  'alexantr/yii2-elfinder' => 
+  array (
+    'name' => 'alexantr/yii2-elfinder',
+    'version' => '1.7.0.0',
+    'alias' => 
+    array (
+      '@alexantr/elfinder' => $vendorDir . '/alexantr/yii2-elfinder/src',
     ),
   ),
 );

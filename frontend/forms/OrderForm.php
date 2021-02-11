@@ -6,17 +6,19 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
+use common\services\CartService;
+use backend\modules\User\services\UserNotificationService;
+
 use backend\modules\Order\models\Order;
 use backend\modules\Order\models\OrderProduct;
 use backend\modules\Product\models\Product;
+use backend\modules\User\models\User;
 
 
 class OrderForm extends Model
 {
-    const EXCEPT_ATTRIBUTES = ['user', 'order'];
-    
     private $user;
-    private $order;
+    public $order;
     
     public $full_name;
     public $email;
@@ -30,7 +32,9 @@ class OrderForm extends Model
         
         if ($this->user = Yii::$app->user->identity) {
             $this->full_name = $this->user->full_name;
-            $this->email = $this->user->username;
+            $this->email = $this->user->email;
+            $this->phone = $this->user->phone;
+            $this->address = $this->user->address;
         }
         
         return parent::init();
@@ -55,69 +59,37 @@ class OrderForm extends Model
     
     public function save()
     {
-        $total_price = 0;
-        $total_quantity = 0;
+        //        Order creating
         
-        $cart = Yii::$app->session->get('cart', []);
-        $cart_products = ArrayHelper::getValue($cart, 'products', []);
-        $cart_products = ArrayHelper::getColumn($cart_products, 'total_quantity');
+        $this->order->setAttributes([
+            'user_id' => ArrayHelper::getValue($this->user, 'id'),
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'delivery_type' => $this->delivery_type,
+        ]);
         
-        $transaction = Yii::$app->db->beginTransaction();
-        $order = $this->order;
-        
-        foreach ($this->attributes as $key => $a) {
-            if (!in_array($key, static::EXCEPT_ATTRIBUTES)) {
-                $order->{$key} = $a;
-            }
-        }
-        
-        $order->user_id = ArrayHelper::getValue($this->user, 'id');
-        $order->key = md5(time() . Yii::$app->security->generateRandomString());
-        
-        if ($order->save()) {
-            $products = Product::find()
-                ->andWhere([
-                    'and',
-                    ['id' => array_keys($cart_products)],
-                    ['>', 'quantity', 0],
-                ])
-                ->all();
-            
-            foreach ($products as $key => $p) {
-                $quantity = ArrayHelper::getValue($cart_products, $p->id);
-                
-                if ($quantity > $p->quantity) {
-                    continue;
-                }
-                
-                $order_product = new OrderProduct();
-                $order_product->order_id = $order->id;
-                $order_product->product_id  = $p->id;
-                $order_product->product_json = $p->attributes;
-                $order_product->price = $p->realPrice();
-                $order_product->quantity = $quantity;
-                $order_product->total_price = $order_product->price * $order_product->quantity;
-                
-                if ($order_product->save()) {
-                    $total_price += $order_product->total_price;
-                    $total_quantity += $order_product->quantity;
-                }
-            }
-        }
-        
-        if (!$total_price || !$total_quantity) {
-            $transaction->rollBack();
+        if (!(new CartService($this->order))->createOrder()) {
             return false;
         }
         
-        $transaction->commit();
-        Yii::$app->session->remove('cart');
+        //        Notifications
         
-        $order->updateAttributes([
-            'total_quantity' => $total_quantity,
-            'total_price' => $total_price,
+        UserNotificationService::create(
+            User::find()->andWhere(['role' => 'admin'])->column(),
+            'order_created', $this->order->id,
+            [
+                'id' => $this->order->id,
+            ]
+        );
+        
+        //        Mailing
+        
+        Yii::$app->services->mail->send($this->email, Yii::t('app_mail', 'Your order has been created'), 'order_created', [
+            'key' => $this->order->key,
         ]);
         
-        return $order->key;
+        return $this->order->key;
     }
 }

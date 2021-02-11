@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
 
 ?>
 
@@ -13,7 +13,6 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
         'id' => 'update-form',
         'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
-        'enctype' => 'multipart/form-data',
     ],
 ]); ?>
 

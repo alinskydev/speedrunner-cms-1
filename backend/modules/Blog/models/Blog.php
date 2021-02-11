@@ -32,8 +32,9 @@ class Blog extends ActiveRecord
                 'attributes' => ['name', 'short_description', 'full_description'],
             ],
             'files' => [
-                'class' => \common\behaviors\FilesBehavior::className(),
+                'class' => \common\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
+                'multiple' => true,
             ],
             'seo_meta' => [
                 'class' => \common\behaviors\SeoMetaBehavior::className(),
@@ -45,10 +46,9 @@ class Blog extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['short_description'], 'string', 'max' => 255],
-            [['full_description'], 'string'],
-            [['category_id'], 'integer'],
             [['name', 'slug', 'image'], 'string', 'max' => 100],
+            [['short_description'], 'string', 'max' => 1000],
+            [['full_description'], 'string'],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['published'], 'date', 'format' => 'php: d.m.Y H:i'],
@@ -67,12 +67,13 @@ class Blog extends ActiveRecord
             'slug' => Yii::t('app', 'Slug'),
             'category_id' => Yii::t('app', 'Category'),
             'image' => Yii::t('app', 'Image'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'full_description' => Yii::t('app', 'Full Description'),
+            'short_description' => Yii::t('app', 'Short description'),
+            'full_description' => Yii::t('app', 'Full description'),
             'images' => Yii::t('app', 'Images'),
             'published' => Yii::t('app', 'Published'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
             'tags_tmp' => Yii::t('app', 'Tags'),
         ];
     }
@@ -100,6 +101,11 @@ class Blog extends ActiveRecord
         return $this->hasMany(BlogRate::className(), ['blog_id' => 'id']);
     }
     
+    public static function find()
+    {
+        return new \backend\modules\Blog\models\query\BlogQuery(get_called_class());
+    }
+    
     public function beforeSave($insert)
     {
         $this->published = $this->published ?: date('Y-m-d H:i:s');
@@ -108,7 +114,7 @@ class Blog extends ActiveRecord
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        TAGS
+        //        Tags
         
         $tags = ArrayHelper::map($this->tags, 'id', 'id');
         

@@ -20,7 +20,7 @@ class SystemSettingsService
     
     public function __get($name)
     {
-        if ($attribute = ArrayHelper::getValue(static::$attributes, $name)) {
+        if (($attribute = ArrayHelper::getValue(static::$attributes, $name)) !== null) {
             return $attribute;
         } else {
             throw new \yii\web\HttpException(404, "The requested attribute '$name' not found");

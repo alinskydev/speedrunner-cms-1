@@ -1,6 +1,6 @@
 <?php
 
-use common\components\framework\grid\GridView;
+use common\framework\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => ArrayHelper::merge($gridViewColumns, [
             [
-                'class' => 'common\components\framework\grid\ActionColumn',
+                'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{view}',
             ],
         ]),

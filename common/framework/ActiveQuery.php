@@ -9,7 +9,12 @@ use yii\db\Expression;
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
-    public function itemsList($attr, $type, $q = null, $limit = 20)
+    public function bySlug($slug)
+    {
+        return $this->andWhere(['slug' => $slug]);
+    }
+    
+    public function itemsList($attribute, $type, $q = null, $limit = 20)
     {
         $lang = Yii::$app->language;
         
@@ -19,21 +24,23 @@ class ActiveQuery extends \yii\db\ActiveQuery
             case 'self':
                 $this->select([
                     "$model_class.id",
-                    "$model_class.$attr as text",
+                    "$model_class.$attribute as text",
                 ])->andFilterWhere([
-                    'like', "$model_class.$attr", $q
+                    'like', "$model_class.$attribute", $q
                 ]);
                 
                 break;
             case 'translation':
                 $this->select([
                     "$model_class.id",
-                    new Expression("$model_class.$attr->>'$.$lang' as text"),
+                    new Expression("$model_class.$attribute->>'$.$lang' as text"),
                 ])->andFilterWhere([
-                    'like', new Expression("LOWER(JSON_EXTRACT($model_class.$attr, '$.$lang'))"), strtolower($q)
+                    'like', new Expression("LOWER(JSON_EXTRACT($model_class.$attribute, '$.$lang'))"), strtolower($q)
                 ]);
                 
                 break;
+            default:
+                $this->andWhere('false');
         }
         
         return $this->limit($limit);

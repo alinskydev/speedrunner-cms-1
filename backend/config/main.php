@@ -29,8 +29,8 @@ return [
     'as access' => [
        'class' => 'yii2mod\rbac\filters\AccessControl',
        'allowActions' => [
-           'site/login',
-           'site/logout',
+           'auth/login',
+           'auth/logout',
        ]
     ],
     'components' => [
@@ -40,8 +40,9 @@ return [
         ],
         'user' => [
             'identityClass' => 'backend\modules\User\models\User',
-            'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'loginUrl' => ['auth/login'],
+            'enableAutoLogin' => true,
         ],
         'session' => [
             'name' => 'advanced-backend',

@@ -2,10 +2,10 @@
 
 use yii\helpers\ArrayHelper;
 
-//      RELATIONS DB SCHEMA
+//      Relations DB schema
 
 foreach ($model->view_relations as $r) {
-    $attrs = ['id', 'item_id', 'sort', 'lang'];
+    $attrs = ['id', 'item_id', 'sort'];
     $dbSchema = Yii::$app->db->schema;
     
     $columns = $dbSchema->getTableSchema($relation['model'])->columns;
@@ -34,11 +34,11 @@ $relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $rel
 <table class="table table-relations">
     <thead>
         <tr>
-            <th></th>
+            <th style="width: 50px;"></th>
 <?php foreach ($columns as $key => $c) { ?>
             <th><?= '<?= ' ?>$relations[0]->getAttributeLabel('<?= $key ?>') ?></th>
 <?php } ?>
-            <th></th>
+            <th style="width: 50px;"></th>
         </tr>
     </thead>
     

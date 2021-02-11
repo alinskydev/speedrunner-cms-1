@@ -3,30 +3,30 @@
 namespace backend\modules\Banner\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Banner\models\Banner;
 use backend\modules\Banner\modelsSearch\BannerSearch;
 
 
-class BannerController extends Controller
+class BannerController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BannerSearch(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-        ];
+        $this->model = new Banner();
+        $this->modelSearch = new BannerSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'update']);
+    }
+    
+    public function findModel()
     {
         return Banner::find()->with(['groups'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }

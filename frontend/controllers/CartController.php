@@ -4,11 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
-use yii\db\Expression;
-
-use backend\modules\Product\models\Product;
+use common\services\CartService;
 
 
 class CartController extends Controller
@@ -35,51 +32,17 @@ class CartController extends Controller
     
     public function actionChange()
     {
-        //        PREPARE
-        
-        $id = Yii::$app->request->post('id');
-        $quantity = intval(Yii::$app->request->post('quantity'));
-        
-        if (!$id || !($product = Product::findOne($id))) {
+        if (!$id || !($product = Product::findOne(Yii::$app->request->post('id'))) {
             Yii::$app->session->setFlash('warning', Yii::t('app', 'Product not found'));
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        if ($product->quantity < $quantity) {
-            Yii::$app->session->setFlash('warning', Yii::t('app', 'Not enough quantity'));
-            return $this->redirect(Yii::$app->request->referrer);
-        }
+        $cart = (new CartService)->changeQuantity($product, (int)Yii::$app->request->post('quantity'));
         
-        //        CART
-        
-        $cart = Yii::$app->session->get('cart', []);
-        
-        if ($quantity > 0) {
-            $cart['products'][$id] = $product->attributes;
-            $cart['products'][$id]['total_quantity'] = $quantity;
-            $cart['products'][$id]['total_price'] = $product->realPrice() * $quantity;
-        } else {
-            ArrayHelper::remove($cart['products'], $id);
-        }
-        
-        if ($cart['products']) {
-            $quantities = ArrayHelper::getColumn($cart['products'], 'total_quantity');
-            $total_prices = ArrayHelper::getColumn($cart['products'], 'total_price');
-            
-            $cart['total'] = [
-                'quantity' => array_sum($quantities),
-                'price' => array_sum($total_prices),
-            ];
-            
-            Yii::$app->session->set('cart', $cart);
-        } else {
-            Yii::$app->session->remove('cart');
-        }
-        
-        $result['quantity'] = ArrayHelper::getValue(Yii::$app->session->get('cart'), 'total.quantity', 0);
-        $result['preview'] = $this->runAction('preview');
-        $result['page'] = $this->runAction('index');
-        
-        return $this->asJson($result);
+        return $this->asJson([
+            'quantity' => ArrayHelper::getValue($cart, 'total.quantity', 0),
+            'preview' => $this->runAction('preview'),
+            'page' => $this->runAction('index'),
+        ]);
     }
 }

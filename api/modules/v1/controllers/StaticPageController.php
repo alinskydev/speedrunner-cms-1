@@ -3,13 +3,14 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use common\controllers\RestController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\controllers\RestController as Controller;
 
 use backend\modules\Staticpage\models\Staticpage;
 
 
-class StaticpageController extends Controller
+class StaticpageController extends RestController
 {
     public function behaviors()
     {

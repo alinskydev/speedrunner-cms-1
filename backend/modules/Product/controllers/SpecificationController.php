@@ -3,38 +3,30 @@
 namespace backend\modules\Product\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductSpecification;
 use backend\modules\Product\modelsSearch\ProductSpecificationSearch;
 
 
-class SpecificationController extends Controller
+class SpecificationController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new ProductSpecificationSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new ProductSpecification(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new ProductSpecification(),
-            ],
-        ];
+        $this->model = new ProductSpecification();
+        $this->modelSearch = new ProductSpecificationSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+    }
+    
+    public function findModel()
     {
         return ProductSpecification::find()->with(['options'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }

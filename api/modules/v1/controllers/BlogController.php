@@ -3,14 +3,14 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use common\controllers\RestController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\controllers\RestController as Controller;
-use common\actions\rest as Actions;
 
 use backend\modules\Blog\modelsSearch\BlogSearch;
 
 
-class BlogController extends Controller
+class BlogController extends RestController
 {
     public function behaviors()
     {
@@ -28,7 +28,7 @@ class BlogController extends Controller
     {
         return [
             'index' => [
-                'class' => Actions\IndexAction::className(),
+                'class' => Actions\rest\IndexAction::className(),
                 'modelSearch' => new BlogSearch(),
             ],
         ];

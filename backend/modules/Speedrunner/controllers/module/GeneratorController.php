@@ -25,9 +25,9 @@ class GeneratorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->addFlash('success', 'Succeccfully done');
+                Yii::$app->session->setFlash('success', ['Successfully done']);
             } else {
-                Yii::$app->session->addFlash('danger', 'An error occured');
+                Yii::$app->session->setFlash('danger', ['An error occurred']);
             }
             
             return $this->refresh();
@@ -45,7 +45,7 @@ class GeneratorController extends Controller
     
     public function actionModelSchema($table_name)
     {
-        //        RELATIONS
+        //        Relations
         
         $table_schema_all = ArrayHelper::index($this->dbSchema->getTableSchemas(), 'name');
         $table_schema = ArrayHelper::getValue($table_schema_all, $table_name);
@@ -66,7 +66,7 @@ class GeneratorController extends Controller
             'foreign_keys' => $foreign_keys,
         ]);
         
-        //        ATTRS
+        //        Attributes
         
         $columns = $table_schema->columns;
         

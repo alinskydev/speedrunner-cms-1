@@ -2,130 +2,98 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use yii\web\JsExpression;
-use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
-use kartik\file\FileInput;
+use backend\widgets\crud\UpdateWidget;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-?>
-
-<?php $form = ActiveForm::begin([
-    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'enableClientValidation' => false,
-    ]
-]); ?>
-
-<h2 class="main-title">
-    <?= $this->title ?>
-    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
-</h2>
-
-<div class="row">
-    <div class="col-lg-2 col-md-3">
-        <ul class="nav flex-column nav-pills main-shadow" role="tablist">
-            <?php foreach ($blocks as $key => $b) { ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= !$key ? 'active' : null ?>" data-toggle="pill" href="#tab-block-<?= $b->id ?>">
-                        <?= $b->type->label ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </div>
+foreach ($blocks as $key => $b) {
+    switch ($b->type->type) {
+        case 'text_input':
+        case 'text_area':
+            $attribute = [
+                'options' => [
+                    'id' => "block-$b->id",
+                    'name' => "Block[$b->id][value]",
+                    'value' => $b->value,
+                ],
+            ];
+            break;
+        
+        case 'checkbox':
+            $attribute = [
+                'options' => [
+                    'id' => "block-$b->id",
+                    'name' => "Block[$b->id][value]",
+                    'checked' => $b->value ? true : false,
+                ],
+            ];
+            break;
+        
+        case 'elfinder':
+        case 'imperavi':
+            $attribute = [
+                'options' => [
+                    'options' => [
+                        'id' => "block-$b->id",
+                        'name' => "Block[$b->id][value]",
+                        'value' => $b->value,
+                    ],
+                ],
+            ];
+            break;
+        
+        case 'files':
+            $attribute = [
+                'multiple' => true,
+                'value' => $b->value,
+                'options' => [
+                    'options' => [
+                        'id' => "block-$b->id",
+                        'name' => "Block[$b->id][value][]",
+                    ],
+                ],
+                'widget_options' => [
+                    'delete_url' => Yii::$app->urlManager->createUrl([
+                        'block/page/file-delete', 'id' => $b->id,
+                    ]),
+                    'sort_url' => Yii::$app->urlManager->createUrl([
+                        'block/page/file-sort', 'id' => $b->id,
+                    ]),
+                ],
+            ];
+            break;
+        
+        case 'groups':
+            $attribute = [
+                'name' => false,
+                'type' => 'render',
+                'model' => $b,
+                'view' => '_groups',
+            ];
+            break;
+    }
     
-    <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
-        <div class="tab-content main-shadow p-3">
-            <?php foreach ($blocks as $key => $b) { ?>
-                <div id="tab-block-<?= $b->id ?>" class="tab-pane <?= !$key ? 'active' : 'fade' ?>">
-                    <?php
-                        switch ($b->type->type) {
-                            case 'textInput':
-                                    echo $form->field($b, 'value')->textInput([
-                                        'name' => "Block[$b->id][value]",
-                                        'id' => "block-$b->id"
-                                    ])->label($b->type->label);
-                                    
-                                    break;
-                                case 'textArea':
-                                    echo $form->field($b, 'value')->textArea([
-                                        'name' => "Block[$b->id][value]",
-                                        'id' => "block-$b->id",
-                                        'rows' => 5
-                                    ])->label($b->type->label);
-                                    
-                                    break;
-                                case 'checkbox':
-                                    echo $form->field($b, 'value', [
-                                        'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                                    ])->checkbox([
-                                        'name' => "Block[$b->id][value]",
-                                        'id' => "block-$b->id",
-                                        'class' => 'custom-control-input',
-                                        'label' => null,
-                                    ])->label($b->type->label, [
-                                        'class' => 'custom-control-label'
-                                    ]);
-                                    
-                                    break;
-                                case 'CKEditor':
-                                    echo $form->field($b, 'value')->widget(Widget::className(), [
-                                        'settings' => [
-                                            'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                                            'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                                        ],
-                                        'options' => [
-                                            'name' => "Block[$b->id][value]",
-                                            'id' => "block-$b->id",
-                                        ],
-                                    ])->label($b->type->label);
-                                    
-                                    break;
-                                case 'ElFinder':
-                                    echo $form->field($b, 'value')->widget(ElFinderInput::className(), [
-                                        'connectorRoute' => '/connection/elfinder-file-upload',
-                                        'name' => "Block[$b->id][value]",
-                                        'id' => "block-$b->id",
-                                    ])->label($b->type->label);
-                                    
-                                    break;
-                                case 'images':
-                                    echo $form->field($b, 'value', [
-                                        'template' => '{label}{hint}{error}{input}',
-                                    ])->widget(FileInput::className(), [
-                                        'options' => [
-                                            'accept' => 'image/*',
-                                            'multiple' => true,
-                                            'name' => "Block[$b->id][value][]",
-                                            'id' => "block-$b->id",
-                                        ],
-                                        'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['block/page/image-delete', 'id' => $b->id]),
-                                            'initialPreview' => $b->value ?: [],
-                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?: [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
-                                        ]),
-                                        'pluginEvents' => [
-                                            'filesorted' => new JsExpression("function(event, params) {
-                                                $.post('".Yii::$app->urlManager->createUrl(['block/page/image-sort', 'id' => $b->id])."', {sort: params});
-                                            }")
-                                        ],
-                                    ])->label($b->type->label);
-                                    
-                                    break;
-                                case 'groups':
-                                    echo $this->render('_groups', ['model' => $b, 'form' => $form]);
-                                    break;
-                        }
-                    ?>
-                </div>
-            <?php } ?>
-        </div>
-    </div>
-</div>
+    $attribute = $attribute ? ArrayHelper::merge([
+        'name' => 'value',
+        'type' => $b->type->type,
+        'container_options' => [
+            'template' => "{beginLabel} {$b->type->label} {endLabel} {input}{hint}{error}",
+        ],
+    ], $attribute) : null;
+    
+    
+    $tabs[$b->id] = [
+        'label' => $b->type->label,
+        'attributes' => [$attribute],
+    ];
+}
 
-<?php ActiveForm::end(); ?>
+echo UpdateWidget::widget([
+    'model' => $new_block,
+    'form_options' => [
+        'fieldConfig' => ['enableClientValidation' => false],
+    ],
+    'tabs' => $tabs ?? [],
+]);

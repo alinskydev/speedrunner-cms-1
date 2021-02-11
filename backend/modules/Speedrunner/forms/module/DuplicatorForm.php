@@ -55,7 +55,7 @@ class DuplicatorForm extends Model
     
     public function process()
     {
-        //        FILES
+        //        Files
         
         if (in_array('files', $this->duplicate_types)) {
             $name_from = Yii::getAlias("@backend/modules/$this->module_name_from");

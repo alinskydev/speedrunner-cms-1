@@ -4,7 +4,7 @@ use yii\helpers\ArrayHelper;
 
 $title = ($model->module_name == $model->controller_name) ? $model->module_name : "$model->module_name " . strtolower($model->controller_name);
 
-//      ATTRIBUTES
+//      Attributes
 
 $attrs = $model->attrs_fields ?: [];
 $attrs = array_filter($attrs, fn ($value) => ArrayHelper::getValue($value, 'grid_view'));
@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             case 'checkbox':
                 echo "            '$key:boolean',\n";
                 break;
+            
             case 'select':
                 echo "            [
                 'attribute' => '$key',
@@ -61,20 +62,20 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => [],
                 'value' => fn (\$model) => \$model->$key,
             ],\n";
-                
                 break;
-            case 'ElFinder':
+            
+            case 'elfinder':
                 echo "            [
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn (\$model) => Html::img(Yii::\$app->sr->image->thumb(\$model->$key, [40, 40], 'resize')),
+                'value' => fn (\$model) => Html::img(Yii::\$app->services->image->thumb(\$model->$key, [40, 40], 'resize')),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
             ],\n";
-                
                 break;
+            
             default:
                 switch ($key) {
                     case 'id':
@@ -84,22 +85,23 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'style' => 'width: 100px;'
                 ],
             ],\n";
-                        
                         break;
+                    
                     case 'slug':
                         echo "            [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn (\$model) => Html::a(\$model->slug, Yii::\$app->urlManagerFrontend->createUrl(['', 'slug' => \$model->slug]), ['target' => '_blank']),
+                'value' => fn (\$model) => Html::a(
+                    \$model->slug,
+                    Yii::\$app->urlManagerFrontend->createUrl(['{route}', 'slug' => \$model->slug]),
+                    ['target' => '_blank']
+                ),
             ],\n";
-                        
                         break;
+                    
                     default:
                         echo "            '$key',\n";
-                        break;
                 }
-                
-                break;
         }
     }
 ?>

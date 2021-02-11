@@ -4,41 +4,42 @@ namespace common\actions\rest;
 
 use Yii;
 use yii\base\Action;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 
 class FormAction extends Action
 {
-    public $form;
-    public array $input_params = [];
-    public array $file_attributes = [];
+    public Model $model;
+    public string $model_class;
+    public array $model_params = [];
+    public array $model_files = [];
+    
     public $run_method;
     
     public function run()
     {
-        $form = $this->form ?: $this->controller::FORMS[$this->id];
+        $this->model = $this->model ?? new $this->model_class($this->model_params);
+        $this->model->load([$this->model->formName() => Yii::$app->request->post()]);
         
-        $model = new $form($this->input_params);
-        $model->load([$model->formName() => Yii::$app->request->post()]);
-        
-        foreach ($this->file_attributes as $f_a) {
-            if (isset($_FILES[$f_a])) {
-                foreach ($_FILES[$f_a] as $key => $f) {
-                    $_FILES[$model->formName()][$key][$f_a] = $f;
+        foreach ($this->model_files as $file) {
+            if (isset($_FILES[$file])) {
+                foreach ($_FILES[$file] as $f_key => $f) {
+                    $_FILES[$this->model->formName()][$f_key][$file] = $f;
                 }
                 
-                unset($_FILES[$f_a]);
+                unset($_FILES[$file]);
             }
         }
         
-        if ($model->validate()) {
-            return $model->{$this->run_method}();
+        if ($this->model->validate()) {
+            return $this->model->{$this->run_method}();
         } else {
             Yii::$app->response->statusCode = 422;
             
             return [
                 'name' => 'Unprocessable entity',
-                'message' => $model->errors,
+                'message' => $this->model->errors,
                 'code' => 0,
                 'status' => 422,
                 'type' => 'yii\\web\\UnprocessableEntityHttpException',

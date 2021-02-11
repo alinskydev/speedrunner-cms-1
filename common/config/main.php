@@ -2,7 +2,7 @@
 
 $app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
 
-return [
+$config = [
     'timeZone' => 'UTC',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -45,7 +45,7 @@ return [
             'viewPath' => '@common/mail',
         ],
 
-        //        URL MANAGERS
+        //        URL managers
 
         'urlManager' => [
             'class' => 'common\framework\UrlManager',
@@ -75,7 +75,7 @@ return [
             'rules' => require __DIR__ . '/../../frontend/config/routes.php',
         ],
         
-        //        SERVICES
+        //        Services
         
         'services' => [
             'class' => 'common\bootstrap\Services',
@@ -91,3 +91,10 @@ return [
         ],
     ],
 ];
+
+if (YII_DEBUG) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = 'yii\debug\Module';
+}
+
+return $config;

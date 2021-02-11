@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => Yii::$app->params['input_types'],
                 'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->type),
             ],
-            'has_translation:boolean',
             [
                 'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{update}',

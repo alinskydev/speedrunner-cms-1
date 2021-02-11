@@ -27,4 +27,3 @@ foreach ($specifications as $key => $s) {
     
     echo ($key + 1 < count($specifications)) ? '<hr>' : null;
 }
-

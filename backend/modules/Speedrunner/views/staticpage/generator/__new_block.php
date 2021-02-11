@@ -4,6 +4,9 @@ use yii\helpers\Html;
 
 $rnd_number = round(microtime(true) * 1000);
 
+$attr_types = Yii::$app->params['input_types'];
+unset($attr_types['select'], $attr_types['select2_ajax']);
+
 ?>
 
 <tr>
@@ -32,7 +35,7 @@ $rnd_number = round(microtime(true) * 1000);
         </div>
     </td>
     <td>
-        <?= Html::dropdownList("GeneratorForm[blocks][$rnd_number][type]", null, Yii::$app->params['input_types'], ['class' => 'form-control']); ?>
+        <?= Html::dropdownList("GeneratorForm[blocks][$rnd_number][type]", null, $attr_types, ['class' => 'form-control']); ?>
     </td>
     <td>
         <div class="page-attrs-wrap"></div>

@@ -26,6 +26,15 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'class' => 'common\framework\grid\CheckboxColumn',
             ],
             [
+                'header' => false,
+                'format' => 'raw',
+                'filter' => false,
+                'value' => fn ($model) => Html::img(Yii::$app->services->image->thumb($model->image, [40, 40], 'resize')),
+                'headerOptions' => [
+                    'style' => 'width: 65px;'
+                ],
+            ],
+            [
                 'attribute' => 'id',
                 'headerOptions' => [
                     'style' => 'width: 100px;'
@@ -35,7 +44,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn ($model) => Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['site/page', 'slug' => $model->slug]), ['target' => '_blank']),
+                'value' => fn ($model) => Html::a(
+                    $model->slug,
+                    Yii::$app->urlManagerFrontend->createUrl(['site/page', 'slug' => $model->slug]),
+                    ['target' => '_blank']
+                ),
             ],
             'created',
             'updated',

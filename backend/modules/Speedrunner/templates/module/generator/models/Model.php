@@ -3,13 +3,13 @@
 use yii\helpers\ArrayHelper;
 use yii\db\mysql\ColumnSchema;
 
-//        DB SCHEMA
+//        DB schema
 
 $dbSchema = Yii::$app->db->schema;
 $columns = $dbSchema->getTableSchema($model->table_name)->columns;
 $attrs_fields = ArrayHelper::index($model->attrs_fields, null, 'type');
 
-//        RULES
+//        Rules
 
 foreach ($model->view_relations as $r) {
     $columns[$r['var_name']] = new ColumnSchema();
@@ -49,7 +49,7 @@ class <?= $model->table_name ?> extends ActiveRecord
         return '<?= $model->table_name ?>';
     }
     
-<?php if (isset($attrs['slug']) || isset($attrs_fields['images']) || $model->view_relations) { ?>
+<?php if (isset($attrs['slug']) || $model->attrs_translation || isset($attrs_fields['files']) || $model->view_relations) { ?>
     public function behaviors()
     {
         return [
@@ -67,11 +67,12 @@ class <?= $model->table_name ?> extends ActiveRecord
                 'attributes' => ['<?= implode("', '", array_keys($model->attrs_translation)) ?>'],
             ],
 <?php } ?>
-<?php if (isset($attrs_fields['images'])) { ?>
-<?php $image_attrs = ArrayHelper::getColumn($attrs_fields['images'], 'name') ?>
+<?php if (isset($attrs_fields['files'])) { ?>
+<?php $file_attributes = ArrayHelper::getColumn($attrs_fields['files'], 'name') ?>
             'files' => [
-                'class' => \common\behaviors\FilesBehavior::className(),
-                'attributes' => ['<?= implode("', '", $image_attrs) ?>'],
+                'class' => \common\behaviors\FileBehavior::className(),
+                'attributes' => ['<?= implode("', '", $file_attributes) ?>'],
+                'multiple' => true,
             ],
 <?php } ?>
 <?php if ($model->has_seo_meta) { ?>
@@ -89,8 +90,8 @@ class <?= $model->table_name ?> extends ActiveRecord
                         'model' => new <?= $r['model'] ?>(),
                         'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
                         'attributes' => [
-                            'main' => 'item_id',
-                            'relational' => [// ATTRIBUTES],
+                            'main' => '',
+                            'relational' => [],
                         ],
                     ],
 <?php } ?>
@@ -110,7 +111,7 @@ class <?= $model->table_name ?> extends ActiveRecord
     {
         return [
 <?php foreach ($attrs as $key => $a) { ?>
-            '<?= $key ?>' => Yii::t('app', '<?= str_replace(['_'], [' '], ucfirst($key)) ?>'),
+            '<?= $key ?>' => Yii::t('app', '<?= str_replace('_', ' ', ucfirst($key)) ?>'),
 <?php } ?>
         ];
     }

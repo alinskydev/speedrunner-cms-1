@@ -12,8 +12,6 @@ use backend\modules\Blog\models\Blog;
 
 class BlogSearch extends Blog
 {
-    public $tag_id;
-    
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -25,7 +23,7 @@ class BlogSearch extends Blog
     public function rules()
     {
         return [
-            [['id', 'category_id', 'tag_id'], 'integer'],
+            [['id', 'category_id', 'tags_tmp'], 'integer'],
             [['name', 'slug', 'created', 'updated', 'published'], 'safe'],
         ];
     }
@@ -70,9 +68,9 @@ class BlogSearch extends Blog
             ->andFilterWhere(['like', 'Blog.published', $this->published])
             ->andFilterWhere(['like', 'Blog.created', $this->created])
             ->andFilterWhere(['like', 'Blog.updated', $this->updated])
-            ->andFilterWhere(['like', 'BlogTag.id', $this->tag_id]);
+            ->andFilterWhere(['like', 'BlogTag.id', $this->tags_tmp]);
         
-        //        TRANSLATIONS
+        //        Translations
         
         $lang = Yii::$app->language;
         

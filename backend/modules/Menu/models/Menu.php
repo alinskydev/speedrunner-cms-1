@@ -57,13 +57,11 @@ class Menu extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Id'),
-            'tree' => Yii::t('app', 'Tree'),
-            'lft' => Yii::t('app', 'Lft'),
-            'rgt' => Yii::t('app', 'Rgt'),
-            'depth' => Yii::t('app', 'Depth'),
-            'expanded' => Yii::t('app', 'Expanded'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
+            'created' => Yii::t('app', 'Created'),
+            'updated' => Yii::t('app', 'Updated'),
+            
             'parent_id' => Yii::t('app', 'Parent'),
         ];
     }

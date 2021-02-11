@@ -3,38 +3,37 @@
 namespace backend\modules\Page\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Page\models\Page;
 use backend\modules\Page\modelsSearch\PageSearch;
 
 
-class PageController extends Controller
+class PageController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new PageSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new Page(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new Page(),
-            ],
-        ];
+        $this->model = new Page();
+        $this->modelSearch = new PageSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+        
+        return ArrayHelper::merge($actions, [
+            'image-delete' => [
+                'class' => Actions\crud\FileDeleteAction::className(),
+                'allowed_attributes' => ['image'],
+            ],
+        ]);
+    }
+    
+    public function findModel()
     {
         return Page::findOne(Yii::$app->request->get('id'));
     }

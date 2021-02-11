@@ -2,7 +2,7 @@ $(function() {
     var el, action, sendData,
         csrf = $('meta[name="csrf-token"]').attr('content');
     
-    //      FILE INPUT
+    //      File input
     
     var fileName;
     
@@ -11,14 +11,14 @@ $(function() {
         $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
     });
     
-    //      NAV FULL
+    //      Nav full
     
     $(document).on('click', '.nav-full-toggle', function() {
         $('.nav-wrapper-full').toggleClass('opened');
         $('body').toggleClass('overflow-hidden');
     });
     
-    //      NAV SIDE
+    //      Nav side
     
     $(document).on('click', '.nav-side-toggle', function() {
         el = $(this);
@@ -46,7 +46,7 @@ $(function() {
         }
     });
     
-    //      DATETIME
+    //      Datepickers
     
     $(document).on('mousedown', '[data-toggle="datepicker"], input[name*="Search[created]"], input[name*="Search[updated]"]', function() {
         if (!$(this).hasClass("hasDatepicker")) {
@@ -88,48 +88,73 @@ $(function() {
         }
     });
     
-    //      SELECT2
+    //      Select2
     
     $(document).on('mousedown', '[data-toggle="select2"]', function() {
         if (!$(this).hasClass('select2-hidden-accessible')) {
             $(this).select2({
                 allowClear: true,
-                placeholder: ' '
+                placeholder: ''
             }).select2('open');
         }
     });
     
-    //      ELFINDER
+    $(document).on('mousedown', '[data-toggle="select2-ajax"]', function() {
+        action = $(this).data('action');
+        
+        if (!$(this).hasClass('select2-hidden-accessible')) {
+            $(this).select2({
+                allowClear: true,
+                placeholder: ' ',
+                ajax: {
+                    url: action,
+                    dataType: 'json',
+                    delay: 300,
+                    data: function (params) { return {q: params.term}; }
+                }
+            }).select2('open');
+        }
+    });
     
-    var elfinderId,
+    //      ElFinder
+    
+    var elfinderId, elfinderParams,
         elfinderUrl = $('meta[name="elfinder-connection-url"]').attr('content');
     
-    $(document).on('click', '[data-toggle="elfinder"] .el-finder-btn', function() {
-        elfinderId = $(this).attr('id').replace('browse', '');
-        window.elfinderBrowse(elfinderId, $('meta[name="elfinder-connection-url"]').attr('content'));
+    $(document).on('click', '[data-toggle="elfinder"] .yii2-elfinder-select-button', function() {
+        if ($(this).hasClass('elfinder-initialized')) {
+            return false;
+        }
+        
+        elfinderId = $(this).closest('.elfinder-container').find('.yii2-elfinder-input').attr('id');
+        elfinderParams = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=900,height=600';
+        
+        alexantr.elFinder.registerSelectButton($(this).attr('id'), elfinderUrl + '?id=' + elfinderId);
+        window.open(elfinderUrl + '?id=' + elfinderId, 'elfinder-select-file', elfinderParams).focus();
     });
     
     $(document).on('click', '.btn-elfinder-remove', function() {
-        $(this).closest('.elfinder-container').find('img').remove();
-        $(this).closest('.elfinder-container').find('input').val('');
+        $(this).closest('.elfinder-container').find('img, audio, video').remove();
+        $(this).closest('.elfinder-container').find('input').removeAttr('value');
     });
     
-    //      CKEDITOR
+    //      Imperavi
     
-    var ckEditorImageUploadUrl = $('meta[name="ckeditor-image_upload-connection-url"]').attr('content'),
-        ckEditorImagesUrl = $('meta[name="ckeditor-images-connection-url"]').attr('content');
+    var ImperaviImagesGetUrl = $('meta[name="imperavi-images-get-connection-url"]').attr('content'),
+        ImperaviImageUploadUrl = $('meta[name="imperavi-image-upload-connection-url"]').attr('content'),
+        ImperaviImageDeleteUrl = $('meta[name="imperavi-image-delete-connection-url"]').attr('content');
     
-    $(document).on('click', '[data-toggle="ckeditor"]', function() {
+    $(document).on('click', '[data-toggle="imperavi"]', function() {
         if ($(this).closest('.redactor-box').length === 0) {
             $(this).redactor({
-                imageUpload: ckEditorImageUploadUrl,
-                imageManagerJson: ckEditorImagesUrl,
-                plugins: ['fontcolor', 'fontsize', 'table', 'clips', 'fullscreen', 'imagemanager'],
-                lang: 'en',
+                imageManagerJson: ImperaviImagesGetUrl,
+                imageUpload: ImperaviImageUploadUrl,
+                imageDelete: ImperaviImageDeleteUrl,
+                plugins: [
+                    'fontcolor', 'fontsize', 'table', 'clips', 'fullscreen', 'imagemanager'
+                ],
+                lang: $('html').attr('lang'),
                 uploadImageFields: {
-                    "_csrf-backend": csrf
-                },
-                uploadFileFields: {
                     "_csrf-backend": csrf
                 },
                 imageUploadErrorCallback: function (response) {
@@ -139,7 +164,7 @@ $(function() {
         }
     });
     
-    //      SORTABLE
+    //      Sortable
     
     $(document).on('mouseenter', '[data-toggle="sortable"]', function() {
         if (!$(this).hasClass('ui-sortable')) {
@@ -150,33 +175,33 @@ $(function() {
         }
     });
     
-    //      FORM AUTOCOMPLETE OFF
+    //      Form autocomplete switching off
     
     $(document).on('focus', 'input, textarea, select', function() {
         $(this).attr('autocomplete', 'off');
     });
     
-    //      FORM VALIDATE TOGGLE ERROR TAB
+    //      Activating tab with error after form validation
     
     var tab;
     
     $(document).on('afterValidate', '#update-form', function(event, messages, errorAttributes) {
         if (errorAttributes.length > 0) {
             el = $('#' + errorAttributes[0].id);
-            tab = el.parents('.tab-pane').attr('id');
+            tab = el.closest('.tab-pane').attr('id');
             $(this).find('.nav-pills a[href="#' + tab + '"]').tab('show');
             
             return false;
         }
     });
     
-    //      POPOVER & TOOLTIP
+    //      Popover & tooltip
     
     $('[data-toggle="popover"]').popover({placement: 'top', trigger: 'hover'});
     $('[data-toggle="tooltip"]').not('td .action-buttons [data-toggle="tooltip"]').tooltip();
     $('td .action-buttons [data-toggle="tooltip"]').tooltip({placement: 'left'});
     
-    //      TOAST
+    //      Toast
     
     var alertJson,
         alertLoaderColors = {
@@ -203,23 +228,23 @@ $(function() {
         }
     }
     
-    //      SAVE & RELOAD
+    //      Save & reload
     
     var url, urlParams;
     
-    $(document).on('click', '[data-toggle="save-reload"]', function() {
+    $(document).on('click', '[data-toggle="save-and-update"]', function() {
         el = $(this).closest('form');
         url = new URL(location.origin + el.attr('action'));
         urlParams = new URLSearchParams(url.search);
         
-        if (!urlParams.has('reload-page')) {
-            urlParams.append('reload-page', 1);
+        if (!urlParams.has('save-and-update')) {
+            urlParams.append('save-and-update', 1);
         }
         
         el.attr('action', url.pathname + '?' + urlParams.toString()).submit();
     });
     
-    //      GRID VIEW FOOTER BUTTONS
+    //      GridView common button
     
     var selection = $('.grid-view [name="selection[]"]');
     
@@ -233,7 +258,7 @@ $(function() {
         });
     });
     
-    //      TABLE RELATIONS
+    //      Table relations
     
     var rand,
         relHtml, relHtmlTmp = [];
@@ -248,14 +273,14 @@ $(function() {
         rand = Date.now();
         
         relHtml = relHtmlTmp[el.data('table')].replace(/\__key__/g, rand);
-        el.parents('table').find('tbody').append(relHtml).find('[data-toggle="ckeditor"]').click();
+        el.closest('table').find('tbody').append(relHtml).find('[data-toggle="imperavi"]').click();
     });
     
     $(document).on('click', '.table-relations .btn-remove', function() {
-        $(this).parents('tr').remove();
+        $(this).closest('tr').remove();
     });
     
-    //      SESSION
+    //      Session toggle
     
     $(document).on('click', '[data-toggle="toggle_session"]', function(e) {
         e.preventDefault();
@@ -275,7 +300,7 @@ $(function() {
         });
     });
     
-    //      AJAX BUTTON
+    //      Ajax button
     
     $(document).on('click', '[data-toggle="ajax-button"]', function(e) {
         e.preventDefault();
@@ -296,7 +321,7 @@ $(function() {
         });
     });
     
-    //      AJAX FORM
+    //      Ajax form
     
     $(document).on('submit', '[data-toggle="ajax-form"]', function(e) {
         e.preventDefault();
@@ -314,7 +339,12 @@ $(function() {
             processData: false,
             success: function(data) {
                 $('#ajax-mask').fadeOut(0);
-                $(el.data('el')).html(data);
+                
+                if (data === '1') {
+                    $('#main-modal').modal('hide');
+                } else {
+                    $(el.data('el')).html(data);
+                }
             }
         });
     });

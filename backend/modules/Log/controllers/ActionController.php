@@ -3,16 +3,25 @@
 namespace backend\modules\Log\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\modelsSearch\LogActionSearch;
 use backend\modules\Log\lists\LogActionModelsList;
 
 
-class ActionController extends Controller
+class ActionController extends CrudController
 {
+    public function beforeAction($action)
+    {
+        $this->model = new LogAction();
+        $this->modelSearch = new LogActionSearch();
+        
+        return parent::beforeAction($action);
+    }
+    
     public function behaviors()
     {
         return [
@@ -35,27 +44,20 @@ class ActionController extends Controller
     
     public function actions()
     {
-        return [
+        $actions = ArrayHelper::filter(parent::actions(), ['view']);
+        
+        return ArrayHelper::merge($actions, [
             'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new LogActionSearch(),
-                'params' => [
+                'class' => Actions\crud\IndexAction::className(),
+                'render_params' => [
                     'log_action_modules_list' => (new LogActionModelsList)::$models,
                 ]
             ],
-        ];
+        ]);
     }
     
-    public function actionView($id)
+    public function findModel()
     {
-        $model = LogAction::find()->with(['attrs'])->andWhere(['id' => $id])->one();
-        
-        if (!$model) {
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        
-        return $this->renderAjax('view', [
-            'model' => $model,
-        ]);
+        return LogAction::find()->with(['attrs'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
 }

@@ -3,48 +3,42 @@
 namespace backend\modules\Product\controllers;
 
 use Yii;
-use yii\web\Controller;
+use common\controllers\CrudController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductVariation;
 
 
-class VariationController extends Controller
+class VariationController extends CrudController
 {
+    public function beforeAction($action)
+    {
+        $this->model = new ProductVariation();
+        
+        return parent::beforeAction($action);
+    }
+    
     public function actions()
     {
         return [
-            'image-sort' => [
-                'class' => Actions\ImageSortAction::className(),
-                'model' => $this->findModel(),
+            'update' => [
+                'class' => Actions\crud\UpdateAction::className(),
+                'redirect_route' => false,
+            ],
+            'file-sort' => [
+                'class' => Actions\crud\FileSortAction::className(),
                 'allowed_attributes' => ['images'],
             ],
-            'image-delete' => [
-                'class' => Actions\ImageDeleteAction::className(),
-                'model' => $this->findModel(),
+            'file-delete' => [
+                'class' => Actions\crud\FileDeleteAction::className(),
                 'allowed_attributes' => ['images'],
             ],
         ];
     }
     
-    private function findModel()
+    public function findModel()
     {
         return ProductVariation::findOne(Yii::$app->request->get('id'));
-    }
-    
-    public function actionUpdate($id)
-    {
-        if ($model = ProductVariation::findOne($id)) {
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->removeFlash('success');
-                return true;
-            }
-            
-            return $this->renderAjax('update', [
-                'model' => $model,
-            ]);
-        } else {
-            $this->redirect(['product/index']);
-        }
     }
 }

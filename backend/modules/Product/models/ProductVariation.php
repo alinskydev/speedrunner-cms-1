@@ -18,8 +18,9 @@ class ProductVariation extends ActiveRecord
     {
         return [
             'files' => [
-                'class' => \common\behaviors\FilesBehavior::className(),
+                'class' => \common\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
+                'multiple' => true,
             ],
         ];
     }
@@ -46,7 +47,7 @@ class ProductVariation extends ActiveRecord
             'option_id' => Yii::t('app', 'Option'),
             'price' => Yii::t('app', 'Price'),
             'quantity' => Yii::t('app', 'Quantity'),
-            'sku' => Yii::t('app', 'Sku'),
+            'sku' => Yii::t('app', 'SKU'),
             'images' => Yii::t('app', 'Images'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),

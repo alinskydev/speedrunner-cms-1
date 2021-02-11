@@ -57,7 +57,7 @@ class ProductSpecificationSearch extends ProductSpecification
         $query->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
         
-        //        TRANSLATIONS
+        //        Translations
         
         $lang = Yii::$app->language;
         

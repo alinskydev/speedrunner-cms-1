@@ -21,7 +21,7 @@ class I18NService
             
             foreach ($languages as $key => $l) {
                 Yii::$app->language = $key;
-                $this->localizedRoutes();
+                $this->setLocalizedRoutes();
                 
                 $languages[$key]['url'] = Yii::$app->urlManager->createUrl(ArrayHelper::merge(
                     [Yii::$app->requestedRoute],
@@ -35,10 +35,10 @@ class I18NService
         }
     }
     
-    public static function localizedRoutes()
+    public static function setLocalizedRoutes()
     {
 //        static::$routes = [
-//            Yii::t('app_routes', 'contact') => 'site/contact',
+//            Yii::t('app', 'Name') => 'site/contact',
 //        ];
 //        
 //        $urlManager = Yii::$app->id == 'app-frontend' ? Yii::$app->urlManager : Yii::$app->urlManagerFrontend;

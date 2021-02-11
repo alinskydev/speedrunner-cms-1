@@ -33,8 +33,9 @@ class Product extends ActiveRecord
                 'attributes' => ['name', 'short_description', 'full_description'],
             ],
             'files' => [
-                'class' => \common\behaviors\FilesBehavior::className(),
+                'class' => \common\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
+                'multiple' => true,
             ],
             'seo_meta' => [
                 'class' => \common\behaviors\SeoMetaBehavior::className(),
@@ -112,11 +113,11 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'main_category_id', 'price'], 'required'],
+            [['name', 'main_category_id', 'price', 'quantity', 'sku'], 'required'],
             [['price', 'quantity'], 'integer', 'min' => 0],
             [['discount'], 'integer', 'min' => 0, 'max' => 100],
             [['name', 'slug', 'sku'], 'string', 'max' => 100],
-            [['short_description'], 'string', 'max' => 255],
+            [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
@@ -140,8 +141,8 @@ class Product extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'slug' => Yii::t('app', 'Slug'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'full_description' => Yii::t('app', 'Full Description'),
+            'short_description' => Yii::t('app', 'Short description'),
+            'full_description' => Yii::t('app', 'Full description'),
             'images' => Yii::t('app', 'Images'),
             'brand_id' => Yii::t('app', 'Brand'),
             'main_category_id' => Yii::t('app', 'Main category'),
@@ -151,6 +152,7 @@ class Product extends ActiveRecord
             'sku' => Yii::t('app', 'SKU'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
             'categories_tmp' => Yii::t('app', 'Categories'),
             'options_tmp' => Yii::t('app', 'Options'),
             'related_tmp' => Yii::t('app', 'Related'),

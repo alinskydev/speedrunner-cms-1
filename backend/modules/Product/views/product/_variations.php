@@ -7,7 +7,7 @@
                 <th><?= Yii::t('app', 'Price') ?></th>
                 <th><?= Yii::t('app', 'Quantity') ?></th>
                 <th><?= Yii::t('app', 'SKU') ?></th>
-                <th style="width: 15%;"></th>
+                <th style="width: 150px;"></th>
             </tr>
         </thead>
         
@@ -101,7 +101,7 @@
         });
         
         $(document).on('click', '.btn-variations-remove', function() {
-            $(this).parents('tr').remove();
+            $(this).closest('tr').remove();
         });
     });
 </script>

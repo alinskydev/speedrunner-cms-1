@@ -3,38 +3,30 @@
 namespace backend\modules\System\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemLanguage;
 use backend\modules\System\modelsSearch\SystemLanguageSearch;
 
 
-class LanguageController extends Controller
+class LanguageController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new SystemLanguageSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new SystemLanguage(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new SystemLanguage(),
-            ],
-        ];
+        $this->model = new SystemLanguage();
+        $this->modelSearch = new SystemLanguageSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+    }
+    
+    public function findModel()
     {
         return SystemLanguage::findOne(Yii::$app->request->get('id'));
     }

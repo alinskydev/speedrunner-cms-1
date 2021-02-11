@@ -2,7 +2,7 @@
 
 $index_title = ($model->module_name == $model->controller_name) ? $model->module_name : "$model->module_name " . strtolower($model->controller_name);
 
-//      ATTRIBUTES
+//      Attributes
 
 $attrs = $model->attrs_fields ?: [];
 
@@ -15,7 +15,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 
-$this->title = Yii::t('app', 'View: {name}', ['name' => $model->name]);
+$this->title = Yii::t('app', 'View: {value}', ['value' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

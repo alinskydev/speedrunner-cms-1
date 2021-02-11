@@ -49,7 +49,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn ($model) => Html::a($model->slug, Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'slug' => $model->slug]), ['target' => '_blank']),
+                'value' => fn ($model) => Html::a(
+                    $model->slug,
+                    Yii::$app->urlManagerFrontend->createUrl(['blog/view', 'slug' => $model->slug]),
+                    ['target' => '_blank']
+                ),
             ],
             [
                 'attribute' => 'category_id',
@@ -72,13 +76,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue($model->category, 'name'),
             ],
             [
-                'attribute' => 'tag_id',
-                'label' => $modelSearch->getAttributeLabel('tags_tmp'),
+                'attribute' => 'tags_tmp',
                 'format' => 'raw',
                 'filter' => Select2::widget([
                     'model' => $modelSearch,
-                    'attribute' => 'tag_id',
-                    'data' => [$modelSearch->tag_id => ArrayHelper::getValue(BlogTag::findOne($modelSearch->tag_id), 'name')],
+                    'attribute' => 'tags_tmp',
+                    'data' => [$modelSearch->tags_tmp => ArrayHelper::getValue(BlogTag::findOne($modelSearch->tags_tmp), 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -90,7 +93,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => implode(', ', ArrayHelper::getColumn($model->tags, 'name')),
+                'value' => fn ($model) => implode('<br>', ArrayHelper::getColumn($model->tags, 'name')),
             ],
             [
                 'attribute' => 'published',

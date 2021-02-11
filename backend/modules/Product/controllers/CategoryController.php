@@ -4,6 +4,7 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductCategory;
 
@@ -43,8 +44,6 @@ class CategoryController extends Controller
         if (!$model || $model->depth == 0) {
             return $this->redirect(['tree']);
         }
-        
-        $model->specifications_tmp = $model->specifications;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['tree']);

@@ -10,13 +10,13 @@ use yii\helpers\ArrayHelper;
 class IndexAction extends Action
 {
     public $modelSearch;
-    public array $params = [];
+    public array $render_params = [];
     
     public function run()
     {
         $dataProvider = $this->modelSearch->search([$this->modelSearch->formName() => Yii::$app->request->get('filter')]);
         
-        $params = [
+        $render_params = [
             'data' => $dataProvider,
             'links' => $dataProvider->pagination->getLinks(true),
             'pagination' => [
@@ -27,6 +27,6 @@ class IndexAction extends Action
             ],
         ];
         
-        return ArrayHelper::merge($params, $this->params);
+        return ArrayHelper::merge($render_params, $this->render_params);
     }
 }

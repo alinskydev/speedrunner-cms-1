@@ -5,26 +5,55 @@ namespace backend\modules\Order\models;
 use Yii;
 use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use backend\modules\Order\services\OrderService;
 
 use backend\modules\User\models\User;
-use backend\modules\User\services\UserNotificationService;
 
 
 class Order extends ActiveRecord
 {
+    public $products_tmp;
+    
     public static function tableName()
     {
         return 'Order';
     }
     
+    public function behaviors()
+    {
+        return [
+            'relations_one_many' => [
+                'class' => \common\behaviors\RelationBehavior::className(),
+                'type' => 'oneMany',
+                'attributes' => [
+                    'products_tmp' => [
+                        'model' => new OrderProduct(),
+                        'relation' => 'products',
+                        'attributes' => [
+                            'main' => 'order_id',
+                            'relational' => ['product_id', 'quantity'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [
-            [['delivery_type'], 'required'],
+            [['full_name', 'email', 'phone', 'address', 'delivery_type', 'products_tmp'], 'required'],
+            [['full_name', 'email', 'phone'], 'string', 'max' => 100],
+            [['address'], 'string', 'max' => 1000],
+            [['email'], 'email'],
             [['delivery_price'], 'integer', 'min' => 1],
             [['delivery_type'], 'in', 'range' => array_keys($this->deliveryTypes())],
             [['payment_type'], 'in', 'range' => array_keys($this->paymentTypes())],
+            [['payment_type'], 'default', 'value' => 'cash'],
             [['status'], 'in', 'range' => array_keys($this->statuses())],
+            [['products_tmp'], 'safe'],
+            
+            [['user_id'], 'exist', 'targetClass' => User::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -48,6 +77,8 @@ class Order extends ActiveRecord
             'key' => Yii::t('app', 'Key'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
+            'products_tmp' => Yii::t('app', 'Products'),
         ];
     }
     
@@ -80,7 +111,7 @@ class Order extends ActiveRecord
         return [
             'new' => [
                 'label' => Yii::t('app', 'New'),
-                'class' => 'primary',
+                'class' => 'light',
                 'save_action' => 'plus',
             ],
             'confirmed' => [
@@ -118,35 +149,39 @@ class Order extends ActiveRecord
     
     public function getProducts()
     {
-        return $this->hasMany(OrderProduct::className(), ['order_id' => 'id']);
+        return $this->hasMany(OrderProduct::className(), ['order_id' => 'id'])->orderBy('sort');
+    }
+    
+    public function beforeValidate()
+    {
+        if (!$this->isNewRecord && ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action") == 'minus') {
+            $this->products_tmp = OrderProduct::find()->select(['id', 'product_id', 'quantity'])->indexBy('id')->asArray()->all();
+        }
+        
+        return parent::beforeValidate();
     }
     
     public function beforeSave($insert)
     {
-        if (!$insert && $this->status != $this->oldAttributes['status']) {
+        //        Generating secret key
+        
+        if ($insert) {
+            $this->status = 'new';
+            $this->key = md5(time() . Yii::$app->security->generateRandomString());
+        }
+        
+        //        Changing products quantity
+        
+        if (!$insert) {
             $new_status_action = ArrayHelper::getValue($this->statuses(), "$this->status.save_action");
             $old_status_action = ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action");
             
             if ($new_status_action != $old_status_action) {
-                $transaction = Yii::$app->db->beginTransaction();
+                $order_service = new OrderService($this);
                 
-                foreach ($this->products as $p) {
-                    $product = $p->product;
-                    $product->quantity += $new_status_action == 'plus' ? $p->quantity : (0 - $p->quantity);
-                    
-                    if ($product->quantity < 0) {
-                        Yii::$app->session->addFlash('danger', Yii::t('app', 'Not enough quantity for {product}', [
-                            'product' => $product->name,
-                        ]));
-                        
-                        $transaction->rollBack();
-                        return false;
-                    }
-                    
-                    $product->updateAttributes(['quantity' => $product->quantity]);
+                if (!$order_service->changeProductsQuantity($new_status_action)) {
+                    return false;
                 }
-                
-                $transaction->commit();
             }
         }
         
@@ -155,29 +190,20 @@ class Order extends ActiveRecord
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        NOTIFICATIONS
+        //        Total quantity and price
         
-        if ($insert) {
-            UserNotificationService::create(
-                User::find()->andWhere(['role' => 'admin'])->column(),
-                'order_created', $this->id,
-                [
-                    'id' => $this->id,
-                ]
-            );
-        }
+        parent::afterSave($insert, $changedAttributes);
+        $this->refresh();
         
-        return parent::afterSave($insert, $changedAttributes);
+        $this->updateAttributes([
+            'total_quantity' => array_sum(ArrayHelper::getColumn($this->products, 'quantity', [])),
+            'total_price' => array_sum(ArrayHelper::getColumn($this->products, 'total_price', [])),
+        ]);
     }
     
     public function beforeDelete()
     {
-        if ($this->statuses()[$this->status]['save_action'] == 'minus') {
-            foreach ($this->products as $p) {
-                $p->delete();
-            }
-        }
-        
+        foreach ($this->products as $value) { $value->delete(); }
         return parent::beforeDelete();
     }
 }

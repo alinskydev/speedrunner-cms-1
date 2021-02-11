@@ -9,8 +9,6 @@ use yii\helpers\StringHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 
-use backend\modules\Block\models\BlockType;
-
 
 class DocumentatorForm extends Model
 {
@@ -44,7 +42,7 @@ class DocumentatorForm extends Model
     
     public function process()
     {
-        //        MODULE
+        //        Module
         
         $module_name = $this->modulesList()[$this->module];
         $module = new $this->module($module_name);
@@ -52,7 +50,7 @@ class DocumentatorForm extends Model
         
         foreach ($controller_files as $file) {
             
-            //        CONTROLLER
+            //        Controller
             
             $controller_basename = StringHelper::basename($file);
             $controller_name = str_replace(['Controller', '.php'], null, $controller_basename);
@@ -64,6 +62,16 @@ class DocumentatorForm extends Model
             $controller_reflection = new \ReflectionClass($controller_class);
             $controller = new $controller_class($controller_class, $module);
             $methods = ArrayHelper::index($controller_reflection->getMethods(), 'name');
+            
+            if ($form_method_reflection = ArrayHelper::getValue($methods, 'actions')) {
+                $controller_external_actions = $form_method_reflection->invoke($controller);
+                
+                foreach ($form_method_reflection->invoke($controller) as $action_key => $action) {
+                    if ($action['class'] == 'common\actions\rest\FormAction') {
+                        $forms[$action_key] = $action['model'] ?? new $action['model_class'];
+                    }
+                }
+            }
             
             if ($controller_comment = $controller_reflection->getDocComment()) {
                 $controller_comment = explode(PHP_EOL, $controller_comment);
@@ -84,7 +92,7 @@ class DocumentatorForm extends Model
                 foreach ($actions as $a_key => $a) {
                     $params = ['get' => [], 'post' => []];
                     
-                    //        GET PARAMS
+                    //        GET params
                     
                     $method_name = 'action' . Inflector::id2camel($a_key, '-');
                     
@@ -96,13 +104,9 @@ class DocumentatorForm extends Model
                     $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $params['get']));
                     $url = Yii::$app->urlManagerApi->createFileUrl($link);
                     
-                    //        POST PARAMS
+                    //        POST params
                     
-                    $forms = $controller_reflection->getConstant('FORMS');
-                    
-                    if (isset($forms[$a_key])) {
-                        $form = new $forms[$a_key]();
-                        
+                    if ($form = ArrayHelper::getValue($forms ?? [], $a_key)) {
                         foreach ($form->rules() as $rule) {
                             foreach ($rule[0] as $r) {
                                 $rule_tmp = $rule;
@@ -139,7 +143,7 @@ class DocumentatorForm extends Model
         $folder_template_render = '@backend/modules/Speedrunner/templates/api/documentator/';
         $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result ?? []]);
         
-        //        ZIP ARCHIVE
+        //        ZIP archive
         
         $file = tempnam(sys_get_temp_dir(), 'zip');
         $zip = new \ZipArchive();

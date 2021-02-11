@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\actions as Actions;
 use yii\filters\AccessControl;
 
 use frontend\forms\ProfileForm;
@@ -26,22 +27,17 @@ class ProfileController extends Controller
         ];
     }
     
-    public function actionUpdate()
+    public function actions()
     {
-        $model = new ProfileForm();
-        
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->update()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Profile has been updated.'));
-            } else {
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'An error occured'));
-            }
-            
-            return $this->refresh();
-        }
-        
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return [
+            'update' => [
+                'class' => Actions\web\FormAction::className(),
+                'model_class' => ProfileForm::className(),
+                'render_view' => 'update',
+                'run_method' => 'update',
+                'success_message' => 'Profile has been updated',
+                'redirect_route' => ['update'],
+            ],
+        ];
     }
 }

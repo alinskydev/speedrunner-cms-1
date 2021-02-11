@@ -3,30 +3,30 @@
 namespace backend\modules\Block\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Block\models\BlockType;
 use backend\modules\Block\modelsSearch\BlockTypeSearch;
 
 
-class TypeController extends Controller
+class TypeController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlockTypeSearch(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-        ];
+        $this->model = new BlockType();
+        $this->modelSearch = new BlockTypeSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'update']);
+    }
+    
+    public function findModel()
     {
         return BlockType::findOne(Yii::$app->request->get('id'));
     }

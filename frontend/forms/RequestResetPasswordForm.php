@@ -41,8 +41,8 @@ class RequestResetPasswordForm extends Model
             }
         }
         
-        $data['url'] = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
-        
-        return Yii::$app->services->mail->send($user->email, Yii::t('app_email', 'Password reset'), 'password_reset', $data);
+        return Yii::$app->services->mail->send($user->email, Yii::t('app_email', 'Password reset'), 'password_reset', [
+            'token' => $user->password_reset_token,
+        ]);
     }
 }

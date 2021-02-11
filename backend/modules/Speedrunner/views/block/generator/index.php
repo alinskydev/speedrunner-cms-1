@@ -3,11 +3,14 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use zxbodya\yii2\elfinder\ElFinderInput;
+use alexantr\elfinder\InputFile;
 
 $this->title = 'Block generator';
 $this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
+$attr_types = Yii::$app->params['input_types'];
+unset($attr_types['select'], $attr_types['select2_ajax']);
 
 ?>
 
@@ -85,7 +88,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 <?= Html::dropdownList(
                                     'GeneratorForm[blocks][__key__][type]',
                                     null,
-                                    Yii::$app->params['input_types'],
+                                    $attr_types,
                                     ['class' => 'form-control']
                                 ); ?>
                             </td>
@@ -102,15 +105,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             </td>
                             
                             <td>
-                                <?= ElFinderInput::widget([
-                                    'connectorRoute' => '/connection/elfinder-file-upload',
-                                    'name' => 'GeneratorForm[blocks][__key__][image]',
-                                    'id' => "elfinder-__key__",
-                                    'inputOptions' => [
-                                        'required' => true,
-                                        'style' => 'border: 0; width: 1px; position: absolute; z-index: -1; left: 50%;'
-                                    ]
-                                ]); ?>
+                                <?= Html::tag(
+                                    'div',
+                                    InputFile::widget([
+                                        'id' => "elfinder-__key__",
+                                        'name' => 'GeneratorForm[blocks][__key__][image]',
+                                        'options' => [
+                                            'required' => true,
+                                            'style' => 'border: 0; width: 1px; position: absolute; z-index: -1; left: 50%;'
+                                        ]
+                                    ]),
+                                    ['data-toggle' => 'elfinder']
+                                ); ?>
                             </td>
                             
                             <td>
@@ -148,12 +154,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             action = el.data('action');
             
             $.get(action, {}, function(data) {
-                el.parents('td').find('.block-attrs-wrap').append(data);
+                el.closest('td').find('.block-attrs-wrap').append(data);
             });
         });
         
         $(document).on('click', '.btn-attr-remove', function() {
-            $(this).parents('.block-attrs').remove();
+            $(this).closest('.block-attrs').remove();
         });
     });
 </script>

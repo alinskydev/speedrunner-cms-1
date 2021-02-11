@@ -11,15 +11,18 @@ use backend\modules\User\models\User;
 class ResetPasswordForm extends Model
 {
     private $user;
+    public $token;
     
     public $password;
     public $confirm_password;
     
-    public function __construct($token)
+    public function init()
     {
-        if (!($this->user = User::findByPasswordResetToken($token))) {
+        if (!($this->user = User::findByPasswordResetToken($this->token))) {
             throw new InvalidParamException(Yii::t('app', 'Wrong password reset token'));
         }
+        
+        return parent::init();
     }
     
     public function rules()

@@ -20,16 +20,19 @@ class Block extends ActiveRecord
     {
         return [
             [['value'], 'string', 'when' => function ($model) {
-                return in_array($model->type->type, ['textInput', 'textArea', 'CKEditor', 'ElFinder']);
+                return in_array($model->type->type, ['text_input', 'text_area', 'imperavi', 'elfinder']);
             }],
             [['value'], 'boolean', 'when' => function ($model) {
                 return in_array($model->type->type, ['checkbox']);
             }],
             [['value'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
-                return in_array($model->type->type, ['images']);
+                return in_array($model->type->type, ['files']);
             }],
             [['value'], 'valueValidation', 'when' => function ($model) {
                 return in_array($model->type->type, ['groups']);
+            }],
+            [['value'], 'default', 'value' => function ($model) {
+                return in_array($model->type->type, ['files', 'groups']) ? [] : '';
             }],
         ];
     }
@@ -56,7 +59,6 @@ class Block extends ActiveRecord
             'page_id' => Yii::t('app', 'Page'),
             'type_id' => Yii::t('app', 'Type'),
             'value' => Yii::t('app', 'Value'),
-            'images_tmp' => Yii::t('app', 'Images'),
         ];
     }
     
@@ -69,7 +71,7 @@ class Block extends ActiveRecord
     {
         $this->value = $this->type->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;
         
-        if (!$this->value && in_array($this->type->type, ['images', 'groups'])) {
+        if (!$this->value && in_array($this->type->type, ['files', 'groups'])) {
             $this->value = [];
         }
         
@@ -78,8 +80,8 @@ class Block extends ActiveRecord
     
     public function beforeValidate()
     {
-        if (!$this->isNewRecord && $this->type->type == 'images' && $images = UploadedFile::getInstances($this, $this->id)) {
-            $this->value = $images;
+        if (!$this->isNewRecord && $this->type->type == 'files' && $files = UploadedFile::getInstances($this, $this->id)) {
+            $this->value = $files;
         }
         
         if ($this->type->type == 'groups' && !is_array($this->value)) {
@@ -91,17 +93,17 @@ class Block extends ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        TRANSLATION
+        //        Translations
         
         $lang = Yii::$app->language;
         
         if ($this->type->type == 'groups') {
             if ($this->type->has_translation) {
                 $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
-                $json[$lang] = array_values($this->value);
+                $json[$lang] = array_values($this->value) ?: [];
                 $this->value = $json;
             } else {
-                $this->value = array_values($this->value);
+                $this->value = array_values($this->value) ?: [];
             }
         } else {
             if ($this->type->has_translation) {
@@ -111,30 +113,30 @@ class Block extends ActiveRecord
             }
         }
         
-        //        IMAGES
+        //        Images
         
         if ($insert) {
-            if (in_array($this->type->type, ['images', 'groups'])) {
+            if (in_array($this->type->type, ['files', 'groups'])) {
                 $this->value = [];
             }
         } else {
-            if ($this->type->type == 'images') {
-                $old_images = ArrayHelper::getValue($this->oldAttributes, 'value', []);
+            if ($this->type->type == 'files') {
+                $old_files = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 
-                if ($images = UploadedFile::getInstances($this, $this->id)) {
-                    foreach ($images as $img) {
-                        $file_url = (new FileService($img))->save();
+                if ($files = UploadedFile::getInstances($this, $this->id)) {
+                    foreach ($files as $f) {
+                        $file_url = (new FileService($f))->save();
                         
                         if ($this->type->has_translation) {
-                            $images_arr[$lang][] = $file_url;
+                            $files_arr[$lang][] = $file_url;
                         } else {
-                            $images_arr[] = $file_url;
+                            $files_arr[] = $file_url;
                         }
                     }
                     
-                    $this->value = ArrayHelper::merge($old_images, $images_arr);
+                    $this->value = ArrayHelper::merge($old_files, $files_arr);
                 } else {
-                    $this->value = $old_images;
+                    $this->value = $old_files;
                 }
             }
         }
@@ -144,7 +146,7 @@ class Block extends ActiveRecord
     
     public function afterDelete()
     {
-        if ($this->type->type == 'images') {
+        if ($this->type->type == 'files') {
             foreach ($this->value as $v) {
                 FileService::delete($v);
             }

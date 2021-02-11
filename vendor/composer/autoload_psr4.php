@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'zxbodya\\yii2\\elfinder\\' => array($vendorDir . '/zxbodya/yii2-elfinder'),
     'yii\\swiftmailer\\' => array($vendorDir . '/yiisoft/yii2-swiftmailer/src'),
     'yii\\jui\\' => array($vendorDir . '/yiisoft/yii2-jui'),
     'yii\\gii\\' => array($vendorDir . '/yiisoft/yii2-gii/src'),
@@ -28,6 +27,7 @@ return array(
     'dosamigos\\arrayquery\\' => array($vendorDir . '/2amigos/yii2-arrayquery-component/src'),
     'creocoder\\nestedsets\\' => array($vendorDir . '/creocoder/yii2-nested-sets/src'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
+    'alexantr\\elfinder\\' => array($vendorDir . '/alexantr/yii2-elfinder/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Php73\\' => array($vendorDir . '/symfony/polyfill-php73'),

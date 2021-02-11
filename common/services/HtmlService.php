@@ -9,14 +9,14 @@ use yii\helpers\ArrayHelper;
 
 class HtmlService
 {
-    public function updateButtons($buttons_list)
+    public function saveButtons($buttons_list)
     {
         foreach ($buttons_list as $button) {
             switch ($button) {
-                case 'save_reload':
+                case 'save_update':
                     $result[] = Html::button(
-                        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & reload'),
-                        ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-reload']
+                        Html::tag('i', null, ['class' => 'fas fa-save']) . Yii::t('app', 'Save & update'),
+                        ['class' => 'btn btn-info btn-icon', 'data-toggle' => 'save-and-update']
                     );
                     
                     break;

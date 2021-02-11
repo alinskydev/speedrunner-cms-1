@@ -17,6 +17,11 @@ class NestedSetsQuery extends ActiveQuery
         ];
     }
     
+    public function withoutRoots()
+    {
+        return $this->andWhere(['>', 'depth', 0]);
+    }
+    
     public function itemsTree($attr, $type)
     {
         $lang = Yii::$app->language;

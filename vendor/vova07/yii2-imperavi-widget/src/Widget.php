@@ -74,7 +74,11 @@ class Widget extends BaseWidget
     /**
      * @var array {@link https://imperavi.com/assets/pdf/redactor-documentation-10.pdf redactor options} to manage the redactor itself.
      */
-    public $settings = [];
+    public $settings = [
+        'plugins' => [
+            'fontcolor', 'fontsize', 'table', 'clips', 'fullscreen',
+        ],
+    ];
 
     /**
      * @var array Default settings that will be merged with {@link $settings}. Useful with DI container.
@@ -89,7 +93,9 @@ class Widget extends BaseWidget
      *
      * @example `['my-custom-plugin' => MyCustomPlugin::className(), ...]`
      */
-    public $plugins = [];
+    public $plugins = [
+        'imagemanager' => 'vova07\imperavi\bundles\ImageManagerAsset',
+    ];
 
     /**
      * @var boolean Whether to render the `textarea` or not.
@@ -103,10 +109,9 @@ class Widget extends BaseWidget
      */
     public function init()
     {
-        $this->settings['plugins'] = isset($this->settings['plugins']) ? $this->settings['plugins'] : [
-            'fontcolor', 'fontsize', 'table', 'clips',
-            'fullscreen', 'imagemanager',
-        ];
+        $this->settings['imageManagerJson'] = $this->settings['imageManagerJson'] ?? Yii::$app->urlManager->createUrl(['connection/imperavi-images-get']);
+        $this->settings['imageUpload'] = $this->settings['imageUpload'] ?? Yii::$app->urlManager->createUrl(['connection/imperavi-image-upload']);
+        $this->settings['imageDelete'] = $this->settings['imageDelete'] ?? Yii::$app->urlManager->createUrl(['connection/imperavi-image-delete']);
         
         if ($this->name === null && $this->selector === null && !$this->hasModel()) {
             throw new InvalidConfigException("Either 'name', or 'model' and 'attribute' properties must be specified.");

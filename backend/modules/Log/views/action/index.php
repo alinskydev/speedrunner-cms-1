@@ -91,6 +91,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'class' => 'common\framework\grid\ActionColumn',
                 'template' => '{view} {link}',
                 'buttons' => [
+                    'link' => function ($url, $model, $key) {
+                        return Html::a(
+                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
+                            ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url'),
+                            [
+                                'target' => '_blank',
+                                'title' => Yii::t('app', 'Link'),
+                                'data-toggle' => 'tooltip',
+                                'data-pjax' => 0,
+                            ]
+                        );
+                    },
                     'view' => function ($url, $model, $key) {
                         return Html::button(
                             Html::tag('i', null, [
@@ -104,18 +116,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 'data-pjax' => 0,
                                 'title' => Yii::t('app', 'View'),
                                 'data-toggle' => 'tooltip',
-                            ]
-                        );
-                    },
-                    'link' => function ($url, $model, $key) {
-                        return Html::a(
-                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
-                            ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url'),
-                            [
-                                'target' => '_blank',
-                                'title' => Yii::t('app', 'Link'),
-                                'data-toggle' => 'tooltip',
-                                'data-pjax' => 0,
                             ]
                         );
                     },

@@ -3,38 +3,30 @@
 namespace backend\modules\Blog\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogCategory;
 use backend\modules\Blog\modelsSearch\BlogCategorySearch;
 
 
-class CategoryController extends Controller
+class CategoryController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlogCategorySearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new BlogCategory(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new BlogCategory(),
-            ],
-        ];
+        $this->model = new BlogCategory();
+        $this->modelSearch = new BlogCategorySearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+    }
+    
+    public function findModel()
     {
         return BlogCategory::findOne(Yii::$app->request->get('id'));
     }

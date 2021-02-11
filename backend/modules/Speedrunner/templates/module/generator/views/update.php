@@ -2,7 +2,7 @@
 
 $index_title = ($model->module_name == $model->controller_name) ? $model->module_name : "$model->module_name " . strtolower($model->controller_name);
 
-//      ATTRIBUTES
+//      Attributes
 
 $attrs = $model->attrs_fields ?: [];
 $controller_url = strtolower($model->module_name) . '/' . strtolower($model->controller_name);
@@ -14,135 +14,84 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use zxbodya\yii2\elfinder\ElFinderInput;
-use vova07\imperavi\Widget;
-use kartik\file\FileInput;
-use kartik\select2\Select2;
-use yii\web\JsExpression;
+use backend\widgets\crud\UpdateWidget;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-?>
-
-<?= "<?php " ?>$form = ActiveForm::begin([
-    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
-]); ?>
-
-<h2 class="main-title">
-    <?php echo "<?= \$this->title ?>\n"; ?>
-    <?php echo "<?= Yii::\$app->sr->html->updateButtons(['save_reload', 'save']) ?>\n"; ?>
-</h2>
-
-<div class="row">
-    <div class="col-lg-2 col-md-3">
-        <ul class="nav flex-column nav-pills main-shadow" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#tab-information">
-                    <?= "<?= Yii::t('app', 'Information') ?>\n" ?>
-                </a>
-            </li>
-<?php foreach ($model->view_relations as $r) { ?>
-<?php $var_name_rel = str_replace('_tmp', null, $r['var_name']); ?>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-<?= $var_name_rel ?>">
-                    <?= "<?= Yii::t('app', '" . ucfirst($var_name_rel) . "') ?>\n" ?>
-                </a>
-            </li>
-<?php } ?>
+echo UpdateWidget::widget([
+    'model' => $model,
 <?php if ($model->has_seo_meta) { ?>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-seo-meta">
-                    <?= "<?= Yii::t('app', 'SEO meta') ?>\n" ?>
-                </a>
-            </li>
+    'has_seo_meta' => true,
 <?php } ?>
-        </ul>
-    </div>
-    
-    <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
-        <div class="tab-content main-shadow p-3">
-            <div id="tab-information" class="tab-pane active">
+    'tabs' => [
+        'information' => [
+            'label' => Yii::t('app', 'Information'),
+            'attributes' => [
 <?php
     foreach ($attrs as $key => $a) {
         switch ($a['type']) {
-            case 'textInput':
-                echo "                <?= \$form->field(\$model, '$key')->textInput() ?>\n";
-                break;
-            case 'textArea':
-                echo "                <?= \$form->field(\$model, '$key')->textArea(['rows' => 5]) ?>\n";
-                break;
+            case 'text_input':
+            case 'text_area':
             case 'checkbox':
-                echo "                <?= \$form->field(\$model, '$key', [
-                    'checkboxTemplate' => Yii::\$app->params['switcher_template'],
-                ])->checkbox([
-                    'class' => 'custom-control-input',
-                ])->label(null, [
-                    'class' => 'custom-control-label'
-                ]) ?>\n";
+            case 'elfinder':
+            case 'imperavi':
+                echo "                '$key' => '{$a['type']}',\n";
                 break;
+            
             case 'select':
-                echo "                <?= \$form->field(\$model, '$key')->dropDownList([]) ?>\n";
+                echo "                [
+                    'name' => '$key',
+                    'type' => '{$a['type']}',
+                    'data' => ArrayHelper::getColumn(\$model->{selectionList}(), 'label'),
+                ],\n";
                 break;
-            case 'CKEditor':
-                echo "                <?= \$form->field(\$model, '$key')->widget(Widget::className(), [
-                    'settings' => [
-                        'imageUpload' => Yii::\$app->urlManager->createUrl('connection/editor-image-upload'),
-                        'imageManagerJson' => Yii::\$app->urlManager->createUrl('connection/editor-images'),
+            
+            case 'select2_ajax':
+                echo "                [
+                    'name' => '$key',
+                    'type' => '{$a['type']}',
+                    'data' => [\$model->$key => ArrayHelper::getValue(\$model->{relation}, '{attribute}')],
+                    'widget_options' => [
+                        'ajax_url' => Yii::\$app->urlManager->createUrl(['items-list/{relation_model}']),
+                    ]
+                ],\n";
+                break;
+            
+            case 'files':
+                echo "                [
+                    'name' => '$key',
+                    'type' => '{$a['type']}',
+                    'multiple' => true,
+                    'widget_options' => [
+                        'delete_url' => Yii::\$app->urlManager->createUrl([
+                            '$controller_url/file-delete', 'id' => \$model->id, 'attr' => '$key'
+                        ]),
+                        'sort_url' => Yii::\$app->urlManager->createUrl([
+                            '$controller_url/file-sort', 'id' => \$model->id, 'attr' => '$key'
+                        ]),
                     ],
-                ]); ?>\n";
+                ],\n";
                 break;
-            case 'ElFinder':
-                echo "                <?= \$form->field(\$model, '$key')->widget(ElFinderInput::className(), [
-                    'connectorRoute' => '/connection/elfinder-file-upload',
-                ]) ?>\n";
-                break;
-            case 'images':
-                echo "                <?= \$form->field(\$model, '$key',[
-                    'template' => '{label}{hint}{error}{input}',
-                ])->widget(FileInput::className(), [
-                    'options' => [
-                        'accept' => 'image/*',
-                        'multiple' => true,
-                    ],
-                    'pluginOptions' => array_merge(Yii::\$app->params['fileInput_pluginOptions'], [
-                        'deleteUrl' => Yii::\$app->urlManager->createUrl(['$controller_url/image-delete', 'id' => \$model->id, 'attr' => '$key']),
-                        'initialPreview' => \$model->$key ?: [],
-                        'initialPreviewConfig' => ArrayHelper::getColumn(\$model->$key ?: [], fn (\$value) => ['key' => \$value, 'downloadUrl' => \$value]),
-                    ]),
-                    'pluginEvents' => [
-                        'filesorted' => new JsExpression(" . '"function(event, params) {
-                            $.post(' . "'" . '".Yii::$app->urlManager->createUrl([' . "'$controller_url/image-sort', 'id' => \$model->id, 'attr' => '$key']). " . '"' . "', {sort: params});
-                        }" . '")
-                    ],
-                ]) ?>' . "\n";
-                break;
+            
         }
     }
 ?>
-            </div>
+            ],
+        ],
 <?php foreach ($model->view_relations as $r) { ?>
 <?php $var_name_rel = str_replace('_tmp', null, $r['var_name']); ?>
-            
-            <div id="tab-<?= $var_name_rel ?>" class="tab-pane fade">
-                <?= '<?= ' ?>$this->render('_<?= $var_name_rel ?>', [
-                    'model' => $model,
-                    'form' => $form,
-                ]); ?>
-            </div>
+        '<?= $var_name_rel ?>' => [
+            'label' => Yii::t('app', '<?= ucfirst($var_name_rel) ?>'),
+            'attributes' => [
+                [
+                    'name' => false,
+                    'type' => 'render',
+                    'view' => '_<?= $var_name_rel ?>',
+                ],
+            ],
+        ],
 <?php } ?>
-<?php if ($model->has_seo_meta) { ?>
-            
-            <div id="tab-seo-meta" class="tab-pane fade">
-                <?= '<?= ' ?>$this->render('@backend/modules/Seo/views/meta/meta', [
-                    'model' => $model,
-                ]) ?>
-            </div>
-<?php } ?>
-        </div>
-    </div>
-</div>
-
-<?= "<?php ActiveForm::end(); ?>\n" ?>
+    ],
+]);

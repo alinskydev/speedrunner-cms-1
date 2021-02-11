@@ -1,6 +1,6 @@
 $(function() {
     
-    //      AJAX BUTTON
+    //      Ajax button
     
     var el, action, sendData;
     
@@ -23,28 +23,39 @@ $(function() {
         });
     });
     
-    //      AJAX FORM
+    //      Ajax form
     
     $(document).on('submit', '[data-toggle="ajax-form"]', function(e) {
         e.preventDefault();
         
         el = $(this);
         action = el.attr('action');
-        sendData = el.serialize();
+        sendData = new FormData(el[0]);
         
-        $.post(action, sendData, function(data) {
-            $(el.data('el')).html(data);
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: sendData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data === '1') {
+                    $('#main-modal').modal('hide');
+                } else {
+                    $(el.data('el')).html(data);
+                }
+            }
         });
     });
     
-    //      CART CHANGE BUTTON
+    //      Cart changing quantity
     
     var quantity;
     
     $(document).on('click', '[data-toggle="cart-quantity-change"]', function(e) {
         e.preventDefault();
         
-        el = $(this).parents('.cart-quantity-wrapper').find('input');
+        el = $(this).closest('.cart-quantity-wrapper').find('input[name="quantity"]');
         quantity = parseInt(el.val());
         quantity = isNaN(quantity) ? 0 : quantity;
         quantity += $(this).data('type') === 'plus' ? 1 : -1;
@@ -53,7 +64,7 @@ $(function() {
         el.val(quantity).trigger('change');
     });
     
-    //      CART CHANGE FORM
+    //      Cart changing form
     
     $(document).on('submit', '[data-toggle="cart-change-form"]', function(e) {
         e.preventDefault();

@@ -393,10 +393,11 @@ header .dropdown-toggle::after {
 .nav-wrapper-side .site-logo {
     display: block;
     width: 100%;
+    text-align: center;
 }
 
 .nav-wrapper-side .site-logo img {
-    width: 100%;
+    width: auto;
     height: 50px;
     padding: 10px 0;
     display: none;
@@ -478,7 +479,7 @@ header .dropdown-toggle::after {
     background: #01a3ab;
     color: #fff;
     width: 42px;
-    height: 42px;
+    height: 100%;
     line-height: 42px;
 }
 
@@ -598,20 +599,6 @@ header .dropdown-toggle::after {
     animation: ajaxMaskLine2 1s ease-in-out 0s infinite;
 }
 
-.preview-elfinder {
-    display: block;
-    max-width: 300px;
-    margin-bottom: 10px;
-}
-
-img.preview-elfinder {
-    max-width: 100px;
-}
-
-.el-finder-dialog .image p {
-    background-size: contain !important;
-}
-
 .grid-view .common-buttons {
     position: fixed;
     bottom: 30px;
@@ -727,16 +714,6 @@ body #redactor-modal-tabber a:hover {
     color: #fff;
 }
 
-body .el-finder-dialog {
-    color: #191d1d;
-}
-
-body .el-finder-dialog label {
-    color: #191d1d;
-    font-weight: 500;
-    letter-spacing: normal;
-}
-
 .btn.btn-icon {
     position: relative;
     padding-left: 48px;
@@ -747,7 +724,7 @@ body .el-finder-dialog label {
     top: 0;
     left: 0;
     width: 36px;
-    height: 36px;
+    height: 100%;
     line-height: 36px;
     background: #fff;
 }
@@ -936,6 +913,26 @@ span.fancytree-active span.fancytree-title,
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+}
+
+.ui-dialog .ui-dialog-titlebar-close::before {
+    content: "\f00d";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+}
+
+.disabled-block {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.disabled-block * {
+    pointer-events: none;
 }
 
 

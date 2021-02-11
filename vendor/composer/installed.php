@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '50e54045225fbc4e164f001aa65dc14c4298383e',
+    'reference' => 'e01f58a8feb3d33ec2b86f2f07e80c2202f69c73',
     'name' => 'yiisoft/yii2-app-advanced',
   ),
   'versions' => 
@@ -19,6 +19,15 @@
       array (
       ),
       'reference' => '7f621370e1e954237741aa6d23eb5a5f21c985f3',
+    ),
+    'alexantr/yii2-elfinder' => 
+    array (
+      'pretty_version' => '1.7.0',
+      'version' => '1.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '868088746cefe3fdc576475ae50a398eeba86e99',
     ),
     'behat/gherkin' => 
     array (
@@ -595,6 +604,15 @@
       ),
       'reference' => '45f2b83ceed5231afa7b3d5b12b58ad335edd82e',
     ),
+    'studio-42/elfinder' => 
+    array (
+      'pretty_version' => '2.1.57',
+      'version' => '2.1.57.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '087524b1d7a4d76cfd848dee2093cd8daf987f78',
+    ),
     'swiftmailer/swiftmailer' => 
     array (
       'pretty_version' => 'v6.2.5',
@@ -834,7 +852,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '50e54045225fbc4e164f001aa65dc14c4298383e',
+      'reference' => 'e01f58a8feb3d33ec2b86f2f07e80c2202f69c73',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (
@@ -908,16 +926,6 @@
         0 => '9999999-dev',
       ),
       'reference' => '590795d0e94c909c636cba1007a619012e118ac9',
-    ),
-    'zxbodya/yii2-elfinder' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => '98dd330685375d7cc13906d65553df6ff5f3b4ae',
     ),
   ),
 );

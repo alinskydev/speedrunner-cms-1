@@ -2,9 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Url;
+use alexantr\elfinder\InputFile;
 use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
 
 $this->title = Yii::t('app', 'System settings');
 $this->params['breadcrumbs'][] = $this->title;
@@ -12,12 +11,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
+    'options' => ['id' => 'update-form'],
+    'fieldConfig' => [
+        'enableClientValidation' => false
+    ]
 ]); ?>
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->services->html->updateButtons(['save']) ?>
+    <?= Yii::$app->services->html->saveButtons(['save']) ?>
 </h2>
 
 <div class="row">
@@ -36,70 +38,60 @@ $this->params['breadcrumbs'][] = $this->title;
             <div id="tab-information" class="tab-pane active">
                 <ul id="sortable" class="p-0 m-0">
                     <?php foreach ($settings as $s) { ?>
-                        <li class="d-flex mb-2" data-id="<?= $s->id ?>">
-                            <div>
+                        <li class="d-flex p-3" data-id="<?= $s->id ?>">
+                            <div class="mr-3">
                                 <label>&nbsp;</label><br>
                                 <div class="btn btn-primary table-sorter">
                                     <i class="fas fa-arrows-alt"></i>
                                 </div>
                             </div>
                             
-                            <div class="col-5">
-                                <?= $form->field($s, 'label')->textInput([
-                                    'name' => 'SystemSettings['.$s->name.'][label]',
-                                    'id' => 'systemsettings-label-' . $s->name,
-                                ]) ?>
-                            </div>
-                            
-                            <div class="col-6">
+                            <div class="w-100">
                                 <?php
                                     switch ($s->type) {
-                                        case 'textInput':
+                                        case 'text_input':
                                             echo $form->field($s, 'value')->textInput([
-                                                'name' => "SystemSettings[$s->name][value]",
-                                                'id' => "systemsettings-$s->name"
-                                            ]);
+                                                'name' => "SystemSettings[$s->id][value]",
+                                                'id' => "systemsettings-$s->id",
+                                            ])->label($s->label);
                                             
                                             break;
-                                        case 'textArea':
+                                        case 'text_area':
                                             echo $form->field($s, 'value')->textArea([
-                                                'name' => "SystemSettings[$s->name][value]",
-                                                'id' => "systemsettings-$s->name",
-                                                'rows' => 5
-                                            ]);
+                                                'name' => "SystemSettings[$s->id][value]",
+                                                'id' => "systemsettings-$s->id",
+                                                'rows' => 5,
+                                            ])->label($s->label);
                                             
                                             break;
                                         case 'checkbox':
                                             echo Html::label('&nbsp;<br>') . $form->field($s, 'value', [
                                                 'checkboxTemplate' => Yii::$app->params['switcher_template'],
                                             ])->checkbox([
-                                                'name' => "SystemSettings[$s->name][value]",
-                                                'id' => "systemsettings-$s->name",
-                                                'class' => 'custom-control-input'
-                                            ])->label(null, [
-                                                'class' => 'custom-control-label'
+                                                'name' => "SystemSettings[$s->id][value]",
+                                                'id' => "systemsettings-$s->id",
+                                                'class' => 'custom-control-input',
+                                            ])->label($s->label, [
+                                                'class' => 'custom-control-label',
                                             ]);
                                             
                                             break;
-                                        case 'CKEditor':
+                                        case 'imperavi':
                                             echo $form->field($s, 'value')->widget(Widget::className(), [
-                                                'settings' => [
-                                                    'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                                                    'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                                                ],
                                                 'options' => [
-                                                    'name' => "SystemSettings[$s->name][value]",
-                                                    'id' => "systemsettings-$s->name",
+                                                    'name' => "SystemSettings[$s->id][value]",
+                                                    'id' => "systemsettings-$s->id",
                                                 ],
-                                            ]);
+                                            ])->label($s->label);
                                             
                                             break;
-                                        case 'ElFinder':
-                                            echo $form->field($s, 'value')->widget(ElFinderInput::className(), [
-                                                'connectorRoute' => '/connection/elfinder-file-upload',
-                                                'name' => "SystemSettings[$s->name][value]",
-                                                'id' => "systemsettings-$s->name",
-                                            ]);
+                                        case 'elfinder':
+                                            echo $form->field($s, 'value')->widget(InputFile::className(), [
+                                                'options' => [
+                                                    'name' => "SystemSettings[$s->id][value]",
+                                                    'id' => "systemsettings-$s->id",
+                                                ]
+                                            ])->label($s->label);
                                             
                                             break;
                                     }

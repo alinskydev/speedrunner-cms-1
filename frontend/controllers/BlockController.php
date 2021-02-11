@@ -13,13 +13,12 @@ class BlockController extends Controller
 {
     public function actionView($slug)
     {
-        if ($model = BlockPage::find()->andWhere(['slug' => $slug])->one()) {
-            return $this->render('view', [
-                'model' => $model,
-                'blocks' => Block::find()->with(['type'])->andWhere(['page_id' => $model->id])->orderBy('sort')->all(),
-            ]);
-        } else {
+        if (!($model = BlockPage::find()->with(['blocks.type'])->bySlug($slug)->one())) {
             $this->redirect(['site/index']);
         }
+        
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 }

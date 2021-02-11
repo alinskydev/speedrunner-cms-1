@@ -71,7 +71,7 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'created', $this->created])
             ->andFilterWhere(['like', 'updated', $this->updated]);
         
-        //        TRANSLATIONS
+        //        Translations
         
         $lang = Yii::$app->language;
         

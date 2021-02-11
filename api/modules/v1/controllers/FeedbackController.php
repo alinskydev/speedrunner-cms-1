@@ -3,17 +3,15 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use common\controllers\RestController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\controllers\RestController as Controller;
-use common\actions\rest as Actions;
+
+use frontend\forms\ContactForm;
 
 
-class FeedbackController extends Controller
+class FeedbackController extends RestController
 {
-    const FORMS = [
-        'send' => '\frontend\forms\ContactForm',
-    ];
-    
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
@@ -30,7 +28,8 @@ class FeedbackController extends Controller
     {
         return [
             'send' => [
-                'class' => Actions\FormAction::className(),
+                'class' => Actions\rest\FormAction::className(),
+                'model' => new ContactForm(),
                 'run_method' => 'sendEmail',
             ],
         ];

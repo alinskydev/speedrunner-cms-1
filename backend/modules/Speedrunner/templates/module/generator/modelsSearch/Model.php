@@ -2,12 +2,12 @@
 
 use yii\helpers\ArrayHelper;
 
-//      DB SCHEMA
+//      DB schema
 
 $dbSchema = Yii::$app->db->schema;
 $columns = $dbSchema->getTableSchema($model->table_name)->columns;
 
-//      RULES & SEARCH
+//      Rules & search
 
 $rules = $model->generateSearchRules($columns);
 $searchConditions = $model->generateSearchConditions($columns);
@@ -80,7 +80,7 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
         <?= implode("\n        ", $searchConditions) ?>
         
 <?php if ($model->attrs_translation) { ?>
-        //        TRANSLATIONS
+        //        Translations
         
         $lang = Yii::$app->language;
         

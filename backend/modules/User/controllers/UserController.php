@@ -3,38 +3,37 @@
 namespace backend\modules\User\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\User\models\User;
 use backend\modules\User\modelsSearch\UserSearch;
 
 
-class UserController extends Controller
+class UserController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new UserSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new User(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new User(),
-            ],
-        ];
+        $this->model = new User();
+        $this->modelSearch = new UserSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+        
+        return ArrayHelper::merge($actions, [
+            'file-delete' => [
+                'class' => Actions\crud\FileDeleteAction::className(),
+                'allowed_attributes' => ['image'],
+            ],
+        ]);
+    }
+    
+    public function findModel()
     {
         return User::findOne(Yii::$app->request->get('id'));
     }

@@ -24,12 +24,12 @@ class SeoMeta extends ActiveRecord
     public function valueValidation($attribute, $params, $validator)
     {
         if (!is_array($this->value)) {
-            $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $attribute]));
+            $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
         }
         
         foreach ((array)$this->value as $key => $v) {
             if (!array_key_exists($key, $this->types()) || !is_string($v)) {
-                $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $attribute]));
+                $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
             }
         }
     }
@@ -50,23 +50,23 @@ class SeoMeta extends ActiveRecord
         return [
             'title' => [
                 'label' => 'Title',
-                'type' => 'inputField',
+                'type' => 'text_input',
             ],
             'description' => [
                 'label' => 'Description',
-                'type' => 'textArea',
+                'type' => 'text_area',
             ],
             'og:title' => [
                 'label' => 'Og:title',
-                'type' => 'inputField',
+                'type' => 'text_input',
             ],
             'og:description' => [
                 'label' => 'Og:description',
-                'type' => 'textArea',
+                'type' => 'text_area',
             ],
             'og:image' => [
                 'label' => 'Og:image',
-                'type' => 'ElFinder',
+                'type' => 'elfinder',
             ]
         ];
     }

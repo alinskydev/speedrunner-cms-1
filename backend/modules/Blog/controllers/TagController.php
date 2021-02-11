@@ -3,38 +3,30 @@
 namespace backend\modules\Blog\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogTag;
 use backend\modules\Blog\modelsSearch\BlogTagSearch;
 
 
-class TagController extends Controller
+class TagController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlogTagSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new BlogTag(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new BlogTag(),
-            ],
-        ];
+        $this->model = new BlogTag();
+        $this->modelSearch = new BlogTagSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+    }
+    
+    public function findModel()
     {
         return BlogTag::findOne(Yii::$app->request->get('id'));
     }

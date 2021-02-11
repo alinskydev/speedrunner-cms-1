@@ -43,10 +43,11 @@ class StaticpageController extends Controller
         return $this->render('update', [
             'model' => $model,
             'blocks' => ArrayHelper::index($model->blocks, null, 'part_name'),
+            'new_block' => new StaticpageBlock,
         ]);
     }
     
-    public function actionImageSort($id)
+    public function actionFileSort($id)
     {
         if (!($model = StaticpageBlock::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);
@@ -65,7 +66,7 @@ class StaticpageController extends Controller
         }
     }
     
-    public function actionImageDelete($id)
+    public function actionFileDelete($id)
     {
         if (!($model = StaticpageBlock::findOne($id))) {
             return $this->redirect(Yii::$app->request->referrer);

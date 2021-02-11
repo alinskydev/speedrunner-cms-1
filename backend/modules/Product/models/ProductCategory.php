@@ -84,15 +84,11 @@ class ProductCategory extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Id'),
-            'tree' => Yii::t('app', 'Tree'),
-            'lft' => Yii::t('app', 'Lft'),
-            'rgt' => Yii::t('app', 'Rgt'),
-            'depth' => Yii::t('app', 'Depth'),
-            'expanded' => Yii::t('app', 'Expanded'),
             'name' => Yii::t('app', 'Name'),
             'slug' => Yii::t('app', 'Slug'),
             'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
+            
             'parent_id' => Yii::t('app', 'Parent'),
             'specifications_tmp' => Yii::t('app', 'Specifications'),
         ];
@@ -100,7 +96,7 @@ class ProductCategory extends ActiveRecord
     
     public function url()
     {
-        $parents = $this->parents()->orderBy('lft')->andWhere(['>', 'depth', 0])->select(['slug'])->asArray()->all();
+        $parents = $this->parents()->withoutRoots()->orderBy('lft')->select(['slug'])->asArray()->all();
         $result = implode('/', ArrayHelper::getColumn($parents, 'slug'));
         
         return $result ? "$result/$this->slug" : $this->slug;

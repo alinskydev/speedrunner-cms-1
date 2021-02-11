@@ -22,15 +22,6 @@ class TranslationMessage extends ActiveRecord
         ];
     }
     
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'Id'),
-            'language' => Yii::t('app', 'Language'),
-            'translation' => Yii::t('app', 'Translation'),
-        ];
-    }
-    
     public function getLang()
     {
         return $this->hasOne(SystemLanguage::className(), ['code' => 'language']);

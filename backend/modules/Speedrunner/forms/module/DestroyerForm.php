@@ -43,7 +43,7 @@ class DestroyerForm extends Model
         foreach ($this->modules as $m) {
             $module = strtolower($m);
             
-            //        FILES
+            //        Files
             
             if ($dir = Yii::getAlias("@backend/modules/$module")) {
                 FileHelper::removeDirectory($dir);

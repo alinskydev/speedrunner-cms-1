@@ -4,6 +4,7 @@ namespace backend\modules\Menu\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Menu\models\Menu;
 
@@ -66,7 +67,7 @@ class MenuController extends Controller
     
     public function actionDeleteWithChildren($id)
     {
-        $model = Menuz::findOne($id);
+        $model = Menu::findOne($id);
         
         if ($model && $model->depth > 0) {
             $model->deleteWithChildren();

@@ -16,13 +16,7 @@ class ProductController extends Controller
         $slug = explode('/', $url);
         $slug = end($slug);
         
-        $possible_categories = ProductCategory::find()
-            ->andWhere([
-                'and',
-                ['slug' => $slug],
-                ['>', 'depth', 0],
-            ])
-            ->all();
+        $possible_categories = ProductCategory::find()->withoutRoots()->bySlug($slug)->all();
         
         foreach ($possible_categories as $p_c) {
             if ($p_c->url() == $url) {
@@ -34,7 +28,7 @@ class ProductController extends Controller
         
         return $this->render('catalog', [
             'category' => $category,
-            'parent_categories' => $category->parents()->andWhere(['>', 'depth', 0])->all(),
+            'parent_categories' => $category->parents()->withoutRoots()->all(),
         ]);
     }
 }

@@ -75,7 +75,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'tags' => true,
                     ],
                 ]); ?>
             </div>
@@ -119,7 +118,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             $('#generatorform-controller_name').val($(this).val());
         });
         
-//        ------------------------------------------------
+        //        ------------------------------------------------
         
         function getModelSchema() {
             action = '<?= Yii::$app->urlManager->createUrl(['speedrunner/module/generator/model-schema']) ?>';

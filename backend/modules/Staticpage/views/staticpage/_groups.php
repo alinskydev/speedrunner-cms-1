@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use alexantr\elfinder\InputFile;
 use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
 
 $attrs = ArrayHelper::index($model->attrs, 'name');
 
@@ -42,7 +42,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                     $input_value = ArrayHelper::getValue($group, $a_key);
                                     
                                     switch ($a_value['type']) {
-                                        case 'textInput':
+                                        case 'text_input':
                                             echo Html::textInput(
                                                 $input_name,
                                                 $input_value,
@@ -50,7 +50,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                             );
                                             
                                             break;
-                                        case 'textArea':
+                                        case 'text_area':
                                             echo Html::textArea(
                                                 $input_name,
                                                 $input_value,
@@ -73,25 +73,27 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                             echo Html::tag('div', $checkbox, ['class' => 'custom-control custom-switch float-left']);
                                             
                                             break;
-                                        case 'CKEditor':
+                                        case 'imperavi':
                                             echo Widget::widget([
                                                 'name' => $input_name,
                                                 'value' => $input_value,
                                                 'id' => "redactor-$key",
-                                                'settings' => [
-                                                    'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                                                    'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                                                ],
+                                                'options' => [
+                                                    'data-toggle' => 'imperavi',
+                                                ]
                                             ]);
                                             
                                             break;
-                                        case 'ElFinder':
-                                            echo ElFinderInput::widget([
-                                                'connectorRoute' => '/connection/elfinder-file-upload',
-                                                'name' => $input_name,
-                                                'value' => $input_value,
-                                                'id' => "elfinder-$key",
-                                            ]);
+                                        case 'elfinder':
+                                            echo Html::tag(
+                                                'div',
+                                                InputFile::widget([
+                                                    'id' => "elfinder-$key",
+                                                    'name' => $input_name,
+                                                    'value' => $input_value,
+                                                ]),
+                                                ['data-toggle' => 'elfinder']
+                                            );
                                             
                                             break;
                                     }

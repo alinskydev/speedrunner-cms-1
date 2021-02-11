@@ -3,26 +3,26 @@
 namespace backend\modules\Blog\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogRate;
 use backend\modules\Blog\modelsSearch\BlogRateSearch;
 
 
-class RateController extends Controller
+class RateController extends CrudController
 {
+    public function beforeAction($action)
+    {
+        $this->model = new BlogRate();
+        $this->modelSearch = new BlogRateSearch();
+        
+        return parent::beforeAction($action);
+    }
+    
     public function actions()
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlogRateSearch(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new BlogRate(),
-            ],
-        ];
+        return ArrayHelper::filter(parent::actions(), ['index', 'delete']);
     }
 }

@@ -26,6 +26,6 @@ class Staticpage extends ActiveRecord
     
     public function getBlocks()
     {
-        return $this->hasMany(StaticpageBlock::className(), ['item_id' => 'id'])->orderBy('part_index');
+        return $this->hasMany(StaticpageBlock::className(), ['staticpage_id' => 'id'])->orderBy('part_index');
     }
 }

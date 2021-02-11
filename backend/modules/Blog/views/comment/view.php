@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
+    'options' => ['id' => 'update-form'],
 ]); ?>
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->services->html->updateButtons(['save_reload', 'save']) ?>
+    <?= Yii::$app->services->html->saveButtons(['save_update', 'save']) ?>
 </h2>
 
 <div class="row">

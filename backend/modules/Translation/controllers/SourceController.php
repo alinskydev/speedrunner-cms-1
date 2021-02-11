@@ -3,30 +3,30 @@
 namespace backend\modules\Translation\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Translation\models\TranslationSource;
 use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
 
 
-class SourceController extends Controller
+class SourceController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new TranslationSourceSearch(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-        ];
+        $this->model = new TranslationSource();
+        $this->modelSearch = new TranslationSourceSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
+    {
+        return ArrayHelper::filter(parent::actions(), ['index', 'update']);
+    }
+    
+    public function findModel()
     {
         return TranslationSource::find()->with(['translations'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }

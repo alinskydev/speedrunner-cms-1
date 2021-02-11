@@ -3,9 +3,9 @@
 namespace backend\modules\Blog\controllers;
 
 use Yii;
-use yii\web\Controller;
+use common\controllers\CrudController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\actions\web as Actions;
 
 use backend\modules\Blog\models\Blog;
 use backend\modules\Blog\modelsSearch\BlogSearch;
@@ -13,46 +13,35 @@ use backend\modules\Blog\modelsSearch\BlogCommentSearch;
 use backend\modules\Blog\modelsSearch\BlogRateSearch;
 
 
-class BlogController extends Controller
+class BlogController extends CrudController
 {
-    public function actions()
+    public function beforeAction($action)
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlogSearch(),
-            ],
-            'create' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => new Blog(),
-            ],
-            'update' => [
-                'class' => Actions\UpdateAction::className(),
-                'model' => $this->findModel(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new Blog(),
-            ],
-            'image-sort' => [
-                'class' => Actions\ImageSortAction::className(),
-                'model' => $this->findModel(),
-                'allowed_attributes' => ['images'],
-            ],
-            'image-delete' => [
-                'class' => Actions\ImageDeleteAction::className(),
-                'model' => $this->findModel(),
-                'allowed_attributes' => ['images'],
-            ],
-        ];
+        $this->model = new Blog();
+        $this->modelSearch = new BlogSearch();
+        
+        return parent::beforeAction($action);
     }
     
-    private function findModel()
+    public function actions()
     {
-        if ($model = Blog::find()->with(['tags'])->andWhere(['id' => Yii::$app->request->get('id')])->one()) {
-            $model->tags_tmp = $model->tags;
-            return $model;
-        }
+        $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
+        
+        return ArrayHelper::merge($actions, [
+            'file-sort' => [
+                'class' => Actions\crud\FileSortAction::className(),
+                'allowed_attributes' => ['images'],
+            ],
+            'file-delete' => [
+                'class' => Actions\crud\FileDeleteAction::className(),
+                'allowed_attributes' => ['images'],
+            ],
+        ]);
+    }
+    
+    public function findModel()
+    {
+        return Blog::find()->with(['tags'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
     }
     
     public function actionView($id)

@@ -26,6 +26,11 @@ class Page extends ActiveRecord
                 'class' => \common\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
             ],
+            'file' => [
+                'class' => \common\behaviors\FileBehavior::className(),
+                'attributes' => ['image'],
+                'multiple' => false,
+            ],
             'seo_meta' => [
                 'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
@@ -39,6 +44,7 @@ class Page extends ActiveRecord
             [['name', 'slug'], 'string', 'max' => 100],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['description'], 'string'],
         ];
     }
@@ -49,6 +55,7 @@ class Page extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'slug' => Yii::t('app', 'Slug'),
+            'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),

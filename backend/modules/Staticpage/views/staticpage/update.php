@@ -2,153 +2,100 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use yii\web\JsExpression;
-use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
-use kartik\file\FileInput;
+use backend\widgets\crud\UpdateWidget;
 
 $this->title = Yii::t('app', 'Static page: {label}', ['label' => $model->label]);
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-?>
-
-<?php $form = ActiveForm::begin([
-    'options' => ['id' => 'update-form', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'enableClientValidation' => false
-    ]
-]); ?>
-
-<h2 class="main-title">
-    <?= $this->title ?>
-    <?= Yii::$app->services->html->updateButtons(['save']) ?>
-</h2>
-
-<div class="row">
-    <div class="col-lg-2 col-md-3">
-        <ul class="nav flex-column nav-pills main-shadow" role="tablist">
-            <?php $counter = 0 ?>
-            <?php foreach ($blocks as $key => $b) { ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= !$counter ? 'active' : null ?>" data-toggle="pill" href="#tab-page-<?= $b[0]->part_index ?>">
-                        <?= $key ?>
-                    </a>
-                </li>
-                
-                <?php $counter++ ?>
-            <?php } ?>
-            
-            <?php if ($model->has_seo_meta) { ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= !$blocks ? 'active' : null ?>" data-toggle="pill" href="#tab-page-seo-meta">
-                        <?= Yii::t('app', 'SEO meta') ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </div>
+foreach ($blocks as $key => $block_part) {
+    $tabs[$block_part[0]->part_index]['label'] = $key;
     
-    <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
-        <div class="tab-content main-shadow p-3">
-            <?php $counter = 0 ?>
-            <?php foreach ($blocks as $key => $block_part) { ?>
-                <div id="tab-page-<?= $block_part[0]->part_index ?>" class="tab-pane <?= !$counter ? 'active' : 'fade' ?>">
-                    <?php foreach ($block_part as $b) { ?>
-                        <?php
-                            switch ($b->type) {
-                                case 'textInput':
-                                    echo $form->field($b, 'value')->textInput([
-                                        'name' => "StaticpageBlock[$b->id][value]",
-                                        'id' => "staticpageblock-$b->id",
-                                    ])->label($b->label);
-                                    
-                                    break;
-                                case 'textArea':
-                                    echo $form->field($b, 'value')->textArea([
-                                        'name' => "StaticpageBlock[$b->id][value]",
-                                        'id' => "staticpageblock-$b->id",
-                                        'rows' => 5,
-                                    ])->label($b->label);
-                                    
-                                    break;
-                                case 'checkbox':
-                                    echo $form->field($b, 'value', [
-                                        'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                                    ])->checkbox([
-                                        'name' => "StaticpageBlock[$b->id][value]",
-                                        'id' => "staticpageblock-$b->id",
-                                        'class' => 'custom-control-input',
-                                        'label' => null,
-                                    ])->label($b->label, [
-                                        'class' => 'custom-control-label',
-                                    ]);
-                                    
-                                    break;
-                                case 'CKEditor':
-                                    echo $form->field($b, 'value')->widget(Widget::className(), [
-                                        'settings' => [
-                                            'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                                            'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                                        ],
-                                        'options' => [
-                                            'name' => "StaticpageBlock[$b->id][value]",
-                                            'id' => "staticpageblock-$b->id",
-                                        ],
-                                    ])->label($b->label);
-                                    
-                                    break;
-                                case 'ElFinder':
-                                    echo $form->field($b, 'value')->widget(ElFinderInput::className(), [
-                                        'connectorRoute' => '/connection/elfinder-file-upload',
-                                        'name' => "StaticpageBlock[$b->id][value]",
-                                        'id' => "staticpageblock-$b->id",
-                                    ])->label($b->label);
-                                    
-                                    break;
-                                case 'images':
-                                    echo $form->field($b, 'value', [
-                                        'template' => '{label}{hint}{error}{input}',
-                                    ])->widget(FileInput::className(), [
-                                        'options' => [
-                                            'accept' => 'image/*',
-                                            'multiple' => true,
-                                            'name' => "StaticpageBlock[$b->id][value][]",
-                                            'id' => "staticpageblock-$b->id",
-                                        ],
-                                        'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                            'deleteUrl' => Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-delete', 'id' => $b->id]),
-                                            'initialPreview' => $b->value ?: [],
-                                            'initialPreviewConfig' => ArrayHelper::getColumn($b->value ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
-                                        ]),
-                                        'pluginEvents' => [
-                                            'filesorted' => new JsExpression("function(event, params) {
-                                                $.post('".Yii::$app->urlManager->createUrl(['staticpage/staticpage/image-sort', 'id' => $b->id])."', {sort: params});
-                                            }")
-                                        ],
-                                    ])->label($b->label);
-                                    
-                                    break;
-                                case 'groups':
-                                    echo $this->render('_groups', ['model' => $b, 'form' => $form]);
-                                    break;
-                            }
-                        ?>
-                    <?php } ?>
-                </div>
-                
-                <?php $counter++ ?>
-            <?php } ?>
+    foreach ($block_part as $b) {
+        switch ($b->type) {
+            case 'text_input':
+            case 'text_area':
+                $attribute = [
+                    'options' => [
+                        'id' => "staticpageblock-$b->id",
+                        'name' => "StaticpageBlock[$b->id][value]",
+                        'value' => $b->value,
+                    ],
+                ];
+                break;
             
-            <?php if ($model->has_seo_meta) { ?>
-                <div id="tab-page-seo-meta" class="tab-pane <?= !$blocks ? 'active' : 'fade' ?>">
-                    <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                        'model' => $model,
-                    ]) ?>
-                </div>
-            <?php } ?>
-        </div>
-    </div>
-</div>
+            case 'checkbox':
+                $attribute = [
+                    'options' => [
+                        'id' => "staticpageblock-$b->id",
+                        'name' => "StaticpageBlock[$b->id][value]",
+                        'checked' => $b->value ? true : false,
+                    ],
+                ];
+                break;
+            
+            case 'elfinder':
+            case 'imperavi':
+                $attribute = [
+                    'options' => [
+                        'options' => [
+                            'id' => "staticpageblock-$b->id",
+                            'name' => "StaticpageBlock[$b->id][value]",
+                            'value' => $b->value,
+                        ],
+                    ],
+                ];
+                break;
+            
+            case 'files':
+                $attribute = [
+                    'multiple' => true,
+                    'value' => $b->value,
+                    'options' => [
+                        'options' => [
+                            'id' => "staticpageblock-$b->id",
+                            'name' => "StaticpageBlock[$b->id][value][]",
+                        ],
+                    ],
+                    'widget_options' => [
+                        'delete_url' => Yii::$app->urlManager->createUrl([
+                            'staticpage/staticpage/file-delete', 'id' => $b->id,
+                        ]),
+                        'sort_url' => Yii::$app->urlManager->createUrl([
+                            'staticpage/staticpage/file-sort', 'id' => $b->id,
+                        ]),
+                    ],
+                ];
+                break;
+            
+            case 'groups':
+                $attribute = [
+                    'name' => false,
+                    'type' => 'render',
+                    'model' => $b,
+                    'view' => '_groups',
+                ];
+                break;
+        }
+        
+        $attribute = $attribute ? ArrayHelper::merge([
+            'name' => 'value',
+            'type' => $b->type,
+            'container_options' => [
+                'template' => "{beginLabel} {$b->label} {endLabel} {input}{hint}{error}",
+            ],
+        ], $attribute) : null;
+        
+        $tabs[$block_part[0]->part_index]['attributes'][] = $attribute;
+    }
+}
 
-<?php ActiveForm::end(); ?>
+echo UpdateWidget::widget([
+    'model' => $new_block,
+    'seo_meta_model' => $model,
+    'has_seo_meta' => $model->has_seo_meta,
+    'save_buttons' => ['save'],
+    'form_options' => [
+        'fieldConfig' => ['enableClientValidation' => false],
+    ],
+    'tabs' => $tabs ?? [],
+]);

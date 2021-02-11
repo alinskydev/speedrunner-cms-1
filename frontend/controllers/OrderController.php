@@ -7,7 +7,6 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
-use kartik\mpdf\Pdf;
 
 use frontend\forms\OrderForm;
 
@@ -38,7 +37,7 @@ class OrderController extends Controller
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Your order is successfully created'));
                 return $this->redirect(['view', 'key' => $key]);
             } else {
-                Yii::$app->session->setFlash('error', Yii::t('app', 'An error occured'));
+                Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred'));
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }

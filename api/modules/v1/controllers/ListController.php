@@ -3,8 +3,9 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use common\controllers\RestController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\controllers\RestController as Controller;
 
 use backend\modules\System\models\SystemSettings;
 use backend\modules\System\models\SystemLanguage;
@@ -16,7 +17,7 @@ use backend\modules\Staticpage\models\Staticpage;
 * - Languages
 * - Static pages
 */
-class ListController extends Controller
+class ListController extends RestController
 {
     public function behaviors()
     {

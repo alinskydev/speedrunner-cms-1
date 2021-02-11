@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\Blog;
@@ -17,45 +18,53 @@ use backend\modules\User\models\User;
 
 class ItemsListController extends Controller
 {
-    public function actionBlogs($q = null)
+    public function actions()
     {
-        $out['results'] = Blog::find()->itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionBlogCategories($q = null)
-    {
-        $out['results'] = BlogCategory::find()->itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionBlogTags($q = null)
-    {
-        $out['results'] = BlogTag::find()->itemsList('name', 'self', $q)->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionProducts($q = null, $id = null)
-    {
-        $out['results'] = Product::find()->itemsList('name', 'translation', $q)->andFilterWhere(['!=', 'id', $id])->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionProductBrands($q = null)
-    {
-        $out['results'] = ProductBrand::find()->itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionProductSpecifications($q = null)
-    {
-        $out['results'] = ProductSpecification::find()->itemsList('name', 'translation', $q)->asArray()->all();
-        return $this->asJson($out);
-    }
-    
-    public function actionUsers($q = null, $role = null)
-    {
-        $out['results'] = User::find()->itemsList('username', 'self', $q)->andFilterWhere(['User.role' => $role])->asArray()->all();
-        return $this->asJson($out);
+        return [
+            'blogs' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new Blog(),
+                'attribute' => 'name',
+                'type' => 'translation',
+            ],
+            'blog-categories' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new BlogCategory(),
+                'attribute' => 'name',
+                'type' => 'translation',
+            ],
+            'blog-tags' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new BlogTag(),
+                'attribute' => 'name',
+                'type' => 'self',
+            ],
+            'products' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new Product(),
+                'attribute' => 'name',
+                'type' => 'translation',
+                'filter' => ['!=', 'id', Yii::$app->request->get('id')],
+            ],
+            'product-brands' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new ProductBrand(),
+                'attribute' => 'name',
+                'type' => 'translation',
+            ],
+            'product-specifications' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new ProductSpecification(),
+                'attribute' => 'name',
+                'type' => 'translation',
+            ],
+            'users' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model' => new User(),
+                'attribute' => 'username',
+                'type' => 'self',
+                'filter' => ['User.role' => Yii::$app->request->get('role')],
+            ],
+        ];
     }
 }

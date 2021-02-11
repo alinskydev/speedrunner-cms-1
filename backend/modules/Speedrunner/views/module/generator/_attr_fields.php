@@ -5,7 +5,6 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
 $attr_types = Yii::$app->params['input_types'];
-$attr_types['select'] = 'Select';
 unset($attr_types['groups']);
 
 ?>

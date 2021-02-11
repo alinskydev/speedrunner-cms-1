@@ -1,12 +1,13 @@
 <?php
 
 return [
-    '/' => 'site/index',
-    'login' => 'site/login',
-    'logout' => 'site/logout',
-    'error' => 'site/error',
+    'login' => 'auth/login',
+    'logout' => 'auth/logout',
     
+    '/' => 'site/index',
+    'error' => 'site/error',
     'change-password' => 'site/change-password',
+    'information' => 'site/information',
     
     'staticpage/update/<name>' => 'staticpage/staticpage/update',
 ];

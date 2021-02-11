@@ -82,14 +82,14 @@ class GetFilesAction extends Action
     public function run()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-
+        
         $files = [];
-
+        
         foreach (FileHelper::findFiles($this->path, $this->options) as $path) {
-            $file = basename($path);
+            $file = str_replace($this->path, null, $path);
             $size = $this->getFileSize($path);
-            $url = $this->url . urlencode($file);
-
+            $url = $this->url . $file;
+            
             $files[] = [
                 'id' => $file,
                 'title' => $file,
@@ -98,7 +98,7 @@ class GetFilesAction extends Action
                 'size' => $size,
             ];
         }
-
+        
         return $files;
     }
 

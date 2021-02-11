@@ -14,12 +14,13 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-file-upload']) ?>">
-    <meta name="ckeditor-image_upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/editor-image-upload']) ?>">
-    <meta name="ckeditor-images-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/editor-images-get']) ?>">
     <meta name="theme-color" content="#067a7d">
-    
     <link rel="shortcut icon" href="<?= Yii::getAlias('@web/favicon.svg') ?>">
+    
+    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-input']) ?>">
+    <meta name="imperavi-images-get-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-images-get']) ?>">
+    <meta name="imperavi-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-image-upload']) ?>">
+    <meta name="imperavi-image-delete-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-image-delete']) ?>">
     
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>

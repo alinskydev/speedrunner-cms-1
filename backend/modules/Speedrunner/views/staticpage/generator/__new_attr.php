@@ -5,7 +5,7 @@ use yii\helpers\Html;
 $rnd_number = round(microtime(true) * 1000);
 
 $attr_types = Yii::$app->params['input_types'];
-unset($attr_types['images'], $attr_types['groups']);
+unset($attr_types['select'], $attr_types['select2_ajax'], $attr_types['files'], $attr_types['groups']);
 
 ?>
 

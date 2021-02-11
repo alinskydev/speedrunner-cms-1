@@ -27,11 +27,18 @@ class ProfileForm extends Model
     
     public function init()
     {
-        $this->user = $this->user ?: Yii::$app->user->identity;
+        if (!($this->user = Yii::$app->user->identity)) {
+            throw new InvalidParamException(Yii::t('app', 'Not authorized'));
+        }
         
         foreach (static::PROFILE_ATTRIBUTES as $a) {
             $this->{$a} = $this->user->{$a};
         }
+    }
+    
+    public function formName()
+    {
+        return 'User';
     }
     
     public function rules()
@@ -41,7 +48,7 @@ class ProfileForm extends Model
             [['confirm_password'], 'required', 'when' => fn ($model) => $model->new_password],
             
             [['full_name', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 255],
+            [['address'], 'string', 'max' => 1000],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
@@ -60,7 +67,7 @@ class ProfileForm extends Model
             'confirm_password' => Yii::t('app', 'Confirm password'),
         ];
     }
-
+    
     public function beforeValidate()
     {
         if ($image = UploadedFile::getInstance($this, 'image')) {
@@ -79,15 +86,6 @@ class ProfileForm extends Model
         }
         
         $user->new_password = $this->new_password;
-        
-        //        IMAGE
-        
-        $old_image = ArrayHelper::getValue($user->profile, 'image');
-        
-        if ($image = UploadedFile::getInstance($this, 'image')) {
-            $user->image = (new FileService($image))->save('files/profile');
-            FileService::delete($old_image);
-        }
         
         return $user->save() ? $user : false;
     }

@@ -13,7 +13,7 @@ class BlogController extends Controller
 {
     public function actionIndex()
     {
-        $query = Blog::find()->orderBy('published DESC');
+        $query = Blog::find()->published()->orderBy('published DESC');
         
         $blogs = new ActiveDataProvider([
             'query' => $query,
@@ -29,13 +29,7 @@ class BlogController extends Controller
     
     public function actionView($slug)
     {
-        $model = Blog::find()->andWhere([
-            'and',
-            ['slug' => $slug],
-            ['<=', 'published', date('Y-m-d H:i:s')],
-        ])->one();
-        
-        if (!$model) {
+        if (!($model = Blog::find()->published()->bySlug($slug)->one())) {
             return $this->redirect(['index']);
         }
         

@@ -29,17 +29,6 @@ class LogActionAttr extends ActiveRecord
         ];
     }
     
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'Id'),
-            'action_id' => Yii::t('app', 'Action'),
-            'name' => Yii::t('app', 'Name'),
-            'value_old' => Yii::t('app', 'Old value'),
-            'value_new' => Yii::t('app', 'New value'),
-        ];
-    }
-    
     public function getAction()
     {
         return $this->hasOne(LogAction::className(), ['id' => 'action_id']);

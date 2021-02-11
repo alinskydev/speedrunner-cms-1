@@ -11,7 +11,7 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-
+    
     public $css = [
         'css/all.min.css',
         'css/bootstrap.min.css',
@@ -19,9 +19,10 @@ class AppAsset extends AssetBundle
         'css/bootstrap-datetimepicker.min.css',
         'css/select2.min.css',
         'css/jquery.toast.css',
+        
         'css/speedrunner.css',
     ];
-
+    
     public $js = [
         'js/popper.min.js',
         'js/bootstrap.min.js',
@@ -31,7 +32,7 @@ class AppAsset extends AssetBundle
         'js/jquery.toast.js',
         'js/speedrunner.js',
     ];
-
+    
     public $depends = [
         'yii\web\YiiAsset',
         'yii\jui\JuiAsset',

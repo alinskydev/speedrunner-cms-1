@@ -1,13 +1,13 @@
 <?php
 
 return [
-    '/' => 'site/index',
-    'login' => 'site/login',
-    'signup' => 'site/signup',
-    'logout' => 'site/logout',
-    'request-reset-password' => 'site/request-reset-password',
-    'reset-password' => 'site/reset-password',
+    'login' => 'auth/login',
+    'signup' => 'auth/signup',
+    'logout' => 'auth/logout',
+    'request-reset-password' => 'auth/request-reset-password',
+    'reset-password/<token>' => 'auth/reset-password',
     
+    '/' => 'site/index',
     'contact' => 'site/contact',
     
     'blog' => 'blog/index',
@@ -15,6 +15,7 @@ return [
     
     'block-page/<slug>' => 'block/view',
     
+    'cart' => 'cart/index',
     'order/view/<key>' => 'order/view',
     
     'product/catalog' => [

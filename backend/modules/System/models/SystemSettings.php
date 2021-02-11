@@ -19,9 +19,12 @@ class SystemSettings extends ActiveRecord
     public function rules()
     {
         return [
-            [['label'], 'required'],
-            [['sort'], 'integer'],
-            [['label', 'value'], 'string', 'max' => 100],
+            [['value'], 'string', 'max' => '100', 'when' => function ($model) {
+                return in_array($model->type, ['text_input', 'text_area', 'imperavi', 'elfinder']);
+            }],
+            [['value'], 'boolean', 'when' => function ($model) {
+                return in_array($model->type, ['checkbox']);
+            }],
         ];
     }
     
@@ -32,7 +35,6 @@ class SystemSettings extends ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'label' => Yii::t('app', 'Label'),
             'value' => Yii::t('app', 'Value'),
-            'type' => Yii::t('app', 'Type'),
         ];
     }
 }

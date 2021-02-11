@@ -4,10 +4,8 @@
 
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-foreach ($blocks as $block) {
-    echo $this->render('view/' . $block->type->name, [
+foreach ($model->blocks as $block) {
+    echo $this->render("view/{$block->type->name}", [
         'value' => $block->value,
     ]);
 }
-
-?>

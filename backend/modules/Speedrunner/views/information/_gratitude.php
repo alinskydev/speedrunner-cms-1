@@ -33,9 +33,9 @@ $external_components = [
         'description' => 'FileInput widget',
         'link' => 'https://github.com/kartik-v/yii2-widget-fileinput',
     ],
-    'zxbodya/yii2-elfinder' => [
+    'alexantr/yii2-elfinder' => [
         'description' => 'ElFinder widget',
-        'link' => 'https://github.com/zxbodya/yii2-elfinder',
+        'link' => 'https://github.com/alexantr/yii2-elfinder',
     ],
 ];
 

@@ -33,6 +33,7 @@ class GeneratorForm extends Model
             [['has_seo_meta'], 'boolean'],
             [['model_relations', 'view_relations', 'attrs_fields'], 'safe'],
             [['module_name'], 'in', 'range' => $this->modulesList(), 'not' => true, 'when' => fn ($model) => in_array('module', $this->generate_files)],
+            [['controller_actions'], 'in', 'allowArray' => true, 'range' => $this->getControllerActions()],
         ];
     }
     
@@ -74,7 +75,7 @@ class GeneratorForm extends Model
     
     public function process()
     {
-        //        PREPARE
+        //        Prepare
         
         $folder_template = Yii::getAlias('@backend/modules/Speedrunner/templates/module/generator');
         $folder_template_render = '@backend/modules/Speedrunner/templates/module/generator';
@@ -84,7 +85,7 @@ class GeneratorForm extends Model
         
         $this->attrs_translation = array_filter($this->attrs_fields, fn ($value) => ArrayHelper::getValue($value, 'has_translation')) ?: [];
         
-        //        MODULE
+        //        Module
         
         if (in_array('module', $this->generate_files)) {
             $file_content = Yii::$app->controller->renderPartial("$folder_template_render/Module.php", ['model' => $this]);
@@ -93,7 +94,7 @@ class GeneratorForm extends Model
             fclose($file);
         }
         
-        //        CONTROLLER
+        //        Controller
         
         if (in_array('controller', $this->generate_files)) {
             $dir = $folder_module . 'controllers/';
@@ -105,11 +106,11 @@ class GeneratorForm extends Model
             fclose($file);
         }
         
-        //        MODELS
+        //        Models
         
         if (in_array('models', $this->generate_files)) {
             
-            //        SELF
+            //        Self
             
             $dir = $folder_module . 'models/';
             FileHelper::createDirectory($dir, $mode = 0644);
@@ -120,7 +121,7 @@ class GeneratorForm extends Model
             fclose($file);
         }
         
-        //        MODELS SEARCH
+        //        Search models
         
         if (in_array('modelsSearch', $this->generate_files)) {
             $dir = $folder_module . 'modelsSearch/';
@@ -132,7 +133,7 @@ class GeneratorForm extends Model
             fclose($file);
         }
         
-        //        VIEWS
+        //        Views
         
         if (in_array('views', $this->generate_files)) {
             $dir = $folder_module . 'views/';
@@ -161,7 +162,7 @@ class GeneratorForm extends Model
                 fclose($file);
             }
             
-            //        VIEW RELATIONS
+            //        View relations
             
             foreach ($this->view_relations as $r) {
                 $dir = $folder_module . 'views/' . strtolower($this->controller_name) . '/';

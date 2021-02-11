@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\BaseInflector;
+use yii\helpers\Inflector;
+use alexantr\elfinder\InputFile;
 use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
 
 use backend\modules\Seo\models\SeoMeta;
 use backend\modules\Seo\services\SeoMetaService;
@@ -22,29 +22,24 @@ $seo_meta_types = SeoMeta::types();
             $value = ArrayHelper::getValue($seo_meta, $key);
             
             switch ($s_m_t['type']) {
-                case 'inputField':
+                case 'text_input':
                     echo Html::input('text', "SeoMeta[$key]", $value, ['class' => 'form-control']);
                     break;
-                case 'textArea':
+                case 'text_area':
                     echo Html::textArea("SeoMeta[$key]", $value, ['class' => 'form-control', 'rows' => 5]);
                     break;
-                case 'CKEditor':
+                case 'imperavi':
                     echo Widget::widget([
                         'name' => "SeoMeta[$key]",
                         'value' => $value,
-                        'id' => 'seo-meta-' . BaseInflector::slug($s_m_t['label']),
-                        'settings' => [
-                            'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                            'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                        ],
+                        'id' => 'seo-meta-' . Inflector::slug($key),
                     ]);
                     break;
-                case 'ElFinder':
-                    echo ElFinderInput::widget([
-                        'connectorRoute' => '/connection/elfinder-file-upload',
+                case 'elfinder':
+                    echo InputFile::widget([
                         'name' => "SeoMeta[$key]",
                         'value' => $value,
-                        'id' => 'seo-meta-' . BaseInflector::slug($s_m_t['label']),
+                        'id' => 'seo-meta-' . Inflector::slug($key),
                     ]);
                     break;
             };

@@ -36,7 +36,7 @@ class BannerGroup extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Id'),
-            'item_id' => Yii::t('app', 'Banner'),
+            'banner_id' => Yii::t('app', 'Banner'),
             'text_1' => Yii::t('app', 'Text 1'),
             'text_2' => Yii::t('app', 'Text 2'),
             'text_3' => Yii::t('app', 'Text 3'),

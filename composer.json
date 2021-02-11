@@ -22,7 +22,6 @@
         "vova07/yii2-imperavi-widget": "*",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "zxbodya/yii2-elfinder": "*@dev",
         "yurkinx/yii2-image": "dev-master",
         "yii2mod/yii2-rbac": "*",
         "creocoder/yii2-nested-sets": "^0.9.0",
@@ -30,7 +29,8 @@
         "wokster/yii2-nested-sets-tree-behavior": "*",
         "kartik-v/yii2-krajee-base": "dev-master",
         "codeception/codeception": "^4.1",
-        "guzzlehttp/guzzle": "^7.2"
+        "guzzlehttp/guzzle": "^7.2",
+        "alexantr/yii2-elfinder": "^1.7"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.0.0",

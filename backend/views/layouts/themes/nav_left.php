@@ -14,7 +14,7 @@ use yii\widgets\Menu;
             </div>
             
             <a href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>" class="site-logo">
-                <img src="<?= Yii::getAlias('@web/img/logo.svg') ?>" class="img-fluid">
+                <img src="<?= Yii::$app->services->settings->site_logo ?>" class="img-fluid">
             </a>
         </div>
         

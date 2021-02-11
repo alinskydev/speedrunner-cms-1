@@ -24,9 +24,9 @@ class TranslationService
         $translations = ArrayHelper::index($this->model->translations, 'language');
         
         foreach ($langs as $l) {
-            $translations[$l] = $translations[$l] ?? new TranslationMessage(['id' => $this->model->id, 'language' => $l]);
+            $result[$l] = $translations[$l] ?? new TranslationMessage(['id' => $this->model->id, 'language' => $l]);
         }
         
-        return $translations;
+        return $result ?? [];
     }
 }

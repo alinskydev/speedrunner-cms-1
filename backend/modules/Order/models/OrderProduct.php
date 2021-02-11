@@ -19,8 +19,10 @@ class OrderProduct extends ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'quantity', 'total_price'], 'required'],
-            [['price', 'quantity', 'total_price'], 'integer', 'min' => 1],
+            [['product_id', 'quantity'], 'required'],
+            [['quantity'], 'integer', 'min' => 1],
+            
+            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
         ];
     }
     
@@ -47,9 +49,25 @@ class OrderProduct extends ActiveRecord
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
     
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->product_json = $this->product->attributes;
+            $this->price = $this->product->price;
+            $this->total_price = $this->price * $this->quantity;
+        }
+        
+        return parent::beforeSave($insert);
+    }
+    
     public function afterDelete()
     {
-        $this->product->updateCounters(['quantity' => $this->quantity]);
+        if ($order = $this->order) {
+            if (ArrayHelper::getValue($order->statuses(), "$order->status.save_action") == 'minus') {
+                $this->product->updateCounters(['quantity' => $this->quantity]);
+            }
+        }
+        
         return parent::afterDelete();
     }
 }

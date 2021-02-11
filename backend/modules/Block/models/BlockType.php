@@ -28,7 +28,6 @@ class BlockType extends ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'label' => Yii::t('app', 'Label'),
             'type' => Yii::t('app', 'Type'),
-            'has_translation' => Yii::t('app', 'Has translation'),
             'image' => Yii::t('app', 'Image'),
         ];
     }

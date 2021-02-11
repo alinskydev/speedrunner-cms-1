@@ -6,14 +6,18 @@ use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 use yii\web\JsExpression;
 
-$this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
+$this->title = Yii::t('app', 'Variation: {value}', ['value' => $model->id]);
 
 ?>
 
 <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <?php $form = ActiveForm::begin([
-            'options' => ['id' => 'variation-update-form', 'enctype' => 'multipart/form-data'],
+            'options' => [
+                'id' => 'update-form',
+                'data-toggle' => 'ajax-form',
+                'data-el' => '#main-modal',
+            ],
         ]); ?>
         
         <div class="modal-header">
@@ -24,7 +28,7 @@ $this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
         <div class="modal-body">
             <div class="row">
                 <div class="col-lg-2 col-md-3">
-                    <ul class="nav flex-column nav-pills" role="tablist">
+                    <ul class="nav flex-column nav-pills main-shadow" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="pill" href="#tab-variations-information">
                                 <?= Yii::t('app', 'Information') ?>
@@ -39,7 +43,7 @@ $this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
                 </div>
                 
                 <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
-                    <div class="tab-content p-3">
+                    <div class="tab-content main-shadow p-3">
                         <div id="tab-variations-information" class="tab-pane active">
                             <?= $form->field($model, 'price')->textInput() ?>
                             <?= $form->field($model, 'quantity')->textInput() ?>
@@ -81,31 +85,3 @@ $this->title = Yii::t('app', 'Variation: {id}', ['id' => $model->id]);
         <?php ActiveForm::end(); ?>
     </div>
 </div>
-
-
-<script>
-    var el, action, sendData;
-    
-    $('#variation-update-form').on('submit', function(e) {
-        e.preventDefault();
-        
-        el = $(this);
-        action = el.attr('action');
-        sendData = new FormData(el[0]);
-        
-        $.ajax({
-            type: "POST",
-            url: action,
-            data: sendData,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                if (data === '1') {
-                    $('#main-modal').modal('hide');
-                } else {
-                    $('#main-modal').html(data);
-                }
-            }
-        });
-    });
-</script>

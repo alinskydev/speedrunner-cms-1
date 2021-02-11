@@ -68,6 +68,7 @@ class BlockPage extends ActiveRecord
             'slug' => Yii::t('app', 'Slug'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
             'blocks_tmp' => Yii::t('app', 'Blocks'),
         ];
     }

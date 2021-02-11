@@ -6,7 +6,7 @@ use common\framework\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
 
-$this->title = Yii::t('app', 'Translation sources');
+$this->title = Yii::t('app', 'Translations');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

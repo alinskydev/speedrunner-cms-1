@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
-use yii\bootstrap\Alert;
 
 use backend\modules\Menu\models\Menu;
 
@@ -14,7 +13,7 @@ $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 
 $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
-$menu = Menu::findOne(1)->setJsonAttributes(['url'])->tree();
+$menu = Menu::findOne(1)->setJsonAttributes(['name', 'url'])->tree();
 
 $flashes = Yii::$app->session->getAllFlashes();
 
@@ -48,7 +47,7 @@ $flashes = Yii::$app->session->getAllFlashes();
 
 <?= Html::a(
     Html::tag('i', '&nbsp;', ['class' => 'fas fa-sign-out-alt']) . Yii::t('app', 'Logout'),
-    ['/site/logout'],
+    ['/auth/logout'],
     ['class' => 'dropdown-item px-3', 'data-method' => 'POST']
 ) ?>
 
@@ -56,21 +55,14 @@ $flashes = Yii::$app->session->getAllFlashes();
     'links' => $this->params['breadcrumbs'] ?? [],
     'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
     'options' => ['class' => 'breadcrumbs'],
+    'itemTemplate' => '<li>{link}</li>',
+    'activeItemTemplate' => '<li class="active">{link}</li>',
 ]) ?>
 
 <?= $content ?>
 
 <div class="alert-wrapper">
-    <?php
-        foreach ($flashes as $key => $f) {
-            echo Alert::widget([
-                'options' => [
-                    'class' => "alert-$key",
-                ],
-                'body' => $f,
-            ]);
-        }
-    ?>
+    <?php print_r($flashes) ?>
 </div>
 
 <?php $this->endBody() ?>

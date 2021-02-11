@@ -13,17 +13,17 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
+    <?= Html::a(
+        Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
+        ['create'],
+        ['class' => 'btn btn-primary btn-icon float-right']
+    ) ?>
 </h2>
 
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $modelSearch,
-        'rowOptions' => function ($model) {
-            return [
-                'class' => 'table-' . ArrayHelper::getValue($model->statuses(), "$model->status.class"),
-            ];
-        },
         'columns' => [
             [
                 'attribute' => 'id',
@@ -91,6 +91,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($modelSearch->statuses(), 'label'),
                 'value' => fn ($model) => ArrayHelper::getValue($model->statuses(), "$model->status.label"),
+                'value' => function ($model) {
+                    return Html::tag(
+                        'div',
+                        ArrayHelper::getValue($model->statuses(), "$model->status.label"),
+                        [
+                            'class' => 'btn btn-sm btn-block btn-' . ArrayHelper::getValue($model->statuses(), "$model->status.class"),
+                            'style' => 'cursor: default;',
+                        ]
+                    );
+                },
             ],
             'created',
             [

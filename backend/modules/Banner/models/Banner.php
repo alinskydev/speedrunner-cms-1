@@ -27,7 +27,7 @@ class Banner extends ActiveRecord
                         'model' => new BannerGroup(),
                         'relation' => 'groups',
                         'attributes' => [
-                            'main' => 'item_id',
+                            'main' => 'banner_id',
                             'relational' => ['text_1', 'text_2', 'text_3', 'link', 'image'],
                         ],
                     ],
@@ -53,6 +53,7 @@ class Banner extends ActiveRecord
             'location' => Yii::t('app', 'Location'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
             'groups_tmp' => Yii::t('app', 'Groups'),
         ];
     }
@@ -71,6 +72,6 @@ class Banner extends ActiveRecord
     
     public function getGroups()
     {
-        return $this->hasMany(BannerGroup::className(), ['item_id' => 'id'])->orderBy('sort');
+        return $this->hasMany(BannerGroup::className(), ['banner_id' => 'id'])->orderBy('sort');
     }
 }

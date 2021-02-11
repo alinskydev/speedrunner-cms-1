@@ -32,7 +32,7 @@ class CacheController extends Controller
     public function actionClear()
     {
         $dirs = [
-            '@api/runtime', '@backend/runtime', '@frontend/runtime',
+            '@api/runtime', '@backend/runtime', '@console/runtime', '@frontend/runtime',
             '@api/web/assets', '@backend/web/assets', '@frontend/web/assets',
         ];
         

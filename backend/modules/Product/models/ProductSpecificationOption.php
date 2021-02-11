@@ -35,13 +35,8 @@ class ProductSpecificationOption extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Id'),
-            'item_id' => Yii::t('app', 'Specification'),
+            'specification_id' => Yii::t('app', 'Specification'),
             'name' => Yii::t('app', 'Name'),
         ];
-    }
-    
-    public function getSpecification()
-    {
-        return $this->hasOne(ProductSpecification::className(), ['id' => 'item_id']);
     }
 }

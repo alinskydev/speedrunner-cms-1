@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('app', 'Error');
+$this->title = Yii::t('app', 'An error occurred');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

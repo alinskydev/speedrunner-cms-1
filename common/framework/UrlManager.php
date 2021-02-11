@@ -70,8 +70,7 @@ class UrlManager extends \yii\web\UrlManager
             Yii::$app->language = $locale;
             static::$currentLanguage = $language;
             
-            \common\services\I18NService::localizedRoutes();
-//            Yii::$app->services->i18n->localizedRoutes();
+            \common\services\I18NService::setLocalizedRoutes();
         } else {
             $params = $request->getQueryParams();
             $route = isset($params[$this->routeParam]) ? $params[$this->routeParam] : '';

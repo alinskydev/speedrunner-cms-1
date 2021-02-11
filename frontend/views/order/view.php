@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
-$this->title = Yii::t('app', 'Order №{order_id}', ['order_id' => $model->id]);
+$this->title = Yii::t('app', 'Order №{id}', ['id' => $model->id]);
 
 $attrs = ['full_name', 'phone', 'email', 'address', 'created'];
 

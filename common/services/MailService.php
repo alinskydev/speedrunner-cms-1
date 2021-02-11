@@ -7,12 +7,7 @@ use Yii;
 
 class MailService
 {
-    private $dir;
-    
-    public function __construct()
-    {
-        $this->dir = '@common/mail';
-    }
+    private $dir = '@common/mail';
     
     public function send($email, $subject, $view, $data = null)
     {

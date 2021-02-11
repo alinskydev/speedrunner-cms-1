@@ -22,16 +22,19 @@ class StaticpageBlock extends ActiveRecord
     {
         return [
             [['value'], 'string', 'when' => function ($model) {
-                return in_array($model->type, ['textInput', 'textArea', 'CKEditor', 'ElFinder']);
+                return in_array($model->type, ['text_input', 'text_area', 'imperavi', 'elfinder']);
             }],
             [['value'], 'boolean', 'when' => function ($model) {
                 return in_array($model->type, ['checkbox']);
             }],
             [['value'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
-                return in_array($model->type, ['images']);
+                return in_array($model->type, ['files']);
             }],
             [['value'], 'valueValidation', 'when' => function ($model) {
                 return in_array($model->type, ['groups']);
+            }],
+            [['value'], 'default', 'value' => function ($model) {
+                return in_array($model->type, ['files', 'groups']) ? [] : '';
             }],
         ];
     }
@@ -51,22 +54,11 @@ class StaticpageBlock extends ActiveRecord
         }
     }
     
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'Id'),
-            'name' => Yii::t('app', 'Name'),
-            'label' => Yii::t('app', 'Label'),
-            'value' => Yii::t('app', 'Value'),
-            'type' => Yii::t('app', 'Type'),
-        ];
-    }
-    
     public function afterFind()
     {
         $this->value = $this->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;
         
-        if (!$this->value && in_array($this->type, ['images', 'groups'])) {
+        if (!$this->value && in_array($this->type, ['files', 'groups'])) {
             $this->value = [];
         }
         
@@ -75,8 +67,8 @@ class StaticpageBlock extends ActiveRecord
     
     public function beforeValidate()
     {
-        if (!$this->isNewRecord && $this->type == 'images' && $images = UploadedFile::getInstances($this, $this->id)) {
-            $this->value = $images;
+        if (!$this->isNewRecord && $this->type == 'files' && $files = UploadedFile::getInstances($this, $this->id)) {
+            $this->value = $files;
         }
         
         if ($this->type == 'groups' && !is_array($this->value)) {
@@ -88,7 +80,7 @@ class StaticpageBlock extends ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        TRANSLATION
+        //        Translations
         
         $lang = Yii::$app->language;
         
@@ -108,30 +100,30 @@ class StaticpageBlock extends ActiveRecord
             }
         }
         
-        //        IMAGES
+        //        Images
         
         if ($insert) {
-            if (in_array($this->type, ['images', 'groups'])) {
+            if (in_array($this->type, ['files', 'groups'])) {
                 $this->value = [];
             }
         } else {
-            if ($this->type == 'images') {
-                $old_images = ArrayHelper::getValue($this->oldAttributes, 'value', []);
+            if ($this->type == 'files') {
+                $old_files = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 
-                if ($images = UploadedFile::getInstances($this, $this->id)) {
-                    foreach ($images as $img) {
-                        $file_url = (new FileService($img))->save();
+                if ($files = UploadedFile::getInstances($this, $this->id)) {
+                    foreach ($files as $f) {
+                        $file_url = (new FileService($f))->save();
                         
                         if ($this->has_translation) {
-                            $images_arr[$lang][] = $file_url;
+                            $files_arr[$lang][] = $file_url;
                         } else {
-                            $images_arr[] = $file_url;
+                            $files_arr[] = $file_url;
                         }
                     }
                     
-                    $this->value = ArrayHelper::merge($old_images, $images_arr);
+                    $this->value = ArrayHelper::merge($old_files, $files_arr);
                 } else {
-                    $this->value = $old_images;
+                    $this->value = $old_files;
                 }
             }
         }
@@ -141,7 +133,7 @@ class StaticpageBlock extends ActiveRecord
     
     public function afterDelete()
     {
-        if ($this->type == 'images') {
+        if ($this->type == 'files') {
             foreach ($this->value as $v) {
                 FileService::delete($v);
             }

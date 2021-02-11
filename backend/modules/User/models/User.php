@@ -22,13 +22,11 @@ class User extends ActiveRecord implements IdentityInterface
         'full_name',
         'phone',
         'address',
-        'image',
     ];
     
     public $full_name;
     public $phone;
     public $address;
-    public $image;
     
     public static function tableName()
     {
@@ -38,6 +36,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
+            'file' => [
+                'class' => \common\behaviors\FileBehavior::className(),
+                'attributes' => ['image'],
+                'multiple' => false,
+                'save_dir' => 'files/profile',
+            ],
             'relations_one_one' => [
                 'class' => \common\behaviors\RelationBehavior::className(),
                 'type' => 'oneOne',
@@ -76,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'unique'],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
             [['username', 'full_name', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 255],
+            [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
             [['role'], 'in', 'range' => array_keys($this->roles())],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
@@ -105,18 +109,19 @@ class User extends ActiveRecord implements IdentityInterface
             'username' => Yii::t('app', 'Username'),
             'role' => Yii::t('app', 'Role'),
             'email' => Yii::t('app', 'Email'),
-            'new_password' => Yii::t('app', 'New password'),
+            'image' => Yii::t('app', 'Image'),
+            'created' => Yii::t('app', 'Created'),
+            'updated' => Yii::t('app', 'Updated'),
             
             'design_theme' => Yii::t('app', 'Theme'),
             'design_font' => Yii::t('app', 'Font'),
             'design_border_radius' => Yii::t('app', 'Border radius'),
             
+            'new_password' => Yii::t('app', 'New password'),
+            
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
-            'image' => Yii::t('app', 'Image'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
         ];
     }
     
@@ -180,34 +185,14 @@ class User extends ActiveRecord implements IdentityInterface
         
         return parent::afterFind();
     }
-
-    public function beforeValidate()
-    {
-        if ($image = UploadedFile::getInstance($this, 'image')) {
-            $this->image = $image;
-        }
-        
-        return parent::beforeValidate();
-    }
     
     public function beforeSave($insert)
     {
-        //        NEW PASSWORD
+        //        New password
         
         if ($this->new_password) {
             $this->generateAuthKey();
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
-        }
-        
-        //        IMAGE
-        
-        $old_image = ArrayHelper::getValue($this, 'profile.image');
-        
-        if ($image = UploadedFile::getInstance($this, 'image')) {
-            $this->image = (new FileService($image))->save('files/profile');
-            FileService::delete($old_image);
-        } else {
-            $this->image = $this->image ?: $old_image;
         }
         
         return parent::beforeSave($insert);
@@ -215,7 +200,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        ROLE ASSIGN
+        //        Role assigning
         
         if (array_key_exists('role', $changedAttributes)) {
             $roles = Yii::$app->authManager->getRoles();
@@ -243,15 +228,13 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterDelete()
     {
-        FileService::delete($this->image);
-        
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
         
         return parent::afterDelete();
     }
     
-    //        YII2 DEFAULT FUNCTIONS
+    //        YII2 default methods
     
     public static function findIdentity($id)
     {

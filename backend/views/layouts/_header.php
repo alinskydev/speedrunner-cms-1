@@ -61,7 +61,7 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                     
                     <?= Html::a(
                         Html::tag('i', '&nbsp;', ['class' => 'fas fa-sign-out-alt']) . Yii::t('app', 'Logout'),
-                        ['/site/logout'],
+                        ['/auth/logout'],
                         ['class' => 'dropdown-item px-3', 'data-method' => 'POST']
                     ) ?>
                 </div>

@@ -7,7 +7,7 @@ use yii2mod\rbac\RbacAsset;
 
 RbacAsset::register($this);
 
-$this->title = Yii::t('app', 'View: {name}', ['name' => $model->name]);
+$this->title = Yii::t('app', 'View: {value}', ['value' => $model->name]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yii2mod.rbac', 'RBAC'), 'url' => ['rbac/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yii2mod.rbac', $this->context->labels['Items']), 'url' => ['index']];

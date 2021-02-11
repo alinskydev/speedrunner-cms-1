@@ -3,12 +3,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use alexantr\elfinder\InputFile;
 use vova07\imperavi\Widget;
-use zxbodya\yii2\elfinder\ElFinderInput;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {name}', ['name' => $model->name]);
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
 
 ?>
 
@@ -17,7 +17,6 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
         'id' => 'update-form',
         'data-toggle' => 'ajax-form',
         'data-el' => '#nav-item-content',
-        'enctype' => 'multipart/form-data',
     ],
 ]); ?>
 
@@ -65,17 +64,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                 <div id="tab-information" class="tab-pane active">
                     <?= $form->field($model, 'name')->textInput() ?>
                     <?= $form->field($model, 'slug')->textInput() ?>
-                    
-                    <?= $form->field($model, 'image')->widget(ElFinderInput::className(), [
-                        'connectorRoute' => '/connection/elfinder-file-upload',
-                    ]) ?>
-                    
-                    <?= $form->field($model, 'description')->widget(Widget::className(), [
-                        'settings' => [
-                            'imageUpload' => Yii::$app->urlManager->createUrl('connection/editor-image-upload'),
-                            'imageManagerJson' => Yii::$app->urlManager->createUrl('connection/editor-images'),
-                        ],
-                    ]); ?>
+                    <?= $form->field($model, 'image')->widget(InputFile::className()) ?>
+                    <?= $form->field($model, 'description')->widget(Widget::className()) ?>
                     
                     <?php
                         if ($model->isNewRecord) {
@@ -96,6 +86,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                         'options' => [
                             'placeholder' => '',
                             'multiple' => true,
+                            'value' => ArrayHelper::getColumn($model->specifications, 'id'),
                         ],
                         'pluginOptions' => [
                             'allowClear' => true,

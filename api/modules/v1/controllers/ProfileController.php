@@ -3,19 +3,16 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
+use common\controllers\RestController;
+use common\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\controllers\RestController as Controller;
-use common\actions\rest as Actions;
 
+use frontend\forms\ProfileForm;
 use backend\modules\User\models\User;
 
 
-class ProfileController extends Controller
+class ProfileController extends RestController
 {
-    const FORMS = [
-        'update' => '\frontend\forms\ProfileForm',
-    ];
-    
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
@@ -36,9 +33,10 @@ class ProfileController extends Controller
     {
         return [
             'update' => [
-                'class' => Actions\FormAction::className(),
+                'class' => Actions\rest\FormAction::className(),
+                'model_class' => ProfileForm::className(),
+                'model_files' => ['image'],
                 'run_method' => 'update',
-                'file_attributes' => ['image'],
             ],
         ];
     }

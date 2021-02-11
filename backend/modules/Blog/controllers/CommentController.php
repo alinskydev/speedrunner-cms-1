@@ -3,27 +3,27 @@
 namespace backend\modules\Blog\controllers;
 
 use Yii;
-use yii\web\Controller;
-use common\actions\web as Actions;
+use common\controllers\CrudController;
+use common\actions as Actions;
+use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogComment;
 use backend\modules\Blog\modelsSearch\BlogCommentSearch;
 
 
-class CommentController extends Controller
+class CommentController extends CrudController
 {
+    public function beforeAction($action)
+    {
+        $this->model = new BlogComment();
+        $this->modelSearch = new BlogCommentSearch();
+        
+        return parent::beforeAction($action);
+    }
+    
     public function actions()
     {
-        return [
-            'index' => [
-                'class' => Actions\IndexAction::className(),
-                'modelSearch' => new BlogCommentSearch(),
-            ],
-            'delete' => [
-                'class' => Actions\DeleteAction::className(),
-                'model' => new BlogComment(),
-            ],
-        ];
+        return ArrayHelper::filter(parent::actions(), ['index', 'delete']);
     }
     
     public function actionView($id)

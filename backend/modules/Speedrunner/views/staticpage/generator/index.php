@@ -85,11 +85,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         });
         
         $(document).on('click', '.btn-part-remove', function() {
-            $(this).parents('.part').remove();
+            $(this).closest('.part').remove();
             partIndex--;
         });
         
-//        ------------------------------------------------
+        //        ------------------------------------------------
         
         $(document).on('click', '.btn-block-add', function() {
             el = $(this);
@@ -101,27 +101,27 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             };
             
             $.get(action, sendData, function(data) {
-                el.parents('table').find('tbody').append(data);
+                el.closest('table').find('tbody').append(data);
             });
         });
         
         $(document).on('click', '.btn-block-remove', function() {
-            $(this).parents('tr').remove();
+            $(this).closest('tr').remove();
         });
         
-//        ------------------------------------------------
+        //        ------------------------------------------------
         
         $(document).on('click', '.btn-attr-add', function() {
             el = $(this);
             action = el.data('action');
             
             $.get(action, {}, function(data) {
-                el.parents('td').find('.page-attrs-wrap').append(data);
+                el.closest('td').find('.page-attrs-wrap').append(data);
             });
         });
         
         $(document).on('click', '.btn-attr-remove', function() {
-            $(this).parents('.page-attrs').remove();
+            $(this).closest('.page-attrs').remove();
         });
     });
 </script>

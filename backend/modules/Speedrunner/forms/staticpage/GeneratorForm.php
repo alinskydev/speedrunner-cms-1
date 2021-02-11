@@ -54,14 +54,13 @@ class GeneratorForm extends Model
             
             foreach ($this->blocks as $b) {
                 $block = new StaticpageBlock();
-                $block->item_id = $page->id;
+                $block->staticpage_id = $page->id;
                 
                 foreach ($attrs as $a) {
                     $block->{$a} = $b[$a];
                 }
                 
                 $block->attrs = array_values(ArrayHelper::getValue($b, 'attrs', []));
-                $block->value = '';
                 $block->save();
             }
         } else {

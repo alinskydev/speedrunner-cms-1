@@ -31,7 +31,7 @@ class ProductSpecification extends ActiveRecord
                         'model' => new ProductSpecificationOption(),
                         'relation' => 'options',
                         'attributes' => [
-                            'main' => 'item_id',
+                            'main' => 'specification_id',
                             'relational' => ['name'],
                         ],
                     ],
@@ -60,13 +60,14 @@ class ProductSpecification extends ActiveRecord
             'use_detail' => Yii::t('app', 'Use in detail page'),
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
+            
             'options_tmp' => Yii::t('app', 'Options'),
         ];
     }
     
     public function getOptions()
     {
-        return $this->hasMany(ProductSpecificationOption::className(), ['item_id' => 'id'])->orderBy('sort');
+        return $this->hasMany(ProductSpecificationOption::className(), ['specification_id' => 'id'])->orderBy('sort');
     }
     
     public function getCategories()

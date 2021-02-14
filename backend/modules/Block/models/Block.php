@@ -3,10 +3,10 @@
 namespace backend\modules\Block\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use common\services\FileService;
+use speedrunner\services\FileService;
 
 
 class Block extends ActiveRecord

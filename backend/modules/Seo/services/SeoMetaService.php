@@ -5,7 +5,7 @@ namespace backend\modules\Seo\services;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 use backend\modules\Seo\models\SeoMeta;
 

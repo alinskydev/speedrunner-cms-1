@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class ProductCategorySpecificationRef extends ActiveRecord

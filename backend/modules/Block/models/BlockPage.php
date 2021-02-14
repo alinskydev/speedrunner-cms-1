@@ -3,7 +3,7 @@
 namespace backend\modules\Block\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -26,14 +26,14 @@ class BlockPage extends ActiveRecord
                 'immutable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name'],
             ],
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
                     'blocks_tmp' => [

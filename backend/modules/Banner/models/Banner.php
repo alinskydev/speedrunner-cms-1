@@ -3,7 +3,7 @@
 namespace backend\modules\Banner\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -20,7 +20,7 @@ class Banner extends ActiveRecord
     {
         return [
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
                     'groups_tmp' => [

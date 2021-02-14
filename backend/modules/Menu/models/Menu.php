@@ -3,7 +3,7 @@
 namespace backend\modules\Menu\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -29,7 +29,7 @@ class Menu extends ActiveRecord
                 'isAttributeTranslatable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'url'],
             ],
         ];
@@ -68,6 +68,6 @@ class Menu extends ActiveRecord
     
     public static function find()
     {
-        return new \common\query\NestedSetsQuery(get_called_class());
+        return new \speedrunner\db\NestedSetsQuery(get_called_class());
     }
 }

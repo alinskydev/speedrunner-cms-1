@@ -3,11 +3,11 @@
 namespace backend\modules\User\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use common\services\FileService;
+use speedrunner\services\FileService;
 
 
 class User extends ActiveRecord implements IdentityInterface
@@ -35,13 +35,13 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'file' => [
-                'class' => \common\behaviors\FileBehavior::className(),
+                'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['image'],
                 'multiple' => false,
                 'save_dir' => 'files/profile',
             ],
             'relations_one_one' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneOne',
                 'attributes' => [
                     'profile' => [
@@ -55,7 +55,7 @@ class User extends ActiveRecord implements IdentityInterface
                 ],
             ],
             'log_actions' => [
-                'class' => \common\behaviors\LogActionBehavior::className(),
+                'class' => \speedrunner\behaviors\LogActionBehavior::className(),
                 'exclude_attributes' => ['auth_key', 'password_hash', 'password_reset_token', 'user_id'],
                 'relations_one_one' => [
                     'profile' => [

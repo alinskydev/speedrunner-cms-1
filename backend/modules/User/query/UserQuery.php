@@ -5,7 +5,7 @@ namespace backend\modules\User\query;
 use Yii;
 use yii\helpers\StringHelper;
 use yii\db\Expression;
-use common\framework\ActiveQuery;
+use speedrunner\db\ActiveQuery;
 
 
 class UserQuery extends ActiveQuery

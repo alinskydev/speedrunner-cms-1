@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\framework\grid\GridView;
+use speedrunner\widgets\grid\GridView;
 
 $this->title = Yii::t('app', 'Product specifications');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\framework\grid\CheckboxColumn',
+                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
             ],
             [
                 'attribute' => 'id',
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created',
             'updated',
             [
-                'class' => 'common\framework\grid\ActionColumn',
+                'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'buttons' => [],
             ],

@@ -3,7 +3,7 @@
 namespace backend\modules\Seo\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class SeoMeta extends ActiveRecord

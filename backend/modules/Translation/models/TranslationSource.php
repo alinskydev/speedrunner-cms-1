@@ -3,7 +3,7 @@
 namespace backend\modules\Translation\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -20,9 +20,6 @@ class TranslationSource extends ActiveRecord
     public function rules()
     {
         return [
-            [['category'], 'required'],
-            [['message'], 'string'],
-            [['category'], 'string', 'max' => 32],
             [['translations_tmp'], 'safe'],
         ];
     }
@@ -33,6 +30,7 @@ class TranslationSource extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'category' => Yii::t('app', 'Category'),
             'message' => Yii::t('app', 'Message'),
+            
             'translations_tmp' => Yii::t('app', 'Translations'),
             'has_translation' => Yii::t('app', 'Has translation'),
         ];

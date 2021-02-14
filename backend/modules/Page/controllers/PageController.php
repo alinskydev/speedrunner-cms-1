@@ -3,8 +3,8 @@
 namespace backend\modules\Page\controllers;
 
 use Yii;
-use common\controllers\CrudController;
-use common\actions as Actions;
+use speedrunner\controllers\CrudController;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Page\models\Page;

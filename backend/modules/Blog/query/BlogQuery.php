@@ -4,7 +4,7 @@ namespace backend\modules\Blog\query;
 
 use Yii;
 use yii\db\Expression;
-use common\framework\ActiveQuery;
+use speedrunner\db\ActiveQuery;
 
 
 class BlogQuery extends ActiveQuery

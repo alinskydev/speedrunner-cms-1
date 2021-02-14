@@ -6,7 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use common\services\FileService;
 
 use backend\modules\User\models\User;
 

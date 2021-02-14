@@ -3,7 +3,7 @@
 namespace backend\modules\Translation\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 use backend\modules\System\models\SystemLanguage;
 

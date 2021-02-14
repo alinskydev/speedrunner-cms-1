@@ -3,7 +3,7 @@
 namespace backend\modules\Banner\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class BannerGroup extends ActiveRecord
@@ -17,7 +17,7 @@ class BannerGroup extends ActiveRecord
     {
         return [
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['text_1', 'text_2', 'text_3', 'link'],
             ],
         ];

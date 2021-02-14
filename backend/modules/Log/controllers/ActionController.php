@@ -3,8 +3,8 @@
 namespace backend\modules\Log\controllers;
 
 use Yii;
-use common\controllers\CrudController;
-use common\actions as Actions;
+use speedrunner\controllers\CrudController;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
@@ -48,7 +48,7 @@ class ActionController extends CrudController
         
         return ArrayHelper::merge($actions, [
             'index' => [
-                'class' => Actions\crud\ListAction::className(),
+                'class' => Actions\crud\DataProviderAction::className(),
                 'render_params' => [
                     'log_action_modules_list' => (new LogActionList)::$models,
                 ]

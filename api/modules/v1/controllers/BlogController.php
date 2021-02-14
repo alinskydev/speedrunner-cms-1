@@ -3,8 +3,8 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use common\controllers\RestController;
-use common\actions as Actions;
+use speedrunner\controllers\RestController;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\search\BlogSearch;
@@ -28,7 +28,7 @@ class BlogController extends RestController
     {
         return [
             'index' => [
-                'class' => Actions\rest\ListAction::className(),
+                'class' => Actions\rest\DataProviderAction::className(),
                 'modelSearch' => new BlogSearch(),
             ],
         ];

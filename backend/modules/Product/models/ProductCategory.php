@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -36,14 +36,14 @@ class ProductCategory extends ActiveRecord
                 'immutable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
             ],
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_many_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'manyMany',
                 'attributes' => [
                     'specifications_tmp' => [
@@ -116,6 +116,6 @@ class ProductCategory extends ActiveRecord
     
     public static function find()
     {
-        return new \common\query\NestedSetsQuery(get_called_class());
+        return new \speedrunner\db\NestedSetsQuery(get_called_class());
     }
 }

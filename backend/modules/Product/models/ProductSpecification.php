@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -20,11 +20,11 @@ class ProductSpecification extends ActiveRecord
     {
         return [
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name'],
             ],
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
                     'options_tmp' => [

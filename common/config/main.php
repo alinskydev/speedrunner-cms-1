@@ -22,12 +22,12 @@ $config = [
         'i18n' => [
             'translations' => [
                 'app*' => [
-                    'class' => 'common\framework\DbMessageSource',
+                    'class' => 'speedrunner\i18n\DbMessageSource',
                     'sourceMessageTable' => 'TranslationSource',
                     'messageTable' => 'TranslationMessage',
                 ],
                 'yii2*' => [
-                    'class' => 'common\framework\DbMessageSource',
+                    'class' => 'speedrunner\i18n\DbMessageSource',
                     'sourceMessageTable' => 'TranslationSource',
                     'messageTable' => 'TranslationMessage',
                 ],
@@ -48,27 +48,27 @@ $config = [
         //        URL managers
 
         'urlManager' => [
-            'class' => 'common\framework\UrlManager',
+            'class' => 'speedrunner\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => $app ? require __DIR__ . "/../../$app/config/routes.php" : [],
         ],
         'urlManagerApi' => [
-            'class' => 'common\framework\UrlManager',
+            'class' => 'speedrunner\web\UrlManager',
             'baseUrl' => '/api',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../api/config/routes.php',
         ],
         'urlManagerBackend' => [
-            'class' => 'common\framework\UrlManager',
+            'class' => 'speedrunner\web\UrlManager',
             'baseUrl' => '/admin',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/../../backend/config/routes.php',
         ],
         'urlManagerFrontend' => [
-            'class' => 'common\framework\UrlManager',
+            'class' => 'speedrunner\web\UrlManager',
             'baseUrl' => '',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -78,13 +78,13 @@ $config = [
         //        Services
         
         'services' => [
-            'class' => 'common\bootstrap\Services',
+            'class' => 'speedrunner\bootstrap\Services',
             'services' => [
-                'cart' => 'common\services\CartService',
-                'html' => 'common\services\HtmlService',
-                'i18n' => 'common\services\I18NService',
-                'image' => 'common\services\ImageService',
-                'mail' => 'common\services\MailService',
+                'cart' => 'speedrunner\services\CartService',
+                'html' => 'speedrunner\services\HtmlService',
+                'i18n' => 'speedrunner\services\I18NService',
+                'image' => 'speedrunner\services\ImageService',
+                'mail' => 'speedrunner\services\MailService',
                 
                 'settings' => 'backend\modules\System\services\SystemSettingsService',
                 'staticpage' => 'backend\modules\Staticpage\services\StaticpageService',

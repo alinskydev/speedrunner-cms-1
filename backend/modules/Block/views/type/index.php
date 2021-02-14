@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\framework\grid\GridView;
+use speedrunner\widgets\grid\GridView;
 
 $this->title = Yii::t('app', 'Block types');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->type),
             ],
             [
-                'class' => 'common\framework\grid\ActionColumn',
+                'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update}',
                 'buttons' => [],
             ],

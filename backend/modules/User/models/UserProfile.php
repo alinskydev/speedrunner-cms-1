@@ -3,7 +3,7 @@
 namespace backend\modules\User\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class UserProfile extends ActiveRecord

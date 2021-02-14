@@ -44,9 +44,4 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    
-    public function actionInformation()
-    {
-        return 'CMS version date: 2021-02-14';
-    }
 }

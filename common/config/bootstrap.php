@@ -6,6 +6,7 @@ Yii::setAlias('@backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('@common', dirname(__DIR__));
 Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@frontend', dirname(dirname(__DIR__)) . '/frontend');
+Yii::setAlias('@speedrunner', dirname(dirname(__DIR__)) . '/speedrunner');
 
 switch (YII_ENV) {
     case 'dev':

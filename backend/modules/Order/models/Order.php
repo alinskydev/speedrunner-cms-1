@@ -3,7 +3,7 @@
 namespace backend\modules\Order\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\User\models\User;
@@ -22,7 +22,7 @@ class Order extends ActiveRecord
     {
         return [
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
                     'products_tmp' => [

@@ -3,7 +3,7 @@
 namespace backend\modules\Blog\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -26,16 +26,16 @@ class Blog extends ActiveRecord
                 'immutable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'short_description', 'full_description'],
             ],
             'files' => [
-                'class' => \common\behaviors\FileBehavior::className(),
+                'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
                 'multiple' => true,
             ],
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }

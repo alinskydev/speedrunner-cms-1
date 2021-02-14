@@ -3,7 +3,7 @@
 namespace backend\modules\Staticpage\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 use backend\modules\Staticpage\services\StaticpageService;
 
@@ -21,7 +21,7 @@ class Staticpage extends ActiveRecord
     {
         return [
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }

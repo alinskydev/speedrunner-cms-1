@@ -32,7 +32,7 @@ echo '<?php';
 namespace backend\modules\<?= $model->module_name ?>\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -63,26 +63,26 @@ class <?= $model->table_name ?> extends ActiveRecord
 <?php } ?>
 <?php if ($model->attrs_translation) { ?>
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['<?= implode("', '", array_keys($model->attrs_translation)) ?>'],
             ],
 <?php } ?>
 <?php if (isset($attrs_fields['files'])) { ?>
 <?php $file_attributes = ArrayHelper::getColumn($attrs_fields['files'], 'name') ?>
             'files' => [
-                'class' => \common\behaviors\FileBehavior::className(),
+                'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['<?= implode("', '", $file_attributes) ?>'],
                 'multiple' => true,
             ],
 <?php } ?>
 <?php if ($model->has_seo_meta) { ?>
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
 <?php } ?>
 <?php if ($model->view_relations) { ?>
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
 <?php foreach ($model->view_relations as $r) { ?>

@@ -3,7 +3,7 @@
 namespace backend\modules\Log\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\lists\LogActionList;

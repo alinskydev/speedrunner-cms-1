@@ -3,7 +3,7 @@
 namespace backend\modules\Blog\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class BlogCategory extends ActiveRecord
@@ -23,11 +23,11 @@ class BlogCategory extends ActiveRecord
                 'immutable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
             ],
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
         ];
     }

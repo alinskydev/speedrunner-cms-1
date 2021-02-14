@@ -5,7 +5,7 @@ namespace backend\modules\Staticpage\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\services\FileService;
+use speedrunner\services\FileService;
 
 use backend\modules\Staticpage\models\Staticpage;
 use backend\modules\Staticpage\models\StaticpageBlock;

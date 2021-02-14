@@ -3,10 +3,10 @@
 namespace backend\modules\Block\controllers;
 
 use Yii;
-use common\controllers\CrudController;
-use common\actions as Actions;
+use speedrunner\controllers\CrudController;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\services\FileService;
+use speedrunner\services\FileService;
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\search\BlockPageSearch;

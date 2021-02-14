@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -29,19 +29,19 @@ class Product extends ActiveRecord
                 'immutable' => true,
             ],
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'short_description', 'full_description'],
             ],
             'files' => [
-                'class' => \common\behaviors\FileBehavior::className(),
+                'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
                 'multiple' => true,
             ],
             'seo_meta' => [
-                'class' => \common\behaviors\SeoMetaBehavior::className(),
+                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_one_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
                 'attributes' => [
                     'variations_tmp' => [
@@ -55,7 +55,7 @@ class Product extends ActiveRecord
                 ],
             ],
             'relations_many_many' => [
-                'class' => \common\behaviors\RelationBehavior::className(),
+                'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'manyMany',
                 'attributes' => [
                     'categories_tmp' => [
@@ -85,7 +85,7 @@ class Product extends ActiveRecord
                 ],
             ],
             'log_actions' => [
-                'class' => \common\behaviors\LogActionBehavior::className(),
+                'class' => \speedrunner\behaviors\LogActionBehavior::className(),
                 'relations_one_many' => [
                     'variations_tmp' => [
                         'relation' => 'variations',

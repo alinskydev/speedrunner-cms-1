@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class ProductSpecificationOption extends ActiveRecord
@@ -17,7 +17,7 @@ class ProductSpecificationOption extends ActiveRecord
     {
         return [
             'translation' => [
-                'class' => \common\behaviors\TranslationBehavior::className(),
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name'],
             ],
         ];

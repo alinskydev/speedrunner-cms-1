@@ -4,9 +4,9 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\actions as Actions;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
-use common\services\ArrayService;
+use speedrunner\services\ArrayService;
 
 use frontend\forms\ContactForm;
 

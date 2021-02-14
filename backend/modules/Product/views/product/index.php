@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use common\framework\grid\GridView;
+use speedrunner\widgets\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
@@ -30,7 +30,7 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
         'filterModel' => $modelSearch,
         'columns' => [
             [
-                'class' => 'common\framework\grid\CheckboxColumn',
+                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
             ],
             [
                 'header' => false,
@@ -100,7 +100,7 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
             'quantity',
             'created',
             [
-                'class' => 'common\framework\grid\ActionColumn',
+                'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'buttons' => [],
             ],

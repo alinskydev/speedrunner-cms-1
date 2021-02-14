@@ -3,7 +3,7 @@
 namespace backend\modules\Product\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
@@ -18,7 +18,7 @@ class ProductVariation extends ActiveRecord
     {
         return [
             'files' => [
-                'class' => \common\behaviors\FileBehavior::className(),
+                'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
                 'multiple' => true,
             ],

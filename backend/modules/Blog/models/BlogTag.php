@@ -3,7 +3,7 @@
 namespace backend\modules\Blog\models;
 
 use Yii;
-use common\framework\ActiveRecord;
+use speedrunner\db\ActiveRecord;
 
 
 class BlogTag extends ActiveRecord

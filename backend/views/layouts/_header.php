@@ -6,7 +6,6 @@ use yii\widgets\Breadcrumbs;
 use yii\widgets\Menu;
 
 use backend\modules\User\models\UserNotification;
-use backend\modules\User\services\UserNotificationService;
 
 $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
@@ -76,8 +75,7 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                     <?php
                         if ($notifications) {
                             foreach ($notifications as $key => $n) {
-                                $notification_service = new UserNotificationService($n);
-                                $label = ArrayHelper::getValue($notification_service->actionData(), 'label');
+                                $label = ArrayHelper::getValue($n->service->actionData(), 'label');
                                 
                                 echo Html::a(
                                     Html::tag('i', '&nbsp;', ['class' => 'fas fa-check-circle']) . $label,

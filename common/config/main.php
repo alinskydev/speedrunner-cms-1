@@ -80,6 +80,7 @@ $config = [
         'services' => [
             'class' => 'common\bootstrap\Services',
             'services' => [
+                'cart' => 'common\services\CartService',
                 'html' => 'common\services\HtmlService',
                 'i18n' => 'common\services\I18NService',
                 'image' => 'common\services\ImageService',

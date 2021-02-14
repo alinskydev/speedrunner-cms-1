@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogCategory;
-use backend\modules\Blog\modelsSearch\BlogCategorySearch;
+use backend\modules\Blog\search\BlogCategorySearch;
 
 
 class CategoryController extends CrudController

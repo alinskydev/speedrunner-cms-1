@@ -3,13 +3,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use backend\widgets\crud\UpdateWidget;
-use backend\modules\Translation\services\TranslationService;
 
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->message]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Translations'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-foreach ((new TranslationService($model))->activeTranslations() as $t) {
+foreach ($model->service->activeTranslations() as $t) {
     $attributes[] = [
         'name' => "translations_tmp[$t->language]",
         'type' => 'text_area',

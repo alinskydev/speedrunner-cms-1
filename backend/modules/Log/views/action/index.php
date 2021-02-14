@@ -6,9 +6,6 @@ use common\framework\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
-use backend\modules\Log\lists\LogActionModelsList;
-use backend\modules\Log\services\LogActionService;
-
 $this->title = Yii::t('app', 'Log actions');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -73,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_old',
                 'format' => 'raw',
-                'value' => fn ($model) => (new LogActionService($model))->attrsColumn('old', 'short'),
+                'value' => fn ($model) => $model->service->attrsColumn('old', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
@@ -81,7 +78,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'attrs_new',
                 'format' => 'raw',
-                'value' => fn ($model) => (new LogActionService($model))->attrsColumn('new', 'short'),
+                'value' => fn ($model) => $model->service->attrsColumn('new', 'short'),
                 'headerOptions' => [
                     'style' => 'min-width: 300px;',
                 ]
@@ -94,7 +91,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'link' => function ($url, $model, $key) {
                         return Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
-                            ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url'),
+                            ArrayHelper::getValue($model->service->findAndFill(), 'index_url'),
                             [
                                 'target' => '_blank',
                                 'title' => Yii::t('app', 'Link'),
@@ -122,7 +119,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ],
                 'visibleButtons' => [
                     'link' => function ($model, $key, $index) {
-                        return $model->type != 'deleted' && ArrayHelper::getValue((new LogActionModelsList())->findAndFill($model), 'index_url');
+                        return $model->type != 'deleted' && ArrayHelper::getValue($model->service->findAndFill(), 'index_url');
                     },
                 ]
             ],

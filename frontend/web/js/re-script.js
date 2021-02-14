@@ -2,7 +2,7 @@ $(function() {
     
     //      Ajax button
     
-    var el, action, sendData;
+    let el, action, sendData;
     
     $(document).on('click', '[data-toggle="ajax-button"]', function(e) {
         e.preventDefault();
@@ -50,7 +50,7 @@ $(function() {
     
     //      Cart changing quantity
     
-    var quantity;
+    let quantity;
     
     $(document).on('click', '[data-toggle="cart-quantity-change"]', function(e) {
         e.preventDefault();

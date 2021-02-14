@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
-use backend\modules\Log\lists\LogActionModelsList;
+use backend\modules\Log\lists\LogActionList;
 
 
 class LogActionService
@@ -22,7 +22,7 @@ class LogActionService
     public function attrsColumn($attrs_type, $view_type)
     {
         $result = [];
-        $model_class = (new LogActionModelsList())->findAndFill($this->model);
+        $model_class = $this->findAndFill();
         
         $model = ArrayHelper::getValue($model_class, 'model');
         $translation_attrs = ArrayHelper::getValue($model_class, 'attributes.translation', []);
@@ -73,5 +73,18 @@ class LogActionService
         }
         
         return implode($view_type == 'short' ? '<br>' : '<hr>', $result);
+    }
+    
+    public function findAndFill()
+    {
+        if ($model = ArrayHelper::getValue(LogActionList::$models, $this->model->model_class)) {
+            if ($index_url = ArrayHelper::getValue($model, 'index_url')) {
+                $model['index_url'] = [$index_url[0], $index_url[1] => $this->model['model_id']];
+            }
+            
+            return $model;
+        } else {
+            throw new \yii\web\HttpException(404, "The requested model '$name' not found");
+        }
     }
 }

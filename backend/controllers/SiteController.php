@@ -47,6 +47,6 @@ class SiteController extends Controller
     
     public function actionInformation()
     {
-        return 'CMS version date: 2021-02-12';
+        return 'CMS version date: 2021-02-14';
     }
 }

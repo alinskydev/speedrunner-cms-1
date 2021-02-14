@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class HtmlService
 {
-    public function saveButtons($buttons_list)
+    public static function saveButtons($buttons_list)
     {
         foreach ($buttons_list as $button) {
             switch ($button) {

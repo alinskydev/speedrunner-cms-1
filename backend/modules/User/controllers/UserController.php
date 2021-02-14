@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\User\models\User;
-use backend\modules\User\modelsSearch\UserSearch;
+use backend\modules\User\search\UserSearch;
 
 
 class UserController extends CrudController

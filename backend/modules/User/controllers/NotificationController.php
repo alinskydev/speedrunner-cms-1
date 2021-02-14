@@ -7,7 +7,6 @@ use yii\web\Controller;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\User\models\UserNotification;
-use backend\modules\User\services\UserNotificationService;
 
 
 class NotificationController extends Controller
@@ -20,8 +19,7 @@ class NotificationController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $notification_service = new UserNotificationService($model);
-        return $this->redirect(ArrayHelper::getValue($notification_service->actionData(), 'url'));
+        return $this->redirect(ArrayHelper::getValue($model->service->actionData(), 'url'));
     }
     
     public function actionClear()

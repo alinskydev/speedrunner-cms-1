@@ -26,11 +26,6 @@ class Page extends ActiveRecord
                 'class' => \common\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
             ],
-            'file' => [
-                'class' => \common\behaviors\FileBehavior::className(),
-                'attributes' => ['image'],
-                'multiple' => false,
-            ],
             'seo_meta' => [
                 'class' => \common\behaviors\SeoMetaBehavior::className(),
             ],
@@ -41,10 +36,9 @@ class Page extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'slug'], 'string', 'max' => 100],
+            [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['description'], 'string'],
         ];
     }

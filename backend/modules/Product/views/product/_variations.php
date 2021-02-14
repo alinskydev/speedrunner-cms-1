@@ -75,7 +75,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var specificationId, specificationValue,
+        let specificationId, specificationValue,
             optionId, optionValue,
             rndNumber, html;
         

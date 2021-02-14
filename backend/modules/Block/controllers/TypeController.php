@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Block\models\BlockType;
-use backend\modules\Block\modelsSearch\BlockTypeSearch;
+use backend\modules\Block\search\BlockTypeSearch;
 
 
 class TypeController extends CrudController

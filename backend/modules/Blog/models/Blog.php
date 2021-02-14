@@ -9,8 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class Blog extends ActiveRecord
 {
-    use \api\modules\v1\models\blog\Blog;
-    
     public $tags_tmp;
     
     public static function tableName()
@@ -89,21 +87,6 @@ class Blog extends ActiveRecord
             ->viaTable('BlogTagRef', ['blog_id' => 'id'], function ($query) {
                 $query->onCondition(['lang' => Yii::$app->language]);
             });
-    }
-    
-    public function getComments()
-    {
-        return $this->hasMany(BlogComment::className(), ['blog_id' => 'id']);
-    }
-    
-    public function getRates()
-    {
-        return $this->hasMany(BlogRate::className(), ['blog_id' => 'id']);
-    }
-    
-    public static function find()
-    {
-        return new \backend\modules\Blog\models\query\BlogQuery(get_called_class());
     }
     
     public function beforeSave($insert)

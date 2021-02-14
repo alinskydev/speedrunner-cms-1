@@ -1,12 +1,12 @@
 <?php
 
-namespace api\modules\v1\models\user;
+namespace api\modules\v1\models\User;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
 
-trait User
+class User
 {
     public function fields()
     {

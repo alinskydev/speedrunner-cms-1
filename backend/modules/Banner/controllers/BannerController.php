@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Banner\models\Banner;
-use backend\modules\Banner\modelsSearch\BannerSearch;
+use backend\modules\Banner\search\BannerSearch;
 
 
 class BannerController extends CrudController

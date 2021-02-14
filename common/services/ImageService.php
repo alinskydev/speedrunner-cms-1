@@ -11,7 +11,7 @@ use Yii\image\drivers\Image as ImageDriver;
 
 class ImageService
 {
-    public function thumb($image_url, $width_height, $type = 'crop')
+    public static function thumb($image_url, $width_height, $type = 'crop')
     {
         $width_height_string = implode('x', $width_height);
         

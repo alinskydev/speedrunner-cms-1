@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var el, action, sendData,
+        let el, action, sendData,
             partIndex = 0;
         
         $(document).on('click', '.btn-part-add', function() {

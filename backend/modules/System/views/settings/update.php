@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var id, oldIndex, newIndex, sendData,
+        let id, oldIndex, newIndex, sendData,
             action = '<?= Yii::$app->urlManager->createUrl(['system/settings/sort']) ?>',
             token = $('meta[name=csrf-token]').attr('content');
         

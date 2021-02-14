@@ -4,23 +4,16 @@ namespace common\services;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use common\framework\ActiveRecord;
+
+use backend\modules\Order\models\Order;
+use backend\modules\Product\models\Product;
 
 
 class CartService
 {
-    private $order;
-    private $product;
-    
-    public function __construct(ActiveRecord $order, ActiveRecord $product)
+    public static function changeQuantity(Product $product, int $quantity)
     {
-        $this->order = $order;
-        $this->product = $product;
-    }
-    
-    public function changeQuantity(int $quantity)
-    {
-        if ($this->product->quantity < $quantity) {
+        if ($product->quantity < $quantity) {
             Yii::$app->session->setFlash('warning', Yii::t('app', 'Not enough quantity'));
             return $this->redirect(Yii::$app->request->referrer);
         }
@@ -28,9 +21,9 @@ class CartService
         $cart = Yii::$app->session->get('cart', []);
         
         if ($quantity > 0) {
-            $cart['products'][$id] = $this->product->attributes;
+            $cart['products'][$id] = $product->attributes;
             $cart['products'][$id]['total_quantity'] = $quantity;
-            $cart['products'][$id]['total_price'] = $this->product->realPrice() * $quantity;
+            $cart['products'][$id]['total_price'] = $product->realPrice() * $quantity;
         } else {
             ArrayHelper::remove($cart['products'], $id);
         }
@@ -52,7 +45,7 @@ class CartService
         return $cart;
     }
     
-    public function createOrder()
+    public static function createOrder(Order $order)
     {
         $total_price = 0;
         $total_quantity = 0;
@@ -61,7 +54,7 @@ class CartService
         $cart_products = ArrayHelper::getValue($cart, 'products', []);
         $cart_products = ArrayHelper::getColumn($cart_products, 'total_quantity');
         
-        $products = $this->product->find()->andWhere(['id' => array_keys($cart_products)])->all();
+        $products = Product::find()->andWhere(['id' => array_keys($cart_products)])->all();
         
         foreach ($products as $key => $p) {
             $order_products[] = [
@@ -70,9 +63,9 @@ class CartService
             ];
         }
         
-        $this->order->products_tmp = $order_products ?? [];
+        $order->products_tmp = $order_products ?? [];
         
-        if (!$this->order->save()) {
+        if (!$order->save()) {
             return false;
         }
         

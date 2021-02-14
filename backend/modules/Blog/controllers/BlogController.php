@@ -8,9 +8,9 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\Blog;
-use backend\modules\Blog\modelsSearch\BlogSearch;
-use backend\modules\Blog\modelsSearch\BlogCommentSearch;
-use backend\modules\Blog\modelsSearch\BlogRateSearch;
+use backend\modules\Blog\search\BlogSearch;
+use backend\modules\Blog\search\BlogCommentSearch;
+use backend\modules\Blog\search\BlogRateSearch;
 
 
 class BlogController extends CrudController

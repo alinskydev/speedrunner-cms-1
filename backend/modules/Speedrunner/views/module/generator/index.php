@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var el, action, sendData;
+        let el, action, sendData;
         
         $('#generatorform-module_name').on('change', function() {
             $('#generatorform-table_name').val($(this).val()).trigger('change');

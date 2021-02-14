@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 use common\services\FileService;
 
 use backend\modules\Block\models\BlockPage;
-use backend\modules\Block\modelsSearch\BlockPageSearch;
+use backend\modules\Block\search\BlockPageSearch;
 use backend\modules\Block\models\BlockType;
 use backend\modules\Block\models\Block;
 

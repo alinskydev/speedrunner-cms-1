@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Order\models\Order;
-use backend\modules\Order\modelsSearch\OrderSearch;
+use backend\modules\Order\search\OrderSearch;
 
 
 class OrderController extends CrudController

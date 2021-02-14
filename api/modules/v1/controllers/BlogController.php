@@ -7,7 +7,7 @@ use common\controllers\RestController;
 use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Blog\modelsSearch\BlogSearch;
+use backend\modules\Blog\search\BlogSearch;
 
 
 class BlogController extends RestController
@@ -28,7 +28,7 @@ class BlogController extends RestController
     {
         return [
             'index' => [
-                'class' => Actions\rest\IndexAction::className(),
+                'class' => Actions\rest\ListAction::className(),
                 'modelSearch' => new BlogSearch(),
             ],
         ];

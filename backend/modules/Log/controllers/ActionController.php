@@ -8,8 +8,8 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
-use backend\modules\Log\modelsSearch\LogActionSearch;
-use backend\modules\Log\lists\LogActionModelsList;
+use backend\modules\Log\search\LogActionSearch;
+use backend\modules\Log\lists\LogActionList;
 
 
 class ActionController extends CrudController
@@ -48,9 +48,9 @@ class ActionController extends CrudController
         
         return ArrayHelper::merge($actions, [
             'index' => [
-                'class' => Actions\crud\IndexAction::className(),
+                'class' => Actions\crud\ListAction::className(),
                 'render_params' => [
-                    'log_action_modules_list' => (new LogActionModelsList)::$models,
+                    'log_action_modules_list' => (new LogActionList)::$models,
                 ]
             ],
         ]);

@@ -11,8 +11,6 @@ use common\services\FileService;
 
 class StaticpageBlock extends ActiveRecord
 {
-    use \api\modules\v1\models\staticpage\StaticpageBlock;
-    
     public static function tableName()
     {
         return 'StaticpageBlock';

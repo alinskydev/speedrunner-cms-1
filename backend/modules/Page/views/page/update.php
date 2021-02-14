@@ -17,16 +17,7 @@ echo UpdateWidget::widget([
             'attributes' => [
                 'name' => 'text_input',
                 'slug' => 'text_input',
-                [
-                    'name' => 'image',
-                    'type' => 'files',
-                    'multiple' => false,
-                    'widget_options' => [
-                        'delete_url' => Yii::$app->urlManager->createUrl([
-                            'page/page/image-delete', 'id' => $model->id, 'attr' => 'image'
-                        ]),
-                    ]
-                ],
+                'image' => 'elfinder',
                 'description' => 'imperavi',
             ],
         ],

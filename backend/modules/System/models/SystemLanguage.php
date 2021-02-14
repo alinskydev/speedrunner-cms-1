@@ -9,8 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class SystemLanguage extends ActiveRecord
 {
-    use \api\modules\v1\models\system\SystemLanguage;
-    
     public static function tableName()
     {
         return 'SystemLanguage';

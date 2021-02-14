@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Translation\models\TranslationSource;
-use backend\modules\Translation\modelsSearch\TranslationSourceSearch;
+use backend\modules\Translation\search\TranslationSourceSearch;
 
 
 class SourceController extends CrudController

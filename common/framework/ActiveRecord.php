@@ -12,14 +12,47 @@ class ActiveRecord extends \yii\db\ActiveRecord
 {
     const HTMLPURIFY_EXCLUDE_CLASSES = [];
     
+    public $service;
+    
+    public function init()
+    {
+        //        Setting service
+        
+        $service_class_name = str_replace('\models\\', '\services\\', get_called_class()) . 'Service';
+        
+        if (!$this->service) {
+            $this->service = class_exists($service_class_name) ? new $service_class_name($this) : null;
+        }
+        
+        return parent::init();
+    }
+    
+    public function fields()
+    {
+        //        API fields
+        
+        $class_name = StringHelper::basename(get_called_class());
+        
+        $module_name = str_replace('backend\modules\\', null, get_called_class());
+        $module_name = str_replace("\models\\$class_name", null, $module_name);
+        
+        $api_module_name = 'v1';
+        $api_class_name = "api\modules\\$api_module_name\models\\$module_name\\$class_name";
+        
+        return class_exists($api_class_name) ? (new $api_class_name())->fields() : parent::fields();
+    }
+    
     public static function find()
     {
-        return new ActiveQuery(get_called_class());
+        //        Setting query
+        
+        $query_class_name = str_replace('\models\\', '\query\\', get_called_class()) . 'Query';
+        return class_exists($query_class_name) ? new $query_class_name(get_called_class()) : new ActiveQuery(get_called_class());
     }
     
     public function afterFind()
     {
-        //        Changing date formats
+        //        Changing dates format
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -34,7 +67,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function beforeSave($insert)
     {
-        //        Changing date formats
+        //        Changing dates format
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -56,9 +89,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML purifier
         
-        $model_class = StringHelper::basename($this->className());
+        $class_name = StringHelper::basename(get_called_class());
         
-        if (!in_array($model_class, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
+        if (!in_array($class_name, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
             foreach ($this->attributes as $key => $a) {
                 ($a && is_string($a)) ? $this->{$key} = HtmlPurifier::process($a) : null;
 //                ($a && is_string($a)) ? $this->{$key} = htmlspecialchars($a, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : null;
@@ -70,7 +103,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function beforeSearch()
     {
-        //        Changing date formats
+        //        Changing dates format
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {
@@ -83,7 +116,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function afterSearch()
     {
-        //        Changing date formats
+        //        Changing dates format
         
         foreach (Yii::$app->params['date_formats'] as $key => $d_f) {
             foreach ($d_f['attributes'] as $a) {

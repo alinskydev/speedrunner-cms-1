@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Log\services\LogActionService;
-
 ?>
 
 <div class="modal-dialog modal-xl">
@@ -27,10 +25,10 @@ use backend\modules\Log\services\LogActionService;
                     <tbody>
                         <tr>
                             <td>
-                                <?= (new LogActionService($model))->attrsColumn('old', 'full') ?>
+                                <?= $model->service->attrsColumn('old', 'full') ?>
                             </td>
                             <td>
-                                <?= (new LogActionService($model))->attrsColumn('new', 'full') ?>
+                                <?= $model->service->attrsColumn('new', 'full') ?>
                             </td>
                         </tr>
                     </tbody>

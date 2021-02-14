@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 use backend\modules\Product\models\Product;
-use backend\modules\Product\modelsSearch\ProductSearch;
+use backend\modules\Product\search\ProductSearch;
 use backend\modules\Product\models\ProductSpecification;
 
 

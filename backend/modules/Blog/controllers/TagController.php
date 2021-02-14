@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogTag;
-use backend\modules\Blog\modelsSearch\BlogTagSearch;
+use backend\modules\Blog\search\BlogTagSearch;
 
 
 class TagController extends CrudController

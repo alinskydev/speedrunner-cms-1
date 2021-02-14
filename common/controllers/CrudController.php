@@ -17,7 +17,7 @@ class CrudController extends Controller
     {
         return [
             'index' => [
-                'class' => Actions\crud\IndexAction::className(),
+                'class' => Actions\crud\ListAction::className(),
             ],
             'view' => [
                 'class' => Actions\crud\ViewAction::className(),

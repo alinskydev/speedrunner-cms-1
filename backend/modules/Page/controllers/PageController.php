@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Page\models\Page;
-use backend\modules\Page\modelsSearch\PageSearch;
+use backend\modules\Page\search\PageSearch;
 
 
 class PageController extends CrudController

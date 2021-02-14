@@ -6,7 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-use common\services\CartService;
 use backend\modules\User\services\UserNotificationService;
 
 use backend\modules\Order\models\Order;
@@ -70,7 +69,7 @@ class OrderForm extends Model
             'delivery_type' => $this->delivery_type,
         ]);
         
-        if (!(new CartService($this->order))->createOrder()) {
+        if (!Yii::$app->services->cart->createOrder($this->order)) {
             return false;
         }
         

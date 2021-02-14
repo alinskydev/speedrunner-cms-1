@@ -1,12 +1,12 @@
 <?php
 
-namespace api\modules\v1\models\staticpage;
+namespace api\modules\v1\models\Staticpage;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
 
-trait StaticpageBlock
+class StaticpageBlock
 {
     public function fields()
     {

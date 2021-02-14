@@ -5,10 +5,12 @@ namespace backend\modules\Staticpage\models;
 use Yii;
 use common\framework\ActiveRecord;
 
+use backend\modules\Staticpage\services\StaticpageService;
+
 
 class Staticpage extends ActiveRecord
 {
-    use \api\modules\v1\models\staticpage\Staticpage;
+    public $service = true;
     
     public static function tableName()
     {

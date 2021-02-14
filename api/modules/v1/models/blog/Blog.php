@@ -1,12 +1,12 @@
 <?php
 
-namespace api\modules\v1\models\blog;
+namespace api\modules\v1\models\Blog;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
 
-trait Blog
+class Blog
 {
     public function fields()
     {

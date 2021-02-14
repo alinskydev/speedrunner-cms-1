@@ -1,10 +1,10 @@
 $(function() {
-    var el, action, sendData,
+    let el, action, sendData,
         csrf = $('meta[name="csrf-token"]').attr('content');
     
     //      File input
     
-    var fileName;
+    let fileName;
     
     $(document).on('change', '.custom-file-input', function() {
         fileName = $(this).val().split('\\').pop();
@@ -118,7 +118,7 @@ $(function() {
     
     //      ElFinder
     
-    var elfinderId, elfinderParams,
+    let elfinderId, elfinderParams,
         elfinderUrl = $('meta[name="elfinder-connection-url"]').attr('content');
     
     $(document).on('click', '[data-toggle="elfinder"] .yii2-elfinder-select-button', function() {
@@ -140,7 +140,7 @@ $(function() {
     
     //      Imperavi
     
-    var ImperaviImagesGetUrl = $('meta[name="imperavi-images-get-connection-url"]').attr('content'),
+    let ImperaviImagesGetUrl = $('meta[name="imperavi-images-get-connection-url"]').attr('content'),
         ImperaviImageUploadUrl = $('meta[name="imperavi-image-upload-connection-url"]').attr('content'),
         ImperaviImageDeleteUrl = $('meta[name="imperavi-image-delete-connection-url"]').attr('content');
     
@@ -183,7 +183,7 @@ $(function() {
     
     //      Activating tab with error after form validation
     
-    var tab;
+    let tab;
     
     $(document).on('afterValidate', '#update-form', function(event, messages, errorAttributes) {
         if (errorAttributes.length > 0) {
@@ -203,7 +203,7 @@ $(function() {
     
     //      Toast
     
-    var alertJson,
+    let alertJson,
         alertLoaderColors = {
             success: '#80CFB1',
             warning: '#F5C480',
@@ -230,7 +230,7 @@ $(function() {
     
     //      Save & reload
     
-    var url, urlParams;
+    let url, urlParams;
     
     $(document).on('click', '[data-toggle="save-and-update"]', function() {
         el = $(this).closest('form');
@@ -246,7 +246,7 @@ $(function() {
     
     //      GridView common button
     
-    var selection = $('.grid-view [name="selection[]"]');
+    let selection = $('.grid-view [name="selection[]"]');
     
     $(document).on('change', '.grid-view [name="selection[]"]', function() {
         $('.grid-view .common-buttons').addClass('d-none');
@@ -260,7 +260,7 @@ $(function() {
     
     //      Table relations
     
-    var rand,
+    let rand,
         relHtml, relHtmlTmp = [];
     
     $('.table-new-relation').each(function() {

@@ -24,7 +24,7 @@ class OrderService
         foreach ($this->model->products as $p) {
             $p->product->quantity += $new_status_action == 'plus' ? $p->quantity : (0 - $p->quantity);
             
-            if (!$p->product->save()) {
+            if (!$p->product->validate()) {
                 Yii::$app->session->removeFlash('success');
                 Yii::$app->session->addFlash('danger', Yii::t('app', 'Not enough quantity for {product}', [
                     'product' => $p->product->name,
@@ -33,6 +33,8 @@ class OrderService
                 $transaction->rollBack();
                 return false;
             }
+            
+            $p->product->updateAttributes(['quantity' => $p->product->quantity]);
         }
         
         $transaction->commit();

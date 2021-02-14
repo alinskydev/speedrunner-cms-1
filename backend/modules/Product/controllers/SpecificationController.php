@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductSpecification;
-use backend\modules\Product\modelsSearch\ProductSpecificationSearch;
+use backend\modules\Product\search\ProductSpecificationSearch;
 
 
 class SpecificationController extends CrudController

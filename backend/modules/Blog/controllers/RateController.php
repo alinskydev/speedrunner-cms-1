@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogRate;
-use backend\modules\Blog\modelsSearch\BlogRateSearch;
+use backend\modules\Blog\search\BlogRateSearch;
 
 
 class RateController extends CrudController

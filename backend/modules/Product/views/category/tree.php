@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var tree;
+        let tree;
         
         $('input[name="fancytree_search"]').on('keyup', function(e) {
             tree = $.ui.fancytree.getTree();

@@ -1048,6 +1048,15 @@ span.fancytree-active span.fancytree-title,
     background: #eee;
 }
 
+.yii2-elfinder-input-preview {
+    width: 100px;
+    margin-bottom: 1rem;
+}
+
+.yii2-elfinder-input-preview img {
+    width: 100%;
+}
+
 .table-new-relation {
     display: none;
 }

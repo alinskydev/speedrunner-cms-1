@@ -12,8 +12,6 @@ use common\services\FileService;
 
 class User extends ActiveRecord implements IdentityInterface
 {
-    use \api\modules\v1\models\user\User;
-    
     const PASSWORD_RESET_TOKEN_EXPIRE = 3600;
     
     public $new_password;
@@ -170,11 +168,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
-    }
-    
-    public static function find()
-    {
-        return new \backend\modules\User\models\query\UserQuery(get_called_class());
     }
     
     public function afterFind()

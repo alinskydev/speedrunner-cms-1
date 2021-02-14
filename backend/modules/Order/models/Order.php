@@ -5,7 +5,6 @@ namespace backend\modules\Order\models;
 use Yii;
 use common\framework\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use backend\modules\Order\services\OrderService;
 
 use backend\modules\User\models\User;
 
@@ -177,9 +176,7 @@ class Order extends ActiveRecord
             $old_status_action = ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action");
             
             if ($new_status_action != $old_status_action) {
-                $order_service = new OrderService($this);
-                
-                if (!$order_service->changeProductsQuantity($new_status_action)) {
+                if (!$this->service->changeProductsQuantity($new_status_action)) {
                     return false;
                 }
             }

@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogComment;
-use backend\modules\Blog\modelsSearch\BlogCommentSearch;
+use backend\modules\Blog\search\BlogCommentSearch;
 
 
 class CommentController extends CrudController

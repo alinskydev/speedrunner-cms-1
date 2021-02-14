@@ -1,12 +1,12 @@
 <?php
 
-namespace api\modules\v1\models\system;
+namespace api\modules\v1\models\System;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
 
-trait SystemSettings
+class SystemSettings
 {
     public function fields()
     {

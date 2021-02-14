@@ -147,7 +147,7 @@ unset($attr_types['select'], $attr_types['select2_ajax']);
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var el, action, sendData;
+        let el, action, sendData;
         
         $(document).on('click', '.btn-attr-add', function() {
             el = $(this);

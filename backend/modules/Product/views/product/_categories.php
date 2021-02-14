@@ -108,7 +108,7 @@ function selectCategories($data, $categories)
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var tree;
+        let tree;
         
         $('input[name="fancytree_search"]').on('keyup', function(e) {
             tree = $.ui.fancytree.getTree();

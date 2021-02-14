@@ -18,7 +18,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;
-use backend\modules\<?= $model->module_name ?>\modelsSearch\<?= $model->table_name ?>Search;
+use backend\modules\<?= $model->module_name ?>\search\<?= $model->table_name ?>Search;
 
 
 class <?= $model->controller_name ?>Controller extends CrudController

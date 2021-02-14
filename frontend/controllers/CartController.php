@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
-use common\services\CartService;
 
 
 class CartController extends Controller
@@ -37,7 +36,7 @@ class CartController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $cart = (new CartService)->changeQuantity($product, (int)Yii::$app->request->post('quantity'));
+        $cart = Yii::$app->services->cart->changeQuantity($product, Yii::$app->request->post('quantity'));
         
         return $this->asJson([
             'quantity' => ArrayHelper::getValue($cart, 'total.quantity', 0),

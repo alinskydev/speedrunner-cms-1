@@ -8,7 +8,7 @@ use common\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\System\modelsSearch\SystemLanguageSearch;
+use backend\modules\System\search\SystemLanguageSearch;
 
 
 class LanguageController extends CrudController

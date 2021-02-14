@@ -13,7 +13,7 @@ use yii\helpers\Inflector;
 class GeneratorForm extends Model
 {
     public $module_name;
-    public $generate_files = ['module', 'controller', 'models', 'modelsSearch', 'views'];
+    public $generate_files = ['module', 'controller', 'models', 'search', 'views'];
     
     public $controller_name;
     public $controller_actions = ['index', 'create', 'update', 'delete'];
@@ -54,7 +54,7 @@ class GeneratorForm extends Model
     
     public function getGenerateFiles()
     {
-        $result = ['module', 'controller', 'models', 'modelsSearch', 'views'];
+        $result = ['module', 'controller', 'models', 'search', 'views'];
         return array_combine($result, $result);
     }
     
@@ -123,11 +123,11 @@ class GeneratorForm extends Model
         
         //        Search models
         
-        if (in_array('modelsSearch', $this->generate_files)) {
-            $dir = $folder_module . 'modelsSearch/';
+        if (in_array('search', $this->generate_files)) {
+            $dir = $folder_module . 'search/';
             FileHelper::createDirectory($dir, $mode = 0644);
             
-            $file_content = Yii::$app->controller->renderPartial("$folder_template_render/modelsSearch/Model.php", ['model' => $this]);
+            $file_content = Yii::$app->controller->renderPartial("$folder_template_render/search/Model.php", ['model' => $this]);
             $file = fopen($dir . $this->table_name . 'Search.php', 'w');
             fwrite($file, $file_content);
             fclose($file);

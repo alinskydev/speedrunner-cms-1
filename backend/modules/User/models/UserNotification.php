@@ -9,6 +9,8 @@ use yii\helpers\ArrayHelper;
 
 class UserNotification extends ActiveRecord
 {
+    public $translations_tmp;
+    
     public static function tableName()
     {
         return 'UserNotification';

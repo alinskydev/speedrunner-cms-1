@@ -23,7 +23,7 @@ class CartService
         if ($quantity > 0) {
             $cart['products'][$id] = $product->attributes;
             $cart['products'][$id]['total_quantity'] = $quantity;
-            $cart['products'][$id]['total_price'] = $product->realPrice() * $quantity;
+            $cart['products'][$id]['total_price'] = $product->service->realPrice() * $quantity;
         } else {
             ArrayHelper::remove($cart['products'], $id);
         }

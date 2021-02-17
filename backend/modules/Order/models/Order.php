@@ -136,11 +136,6 @@ class Order extends ActiveRecord
         ];
     }
     
-    public function realTotalPrice()
-    {
-        return $this->total_price + $this->delivery_price;
-    }
-    
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);

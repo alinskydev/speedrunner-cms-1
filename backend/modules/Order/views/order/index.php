@@ -78,10 +78,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'total_price',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $result[] = $model->getAttributeLabel('total_quantity') . ": $model->total_quantity";
-                    $result[] = $model->getAttributeLabel('total_price') . ": $model->total_price";
-                    $result[] = $model->getAttributeLabel('delivery_price') . ": $model->delivery_price";
-                    $result[] = Yii::t('app', 'Checkout price') . ": " . $model->realTotalPrice();
+                    $prices = ['total_quantity', 'total_price', 'delivery_price'];
+                    
+                    foreach ($prices as $p) {
+                        $result[] = $model->getAttributeLabel($p) . ': ' . ArrayHelper::getValue($model, $p, 0);
+                    }
+                    
+                    $result[] = Yii::t('app', 'Checkout price') . ": " . $model->service->realTotalPrice();
                     
                     return implode('<br>', $result);
                 }

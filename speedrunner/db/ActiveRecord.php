@@ -12,7 +12,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 {
     const HTMLPURIFY_EXCLUDE_CLASSES = [];
     
-    public $service;
+    public $service = null;
     
     public function init()
     {
@@ -20,7 +20,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         $service_class_name = str_replace('\models\\', '\services\\', get_called_class()) . 'Service';
         
-        if (!$this->service) {
+        if ($this->service === null) {
             $this->service = class_exists($service_class_name) ? new $service_class_name($this) : null;
         }
         
@@ -89,7 +89,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML purifier
         
-        $class_name = StringHelper::basename(get_called_class());
+        $class_name = StringHelper::basename($this->modelClass);
         
         if (!in_array($class_name, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
             foreach ($this->dirtyAttributes as $key => $a) {

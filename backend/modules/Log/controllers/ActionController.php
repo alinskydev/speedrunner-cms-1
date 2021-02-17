@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\search\LogActionSearch;
-use backend\modules\Log\lists\LogActionList;
+use backend\modules\Log\lists\LogActionModelsList;
 
 
 class ActionController extends CrudController
@@ -50,7 +50,7 @@ class ActionController extends CrudController
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
                 'render_params' => [
-                    'log_action_modules_list' => (new LogActionList)::$models,
+                    'log_action_models_list' => (new LogActionModelsList)::$data,
                 ]
             ],
         ]);

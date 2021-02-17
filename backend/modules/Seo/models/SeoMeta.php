@@ -8,6 +8,8 @@ use speedrunner\db\ActiveRecord;
 
 class SeoMeta extends ActiveRecord
 {
+    public $service = false;
+    
     public static function tableName()
     {
         return 'SeoMeta';

@@ -160,11 +160,6 @@ class Product extends ActiveRecord
         ];
     }
     
-    public function realPrice()
-    {
-        return round($this->price * (1 - $this->discount / 100));
-    }
-    
     public function getBrand()
     {
         return $this->hasOne(ProductBrand::className(), ['id' => 'brand_id']);

@@ -10,7 +10,7 @@ use yii\helpers\StringHelper;
 
 use backend\modules\Log\models\LogAction;
 use backend\modules\Log\models\LogActionAttr;
-use backend\modules\Log\lists\LogActionList;
+use backend\modules\Log\lists\LogActionModelsList;
 
 
 class LogActionBehavior extends Behavior
@@ -117,7 +117,7 @@ class LogActionBehavior extends Behavior
             return Yii::$app->session->addFlash('warning', Yii::t('app', "Record hasn't been saved to the actions log"));
         }
         
-        $relations = ArrayHelper::getValue(LogActionList::$models, "$log_action->model_class.relations", []);
+        $relations = ArrayHelper::getValue(LogActionModelsList::$data, "$log_action->model_class.relations", []);
         $counter = 0;
         
         foreach ($changedAttributes as $key => $a) {

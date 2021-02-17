@@ -8,14 +8,14 @@ use yii\helpers\ArrayHelper;
 use backend\modules\Log\models\LogAction;
 
 
-class LogActionList
+class LogActionModelsList
 {
-    public static $models = null;
+    public static $data = null;
     
     public function __construct()
     {
-        if (static::$models === null) {
-            static::$models = [
+        if (static::$data === null) {
+            static::$data = [
                 'Product' => [
                     'name' => 'Product',
                     'module' => Yii::t('app', 'Products'),

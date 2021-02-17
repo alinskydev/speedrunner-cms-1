@@ -5,20 +5,13 @@ namespace backend\modules\Log\services;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use speedrunner\services\ActiveService;
 
-use backend\modules\Log\models\LogAction;
-use backend\modules\Log\lists\LogActionList;
+use backend\modules\Log\lists\LogActionModelsList;
 
 
-class LogActionService
+class LogActionService extends ActiveService
 {
-    private $model;
-    
-    public function __construct(LogAction $model)
-    {
-        $this->model = $model;
-    }
-    
     public function attrsColumn($attrs_type, $view_type)
     {
         $result = [];
@@ -77,7 +70,7 @@ class LogActionService
     
     public function findAndFill()
     {
-        if ($model = ArrayHelper::getValue(LogActionList::$models, $this->model->model_class)) {
+        if ($model = ArrayHelper::getValue(LogActionModelsList::$data, $this->model->model_class)) {
             if ($index_url = ArrayHelper::getValue($model, 'index_url')) {
                 $model['index_url'] = [$index_url[0], $index_url[1] => $this->model['model_id']];
             }

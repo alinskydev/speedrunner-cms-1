@@ -4,17 +4,14 @@ namespace backend\modules\Order\services;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use speedrunner\services\ActiveService;
 
-use backend\modules\Order\models\Order;
 
-
-class OrderService
+class OrderService extends ActiveService
 {
-    private $model;
-    
-    public function __construct(Order $model)
+    public function realTotalPrice()
     {
-        $this->model = $model;
+        return $this->model->total_price + $this->model->delivery_price;
     }
     
     public function changeProductsQuantity($new_status_action)

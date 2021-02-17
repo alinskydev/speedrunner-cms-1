@@ -86,6 +86,7 @@ $config = [
                 'image' => 'speedrunner\services\ImageService',
                 'mail' => 'speedrunner\services\MailService',
                 
+                'notification' => 'backend\modules\User\services\UserNotificationService',
                 'settings' => 'backend\modules\System\services\SystemSettingsService',
                 'staticpage' => 'backend\modules\Staticpage\services\StaticpageService',
             ],

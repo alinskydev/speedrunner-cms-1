@@ -14,10 +14,21 @@ class ActiveQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['slug' => $slug]);
     }
     
+    public function setTranslationAttributes(array $attributes)
+    {
+        $lang = Yii::$app->language;
+        $model_class = StringHelper::basename($this->modelClass);
+        
+        foreach ($attributes as $a) {
+            $this->addSelect([new Expression("$model_class.$a->>'$.$lang' as $a")]);
+        }
+        
+        return $this;
+    }
+    
     public function itemsList($attribute, $type, $q = null, $limit = 20)
     {
         $lang = Yii::$app->language;
-        
         $model_class = StringHelper::basename($this->modelClass);
         
         switch ($type) {

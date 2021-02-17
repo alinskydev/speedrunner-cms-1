@@ -10,7 +10,7 @@ use backend\modules\Staticpage\services\StaticpageService;
 
 class Staticpage extends ActiveRecord
 {
-    public $service = true;
+    public $service = false;
     
     public static function tableName()
     {

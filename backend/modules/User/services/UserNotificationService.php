@@ -3,27 +3,17 @@
 namespace backend\modules\User\services;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use speedrunner\services\ActiveService;
+
 use backend\modules\User\models\UserNotification;
 
 
-class UserNotificationService
+class UserNotificationService extends ActiveService
 {
-    private $model;
-    
-    public function __construct(UserNotification $model)
+    public function __construct(?UserNotification $model = null)
     {
-        $this->model = $model;
-    }
-    
-    public function actionData()
-    {
-        switch ($this->model->action_type) {
-            case 'order_created':
-                return [
-                    'label' => Yii::t('app_notification', 'You have new order'),
-                    'url' => ['/order/order/index', 'OrderSearch[id]' => $this->model->action_id],
-                ];
-        }
+        $this->model = $model ?? new UserNotification();
     }
     
     public static function create($user_ids, $action_type, $action_id, $params = [])
@@ -35,6 +25,17 @@ class UserNotificationService
             $model->action_id = $action_id;
             $model->params = $params;
             $model->save();
+        }
+    }
+    
+    public function actionData()
+    {
+        switch ($this->model->action_type) {
+            case 'order_created':
+                return [
+                    'label' => Yii::t('app_notification', 'You have new order'),
+                    'url' => ['/order/order/index', 'OrderSearch[id]' => $this->model->action_id],
+                ];
         }
     }
 }

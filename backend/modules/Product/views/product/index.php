@@ -94,7 +94,7 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
                     $result[] = $model->price ? $model->getAttributeLabel('price') . ": $model->price" : null;
                     $result[] = $model->discount ? $model->getAttributeLabel('discount') . ": $model->discount%" : null;
                     
-                    return implode('<br>', $result) . '<hr>' . Yii::t('app', 'Total price') . ': ' . $model->realPrice();
+                    return implode('<br>', $result) . '<hr>' . Yii::t('app', 'Total price') . ': ' . $model->service->realPrice();
                 }
             ],
             'quantity',

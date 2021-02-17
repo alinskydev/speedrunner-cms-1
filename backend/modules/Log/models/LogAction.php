@@ -6,7 +6,7 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Log\lists\LogActionList;
+use backend\modules\Log\lists\LogActionModelsList;
 use backend\modules\User\models\User;
 
 
@@ -22,7 +22,7 @@ class LogAction extends ActiveRecord
         return [
             [['type', 'model_class'], 'required'],
             [['type'], 'in', 'range' => array_keys($this->types())],
-            [['model_class'], 'in', 'range' => array_keys((new LogActionList)::$models)],
+            [['model_class'], 'in', 'range' => array_keys((new LogActionModelsList)::$data)],
         ];
     }
     

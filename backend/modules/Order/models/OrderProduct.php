@@ -51,11 +51,9 @@ class OrderProduct extends ActiveRecord
     
     public function beforeSave($insert)
     {
-        if ($insert) {
-            $this->product_json = $this->product->attributes;
-            $this->price = $this->product->price;
-            $this->total_price = $this->price * $this->quantity;
-        }
+        $this->product_json = $this->product->attributes;
+        $this->price = $this->product->service->realPrice();
+        $this->total_price = $this->price * $this->quantity;
         
         return parent::beforeSave($insert);
     }

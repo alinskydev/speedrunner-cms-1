@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class SystemSettings extends ActiveRecord
 {
-    public $service = true;
+    public $service = false;
     
     public static function tableName()
     {

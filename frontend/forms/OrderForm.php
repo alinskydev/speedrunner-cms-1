@@ -6,8 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\User\services\UserNotificationService;
-
 use backend\modules\Order\models\Order;
 use backend\modules\Order\models\OrderProduct;
 use backend\modules\Product\models\Product;
@@ -75,7 +73,7 @@ class OrderForm extends Model
         
         //        Notifications
         
-        UserNotificationService::create(
+        Yii::$app->services->notification->create(
             User::find()->andWhere(['role' => 'admin'])->column(),
             'order_created', $this->order->id,
             [

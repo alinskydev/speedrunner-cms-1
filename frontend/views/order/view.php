@@ -41,5 +41,5 @@ $attrs = ['full_name', 'phone', 'email', 'address', 'created'];
 ]) ?>
 
 <?= Yii::t('app', 'Total price: {price} сум', [
-    'price' => Yii::$app->formatter->asDecimal($model->realTotalPrice())
+    'price' => Yii::$app->formatter->asDecimal($model->service->realTotalPrice())
 ]) ?>

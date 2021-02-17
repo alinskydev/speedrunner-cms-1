@@ -54,10 +54,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'model_class',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map($log_action_modules_list, 'name', 'label', 'module'),
-                'value' => function ($model) use ($log_action_modules_list) {
-                    $result[] = Html::tag('b', ArrayHelper::getValue($log_action_modules_list, "$model->model_class.label"));
-                    $result[] = '(' . ArrayHelper::getValue($log_action_modules_list, "$model->model_class.module") . ')';
+                'filter' => ArrayHelper::map($log_action_models_list, 'name', 'label', 'module'),
+                'value' => function ($model) use ($log_action_models_list) {
+                    $result[] = Html::tag('b', ArrayHelper::getValue($log_action_models_list, "$model->model_class.label"));
+                    $result[] = '(' . ArrayHelper::getValue($log_action_models_list, "$model->model_class.module") . ')';
                     $result[] = "Id: $model->model_id";
                     
                     return implode('<br>', $result);

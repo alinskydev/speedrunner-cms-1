@@ -89,7 +89,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML purifier
         
-        $class_name = StringHelper::basename($this->modelClass);
+        $class_name = StringHelper::basename(get_called_class());
         
         if (!in_array($class_name, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
             foreach ($this->dirtyAttributes as $key => $a) {

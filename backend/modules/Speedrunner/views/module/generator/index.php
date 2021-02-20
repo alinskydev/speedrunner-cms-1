@@ -110,11 +110,15 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
 <script>
+    function camel2id(word) {
+        return word.split(/(?=[A-Z])/).join('_').toLowerCase();
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
         let el, action, sendData;
         
         $('#generatorform-module_name').on('change', function() {
-            $('#generatorform-table_name').val($(this).val()).trigger('change');
+            $('#generatorform-table_name').val(camel2id($(this).val())).trigger('change');
             $('#generatorform-controller_name').val($(this).val());
         });
         

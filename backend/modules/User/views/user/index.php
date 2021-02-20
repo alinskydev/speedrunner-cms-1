@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'header' => false,
@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'username',
             [
                 'attribute' => 'role',
-                'filter' => ArrayHelper::getColumn($modelSearch->roles(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->roles(), "$model->role.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->roles(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->roles(), "$model->role.label"),
             ],
             'email:email',
             'full_name',

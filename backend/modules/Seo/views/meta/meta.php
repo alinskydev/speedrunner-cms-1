@@ -10,7 +10,7 @@ use backend\modules\Seo\models\SeoMeta;
 use backend\modules\Seo\services\SeoMetaService;
 
 $seo_meta = (new SeoMetaService($model))->getMetaValue();
-$seo_meta_types = SeoMeta::types();
+$seo_meta_types = (new SeoMeta())->enums->types();
 
 ?>
 
@@ -21,7 +21,7 @@ $seo_meta_types = SeoMeta::types();
         <?php
             $value = ArrayHelper::getValue($seo_meta, $key);
             
-            switch ($s_m_t['type']) {
+            switch ($s_m_t['input_type']) {
                 case 'text_input':
                     echo Html::input('text', "SeoMeta[$key]", $value, ['class' => 'form-control']);
                     break;

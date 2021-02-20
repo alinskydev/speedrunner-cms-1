@@ -46,7 +46,7 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                             <?= $user->full_name ?>
                         </div>
                         <small>
-                            <?= ArrayHelper::getValue($user->roles(), "$user->role.label") ?>
+                            <?= ArrayHelper::getValue($user->enums->roles(), "$user->role.label") ?>
                         </small>
                     </div>
                     

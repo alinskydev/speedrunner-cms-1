@@ -9,12 +9,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <div class="site-error">
     <h2 class="main-title">
-        <?= $this->title ?>
+        <?= $exception->getName() ?>
     </h2>
     
-    <?php if ($exception) { ?>
-        <div class="alert alert-danger">
-            <?= nl2br(Html::encode($exception->getMessage())) ?>
-        </div>
-    <?php } ?>
+    <div class="alert alert-danger">
+        <?= nl2br(Html::encode($exception->getMessage())) ?>
+    </div>
 </div>

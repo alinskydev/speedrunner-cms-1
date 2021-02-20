@@ -40,6 +40,7 @@
 
 body {
     font-family: "Main", sans-serif;
+    line-height: 24px;
 }
 
 .btn:not(.btn-link):hover {
@@ -387,7 +388,8 @@ header .dropdown-toggle::after {
 }
 
 .nav-wrapper-side.opened {
-    width: 300px;
+    width: 250px;
+    min-width: 250px;
 }
 
 .nav-wrapper-side .site-logo {
@@ -824,6 +826,10 @@ body .select2-container .select2-selection--multiple .select2-selection__clear {
     font-size: 1.3rem;
 }
 
+body .select2-hidden-accessible {
+    display: none;
+}
+
 .file-input {
     margin-top: 15px;
 }
@@ -960,10 +966,15 @@ span.fancytree-active span.fancytree-title,
     
     .nav-wrapper-side .site-logo img {
         display: block;
+        margin: auto;
     }
     
     .nav-wrapper-side:not(.opened) .nav-items {
         display: none;
+    }
+    
+    body .select2.select2-container {
+        min-width: none;
     }
 }
 

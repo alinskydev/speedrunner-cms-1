@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'speedrunner\widgets\grid\CheckboxColumn',
@@ -59,9 +59,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'category_id',
                 'format' => 'raw',
                 'filter' => Select2::widget([
-                    'model' => $modelSearch,
+                    'model' => $searchModel,
                     'attribute' => 'category_id',
-                    'data' => [$modelSearch->category_id => ArrayHelper::getValue($modelSearch->category, 'name')],
+                    'data' => [$searchModel->category_id => ArrayHelper::getValue($searchModel->category, 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -79,9 +79,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'tags_tmp',
                 'format' => 'raw',
                 'filter' => Select2::widget([
-                    'model' => $modelSearch,
+                    'model' => $searchModel,
                     'attribute' => 'tags_tmp',
-                    'data' => [$modelSearch->tags_tmp => ArrayHelper::getValue(BlogTag::findOne($modelSearch->tags_tmp), 'name')],
+                    'data' => [$searchModel->tags_tmp => ArrayHelper::getValue(BlogTag::findOne($searchModel->tags_tmp), 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,

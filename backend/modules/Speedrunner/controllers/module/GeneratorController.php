@@ -5,20 +5,13 @@ namespace backend\modules\Speedrunner\controllers\module;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 
 use backend\modules\Speedrunner\forms\module\GeneratorForm;
 
 
 class GeneratorController extends Controller
 {
-    private $dbSchema;
-    
-    public function beforeAction($action)
-    {
-        $this->dbSchema = Yii::$app->db->schema;
-        return parent::beforeAction($action);
-    }
-    
     public function actionIndex()
     {
         $model = new GeneratorForm();
@@ -33,7 +26,7 @@ class GeneratorController extends Controller
             return $this->refresh();
         }
         
-        foreach ($this->dbSchema->getTableNames() as $t) {
+        foreach (Yii::$app->db->schema->getTableNames() as $t) {
             $tables[$t] = $t;
         }
             
@@ -47,8 +40,12 @@ class GeneratorController extends Controller
     {
         //        Relations
         
-        $table_schema_all = ArrayHelper::index($this->dbSchema->getTableSchemas(), 'name');
+        $table_schema_all = ArrayHelper::index(Yii::$app->db->schema->getTableSchemas(), 'name');
         $table_schema = ArrayHelper::getValue($table_schema_all, $table_name);
+        
+        if (!$table_schema) {
+            return false;
+        }
         
         $foreign_keys['internal'] = ArrayHelper::index($table_schema->foreignKeys, 0);
         $foreign_keys['external'] = ArrayHelper::map($table_schema_all, 'name', function ($value) use ($table_name) {
@@ -62,7 +59,7 @@ class GeneratorController extends Controller
         $foreign_keys['external'] = array_filter($foreign_keys['external']);
         
         $data['relations'] = $this->renderAjax('_model_relations', [
-            'table_name' => $table_name,
+            'table_name' => Inflector::id2camel($table_name, '_'),
             'foreign_keys' => $foreign_keys,
         ]);
         

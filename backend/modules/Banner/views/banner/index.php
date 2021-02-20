@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'attribute' => 'id',
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'name',
             [
                 'attribute' => 'location',
-                'filter' => ArrayHelper::getColumn($modelSearch->locations(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->locations(), "$model->location.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->locations(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->locations(), "$model->location.label"),
             ],
             'created',
             'updated',

@@ -6,20 +6,23 @@ use backend\modules\Staticpage\models\Staticpage;
 
 return [
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-user']) . Yii::t('app', 'Users'),
+        'label' => Yii::t('app', 'Users'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-user']),
         'items' => [
             ['label' => Yii::t('app', 'Users'), 'url' => ['/user/user/index']],
             ['label' => Yii::t('app', 'RBAC'), 'url' => ['/rbac/rbac/index'], 'visible' => YII_ENV_DEV],
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Static pages'),
+        'label' => Yii::t('app', 'Static pages'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-file-alt']),
         'items' => ArrayHelper::getColumn(Staticpage::find()->asArray()->all(), function($value) {
             return ['label' => $value['label'], 'url' => ['/staticpage/staticpage/update', 'name' => $value['name']]];
         }),
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-server']) . Yii::t('app', 'Content'),
+        'label' => Yii::t('app', 'Content'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-server']),
         'items' => [
             ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/tree']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/page/page/index']],
@@ -27,14 +30,16 @@ return [
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-th']) . Yii::t('app', 'Blocks'),
+        'label' => Yii::t('app', 'Blocks'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-th']),
         'items' => [
             ['label' => Yii::t('app', 'Types'), 'url' => ['/block/type/index']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/block/page/index']],
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-newspaper']) . Yii::t('app', 'Blogs'),
+        'label' => Yii::t('app', 'Blogs'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-newspaper']),
         'items' => [
             ['label' => Yii::t('app', 'Blogs'), 'url' => ['/blog/blog/index']],
             ['label' => Yii::t('app', 'Categories'), 'url' => ['/blog/category/index']],
@@ -44,7 +49,8 @@ return [
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-boxes']) . Yii::t('app', 'Products'),
+        'label' => Yii::t('app', 'Products'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-boxes']),
         'items' => [
             ['label' => Yii::t('app', 'Products'), 'url' => ['/product/product/index']],
             ['label' => Yii::t('app', 'Categories'), 'url' => ['/product/category/tree']],
@@ -53,14 +59,16 @@ return [
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-shopping-cart']) . Yii::t('app', 'Orders'),
+        'label' => Yii::t('app', 'Orders'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-shopping-cart']),
         'items' => [
             ['label' => Yii::t('app', 'Orders'), 'url' => ['/order/order/index']],
         ],
     ],
     
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-cogs']) . Yii::t('app', 'System'),
+        'label' => Yii::t('app', 'System'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-cogs']),
         'items' => [
             ['label' => Yii::t('app', 'Settings'),'url' => ['/system/settings/update']],
             ['label' => Yii::t('app', 'Languages'), 'url' => ['/system/language/index']],
@@ -69,14 +77,16 @@ return [
         ],
     ],
     [
-        'label' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']) . Yii::t('app', 'Cache'),
+        'label' => Yii::t('app', 'Cache'),
+        'icon' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']),
         'items' => [
             ['label' => Yii::t('app', 'Remove thumbs'), 'url' => ['/cache/remove-thumbs']],
             ['label' => Yii::t('app', 'Clear'), 'url' => ['/cache/clear']],
         ],
     ],
     [
-        'label' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']) . 'Speedrunner',
+        'label' => 'Speedrunner',
+        'icon' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']),
         'visible' => YII_ENV_DEV,
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],

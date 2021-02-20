@@ -10,13 +10,14 @@ use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
-    public function actionError()
+    public function actions()
     {
-        $this->layout = 'error';
-        
-        return $this->render('error', [
-            'exception' => Yii::$app->errorHandler->exception
-        ]);
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+                'layout' => 'error',
+            ],
+        ];
     }
     
     public function actionIndex()

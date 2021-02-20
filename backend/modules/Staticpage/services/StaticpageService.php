@@ -14,14 +14,14 @@ class StaticpageService
     
     public function __construct()
     {
-        if (static::$pages === null) {
-            static::$pages = Staticpage::find()->with(['blocks'])->indexBy('name')->all();
+        if (self::$pages === null) {
+            self::$pages = Staticpage::find()->with(['blocks'])->indexBy('name')->all();
         }
     }
     
     public function __get($name)
     {
-        if ($page = ArrayHelper::getValue(static::$pages, $name)) {
+        if ($page = ArrayHelper::getValue(self::$pages, $name)) {
             return [
                 'page' => $page,
                 'blocks' => ArrayHelper::map($page->blocks, 'name', 'value'),

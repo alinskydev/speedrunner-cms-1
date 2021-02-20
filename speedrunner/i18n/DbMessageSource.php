@@ -35,7 +35,7 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
             $this->cache = Instance::ensure($this->cache, 'yii\caching\CacheInterface');
         }
         
-        $this->on(static::EVENT_MISSING_TRANSLATION, function($event) {
+        $this->on(self::EVENT_MISSING_TRANSLATION, function($event) {
             if (!$this->issetId($event->category, $event->message)) {
                 $id = (new Query())->select("id")->from($this->sourceMessageTable)
                     ->where('category = :category AND BINARY message = :message', [

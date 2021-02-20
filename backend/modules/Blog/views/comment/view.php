@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 return $form->field($model, 'status', [
                                     'template' => '{input}{hint}{error}',
                                     'options' => ['class' => 'm-0'],
-                                ])->dropDownList(ArrayHelper::getColumn($model->statuses(), 'label'));
+                                ])->dropDownList(ArrayHelper::getColumn($model->enums->statuses(), 'label'));
                             },
                         ],
                         'created',

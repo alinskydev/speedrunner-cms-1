@@ -14,13 +14,13 @@ class LogActionModelsList
     
     public function __construct()
     {
-        if (static::$data === null) {
-            static::$data = [
+        if (self::$data === null) {
+            self::$data = [
                 'Product' => [
                     'name' => 'Product',
                     'module' => Yii::t('app', 'Products'),
                     'label' => Yii::t('app', 'Products'),
-                    'model' => new \backend\modules\Product\models\Product(),
+                    'model' => ($model = new \backend\modules\Product\models\Product()),
                     'index_url' => ['/product/product/index', 'ProductSearch[id]'],
                     'relations' => [
                         'brand_id' => ['link' => 'brand', 'attr' => 'name'],
@@ -29,7 +29,7 @@ class LogActionModelsList
                     'attributes' => [
                         'translation' => (new \backend\modules\Product\models\Product())->behaviors['translation']->attributes,
                         'boolean' => [],
-                        'select' => [],
+                        'enum' => [],
                         'text' => ['full_description'],
                         'json' => ['images', 'variations_tmp'],
                     ],
@@ -39,13 +39,17 @@ class LogActionModelsList
                     'name' => 'User',
                     'module' => Yii::t('app', 'Users'),
                     'label' => Yii::t('app', 'Users'),
-                    'model' => new \backend\modules\User\models\User(),
+                    'model' => ($model = new \backend\modules\User\models\User()),
                     'index_url' => ['/user/user/index', 'UserSearch[id]'],
                     'relations' => [],
                     'attributes' => [
                         'translation' => [],
                         'boolean' => [],
-                        'select' => ['role' => 'roles', 'design_theme' => 'designThemes', 'design_font' => 'designFonts'],
+                        'enum' => [
+                            'role' => $model->enums->roles(),
+                            'design_theme' => $model->enums->designThemes(),
+                            'design_font' => $model->enums->designFonts(),
+                        ],
                         'text' => [],
                         'json' => [],
                     ],

@@ -33,7 +33,7 @@ class FileBehavior extends Behavior
         $method = $this->multiple ? 'getInstances' : 'getInstance';
         
         foreach ($this->attributes as $a) {
-            if ($value = UploadedFile::{$method}($this->owner, $a)) {
+            if ($value = forward_static_call([UploadedFile::className(), $method], $this->owner, $a)) {
                 $this->owner->{$a} = $value;
             }
         }

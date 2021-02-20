@@ -12,15 +12,13 @@ class FileDeleteAction extends Action
 {
     public array $allowed_attributes = [];
     
-    public function run()
+    public function run($id, $attr)
     {
-        $attr = Yii::$app->request->get('attr');
-        
         if (!in_array($attr, $this->allowed_attributes)) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
-        if (!($model = $this->controller->findModel())) {
+        if (!($model = $this->controller->findModel($id))) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         

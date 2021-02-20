@@ -9,19 +9,16 @@ use yii\helpers\ArrayHelper;
 use speedrunner\services\FileService;
 
 use backend\modules\Block\models\BlockPage;
-use backend\modules\Block\search\BlockPageSearch;
 use backend\modules\Block\models\BlockType;
 use backend\modules\Block\models\Block;
 
 
 class PageController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new BlockPage();
-        $this->modelSearch = new BlockPageSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -47,14 +44,14 @@ class PageController extends CrudController
         ]);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return BlockPage::find()->with(['blocks.type'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['blocks.type'])->andWhere(['id' => $id])->one();
     }
     
     public function actionUpdate($id)
     {
-        $model = BlockPage::find()->with(['blocks', 'blocks.type'])->andWhere(['id' => $id])->one();
+        $model = $this->findModel($id);
         
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);

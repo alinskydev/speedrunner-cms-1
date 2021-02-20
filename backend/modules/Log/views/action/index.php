@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'attribute' => 'id',
@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'user_id',
                 'format' => 'raw',
                 'filter' => Select2::widget([
-                    'model' => $modelSearch,
+                    'model' => $searchModel,
                     'attribute' => 'user_id',
-                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'username')],
+                    'data' => [$searchModel->user_id => ArrayHelper::getValue($searchModel->user, 'username')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -48,8 +48,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             [
                 'attribute' => 'type',
-                'filter' => ArrayHelper::getColumn($modelSearch->types(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->types(), "$model->type.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->types(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->types(), "$model->type.label"),
             ],
             [
                 'attribute' => 'model_class',

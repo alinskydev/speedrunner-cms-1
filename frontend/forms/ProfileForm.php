@@ -30,7 +30,7 @@ class ProfileForm extends Model
             throw new InvalidParamException(Yii::t('app', 'Not authorized'));
         }
         
-        foreach (static::PROFILE_ATTRIBUTES as $a) {
+        foreach (self::PROFILE_ATTRIBUTES as $a) {
             $this->{$a} = $this->user->{$a};
         }
     }
@@ -80,7 +80,7 @@ class ProfileForm extends Model
     {
         $user = $this->user;
         
-        foreach (static::PROFILE_ATTRIBUTES as $a) {
+        foreach (self::PROFILE_ATTRIBUTES as $a) {
             $user->{$a} = $this->{$a};
         }
         

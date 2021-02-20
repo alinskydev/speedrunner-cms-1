@@ -10,6 +10,6 @@ class ProductRelatedRef extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductRelatedRef';
+        return '{{%product_related_ref}}';
     }
 }

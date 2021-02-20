@@ -1,6 +1,8 @@
 <?php
 
 $app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
+$routes_file = __DIR__ . "/../../$app/config/routes.php";
+$routes = $app && file_exists($routes_file) ? require $routes_file : [];
 
 $config = [
     'timeZone' => 'UTC',
@@ -23,13 +25,13 @@ $config = [
             'translations' => [
                 'app*' => [
                     'class' => 'speedrunner\i18n\DbMessageSource',
-                    'sourceMessageTable' => 'TranslationSource',
-                    'messageTable' => 'TranslationMessage',
+                    'sourceMessageTable' => 'translation_source',
+                    'messageTable' => 'translation_message',
                 ],
                 'yii2*' => [
                     'class' => 'speedrunner\i18n\DbMessageSource',
-                    'sourceMessageTable' => 'TranslationSource',
-                    'messageTable' => 'TranslationMessage',
+                    'sourceMessageTable' => 'translation_source',
+                    'messageTable' => 'translation_message',
                 ],
             ],
         ],
@@ -43,6 +45,7 @@ $config = [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'useFileTransport' => true,
         ],
 
         //        URL managers
@@ -51,7 +54,7 @@ $config = [
             'class' => 'speedrunner\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => $app ? require __DIR__ . "/../../$app/config/routes.php" : [],
+            'rules' => $routes,
         ],
         'urlManagerApi' => [
             'class' => 'speedrunner\web\UrlManager',
@@ -78,8 +81,9 @@ $config = [
         //        Services
         
         'services' => [
-            'class' => 'speedrunner\bootstrap\Services',
-            'services' => [
+            'class' => 'speedrunner\bootstrap\Components',
+            'components' => [
+                'array' => 'speedrunner\services\ArrayService',
                 'cart' => 'speedrunner\services\CartService',
                 'html' => 'speedrunner\services\HtmlService',
                 'i18n' => 'speedrunner\services\I18NService',

@@ -14,10 +14,12 @@ class UnchangeableValidator extends Validator
     
     public function validateAttribute($model, $attribute)
     {
+        $message = $this->message ?? Yii::t('app', 'You cannot change {attribute}', [
+            'attribute' => $model->getAttributeLabel($attribute),
+        ]);
+        
         if (!$model->isNewRecord && $model->{$attribute} != ArrayHelper::getValue($model->oldAttributes, $attribute)) {
-            $this->addError($model, $attribute, Yii::t('app', 'You cannot change {attribute}', [
-                'attribute' => $model->getAttributeLabel($attribute),
-            ]));
+            $this->addError($model, $attribute, $message);
         }
     }
 }

@@ -6,7 +6,6 @@ use Yii;
 use yii\web\Controller;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
-use speedrunner\services\ArrayService;
 
 use frontend\forms\ContactForm;
 
@@ -19,6 +18,9 @@ class SiteController extends Controller
     public function actions()
     {
         return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
             'contact' => [
                 'class' => Actions\web\FormAction::className(),
                 'model_class' => ContactForm::className(),
@@ -30,21 +32,12 @@ class SiteController extends Controller
         ];
     }
     
-    public function actionError()
-    {
-        return $this->render('error', [
-            'exception' => Yii::$app->errorHandler->exception
-        ]);
-    }
-    
     public function actionIndex()
     {
         $page = Yii::$app->services->staticpage->home;
         
-        ProductCategory::find()->setTranslationAttributes([])->all();
-        
         $categories_tree = ProductCategory::find()->andWhere(['depth' => 0])->one()->setJsonAttributes(['name'])->tree();
-        $categories = (new ArrayService($categories_tree))->buildFullPath('slug');
+        $categories = Yii::$app->services->array->buildFullPath($categories_tree, 'slug');
         
         return $this->render('index', [
             'page' => $page['page'],

@@ -10,7 +10,7 @@ class BannerGroup extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BannerGroup';
+        return '{{%banner_group}}';
     }
     
     public function behaviors()

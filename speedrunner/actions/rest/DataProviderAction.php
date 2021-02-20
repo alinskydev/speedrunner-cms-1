@@ -5,22 +5,27 @@ namespace speedrunner\actions\rest;
 use Yii;
 use yii\base\Action;
 use yii\helpers\ArrayHelper;
+use yii\db\ActiveRecord;
 
 
 class DataProviderAction extends Action
 {
-    public $modelSearch;
+    public ActiveRecord $model;
     public array $render_params = [];
     
     public function run()
     {
-        $this->modelSearch->load([$this->modelSearch->formName() => Yii::$app->request->get('filter')]);
-        $this->modelSearch->beforeSearch();
+        $params = Yii::$app->request->get('filter');
+        array_walk_recursive($params, function(&$v) { $v = trim($v); });
         
-        $dataProvider = $this->modelSearch->search();
+        $this->model = $this->model->searchModel;
+        $this->model->load([$this->model->formName() => $params]);
+        $this->model->beforeSearch();
+        
+        $dataProvider = $this->model->search();
         $dataProvider->pagination->totalCount = $dataProvider->query->count();
         
-        $this->modelSearch->afterSearch();
+        $this->model->afterSearch();
         
         $render_params = [
             'data' => $dataProvider,

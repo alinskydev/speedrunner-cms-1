@@ -5,6 +5,7 @@ namespace speedrunner\services;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 
 class HtmlService
@@ -31,5 +32,10 @@ class HtmlService
         }
         
         return Html::tag('div', implode(' ', $result ?? []), ['class' => 'float-right']);
+    }
+    
+    public static function dump($var, $depth = 10, $highlight = true)
+    {
+        return VarDumper::dump($var, $depth, $highlight);
     }
 }

@@ -13,7 +13,7 @@ class OrderProduct extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'OrderProduct';
+        return '{{%order_product}}';
     }
     
     public function rules()
@@ -51,9 +51,11 @@ class OrderProduct extends ActiveRecord
     
     public function beforeSave($insert)
     {
-        $this->product_json = $this->product->attributes;
-        $this->price = $this->product->service->realPrice();
-        $this->total_price = $this->price * $this->quantity;
+        if ($this->product) {
+            $this->product_json = $this->product->attributes;
+            $this->price = $this->product->service->realPrice();
+            $this->total_price = $this->price * $this->quantity;
+        }
         
         return parent::beforeSave($insert);
     }
@@ -61,7 +63,7 @@ class OrderProduct extends ActiveRecord
     public function afterDelete()
     {
         if ($order = $this->order) {
-            if (ArrayHelper::getValue($order->statuses(), "$order->status.save_action") == 'minus') {
+            if (ArrayHelper::getValue($order->enums->statuses(), "$order->status.save_action") == 'minus') {
                 $this->product->updateCounters(['quantity' => $this->quantity]);
             }
         }

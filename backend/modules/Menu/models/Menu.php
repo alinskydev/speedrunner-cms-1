@@ -13,7 +13,7 @@ class Menu extends ActiveRecord
     
     public static function tableName()
     {
-        return 'Menu';
+        return '{{%menu}}';
     }
     
     public function behaviors()
@@ -49,7 +49,7 @@ class Menu extends ActiveRecord
             [['name', 'url'], 'string', 'max' => 100],
             [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
             
-            [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
+            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
         ];
     }
     

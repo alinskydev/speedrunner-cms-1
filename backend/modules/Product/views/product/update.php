@@ -52,10 +52,10 @@ echo UpdateWidget::widget([
                     'multiple' => true,
                     'widget_options' => [
                         'delete_url' => Yii::$app->urlManager->createUrl([
-                            'product/product/image-delete', 'id' => $model->id, 'attr' => 'images'
+                            'product/product/file-delete', 'id' => $model->id, 'attr' => 'images'
                         ]),
                         'sort_url' => Yii::$app->urlManager->createUrl([
-                            'product/product/image-sort', 'id' => $model->id, 'attr' => 'images'
+                            'product/product/file-sort', 'id' => $model->id, 'attr' => 'images'
                         ]),
                     ]
                 ],

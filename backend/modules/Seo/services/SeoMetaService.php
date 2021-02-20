@@ -34,29 +34,37 @@ class SeoMetaService
     
     public function register()
     {
-        foreach ($this->getMetaValue() as $key => $s_m) {
-            switch ($key) {
+        $seo_meta = $this->getMetaValue();
+        $seo_meta_types = (new SeoMeta())->enums->types();
+        
+        foreach ($seo_meta_types as $key => $s_m_t) {
+            $value = ArrayHelper::getValue($seo_meta, $key);
+            
+            switch ($s_m_t['register_type']) {
                 case 'title':
-                    Yii::$app->view->title = $s_m;
+                    Yii::$app->view->title = $value;
                     break;
-                case 'description':
-                case 'keywords':
+                    
+                case 'name':
                     Yii::$app->view->registerMetaTag([
                         'name' => $key,
-                        'content' => $s_m,
+                        'content' => $value,
                     ]);
                     break;
-                case 'og:image':
+                    
+                case 'property':
                     Yii::$app->view->registerMetaTag([
                         'property' => $key,
-                        'content' => $s_m ? Yii::$app->urlManager->createAbsoluteFileUrl($s_m) : null,
+                        'content' => $value,
                     ]);
                     break;
-                default:
+                    
+                case 'url':
                     Yii::$app->view->registerMetaTag([
                         'property' => $key,
-                        'content' => $s_m,
+                        'content' => $value ? Yii::$app->urlManager->createAbsoluteFileUrl($value) : null,
                     ]);
+                    break;
             }
         }
     }

@@ -13,7 +13,7 @@ class SystemSettings extends ActiveRecord
     
     public static function tableName()
     {
-        return 'SystemSettings';
+        return '{{%system_settings}}';
     }
     
     public function rules()

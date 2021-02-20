@@ -17,7 +17,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 ]); ?>
 
 <div class="row">
-    <div class="col-lg-2 col-md-3">
+    <div class="col-lg-3 col-md-4">
         <ul class="nav flex-column nav-pills main-shadow" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#tab-information">
@@ -27,7 +27,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
         </ul>
     </div>
     
-    <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
+    <div class="col-lg-9 col-md-8 mt-3 mt-md-0">
         <div class="main-shadow">
             <div class="p-3 bg-primary text-white">
                 <h5 class="m-0">
@@ -64,17 +64,29 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     if (!$model->isNewRecord) {
                         $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete'),
-                            ['menu/delete', 'id' => $model->id],
-                            ['class' => 'btn btn-warning btn-icon']
-                        ) . ' ';
+                            ['delete', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-warning btn-icon',
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure?'),
+                                    'method' => 'post',
+                                ]
+                            ]
+                        );
                         
                         $buttons[] = Html::a(
                             Html::tag('i', null, ['class' => 'fas fa-trash']) . Yii::t('app', 'Delete with children'),
-                            ['menu/delete-with-children', 'id' => $model->id],
-                            ['class' => 'btn btn-danger btn-icon']
+                            ['delete-with-children', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-danger btn-icon',
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Are you sure?'),
+                                    'method' => 'post',
+                                ]
+                            ]
                         );
                         
-                        echo Html::tag('div', implode(null, $buttons), ['class' => 'float-right']);
+                        echo Html::tag('div', implode(' ', $buttons), ['class' => 'float-right']);
                     }
                 ?>
             </div>

@@ -15,9 +15,9 @@ class UpdateAction extends FormAction
     public ?string $success_message = 'Record has been saved';
     public $redirect_route = ['index'];
     
-    public function run()
+    public function run($id = null)
     {
-        if (!($model = $this->controller->findModel())) {
+        if (!($model = $this->controller->findModel($id))) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         

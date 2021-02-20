@@ -28,10 +28,10 @@ use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 <?php } ?>
 
-use backend\modules\<?= $model->module_name ?>\models\<?= $model->table_name ?>;
+use backend\modules\<?= $model->module_name ?>\models\<?= $model->model_name ?>;
 
 
-class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
+class <?= $model->model_name ?>Search extends <?= $model->model_name . "\n" ?>
 {
 <?php if(isset($attrs['slug'])) { ?>
     public function behaviors()
@@ -50,9 +50,9 @@ class <?= $model->table_name ?>Search extends <?= $model->table_name . "\n" ?>
         ];
     }
     
-    public function search($)
+    public function search()
     {
-        $query = <?= $model->table_name ?>::find();
+        $query = <?= $model->model_name ?>::find();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

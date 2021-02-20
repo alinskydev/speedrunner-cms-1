@@ -28,7 +28,7 @@ class LogActionSearch extends LogAction
         $query = LogAction::find()
             ->joinWith(['attrs'])
             ->with(['user'])
-            ->groupBy('LogAction.id');
+            ->groupBy('log_action.id');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -47,16 +47,16 @@ class LogActionSearch extends LogAction
         }
         
         $query->andFilterWhere([
-            'LogAction.id' => $this->id,
-            'LogAction.user_id' => $this->user_id,
-            'LogAction.model_class' => $this->model_class,
-            'LogAction.model_id' => $this->model_id,
+            'log_action.id' => $this->id,
+            'log_action.user_id' => $this->user_id,
+            'log_action.model_class' => $this->model_class,
+            'log_action.model_id' => $this->model_id,
         ]);
         
-        $query->andFilterWhere(['like', 'LogAction.type', $this->type])
-            ->andFilterWhere(['like', 'LogAction.created', $this->created])
-            ->andFilterWhere(['like', 'LogActionAttr.name', $this->attrs_old])
-            ->andFilterWhere(['like', 'LogActionAttr.name', $this->attrs_new]);
+        $query->andFilterWhere(['like', 'log_action.type', $this->type])
+            ->andFilterWhere(['like', 'log_action.created', $this->created])
+            ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_old])
+            ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_new]);
         
 		return $dataProvider;
     }

@@ -13,7 +13,7 @@ class StaticpageBlock extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'StaticpageBlock';
+        return '{{%staticpage_block}}';
     }
     
     public function rules()

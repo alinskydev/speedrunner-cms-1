@@ -11,14 +11,14 @@ class BlogComment extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlogComment';
+        return '{{%blog_comment}}';
     }
     
     public function rules()
     {
         return [
             [['blog_id', 'text'], 'required'],
-            [['status'], 'in', 'range' => array_keys($this->statuses())],
+            [['status'], 'in', 'range' => array_keys($this->enums->statuses())],
             [['text'], 'string', 'max' => 1000],
             
             [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
@@ -34,18 +34,6 @@ class BlogComment extends ActiveRecord
             'text' => Yii::t('app', 'Text'),
             'status' => Yii::t('app', 'Status'),
             'created' => Yii::t('app', 'Created'),
-        ];
-    }
-    
-    public static function statuses()
-    {
-        return [
-            'new' => [
-                'label' => Yii::t('app', 'New'),
-            ],
-            'published' => [
-                'label' => Yii::t('app', 'Published'),
-            ],
         ];
     }
     

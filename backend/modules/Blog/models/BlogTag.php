@@ -10,7 +10,7 @@ class BlogTag extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlogTag';
+        return '{{%blog_tag}}';
     }
     
     public function rules()

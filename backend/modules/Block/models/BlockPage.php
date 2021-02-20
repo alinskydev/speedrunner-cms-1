@@ -13,7 +13,7 @@ class BlockPage extends ActiveRecord
     
     public static function tableName()
     {
-        return 'BlockPage';
+        return '{{%block_page}}';
     }
     
     public function behaviors()

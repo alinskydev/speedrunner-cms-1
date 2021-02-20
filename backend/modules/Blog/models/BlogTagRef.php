@@ -10,6 +10,6 @@ class BlogTagRef extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlogTagRef';
+        return '{{%blog_tag_ref}}';
     }
 }

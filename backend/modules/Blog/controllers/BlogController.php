@@ -8,19 +8,16 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\Blog;
-use backend\modules\Blog\search\BlogSearch;
-use backend\modules\Blog\search\BlogCommentSearch;
-use backend\modules\Blog\search\BlogRateSearch;
+use backend\modules\Blog\models\BlogComment;
+use backend\modules\Blog\models\BlogRate;
 
 
 class BlogController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new Blog();
-        $this->modelSearch = new BlogSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -39,35 +36,36 @@ class BlogController extends CrudController
         ]);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return Blog::find()->with(['tags'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['tags'])->andWhere(['id' => $id])->one();
     }
     
     public function actionView($id)
     {
-        if ($model = Blog::findOne($id)) {
-            $search_models = [
-                'comments' => new BlogCommentSearch(),
-                'rates' => new BlogRateSearch(),
-            ];
-            
-            foreach ($search_models as $key => $s_m) {
-                $modelSearch[$key] = $s_m;
-                $dataProvider[$key] = $modelSearch[$key]->search(Yii::$app->request->queryParams);
-                $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
-                $dataProvider[$key]->pagination->pageSize = 20;
-                $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
-                $dataProvider[$key]->query->andWhere(['blog_id' => $id]);
-            }
-            
-            return $this->render('view', [
-                'model' => $model,
-                'modelSearch' => $modelSearch,
-                'dataProvider' => $dataProvider,
-            ]);
-        } else {
-            $this->redirect(['index']);
+        if (!($model = $this->model->findOne($id))) {
+            return $this->redirect(['index']);
         }
+        
+        $models = [
+            'comments' => new BlogComment(),
+            'rates' => new BlogRate(),
+        ];
+        
+        foreach ($models as $key => $m) {
+            $searchModel[$key] = $m->searchModel;
+            $searchModel[$key]->enums = $m->enums;
+            $dataProvider[$key] = $searchModel[$key]->search(Yii::$app->request->queryParams);
+            $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
+            $dataProvider[$key]->pagination->pageSize = 20;
+            $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
+            $dataProvider[$key]->query->andWhere(['blog_id' => $id]);
+        }
+        
+        return $this->render('view', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

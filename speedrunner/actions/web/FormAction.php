@@ -18,20 +18,25 @@ class FormAction extends Action
     public array $render_params = [];
     
     public string $run_method;
+    
     public ?string $success_message = null;
-    public $redirect_route = false;
+    public ?string $error_message = 'An error occurred';
+    
+    public $redirect_route = null;
     
     public function run()
     {
         $this->model = $this->model ?? new $this->model_class($this->model_params);
         
         if ($this->model->load(Yii::$app->request->post()) && $this->model->validate()) {
-            if (!$this->model->{$this->run_method}()) {
-                Yii::$app->session->setFlash('danger', [Yii::t('app', 'An error occurred')]);
-            }
-            
-            if ($this->success_message) {
-                Yii::$app->session->setFlash('success', [Yii::t('app', $this->success_message)]);
+            if (call_user_func([$this->model, $this->run_method])) {
+                if ($this->success_message) {
+                    Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
+                }
+            } else {
+                if ($this->error_message) {
+                    Yii::$app->session->addFlash('danger', Yii::t('app', $this->error_message));
+                }
             }
             
             if (!$this->redirect_route) {
@@ -48,6 +53,10 @@ class FormAction extends Action
         $render_params = ['model' => $this->model];
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         
-        return $this->controller->{$render_type}($this->render_view, ArrayHelper::merge($render_params, $this->render_params));
+        return call_user_func(
+            [$this->controller, $render_type],
+            $this->render_view,
+            ArrayHelper::merge($render_params, $this->render_params)
+        );
     }
 }

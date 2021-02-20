@@ -14,7 +14,7 @@ class TranslationSource extends ActiveRecord
     
     public static function tableName()
     {
-        return 'TranslationSource';
+        return '{{%translation_source}}';
     }
     
     public function rules()

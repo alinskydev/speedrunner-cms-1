@@ -13,14 +13,14 @@ class SystemSettingsService
     
     public function __construct()
     {
-        if (static::$attributes === null) {
-            static::$attributes = ArrayHelper::map(SystemSettings::find()->select(['name', 'value'])->asArray()->all(), 'name', 'value');
+        if (self::$attributes === null) {
+            self::$attributes = ArrayHelper::map(SystemSettings::find()->select(['name', 'value'])->asArray()->all(), 'name', 'value');
         }
     }
     
     public function __get($name)
     {
-        if (($attribute = ArrayHelper::getValue(static::$attributes, $name)) !== null) {
+        if (($attribute = ArrayHelper::getValue(self::$attributes, $name)) !== null) {
             return $attribute;
         } else {
             throw new \yii\web\HttpException(404, "The requested attribute '$name' not found");

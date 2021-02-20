@@ -30,21 +30,13 @@ echo UpdateWidget::widget([
                 [
                     'name' => 'delivery_type',
                     'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->deliveryTypes(), 'label'),
+                    'data' => ArrayHelper::getColumn($model->enums->deliveryTypes(), 'label'),
                 ],
                 'delivery_price' => 'text_input',
                 [
                     'name' => 'payment_type',
                     'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->paymentTypes(), 'label'),
-                ],
-                [
-                    'name' => 'status',
-                    'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->statuses(), 'label'),
-                    'container_options' => [
-                        'options' => ['class' => $model->isNewRecord ? 'd-none' : 'form-group'],
-                    ],
+                    'data' => ArrayHelper::getColumn($model->enums->paymentTypes(), 'label'),
                 ],
                 '<hr>',
                 [

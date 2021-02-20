@@ -14,14 +14,14 @@ class LogAction extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'LogAction';
+        return '{{%log_action}}';
     }
 
     public function rules()
     {
         return [
             [['type', 'model_class'], 'required'],
-            [['type'], 'in', 'range' => array_keys($this->types())],
+            [['type'], 'in', 'range' => array_keys($this->enums->types())],
             [['model_class'], 'in', 'range' => array_keys((new LogActionModelsList)::$data)],
         ];
     }
@@ -38,21 +38,6 @@ class LogAction extends ActiveRecord
             
             'attrs_old' => Yii::t('app', 'Old value'),
             'attrs_new' => Yii::t('app', 'New value'),
-        ];
-    }
-    
-    public static function types()
-    {
-        return [
-            'created' => [
-                'label' => Yii::t('app', 'Created'),
-            ],
-            'updated' => [
-                'label' => Yii::t('app', 'Updated'),
-            ],
-            'deleted' => [
-                'label' => Yii::t('app', 'Deleted'),
-            ],
         ];
     }
     

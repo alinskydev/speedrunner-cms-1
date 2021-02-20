@@ -12,7 +12,7 @@ class TranslationMessage extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'TranslationMessage';
+        return '{{%translation_message}}';
     }
     
     public function rules()

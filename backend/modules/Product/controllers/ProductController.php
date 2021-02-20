@@ -9,18 +9,15 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 use backend\modules\Product\models\Product;
-use backend\modules\Product\search\ProductSearch;
 use backend\modules\Product\models\ProductSpecification;
 
 
 class ProductController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new Product();
-        $this->modelSearch = new ProductSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -39,20 +36,14 @@ class ProductController extends CrudController
         ]);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return Product::find()
-            ->with([
-                'categories',
-                'variations.specification', 'variations.option',
-            ])
-            ->andWhere(['id' => Yii::$app->request->get('id')])
-            ->one();
+        return $this->model->find()->with(['categories', 'variations.specification', 'variations.option'])->andWhere(['id' => $id])->one();
     }
     
     public function actionSpecifications($id = null, array $categories = [])
     {
-        $model = Product::findOne($id) ?: new Product;
+        $model = $this->model->findOne($id) ?: $this->model;
         $specifications = ProductSpecification::find()->byAssignedCategies($categories)->asArray()->all();
         
         $variations = [

@@ -10,7 +10,7 @@ class BlockType extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlockType';
+        return '{{%block_type}}';
     }
     
     public function rules()

@@ -10,6 +10,6 @@ class ProductOptionRef extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductOptionRef';
+        return '{{%product_option_ref}}';
     }
 }

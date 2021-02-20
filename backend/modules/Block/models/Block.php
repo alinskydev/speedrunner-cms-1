@@ -13,7 +13,7 @@ class Block extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'Block';
+        return '{{%block}}';
     }
     
     public function rules()

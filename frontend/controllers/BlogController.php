@@ -29,7 +29,7 @@ class BlogController extends Controller
     
     public function actionView($slug)
     {
-        if (!($model = Blog::find()->published()->bySlug($slug)->one())) {
+        if (!($model = Blog::find()->bySlug($slug)->published()->one())) {
             return $this->redirect(['index']);
         }
         

@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Banner\models\Banner;
-use backend\modules\Banner\search\BannerSearch;
 
 
 class BannerController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new Banner();
-        $this->modelSearch = new BannerSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -26,8 +23,8 @@ class BannerController extends CrudController
         return ArrayHelper::filter(parent::actions(), ['index', 'update']);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return Banner::find()->with(['groups'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['groups'])->andWhere(['id' => $id])->one();
     }
 }

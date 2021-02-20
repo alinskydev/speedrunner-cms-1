@@ -12,7 +12,7 @@ class SeoMeta extends ActiveRecord
     
     public static function tableName()
     {
-        return 'SeoMeta';
+        return '{{%seo_meta}}';
     }
     
     public function rules()
@@ -30,7 +30,7 @@ class SeoMeta extends ActiveRecord
         }
         
         foreach ((array)$this->value as $key => $v) {
-            if (!array_key_exists($key, $this->types()) || !is_string($v)) {
+            if (!array_key_exists($key, $this->enums->types()) || !is_string($v)) {
                 $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
             }
         }
@@ -44,32 +44,6 @@ class SeoMeta extends ActiveRecord
             'model_id' => Yii::t('app', 'Model id'),
             'lang' => Yii::t('app', 'Language'),
             'value' => Yii::t('app', 'Value'),
-        ];
-    }
-    
-    public static function types()
-    {
-        return [
-            'title' => [
-                'label' => 'Title',
-                'type' => 'text_input',
-            ],
-            'description' => [
-                'label' => 'Description',
-                'type' => 'text_area',
-            ],
-            'og:title' => [
-                'label' => 'Og:title',
-                'type' => 'text_input',
-            ],
-            'og:description' => [
-                'label' => 'Og:description',
-                'type' => 'text_area',
-            ],
-            'og:image' => [
-                'label' => 'Og:image',
-                'type' => 'elfinder',
-            ]
         ];
     }
 }

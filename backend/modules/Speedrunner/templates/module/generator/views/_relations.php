@@ -56,7 +56,7 @@ $relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $rel
 <?php foreach ($columns as $key => $c) { ?>
                 <td>
                     <?= '<?= ' ?>$form->field($value, '<?= $key ?>', ['template' => '{input}'])->textArea([
-                        'name' => "<?= $model['table_name'] ?>[<?= $relation['var_name'] ?>][$value_id][<?= $key ?>]",
+                        'name' => "<?= $model->model_name ?>[<?= $relation['var_name'] ?>][$value_id][<?= $key ?>]",
                         'rows' => 5,
                     ]) ?>
                 </td>

@@ -14,19 +14,27 @@ class DataProviderAction extends Action
     
     public function run()
     {
-        $modelSearch = $this->controller->modelSearch;
-        $modelSearch->load(Yii::$app->request->queryParams);
-        $modelSearch->beforeSearch();
+        $params = Yii::$app->request->queryParams;
+        array_walk_recursive($params, function(&$v) { $v = trim($v); });
+        
+        $model = $this->controller->model->searchModel;
+        $model->enums = $this->controller->model->enums;
+        $model->load($params);
+        $model->beforeSearch();
         
         $render_params = [
-            'modelSearch' => $modelSearch,
-            'dataProvider' => $modelSearch->search(),
+            'searchModel' => $model,
+            'dataProvider' => $model->search(),
         ];
         
-        $modelSearch->afterSearch();
+        $model->afterSearch();
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         
-        return $this->controller->{$render_type}($this->render_view, ArrayHelper::merge($render_params, $this->render_params));
+        return call_user_func(
+            [$this->controller, $render_type],
+            $this->render_view,
+            ArrayHelper::merge($render_params, $this->render_params)
+        );
     }
 }

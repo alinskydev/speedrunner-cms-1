@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogRate;
-use backend\modules\Blog\search\BlogRateSearch;
 
 
 class RateController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new BlogRate();
-        $this->modelSearch = new BlogRateSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()

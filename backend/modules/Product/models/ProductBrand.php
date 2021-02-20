@@ -10,7 +10,7 @@ class ProductBrand extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductBrand';
+        return '{{%product_brand}}';
     }
     
     public function behaviors()

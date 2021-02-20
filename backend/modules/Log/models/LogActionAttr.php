@@ -12,7 +12,7 @@ class LogActionAttr extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'LogActionAttr';
+        return '{{%log_action_attr}}';
     }
     
     public function rules()

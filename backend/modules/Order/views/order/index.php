@@ -5,9 +5,12 @@ use yii\helpers\ArrayHelper;
 use speedrunner\widgets\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
+use yii\bootstrap\Dropdown;
 
 $this->title = Yii::t('app', 'Orders');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
+$enums_class_name = str_replace('\models\\', '\enums\\', $searchModel->className()) . 'Enums';
 
 ?>
 
@@ -23,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'attribute' => 'id',
@@ -35,9 +38,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'user_id',
                 'format' => 'raw',
                 'filter' => Select2::widget([
-                    'model' => $modelSearch,
+                    'model' => $searchModel,
                     'attribute' => 'user_id',
-                    'data' => [$modelSearch->user_id => ArrayHelper::getValue($modelSearch->user, 'username')],
+                    'data' => [$searchModel->user_id => ArrayHelper::getValue($searchModel->user, 'username')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -65,14 +68,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'delivery_type',
                 'format' => 'raw',
-                'filter' => ArrayHelper::getColumn($modelSearch->deliveryTypes(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->deliveryTypes(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->deliveryTypes(), "$model->delivery_type.label"),
             ],
             [
                 'attribute' => 'payment_type',
                 'format' => 'raw',
-                'filter' => ArrayHelper::getColumn($modelSearch->paymentTypes(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->paymentTypes(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->paymentTypes(), "$model->payment_type.label"),
             ],
             [
                 'attribute' => 'total_price',
@@ -92,17 +95,32 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'status',
                 'format' => 'raw',
-                'filter' => ArrayHelper::getColumn($modelSearch->statuses(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->statuses(), "$model->status.label"),
+                'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
+                'value' => fn ($model) => ArrayHelper::getValue($model->enums->statuses(), "$model->status.label"),
                 'value' => function ($model) {
-                    return Html::tag(
-                        'div',
-                        ArrayHelper::getValue($model->statuses(), "$model->status.label"),
+                    $result = Html::a(
+                        ArrayHelper::getValue($model->enums->statuses(), "$model->status.label") . Html::tag('b', null, ['class' => 'caret']),
+                        '#',
                         [
-                            'class' => 'btn btn-sm btn-block btn-' . ArrayHelper::getValue($model->statuses(), "$model->status.class"),
-                            'style' => 'cursor: default;',
+                            'data-toggle' => 'dropdown',
+                            'class' => 'dropdown-toggle btn btn-block btn-' . ArrayHelper::getValue($model->enums->statuses(), "$model->status.class"),
                         ]
                     );
+                    
+                    $result .= Dropdown::widget([
+                        'items' => array_map(function ($key, $value) use ($model) {
+                            return [
+                                'label' => $value['label'],
+                                'url' => ['change-status', 'id' => $model->id, 'status' => $key],
+                                'linkOptions' => ['class' => 'dropdown-item'],
+                            ];
+                        }, array_keys($model->enums->statuses()), $model->enums->statuses()),
+                        'options' => [
+                            'class' => 'dropdown-menu',
+                        ],
+                    ]);
+                    
+                    return Html::tag('div', $result, ['class' => 'dropdown']);
                 },
             ],
             'created',

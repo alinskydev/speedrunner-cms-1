@@ -13,7 +13,7 @@ class I18NService
     
     public function __construct()
     {
-        if (static::$languages === null) {
+        if (self::$languages === null) {
             $languages = Yii::$app->urlManager->languages;
             $current_language = Yii::$app->language;
             
@@ -29,23 +29,23 @@ class I18NService
             }
             
             Yii::$app->language = $current_language;
-            static::$languages = $languages;
+            self::$languages = $languages;
         }
     }
     
     public static function setLocalizedRoutes()
     {
-//        static::$routes = [
+//        self::$routes = [
 //            Yii::t('app', 'Name') => 'site/contact',
 //        ];
 //        
 //        $urlManager = Yii::$app->id == 'app-frontend' ? Yii::$app->urlManager : Yii::$app->urlManagerFrontend;
 //        $urlManager->rules = ArrayHelper::index($urlManager->rules, 'route');
 //        
-//        foreach (static::$routes as $r) {
+//        foreach (self::$routes as $r) {
 //            ArrayHelper::remove($urlManager->rules, $r);
 //        }
 //        
-//        $urlManager->addRules(static::$routes);
+//        $urlManager->addRules(self::$routes);
     }
 }

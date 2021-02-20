@@ -33,7 +33,7 @@ class FormAction extends Action
         }
         
         if ($this->model->validate()) {
-            return $this->model->{$this->run_method}();
+            return call_user_func([$this->model, $this->run_method]);
         } else {
             Yii::$app->response->statusCode = 422;
             

@@ -6,6 +6,7 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
+use speedrunner\validators\UnchangeableValidator;
 use yii\web\UploadedFile;
 use speedrunner\services\FileService;
 
@@ -28,7 +29,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function tableName()
     {
-        return 'User';
+        return '{{%user}}';
     }
     
     public function behaviors()
@@ -80,24 +81,17 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
-            [['role'], 'in', 'range' => array_keys($this->roles())],
+            [['role'], 'in', 'range' => array_keys($this->enums->roles())],
             [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             
-            [['design_theme'], 'in', 'range' => array_keys($this->designThemes())],
-            [['design_font'], 'in', 'range' => array_keys($this->designFonts())],
+            [['design_theme'], 'in', 'range' => array_keys($this->enums->designThemes())],
+            [['design_font'], 'in', 'range' => array_keys($this->enums->designFonts())],
             [['design_border_radius'], 'integer', 'min' => 0],
             [['design_border_radius'], 'default', 'value' => 0],
             
-            [['role'], 'adminRoleValidation'],
+            [['role'], UnchangeableValidator::className(), 'when' => fn ($model) => $model->id == 1],
         ];
-    }
-    
-    public function adminRoleValidation($attribute, $params, $validator)
-    {
-        if ($this->id == 1 && $this->role != 'admin') {
-            $this->addError($attribute, Yii::t('app', 'You cannot change role for this user'));
-        }
     }
     
     public function attributeLabels()
@@ -123,48 +117,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
-    public static function roles()
-    {
-        return [
-            'admin' => [
-                'label' => Yii::t('app', 'Admin'),
-            ],
-            'registered' => [
-                'label' => Yii::t('app', 'Registered'),
-            ],
-        ];
-    }
-    
-    public static function designThemes()
-    {
-        return [
-            'nav_full' => [
-                'label' => Yii::t('app', 'Full menu'),
-            ],
-            'nav_left' => [
-                'label' => Yii::t('app', 'Left menu'),
-            ],
-        ];
-    }
-    
-    public static function designFonts()
-    {
-        return [
-            'oswald' => [
-                'label' => 'Oswald',
-            ],
-            'roboto' => [
-                'label' => 'Roboto',
-            ],
-            'montserrat' => [
-                'label' => 'Montserrat',
-            ],
-            'ibm_plex_sans' => [
-                'label' => 'IBM Plex Sans',
-            ],
-        ];
-    }
-    
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
@@ -181,7 +133,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function beforeSave($insert)
     {
-        //        New password
+        //        Setting new password
         
         if ($this->new_password) {
             $this->generateAuthKey();
@@ -193,7 +145,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterSave($insert, $changedAttributes)
     {
-        //        Role assigning
+        //        Assigning role
         
         if (array_key_exists('role', $changedAttributes)) {
             $roles = Yii::$app->authManager->getRoles();
@@ -221,6 +173,8 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function afterDelete()
     {
+        //        Detaching role
+        
         $roles = Yii::$app->authManager->getRoles();
         Yii::$app->authManager->revoke($roles[$this->role], $this->id);
         
@@ -231,22 +185,22 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function findIdentity($id)
     {
-        return static::find()->andWhere(['id' => $id])->one();
+        return self::find()->andWhere(['id' => $id])->one();
     }
     
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::find()->andWhere(['auth_key' => $token])->one();
+        return self::find()->andWhere(['auth_key' => $token])->one();
     }
     
     public static function findByUsername($username)
     {
-        return static::find()->andWhere(['username' => $username])->one();
+        return self::find()->andWhere(['username' => $username])->one();
     }
     
     public static function findByPasswordResetToken($token)
     {
-        return static::isPasswordResetTokenValid($token) ? static::findOne(['password_reset_token' => $token]) : false;
+        return self::isPasswordResetTokenValid($token) ? self::findOne(['password_reset_token' => $token]) : false;
     }
     
     public static function isPasswordResetTokenValid($token)
@@ -256,7 +210,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
         
         $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-        $expire = static::PASSWORD_RESET_TOKEN_EXPIRE;
+        $expire = self::PASSWORD_RESET_TOKEN_EXPIRE;
         return $timestamp + $expire >= time();
     }
     

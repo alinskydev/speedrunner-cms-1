@@ -92,16 +92,16 @@ class DuplicatorForm extends Model
         
         if (in_array('db_tables', $this->duplicate_types)) {
             $tables = Yii::$app->db->schema->getTableNames();
-            $sql = null;
+            $sql = [];
             
             foreach ($tables as $t) {
                 if (strpos($t, $this->module_name_from) === 0) {
                     $new_table_name = str_replace($this->module_name_from, $this->module_name_to, $t);
-                    $sql .= "CREATE TABLE $new_table_name LIKE $t;";
+                    $sql[] = "CREATE TABLE $new_table_name LIKE $t;";
                 }
             }
             
-            Yii::$app->db->createCommand($sql)->execute();
+            Yii::$app->db->createCommand(implode(';', $sql))->execute();
         }
         
         return true;

@@ -11,7 +11,7 @@ class SystemLanguage extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'SystemLanguage';
+        return '{{%system_language}}';
     }
     
     public function rules()

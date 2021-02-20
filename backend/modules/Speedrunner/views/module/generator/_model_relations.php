@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 
 $types = [
     'hasOne' => 'hasOne',
@@ -32,6 +33,7 @@ $types = [
                 <?php
                     ArrayHelper::remove($fk, 0);
                     $fk = $fks_key == 'internal' ? array_flip($fk) : $fk;
+                    $key = Inflector::id2camel($key, '_');
                 ?>
                 
                 <tr>

@@ -4,6 +4,7 @@ namespace backend\modules\Product\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductCategory;
@@ -11,6 +12,19 @@ use backend\modules\Product\models\ProductCategory;
 
 class CategoryController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'delete-with-children' => ['post'],
+                ],
+            ],
+        ];
+    }
+    
     public function actionTree()
     {
         return $this->render('tree', [

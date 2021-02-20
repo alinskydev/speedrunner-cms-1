@@ -7,7 +7,7 @@ use speedrunner\controllers\RestController;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Blog\search\BlogSearch;
+use backend\modules\Blog\models\Blog;
 
 
 class BlogController extends RestController
@@ -29,7 +29,7 @@ class BlogController extends RestController
         return [
             'index' => [
                 'class' => Actions\rest\DataProviderAction::className(),
-                'modelSearch' => new BlogSearch(),
+                'model' => new Blog(),
             ],
         ];
     }

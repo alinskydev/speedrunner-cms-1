@@ -11,7 +11,7 @@ class ProductVariation extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductVariation';
+        return '{{%product_variation}}';
     }
     
     public function behaviors()

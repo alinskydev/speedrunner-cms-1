@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductSpecification;
-use backend\modules\Product\search\ProductSpecificationSearch;
 
 
 class SpecificationController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new ProductSpecification();
-        $this->modelSearch = new ProductSpecificationSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -26,8 +23,8 @@ class SpecificationController extends CrudController
         return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return ProductSpecification::find()->with(['options'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return ProductSpecification::find()->with(['options'])->andWhere(['id' => $id])->one();
     }
 }

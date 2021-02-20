@@ -59,13 +59,13 @@ $this->title = Yii::t('app', 'Variation: {value}', ['value' => $model->id]);
                                     'multiple' => true,
                                 ],
                                 'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
-                                    'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/image-delete', 'id' => $model->id, 'attr' => 'images']),
+                                    'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/file-delete', 'id' => $model->id, 'attr' => 'images']),
                                     'initialPreview' => $model->images ?? [],
                                     'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
                                 ]),
                                 'pluginEvents' => [
                                     'filesorted' => new JsExpression("function(event, params) {
-                                        $.post('".Yii::$app->urlManager->createUrl(['product/variation/image-sort', 'id' => $model->id, 'attr' => 'images'])."', {sort: params});
+                                        $.post('".Yii::$app->urlManager->createUrl(['product/variation/file-sort', 'id' => $model->id, 'attr' => 'images'])."', {sort: params});
                                     }")
                                 ],
                             ]); ?>

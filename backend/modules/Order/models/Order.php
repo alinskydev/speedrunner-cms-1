@@ -5,22 +5,33 @@ namespace backend\modules\Order\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\behaviors\AttributeBehavior;
+use speedrunner\validators\UnchangeableValidator;
 
 use backend\modules\User\models\User;
 
 
 class Order extends ActiveRecord
 {
+    const SCENARIO_CHANGE_STATUS = 'change_status';
+    
     public $products_tmp;
     
     public static function tableName()
     {
-        return 'Order';
+        return '{{%order}}';
     }
     
     public function behaviors()
     {
         return [
+            'attributes' => [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'key',
+                ],
+                'value' => fn ($event) => md5(time() . Yii::$app->security->generateRandomString()),
+            ],
             'relations_one_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
@@ -46,10 +57,10 @@ class Order extends ActiveRecord
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
             [['delivery_price'], 'integer', 'min' => 1],
-            [['delivery_type'], 'in', 'range' => array_keys($this->deliveryTypes())],
-            [['payment_type'], 'in', 'range' => array_keys($this->paymentTypes())],
+            [['delivery_type'], 'in', 'range' => array_keys($this->enums->deliveryTypes())],
+            [['payment_type'], 'in', 'range' => array_keys($this->enums->paymentTypes())],
             [['payment_type'], 'default', 'value' => 'cash'],
-            [['status'], 'in', 'range' => array_keys($this->statuses())],
+            [['status'], 'in', 'range' => array_keys($this->enums->statuses())],
             [['products_tmp'], 'safe'],
             
             [['user_id'], 'exist', 'targetClass' => User::className(), 'targetAttribute' => 'id'],
@@ -81,59 +92,12 @@ class Order extends ActiveRecord
         ];
     }
     
-    public static function deliveryTypes()
+    public function scenarios()
     {
-        return [
-            'pickup' => [
-                'label' => Yii::t('app', 'Pickup'),
-            ],
-            'delivery' => [
-                'label' => Yii::t('app', 'Delivery'),
-            ],
-        ];
-    }
-    
-    public static function paymentTypes()
-    {
-        return [
-            'cash' => [
-                'label' => Yii::t('app', 'Cash'),
-            ],
-            'bank_card' => [
-                'label' => Yii::t('app', 'Bank card'),
-            ],
-        ];
-    }
-    
-    public static function statuses()
-    {
-        return [
-            'new' => [
-                'label' => Yii::t('app', 'New'),
-                'class' => 'light',
-                'save_action' => 'plus',
-            ],
-            'confirmed' => [
-                'label' => Yii::t('app', 'Confirmed'),
-                'class' => 'warning',
-                'save_action' => 'minus',
-            ],
-            'payed' => [
-                'label' => Yii::t('app', 'Payed'),
-                'class' => 'info',
-                'save_action' => 'minus',
-            ],
-            'completed' => [
-                'label' => Yii::t('app', 'Completed'),
-                'class' => 'success',
-                'save_action' => 'minus',
-            ],
-            'canceled' => [
-                'label' => Yii::t('app', 'Canceled'),
-                'class' => 'danger',
-                'save_action' => 'plus',
-            ],
-        ];
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CHANGE_STATUS] = ['status'];
+        
+        return $scenarios;
     }
     
     public function getUser()
@@ -146,34 +110,21 @@ class Order extends ActiveRecord
         return $this->hasMany(OrderProduct::className(), ['order_id' => 'id'])->orderBy('sort');
     }
     
-    public function beforeValidate()
-    {
-        if (!$this->isNewRecord && ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action") == 'minus') {
-            $this->products_tmp = OrderProduct::find()->select(['id', 'product_id', 'quantity'])->indexBy('id')->asArray()->all();
-        }
-        
-        return parent::beforeValidate();
-    }
-    
     public function beforeSave($insert)
     {
-        //        Generating secret key
-        
-        if ($insert) {
-            $this->status = 'new';
-            $this->key = md5(time() . Yii::$app->security->generateRandomString());
-        }
-        
         //        Changing products quantity
         
-        if (!$insert) {
-            $new_status_action = ArrayHelper::getValue($this->statuses(), "$this->status.save_action");
-            $old_status_action = ArrayHelper::getValue($this->statuses(), "{$this->oldAttributes['status']}.save_action");
-            
-            if ($new_status_action != $old_status_action) {
-                if (!$this->service->changeProductsQuantity($new_status_action)) {
-                    return false;
-                }
+        $oldAttributes = $this->oldAttributes ?: $this->attributes;
+        $old_status_action = ArrayHelper::getValue($this->enums->statuses(), "{$oldAttributes['status']}.save_action");
+        $new_status_action = ArrayHelper::getValue($this->enums->statuses(), "$this->status.save_action");
+        
+        if ($new_status_action == 'minus') {
+            $this->products_tmp = OrderProduct::find()->select(['id', 'product_id', 'quantity'])->indexBy('id')->asArray()->all();;
+        }
+        
+        if ($new_status_action != $old_status_action) {
+            if (!$this->service->changeProductsQuantity($new_status_action)) {
+                return false;
             }
         }
         

@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <div class="main-shadow p-3">
     <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'speedrunner\widgets\grid\CheckboxColumn',
@@ -56,6 +56,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 break;
             
             case 'select':
+            case 'select2_ajax':
                 echo "            [
                 'attribute' => '$key',
                 'format' => 'raw',

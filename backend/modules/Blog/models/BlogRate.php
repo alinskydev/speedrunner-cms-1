@@ -11,7 +11,7 @@ class BlogRate extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlogRate';
+        return '{{%blog_rate}}';
     }
     
     public function rules()

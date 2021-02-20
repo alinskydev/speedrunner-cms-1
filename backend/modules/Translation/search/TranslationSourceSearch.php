@@ -25,7 +25,7 @@ class TranslationSourceSearch extends TranslationSource
     {
         $query = TranslationSource::find()
             ->joinWith(['currentTranslation'])
-            ->groupBy('TranslationSource.id');
+            ->groupBy('translation_source.id');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -44,13 +44,13 @@ class TranslationSourceSearch extends TranslationSource
         }
         
         $query->andFilterWhere([
-            'TranslationSource.id' => $this->id,
+            'translation_source.id' => $this->id,
         ]);
         
-        $query->andFilterWhere(['like', 'TranslationSource.category', $this->category])
-            ->andFilterWhere(['like', 'TranslationSource.message', $this->message])
-            ->andFilterWhere(['like', 'TranslationMessage.translation', $this->translations_tmp])
-            ->andFilterWhere(['like', 'IF(LENGTH(TranslationMessage.translation) > 0, true, false)', $this->has_translation]);
+        $query->andFilterWhere(['like', 'translation_source.category', $this->category])
+            ->andFilterWhere(['like', 'translation_source.message', $this->message])
+            ->andFilterWhere(['like', 'translation_message.translation', $this->translations_tmp])
+            ->andFilterWhere(['like', 'IF(LENGTH(translation_message.translation) > 0, true, false)', $this->has_translation]);
         
 		return $dataProvider;
     }

@@ -10,6 +10,6 @@ class UserProfile extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'UserProfile';
+        return '{{%user_profile}}';
     }
 }

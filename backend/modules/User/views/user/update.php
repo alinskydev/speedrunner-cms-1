@@ -20,7 +20,7 @@ echo UpdateWidget::widget([
                 [
                     'name' => 'role',
                     'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->roles(), 'label'),
+                    'data' => ArrayHelper::getColumn($model->enums->roles(), 'label'),
                 ],
                 [
                     'name' => 'new_password',
@@ -44,7 +44,7 @@ echo UpdateWidget::widget([
                     'multiple' => false,
                     'widget_options' => [
                         'delete_url' => Yii::$app->urlManager->createUrl([
-                            'user/user/image-delete', 'id' => $model->id, 'attr' => 'image'
+                            'user/user/file-delete', 'id' => $model->id, 'attr' => 'image'
                         ]),
                     ]
                 ],
@@ -60,12 +60,12 @@ echo UpdateWidget::widget([
                 [
                     'name' => 'design_theme',
                     'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->designThemes(), 'label'),
+                    'data' => ArrayHelper::getColumn($model->enums->designThemes(), 'label'),
                 ],
                 [
                     'name' => 'design_font',
                     'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->designFonts(), 'label'),
+                    'data' => ArrayHelper::getColumn($model->enums->designFonts(), 'label'),
                 ],
                 'design_border_radius' => 'text_input',
             ],

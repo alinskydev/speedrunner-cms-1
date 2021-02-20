@@ -36,7 +36,7 @@ use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 
-class <?= $model->table_name ?> extends ActiveRecord
+class <?= $model->model_name ?> extends ActiveRecord
 {
 <?php if ($model->view_relations) { ?>
 <?php foreach ($model->view_relations as $r) { ?>
@@ -46,7 +46,7 @@ class <?= $model->table_name ?> extends ActiveRecord
 <?php } ?>
     public static function tableName()
     {
-        return '<?= $model->table_name ?>';
+        return '{{%<?= $model->table_name ?>}}';
     }
     
 <?php if (isset($attrs['slug']) || $model->attrs_translation || isset($attrs_fields['files']) || $model->view_relations) { ?>

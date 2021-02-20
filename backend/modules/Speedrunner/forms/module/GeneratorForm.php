@@ -19,12 +19,14 @@ class GeneratorForm extends Model
     public $controller_actions = ['index', 'create', 'update', 'delete'];
     
     public $table_name;
+    public $model_name;
     public $has_seo_meta;
+    
     public $model_relations = [];
     public $view_relations = [];
     
     public $attrs_fields = [];
-    public $attrs_translation;
+    public $attrs_translation = [];
     
     public function rules()
     {
@@ -71,6 +73,12 @@ class GeneratorForm extends Model
         }
         
         return $result ?? [];
+    }
+    
+    public function afterValidate()
+    {
+        $this->model_name = Inflector::id2camel($this->table_name, '_');
+        return parent::afterValidate();
     }
     
     public function process()

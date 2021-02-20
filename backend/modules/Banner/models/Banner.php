@@ -13,7 +13,7 @@ class Banner extends ActiveRecord
     
     public static function tableName()
     {
-        return 'Banner';
+        return '{{%banner}}';
     }
     
     public function behaviors()
@@ -55,18 +55,6 @@ class Banner extends ActiveRecord
             'updated' => Yii::t('app', 'Updated'),
             
             'groups_tmp' => Yii::t('app', 'Groups'),
-        ];
-    }
-    
-    public static function locations()
-    {
-        return [
-            'slider_home' => [
-                'label' => Yii::t('app', 'Slider home'),
-            ],
-            'slider_about' => [
-                'label' => Yii::t('app', 'Slider about'),
-            ],
         ];
     }
     

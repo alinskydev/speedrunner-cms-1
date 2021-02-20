@@ -13,7 +13,7 @@ class ProductSpecification extends ActiveRecord
     
     public static function tableName()
     {
-        return 'ProductSpecification';
+        return '{{%product_specification}}';
     }
     
     public function behaviors()
@@ -73,6 +73,6 @@ class ProductSpecification extends ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(ProductCategory::className(), ['id' => 'category_id'])
-            ->viaTable('ProductCategorySpecificationRef', ['specification_id' => 'id']);
+            ->viaTable('product_category_specification_ref', ['specification_id' => 'id']);
     }
 }

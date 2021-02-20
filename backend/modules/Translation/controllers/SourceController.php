@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Translation\models\TranslationSource;
-use backend\modules\Translation\search\TranslationSourceSearch;
 
 
 class SourceController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new TranslationSource();
-        $this->modelSearch = new TranslationSourceSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -26,8 +23,8 @@ class SourceController extends CrudController
         return ArrayHelper::filter(parent::actions(), ['index', 'update']);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return TranslationSource::find()->with(['translations'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['translations'])->andWhere(['id' => $id])->one();
     }
 }

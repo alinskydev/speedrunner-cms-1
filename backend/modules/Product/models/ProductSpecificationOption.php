@@ -10,7 +10,7 @@ class ProductSpecificationOption extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductSpecificationOption';
+        return '{{%product_specification_option}}';
     }
     
     public function behaviors()

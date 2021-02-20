@@ -8,18 +8,15 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Log\models\LogAction;
-use backend\modules\Log\search\LogActionSearch;
 use backend\modules\Log\lists\LogActionModelsList;
 
 
 class ActionController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new LogAction();
-        $this->modelSearch = new LogActionSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function behaviors()
@@ -27,15 +24,15 @@ class ActionController extends CrudController
         return [
             'cache' => [
                 'class' => \yii\filters\PageCache::className(),
-                'duration' => 0,
                 'only' => ['index', 'view'],
+                'duration' => 0,
                 'dependency' => [
                     'class' => \yii\caching\DbDependency::className(),
                     'sql' => LogAction::find()->select('COUNT(*)')->createCommand()->getRawSql(),
                 ],
                 'variations' => [
                     Yii::$app->language,
-                    Yii::$app->user,
+                    Yii::$app->user->id,
                     Yii::$app->request->get(),
                 ],
             ],
@@ -50,14 +47,14 @@ class ActionController extends CrudController
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
                 'render_params' => [
-                    'log_action_models_list' => (new LogActionModelsList)::$data,
+                    'log_action_models_list' => (new LogActionModelsList())::$data,
                 ]
             ],
         ]);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return LogAction::find()->with(['attrs'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['attrs'])->andWhere(['id' => $id])->one();
     }
 }

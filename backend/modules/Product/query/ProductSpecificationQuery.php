@@ -15,14 +15,14 @@ class ProductSpecificationQuery extends ActiveQuery
         
         return $this->joinWith([
                 'categories',
-                'options' => fn ($query) => $query->select(['*', new Expression("ProductSpecificationOption.name->>'$.$lang' as name")]),
+                'options' => fn ($query) => $query->select(['*', new Expression("product_specification_option.name->>'$.$lang' as name")]),
             ])
-            ->andWhere(['ProductCategory.id' => $categories])
+            ->andWhere(['product_category.id' => $categories])
             ->select([
-                'ProductSpecification.*',
-                new Expression("ProductSpecification.name->>'$.$lang' as name"),
-                'ProductSpecificationOption.sort',
+                'product_specification.*',
+                new Expression("product_specification.name->>'$.$lang' as name"),
+                'product_specification_option.sort',
             ])
-            ->groupBy('ProductSpecification.id');
+            ->groupBy('product_specification.id');
     }
 }

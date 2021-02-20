@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider['comments'],
-                    'filterModel' => $modelSearch['comments'],
+                    'filterModel' => $searchModel['comments'],
                     'columns' => [
                         [
                             'attribute' => 'id',
@@ -55,9 +55,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'attribute' => 'user_id',
                             'format' => 'raw',
                             'filter' => Select2::widget([
-                                'model' => $modelSearch['comments'],
+                                'model' => $searchModel['comments'],
                                 'attribute' => 'user_id',
-                                'data' => [$modelSearch['comments']->user_id => ArrayHelper::getValue($modelSearch['comments']->user, 'username')],
+                                'data' => [$searchModel['comments']->user_id => ArrayHelper::getValue($searchModel['comments']->user, 'username')],
                                 'options' => ['placeholder' => ' '],
                                 'pluginOptions' => [
                                     'allowClear' => true,
@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'text:ntext',
                         [
                             'attribute' => 'status',
-                            'filter' => ArrayHelper::getColumn($modelSearch['comments']->statuses(), 'label'),
-                            'value' => fn ($model) => ArrayHelper::getValue($modelSearch['comments']->statuses(), "$model->status.label"),
+                            'filter' => ArrayHelper::getColumn($searchModel['comments']->enums->statuses(), 'label'),
+                            'value' => fn ($model) => ArrayHelper::getValue($searchModel['comments']->enums->statuses(), "$model->status.label"),
                         ],
                         'created',
                     ],
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider['rates'],
-                    'filterModel' => $modelSearch['rates'],
+                    'filterModel' => $searchModel['rates'],
                     'columns' => [
                         [
                             'attribute' => 'id',
@@ -104,9 +104,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'attribute' => 'user_id',
                             'format' => 'raw',
                             'filter' => Select2::widget([
-                                'model' => $modelSearch['rates'],
+                                'model' => $searchModel['rates'],
                                 'attribute' => 'user_id',
-                                'data' => [$modelSearch['rates']->user_id => ArrayHelper::getValue($modelSearch['rates']->user, 'username')],
+                                'data' => [$searchModel['rates']->user_id => ArrayHelper::getValue($searchModel['rates']->user, 'username')],
                                 'options' => ['placeholder' => ' '],
                                 'pluginOptions' => [
                                     'allowClear' => true,

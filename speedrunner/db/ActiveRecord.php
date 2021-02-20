@@ -12,10 +12,28 @@ class ActiveRecord extends \yii\db\ActiveRecord
 {
     const HTMLPURIFY_EXCLUDE_CLASSES = [];
     
+    public $enums = null;
+    public $searchModel = null;
     public $service = null;
     
     public function init()
     {
+        //        Setting enums
+        
+        $enums_class_name = str_replace('\models\\', '\enums\\', get_called_class()) . 'Enums';
+        
+        if ($this->enums === null) {
+            $this->enums = class_exists($enums_class_name) ? new $enums_class_name($this) : null;
+        }
+        
+        //        Setting search model
+        
+        $search_model_class_name = str_replace('\models\\', '\search\\', get_called_class()) . 'Search';
+        
+        if ($this->searchModel === null) {
+            $this->searchModel = class_exists($search_model_class_name) ? new $search_model_class_name($this) : null;
+        }
+        
         //        Setting service
         
         $service_class_name = str_replace('\models\\', '\services\\', get_called_class()) . 'Service';
@@ -91,7 +109,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         $class_name = StringHelper::basename(get_called_class());
         
-        if (!in_array($class_name, static::HTMLPURIFY_EXCLUDE_CLASSES)) {
+        if (!in_array($class_name, self::HTMLPURIFY_EXCLUDE_CLASSES)) {
             foreach ($this->dirtyAttributes as $key => $a) {
                 ($a && is_string($a)) ? $this->{$key} = HtmlPurifier::process($a) : null;
 //                ($a && is_string($a)) ? $this->{$key} = htmlspecialchars($a, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : null;

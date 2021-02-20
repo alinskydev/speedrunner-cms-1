@@ -13,7 +13,7 @@ class UserNotification extends ActiveRecord
     
     public static function tableName()
     {
-        return 'UserNotification';
+        return '{{%user_notification}}';
     }
     
     public function rules()

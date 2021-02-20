@@ -14,10 +14,10 @@ class UserQuery extends ActiveQuery
     {
         switch ($type) {
             case 'self':
-                $this->select(['User.id', "User.$attr as text"])->andFilterWhere(['like', "User.$attr", $q]);
+                $this->select(['user.id', "user.$attr as text"])->andFilterWhere(['like', "user.$attr", $q]);
                 break;
             case 'profile':
-                $this->joinWith(['profile'], false)->select(['User.id', "UserProfile.$attr as text"])->andFilterWhere(['like', "UserProfile.$attr", $q]);
+                $this->joinWith(['profile'], false)->select(['user.id', "user_profile.$attr as text"])->andFilterWhere(['like', "user_profile.$attr", $q]);
                 break;
             default:
                 $this->andWhere('false');

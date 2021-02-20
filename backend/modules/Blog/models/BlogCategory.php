@@ -10,7 +10,7 @@ class BlogCategory extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'BlogCategory';
+        return '{{%blog_category}}';
     }
     
     public function behaviors()

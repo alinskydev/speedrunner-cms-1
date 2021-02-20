@@ -16,7 +16,7 @@ class Product extends ActiveRecord
     
     public static function tableName()
     {
-        return 'Product';
+        return '{{%product}}';
     }
     
     public function behaviors()
@@ -173,19 +173,19 @@ class Product extends ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(ProductCategory::className(), ['id' => 'category_id'])
-            ->viaTable('ProductCategoryRef', ['product_id' => 'id']);
+            ->viaTable('product_category_ref', ['product_id' => 'id']);
     }
     
     public function getOptions()
     {
         return $this->hasMany(ProductSpecificationOption::className(), ['id' => 'option_id'])
-            ->viaTable('ProductOptionRef', ['product_id' => 'id']);
+            ->viaTable('product_option_ref', ['product_id' => 'id']);
     }
     
     public function getRelated()
     {
-        return $this->hasMany(static::className(), ['id' => 'related_id'])
-            ->viaTable('ProductRelatedRef', ['product_id' => 'id']);
+        return $this->hasMany(self::className(), ['id' => 'related_id'])
+            ->viaTable('product_related_ref', ['product_id' => 'id']);
     }
     
     public function getVariations()

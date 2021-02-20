@@ -19,19 +19,17 @@ class NestedSetsQuery extends ActiveQuery
     
     public function withoutRoots()
     {
-        return $this->andWhere(['>', 'depth', 0]);
+        return $this->andWhere(['>', "$this->table_name.depth", 0]);
     }
     
     public function itemsTree($attr, $type)
     {
-        $lang = Yii::$app->language;
-        
         switch ($type) {
             case 'self':
-                $this->addSelect(['id', new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name) as text")]);
+                $this->addSelect(['id', new Expression("CONCAT(REPEAT(('- '), (depth - 1)), $this->table_name.name) as text")]);
                 break;
             case 'translation':
-                $this->addSelect(['id', new Expression("CONCAT(REPEAT(('- '), (depth - 1)), name->>'$.$lang') as text")]);
+                $this->addSelect(['id', new Expression("CONCAT(REPEAT(('- '), (depth - 1)), $this->table_name.name->>'$.$this->lang') as text")]);
                 break;
         }
         

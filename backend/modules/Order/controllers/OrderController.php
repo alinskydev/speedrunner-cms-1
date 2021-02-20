@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Order\models\Order;
-use backend\modules\Order\search\OrderSearch;
 
 
 class OrderController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new Order();
-        $this->modelSearch = new OrderSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -26,8 +23,18 @@ class OrderController extends CrudController
         return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
     }
     
-    public function findModel()
+    public function findModel($id)
     {
-        return Order::find()->with(['products'])->andWhere(['id' => Yii::$app->request->get('id')])->one();
+        return $this->model->find()->with(['products'])->andWhere(['id' => $id])->one();
+    }
+    
+    public function actionChangeStatus($id, $status)
+    {
+        if (!($model = $this->model->findOne($id))) {
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        
+        $model->service->changeStatus($status);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

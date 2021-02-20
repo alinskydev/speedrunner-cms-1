@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use backend\modules\Order\models\OrderProduct;
 
 $relations = ArrayHelper::merge($model->products, [new OrderProduct]);
-$is_block_disabled = !$model->isNewRecord && ArrayHelper::getValue($model->statuses(), "{$model->oldAttributes['status']}.save_action") == 'minus';
+$is_block_disabled = !$model->isNewRecord && ArrayHelper::getValue($model->enums->statuses(), "$model->status.save_action") == 'minus';
 
 ?>
 
@@ -33,18 +33,25 @@ $is_block_disabled = !$model->isNewRecord && ArrayHelper::getValue($model->statu
                 
                 <td>
                     <?php
-                        echo $form->field($value, 'product_id', [
-                            'template' => '{input}',
-                            'enableClientValidation' => false,
-                        ])->dropDownList(
-                            [$value->product_id => ArrayHelper::getValue($value, 'product.name')],
-                            [
-                                'name' => "Order[products_tmp][$value_id][product_id]",
-                                'id' => "select2-products-$value_id",
-                                'data-toggle' => 'select2-ajax',
-                                'data-action' => Yii::$app->urlManager->createUrl(['items-list/products']),
-                            ]
-                        );
+                        if ($value->isNewRecord || $value->product) {
+                            echo $form->field($value, 'product_id', [
+                                'template' => '{input}',
+                                'enableClientValidation' => false,
+                            ])->dropDownList(
+                                [$value->product_id => ArrayHelper::getValue($value, 'product.name')],
+                                [
+                                    'name' => "Order[products_tmp][$value_id][product_id]",
+                                    'id' => "select2-products-$value_id",
+                                    'data-toggle' => 'select2-ajax',
+                                    'data-action' => Yii::$app->urlManager->createUrl(['items-list/products']),
+                                ]
+                            );
+                        } else {
+                            echo $form->field($value, 'product_json', ['template' => '{input}'])->textInput([
+                                'value' => ArrayHelper::getValue($value->product_json, 'name'),
+                                'name' => false,
+                            ]);
+                        }
                     ?>
                 </td>
                 

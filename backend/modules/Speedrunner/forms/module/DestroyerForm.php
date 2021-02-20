@@ -52,16 +52,16 @@ class DestroyerForm extends Model
             //        DB
             
             $tables = Yii::$app->db->schema->getTableNames();
-            $sql = 'SET FOREIGN_KEY_CHECKS = 0;';
+            $sql[] = 'SET FOREIGN_KEY_CHECKS = 0;';
             
             foreach ($tables as $t) {
                 if (strpos($t, $m) === 0) {
-                    $sql .= "DROP TABLE $t;";
+                    $sql[] = "DROP TABLE $t;";
                 }
             }
             
-            $sql .= 'SET FOREIGN_KEY_CHECKS = 1;';
-            Yii::$app->db->createCommand($sql)->execute();
+            $sql[] = 'SET FOREIGN_KEY_CHECKS = 1;';
+            Yii::$app->db->createCommand(implode(';', $sql))->execute();
         }
         
         return true;

@@ -72,10 +72,10 @@ echo UpdateWidget::widget([
                     'multiple' => true,
                     'widget_options' => [
                         'delete_url' => Yii::$app->urlManager->createUrl([
-                            'blog/blog/image-delete', 'id' => $model->id, 'attr' => 'images'
+                            'blog/blog/file-delete', 'id' => $model->id, 'attr' => 'images'
                         ]),
                         'sort_url' => Yii::$app->urlManager->createUrl([
-                            'blog/blog/image-sort', 'id' => $model->id, 'attr' => 'images'
+                            'blog/blog/file-sort', 'id' => $model->id, 'attr' => 'images'
                         ]),
                     ],
                 ],

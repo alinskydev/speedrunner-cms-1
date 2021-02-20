@@ -10,7 +10,7 @@ class Page extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'Page';
+        return '{{%page}}';
     }
     
     public function behaviors()

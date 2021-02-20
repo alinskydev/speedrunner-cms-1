@@ -14,7 +14,7 @@ class ProductCategory extends ActiveRecord
     
     public static function tableName()
     {
-        return 'ProductCategory';
+        return '{{%product_category}}';
     }
     
     public function behaviors()
@@ -75,7 +75,7 @@ class ProductCategory extends ActiveRecord
             [['description'], 'string'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             
-            [['parent_id'], 'exist', 'targetClass' => static::className(), 'targetAttribute' => 'id'],
+            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
             [['specifications_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id']],
         ];
     }
@@ -105,13 +105,13 @@ class ProductCategory extends ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])
-            ->viaTable('ProductCategoryRef', ['category_id' => 'id']);
+            ->viaTable('product_category_ref', ['category_id' => 'id']);
     }
     
     public function getSpecifications()
     {
         return $this->hasMany(ProductSpecification::className(), ['id' => 'specification_id'])
-            ->viaTable('ProductCategorySpecificationRef', ['category_id' => 'id']);
+            ->viaTable('product_category_specification_ref', ['category_id' => 'id']);
     }
     
     public static function find()

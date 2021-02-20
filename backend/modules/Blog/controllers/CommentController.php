@@ -8,17 +8,14 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Blog\models\BlogComment;
-use backend\modules\Blog\search\BlogCommentSearch;
 
 
 class CommentController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new BlogComment();
-        $this->modelSearch = new BlogCommentSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -28,7 +25,7 @@ class CommentController extends CrudController
     
     public function actionView($id)
     {
-        if (!($model = BlogComment::findOne($id))) {
+        if (!($model = $this->model->findOne($id))) {
             return $this->redirect(['index']);
         }
         

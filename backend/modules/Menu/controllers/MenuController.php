@@ -4,6 +4,7 @@ namespace backend\modules\Menu\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Menu\models\Menu;
@@ -11,6 +12,19 @@ use backend\modules\Menu\models\Menu;
 
 class MenuController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'delete-with-children' => ['post'],
+                ],
+            ],
+        ];
+    }
+    
     public function actionTree()
     {
         return $this->render('tree', [

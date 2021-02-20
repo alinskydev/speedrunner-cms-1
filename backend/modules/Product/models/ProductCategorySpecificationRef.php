@@ -10,6 +10,6 @@ class ProductCategorySpecificationRef extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'ProductCategorySpecificationRef';
+        return '{{%product_category_specification_ref}}';
     }
 }

@@ -8,26 +8,18 @@ use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\System\search\SystemLanguageSearch;
 
 
 class LanguageController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new SystemLanguage();
-        $this->modelSearch = new SystemLanguageSearch();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
     {
         return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
-    }
-    
-    public function findModel()
-    {
-        return SystemLanguage::findOne(Yii::$app->request->get('id'));
     }
 }

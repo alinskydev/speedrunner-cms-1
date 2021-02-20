@@ -12,11 +12,10 @@ use backend\modules\Product\models\ProductVariation;
 
 class VariationController extends CrudController
 {
-    public function beforeAction($action)
+    public function init()
     {
         $this->model = new ProductVariation();
-        
-        return parent::beforeAction($action);
+        return parent::init();
     }
     
     public function actions()
@@ -25,6 +24,7 @@ class VariationController extends CrudController
             'update' => [
                 'class' => Actions\crud\UpdateAction::className(),
                 'redirect_route' => false,
+                'success_message' => false,
             ],
             'file-sort' => [
                 'class' => Actions\crud\FileSortAction::className(),
@@ -35,10 +35,5 @@ class VariationController extends CrudController
                 'allowed_attributes' => ['images'],
             ],
         ];
-    }
-    
-    public function findModel()
-    {
-        return ProductVariation::findOne(Yii::$app->request->get('id'));
     }
 }

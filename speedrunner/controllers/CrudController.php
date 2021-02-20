@@ -4,14 +4,26 @@ namespace speedrunner\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
 use speedrunner\actions as Actions;
 use speedrunner\db\ActiveRecord;
 
 
 class CrudController extends Controller
 {
-    public ?ActiveRecord $model;
-    public ?ActiveRecord $modelSearch;
+    public ActiveRecord $model;
+    
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
     
     public function actions()
     {
@@ -32,5 +44,10 @@ class CrudController extends Controller
                 'class' => Actions\crud\DeleteAction::className(),
             ],
         ];
+    }
+    
+    public function findModel($id)
+    {
+        return $this->model->findOne($id);
     }
 }

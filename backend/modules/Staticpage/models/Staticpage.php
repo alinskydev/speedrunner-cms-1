@@ -14,7 +14,7 @@ class Staticpage extends ActiveRecord
     
     public static function tableName()
     {
-        return 'Staticpage';
+        return '{{%staticpage}}';
     }
     
     public function behaviors()

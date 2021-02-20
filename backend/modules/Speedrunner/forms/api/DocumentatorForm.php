@@ -64,10 +64,8 @@ class DocumentatorForm extends Model
             $methods = ArrayHelper::index($controller_reflection->getMethods(), 'name');
             
             if ($form_method_reflection = ArrayHelper::getValue($methods, 'actions')) {
-                $controller_external_actions = $form_method_reflection->invoke($controller);
-                
                 foreach ($form_method_reflection->invoke($controller) as $action_key => $action) {
-                    if ($action['class'] == 'common\actions\rest\FormAction') {
+                    if ($action['class'] == 'speedrunner\actions\rest\FormAction') {
                         $forms[$action_key] = $action['model'] ?? new $action['model_class'];
                     }
                 }
@@ -118,7 +116,7 @@ class DocumentatorForm extends Model
                                     if (is_callable($value)) {
                                         $value = "$key: FUNCTION";
                                     } elseif (is_array($value)) {
-                                        $value = "$key: [" . static::implodeRecursive(', ', $value) . ']';
+                                        $value = "$key: [" . self::implodeRecursive(', ', $value) . ']';
                                     } else {
                                         $value = "$key: $value";
                                     }
@@ -184,7 +182,7 @@ class DocumentatorForm extends Model
             $output .= (!is_int($key) ? "$key: " : null);
             
             if (is_array($av)) {
-                $output .= static::implodeRecursive($separator, $av);
+                $output .= self::implodeRecursive($separator, $av);
             } else {
                 $output .= $separator . $av;
             }

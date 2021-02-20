@@ -20,7 +20,7 @@ class LogActionService extends ActiveService
         $model = ArrayHelper::getValue($model_class, 'model');
         $translation_attrs = ArrayHelper::getValue($model_class, 'attributes.translation', []);
         $boolean_attrs = ArrayHelper::getValue($model_class, 'attributes.boolean', []);
-        $select_attrs = ArrayHelper::getValue($model_class, 'attributes.select', []);
+        $enum_attrs = ArrayHelper::getValue($model_class, 'attributes.enum', []);
         $text_attrs = ArrayHelper::getValue($model_class, 'attributes.text', []);
         $json_attrs = ArrayHelper::getValue($model_class, 'attributes.json', []);
         
@@ -43,8 +43,8 @@ class LogActionService extends ActiveService
                 $value = ArrayHelper::getValue($value, Yii::$app->language);
             if (in_array($a->name, $boolean_attrs))
                 $value = Yii::$app->formatter->asBoolean($value);
-            if (isset($select_attrs[$a->name]))
-                $value = ArrayHelper::getValue($model->{$select_attrs[$a->name]}(), "$value.label");
+            if (isset($enum_attrs[$a->name]))
+                $value = ArrayHelper::getValue($enum_attrs[$a->name], "$value.label");
             
             if (in_array($a->name, $text_attrs) && $view_type == 'short') {
                 $value = Yii::t('app', '{length} symbols', ['length' => strlen($value)]);

@@ -42,7 +42,7 @@ class AppAsset extends AssetBundle
     
     public function init()
     {
-        $this->css[] = 'css/design/fonts/' . ArrayHelper::getValue(Yii::$app->user->identity, 'design_font', 'oswald') . '.css';
+        $this->css[] = 'css/design/fonts/' . ArrayHelper::getValue(Yii::$app->user->identity, 'design_font', 'roboto') . '.css';
         
         return parent::init();
     }

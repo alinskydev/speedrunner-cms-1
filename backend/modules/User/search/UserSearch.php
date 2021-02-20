@@ -41,22 +41,22 @@ class UserSearch extends User
         }
         
         $query->andFilterWhere([
-            'User.id' => $this->id,
-            'User.role' => $this->role,
+            'user.id' => $this->id,
+            'user.role' => $this->role,
         ]);
         
-        $query->andFilterWhere(['like', 'User.username', $this->username])
-            ->andFilterWhere(['like', 'User.email', $this->email])
-            ->andFilterWhere(['like', 'UserProfile.full_name', $this->full_name])
-            ->andFilterWhere(['like', 'UserProfile.phone', $this->phone])
-            ->andFilterWhere(['like', 'UserProfile.address', $this->address])
-            ->andFilterWhere(['like', 'User.created', $this->created])
-            ->andFilterWhere(['like', 'User.updated', $this->updated]);
+        $query->andFilterWhere(['like', 'user.username', $this->username])
+            ->andFilterWhere(['like', 'user.email', $this->email])
+            ->andFilterWhere(['like', 'user_profile.full_name', $this->full_name])
+            ->andFilterWhere(['like', 'user_profile.phone', $this->phone])
+            ->andFilterWhere(['like', 'user_profile.address', $this->address])
+            ->andFilterWhere(['like', 'user.created', $this->created])
+            ->andFilterWhere(['like', 'user.updated', $this->updated]);
         
         foreach ($this->profile_attributes as $p_a) {
             $dataProvider->sort->attributes[$p_a] = [
-                'asc' => ["UserProfile.$p_a" => SORT_ASC],
-                'desc' => ["UserProfile.$p_a" => SORT_DESC],
+                'asc' => ["user_profile.$p_a" => SORT_ASC],
+                'desc' => ["user_profile.$p_a" => SORT_DESC],
             ];
         }
         

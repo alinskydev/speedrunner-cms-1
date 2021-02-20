@@ -68,7 +68,7 @@ class UrlManager extends \yii\web\UrlManager
             
             $locale = ArrayHelper::getValue($this->aliases, $language, $language);
             Yii::$app->language = $locale;
-            static::$currentLanguage = $language;
+            self::$currentLanguage = $language;
             
             \speedrunner\services\I18NService::setLocalizedRoutes();
         } else {
@@ -84,7 +84,7 @@ class UrlManager extends \yii\web\UrlManager
                 $params[$this->routeParam] = $route;
                 $request->setQueryParams($params);
                 Yii::$app->language = $locale;
-                static::$currentLanguage = $language;
+                self::$currentLanguage = $language;
             }
         }
         
@@ -99,25 +99,27 @@ class UrlManager extends \yii\web\UrlManager
     public function createUrl($params)
     {
         $params = (array)$params;
-        $language = ArrayHelper::remove($params, 'lang', static::$currentLanguage);
+        $language = ArrayHelper::remove($params, 'lang', self::$currentLanguage);
         
-        return $this->baseUrl . ($language ? "/$language" : null) .
-            preg_replace('~' . $this->baseUrl . '~', null, parent::createUrl($params), 1);
+        $url = $this->baseUrl . ($language ? "/$language" : null);
+        $url .= preg_replace('~' . $this->baseUrl . '~', null, parent::createUrl($params), 1);
+        
+        return $url;
     }
     
     public function createFileUrl($params, $scheme = null)
     {
         $params = (array)$params;
-        static::$currentLanguage = null;
+        self::$currentLanguage = null;
         $url = $this->createUrl($params);
-        static::$currentLanguage = Yii::$app->language;
+        self::$currentLanguage = Yii::$app->language;
         return Url::ensureScheme($url, $scheme);
     }
     
     public function createAbsoluteFileUrl($params, $scheme = null)
     {
         $params = (array)$params;
-        static::$currentLanguage = null;
+        self::$currentLanguage = null;
         $url = $this->createUrl($params);
         if (strpos($url, '://') === false) {
             $hostInfo = $this->getHostInfo();
@@ -127,8 +129,8 @@ class UrlManager extends \yii\web\UrlManager
                 $url = $hostInfo . $url;
             }
         }
-        static::$currentLanguage = Yii::$app->language;
-
+        
+        self::$currentLanguage = Yii::$app->language;
         return Url::ensureScheme($url, $scheme);
     }
     

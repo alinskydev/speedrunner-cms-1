@@ -3,24 +3,31 @@
 namespace speedrunner\db;
 
 use Yii;
-use yii\helpers\StringHelper;
 use yii\db\Expression;
 
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
+    public $table_name;
+    public $lang;
+    
+    public function init()
+    {
+        $this->table_name = $this->modelClass::tableName();
+        $this->lang = Yii::$app->language;
+        
+        return parent::init();
+    }
+    
     public function bySlug($slug)
     {
-        return $this->andWhere(['slug' => $slug]);
+        return $this->andWhere(["$this->table_name.slug" => $slug]);
     }
     
     public function setTranslationAttributes(array $attributes)
     {
-        $lang = Yii::$app->language;
-        $model_class = StringHelper::basename($this->modelClass);
-        
         foreach ($attributes as $a) {
-            $this->addSelect([new Expression("$model_class.$a->>'$.$lang' as $a")]);
+            $this->addSelect([new Expression("$this->table_name.$a->>'$.$this->lang' as $a")]);
         }
         
         return $this;
@@ -28,25 +35,24 @@ class ActiveQuery extends \yii\db\ActiveQuery
     
     public function itemsList($attribute, $type, $q = null, $limit = 20)
     {
-        $lang = Yii::$app->language;
-        $model_class = StringHelper::basename($this->modelClass);
+        $this->table_name = $this->modelClass::tableName();
         
         switch ($type) {
             case 'self':
                 $this->select([
-                    "$model_class.id",
-                    "$model_class.$attribute as text",
+                    "$this->table_name.id",
+                    "$this->table_name.$attribute as text",
                 ])->andFilterWhere([
-                    'like', "$model_class.$attribute", $q
+                    'like', "$this->table_name.$attribute", $q
                 ]);
                 
                 break;
             case 'translation':
                 $this->select([
-                    "$model_class.id",
-                    new Expression("$model_class.$attribute->>'$.$lang' as text"),
+                    "$this->table_name.id",
+                    new Expression("$this->table_name.$attribute->>'$.$this->lang' as text"),
                 ])->andFilterWhere([
-                    'like', new Expression("LOWER(JSON_EXTRACT($model_class.$attribute, '$.$lang'))"), strtolower($q)
+                    'like', new Expression("LOWER(JSON_EXTRACT($this->table_name.$attribute, '$.$this->lang'))"), strtolower($q)
                 ]);
                 
                 break;

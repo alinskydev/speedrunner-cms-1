@@ -11,8 +11,6 @@ use backend\modules\Product\models\ProductCategory;
 $this->title = Yii::t('app', 'Products');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-$categories_list = ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all();
-
 ?>
 
 <h2 class="main-title">
@@ -27,7 +25,7 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
 <div class="main-shadow p-3">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $modelSearch,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'speedrunner\widgets\grid\CheckboxColumn',
@@ -60,7 +58,10 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
             [
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map($categories_list, 'id', 'text'),
+                'filter' => ArrayHelper::map(
+                    ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
+                    'id', 'text'
+                ),
                 'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
@@ -71,9 +72,9 @@ $categories_list = ProductCategory::find()->itemsTree('name', 'translation')->wi
                 'attribute' => 'brand_id',
                 'format' => 'raw',
                 'filter' => Select2::widget([
-                    'model' => $modelSearch,
+                    'model' => $searchModel,
                     'attribute' => 'brand_id',
-                    'data' => [$modelSearch->brand_id => ArrayHelper::getValue($modelSearch->brand, 'name')],
+                    'data' => [$searchModel->brand_id => ArrayHelper::getValue($searchModel->brand, 'name')],
                     'options' => ['placeholder' => ' '],
                     'pluginOptions' => [
                         'allowClear' => true,

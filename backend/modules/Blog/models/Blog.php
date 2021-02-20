@@ -13,7 +13,7 @@ class Blog extends ActiveRecord
     
     public static function tableName()
     {
-        return 'Blog';
+        return '{{%blog}}';
     }
     
     public function behaviors()
@@ -84,7 +84,7 @@ class Blog extends ActiveRecord
     public function getTags()
     {
         return $this->hasMany(BlogTag::className(), ['id' => 'tag_id'])
-            ->viaTable('BlogTagRef', ['blog_id' => 'id'], function ($query) {
+            ->viaTable('blog_tag_ref', ['blog_id' => 'id'], function ($query) {
                 $query->onCondition(['lang' => Yii::$app->language]);
             });
     }

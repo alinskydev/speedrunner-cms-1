@@ -30,7 +30,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<?= $this->render('@backend/views/layouts/themes/' . ArrayHelper::getValue(Yii::$app->user->identity, 'design_theme', 'nav_full'), [
+<?= $this->render('@backend/views/layouts/themes/' . (Yii::$app->user->identity->design_theme ?? 'nav_full'), [
     'content' => $content,
     'menu_items' => require '_nav.php',
     'flashes' => json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE),

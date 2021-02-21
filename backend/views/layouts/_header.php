@@ -53,8 +53,8 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                     <div class="dropdown-divider"></div>
                     
                     <?= Html::a(
-                        Html::tag('i', '&nbsp;', ['class' => 'fas fa-key']) . Yii::t('app', 'Change password'),
-                        ['/site/change-password'],
+                        Html::tag('i', '&nbsp;', ['class' => 'fas fa-edit']) . Yii::t('app', 'Update'),
+                        ['/user/user/profile-update'],
                         ['class' => 'dropdown-item px-3']
                     ) ?>
                     

@@ -17,7 +17,6 @@ use yii\di\Instance;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemLanguage;
-use backend\modules\Translation\models\TranslationSource;
 
 
 class DbMessageSource extends \yii\i18n\DbMessageSource

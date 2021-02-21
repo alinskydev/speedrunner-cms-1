@@ -27,6 +27,14 @@ class UserController extends CrudController
                 'class' => Actions\crud\FileDeleteAction::className(),
                 'allowed_attributes' => ['image'],
             ],
+            'profile-update' => [
+                'class' => Actions\web\FormAction::className(),
+                'model' => Yii::$app->user->identity,
+                'render_view' => 'profile_update',
+                'run_method' => 'save',
+                'success_message' => 'Profile has been updated',
+                'redirect_route' => ['profile-update'],
+            ],
         ]);
     }
 }

@@ -13,9 +13,19 @@ use speedrunner\services\FileService;
 
 class User extends ActiveRecord implements IdentityInterface
 {
+    const SCENARIO_UPDATE_PROFILE = 'update_profile';
+    
     const PASSWORD_RESET_TOKEN_EXPIRE = 3600;
     
     public $new_password;
+    
+    public $full_name;
+    public $phone;
+    public $address;
+    
+    public $design_theme;
+    public $design_font;
+    public $design_border_radius;
     
     public $profile_attributes = [
         'full_name',
@@ -23,13 +33,26 @@ class User extends ActiveRecord implements IdentityInterface
         'address',
     ];
     
-    public $full_name;
-    public $phone;
-    public $address;
+    public $design_attributes = [
+        'design_theme',
+        'design_font',
+        'design_border_radius',
+    ];
     
     public static function tableName()
     {
         return '{{%user}}';
+    }
+    
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE_PROFILE] = [
+            'new_password', 'full_name', 'phone', 'address',
+            'design_theme', 'design_font', 'design_border_radius',
+        ];
+        
+        return $scenarios;
     }
     
     public function behaviors()
@@ -53,6 +76,14 @@ class User extends ActiveRecord implements IdentityInterface
                             'relational' => $this->profile_attributes,
                         ],
                     ],
+                    'design' => [
+                        'model' => new UserDesign(),
+                        'relation' => 'design',
+                        'attributes' => [
+                            'main' => 'user_id',
+                            'relational' => $this->design_attributes,
+                        ],
+                    ],
                 ],
             ],
             'log_actions' => [
@@ -63,6 +94,10 @@ class User extends ActiveRecord implements IdentityInterface
                         'relation' => 'profile',
                         'attributes' => $this->profile_attributes,
                     ],
+                    'design' => [
+                        'relation' => 'design',
+                        'attributes' => $this->design_attributes,
+                    ],
                 ],
             ],
         ];
@@ -72,7 +107,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email', 'role', 'full_name'], 'required'],
-            [['new_password'], 'required', 'when' => function($model) {
+            [['new_password'], 'required', 'enableClientValidation' => false, 'when' => function($model) {
                 return $model->isNewRecord;
             }],
             
@@ -105,15 +140,15 @@ class User extends ActiveRecord implements IdentityInterface
             'created' => Yii::t('app', 'Created'),
             'updated' => Yii::t('app', 'Updated'),
             
-            'design_theme' => Yii::t('app', 'Theme'),
-            'design_font' => Yii::t('app', 'Font'),
-            'design_border_radius' => Yii::t('app', 'Border radius'),
-            
             'new_password' => Yii::t('app', 'New password'),
             
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
+            
+            'design_theme' => Yii::t('app', 'Theme'),
+            'design_font' => Yii::t('app', 'Font'),
+            'design_border_radius' => Yii::t('app', 'Border radius'),
         ];
     }
     
@@ -122,10 +157,19 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
     
+    public function getDesign()
+    {
+        return $this->hasOne(UserDesign::className(), ['user_id' => 'id']);
+    }
+    
     public function afterFind()
     {
         foreach ($this->profile_attributes as $p_a) {
             $this->{$p_a} = $this->profile->{$p_a};
+        }
+        
+        foreach ($this->design_attributes as $p_a) {
+            $this->{$p_a} = $this->design->{$p_a};
         }
         
         return parent::afterFind();

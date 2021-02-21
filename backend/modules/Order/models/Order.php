@@ -22,6 +22,14 @@ class Order extends ActiveRecord
         return '{{%order}}';
     }
     
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CHANGE_STATUS] = ['status'];
+        
+        return $scenarios;
+    }
+    
     public function behaviors()
     {
         return [
@@ -90,14 +98,6 @@ class Order extends ActiveRecord
             
             'products_tmp' => Yii::t('app', 'Products'),
         ];
-    }
-    
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CHANGE_STATUS] = ['status'];
-        
-        return $scenarios;
     }
     
     public function getUser()

@@ -32,4 +32,4 @@ Use following urls to get application you need:
 In progress...
 
 ## Reporting
-Let me know about **bugs to fix** and **feautures (or ideas) you want to see to discuss**.
+Let me know about **bugs to fix** and **features (or ideas) to discuss**.

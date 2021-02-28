@@ -14,7 +14,7 @@ class SystemSettingsService
     public function __construct()
     {
         if (self::$attributes === null) {
-            self::$attributes = ArrayHelper::map(SystemSettings::find()->select(['name', 'value'])->asArray()->all(), 'name', 'value');
+            self::$attributes = ArrayHelper::map(SystemSettings::find()->asArray()->all(), 'name', 'value');
         }
     }
     

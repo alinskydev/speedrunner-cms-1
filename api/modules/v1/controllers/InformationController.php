@@ -36,7 +36,7 @@ class InformationController extends RestController
         return [
             'settings' => SystemSettings::find()->andWhere(['not in', 'name', ['delete_model_file']])->all(),
             'languages' => SystemLanguage::find()->all(),
-            'static_pages' => Staticpage::find()->select(['name', 'label'])->asArray()->all(),
+            'static_pages' => Staticpage::find()->select(['name', 'label'])->asObject()->all(),
         ];
     }
 }

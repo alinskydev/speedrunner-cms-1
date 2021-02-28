@@ -87,7 +87,7 @@ body .redactor-box-fullscreen {
   overflow: auto;
   margin: 0 !important;
   padding: 20px;
-  min-height: 250px;
+  min-height: 80px;
   outline: none;
   white-space: normal;
   border: 1px solid #eee;

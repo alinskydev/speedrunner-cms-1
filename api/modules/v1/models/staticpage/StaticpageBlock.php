@@ -16,9 +16,9 @@ class StaticpageBlock
             'part_name',
             'value' => function ($model) {
                 switch ($model->type) {
-                    case 'ElFinder':
+                    case 'elfinder':
                         return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->value);
-                    case 'images':
+                    case 'files':
                         foreach ($model->value as $v) {
                             $result[] = Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($v);
                         }

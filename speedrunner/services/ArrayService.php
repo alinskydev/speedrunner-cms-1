@@ -7,16 +7,21 @@ use Yii;
 
 class ArrayService
 {
-    public static function buildFullPath($data, $attr, $children_attr = 'children', $parent_value = null, $separator = '/')
+    public static function buildFullPath(array $array, $attr, $children_attr = 'children', $parent_value = null, $separator = '/')
     {
-        foreach ($data as &$d) {
-            $d[$attr] = $parent_value ? $parent_value . $separator . $d[$attr] : $d[$attr];
+        foreach ($array as &$arr) {
+            $arr[$attr] = $parent_value ? $parent_value . $separator . $arr[$attr] : $arr[$attr];
             
-            if ($d[$children_attr]) {
-                $d[$children_attr] = self::buildFullPath($d[$children_attr], $attr, $children_attr, $d[$attr], $separator);
+            if ($arr[$children_attr]) {
+                $arr[$children_attr] = self::buildFullPath($arr[$children_attr], $attr, $children_attr, $arr[$attr], $separator);
             }
         }
         
-        return $data;
+        return $array;
+    }
+    
+    public static function toObjects(array $array)
+    {
+        return json_decode(json_encode($array, JSON_UNESCAPED_UNICODE), false);
     }
 }

@@ -19,6 +19,9 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#067a7d">
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web/favicon.svg') ?>">
+    
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 foreach ($specifications as $key => $s) {
-    echo Html::tag('h5', $s['name']);
+    echo Html::tag('h5', $s->name);
     
     echo Html::checkboxList(
-        'Product[options_tmp][' . $s['id'] . '][]',
+        'Product[options_tmp][' . $s->id . '][]',
         $options,
-        ArrayHelper::map($s['options'], 'id', 'name'),
+        ArrayHelper::map($s->options, 'id', 'name'),
         [
             'separator' => Html::tag('div', null, ['class' => 'mb-2']),
-            'item' => function ($index, $label, $name, $checked, $value) use ($s) {
+            'item' => function ($index, $label, $name, $checked, $value) {
                 $result = Html::checkbox('Product[options_tmp][]', $checked, [
                     'id' => "productoption-$value",
                     'class' => 'custom-control-input',

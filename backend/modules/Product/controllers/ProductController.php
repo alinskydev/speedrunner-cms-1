@@ -44,7 +44,7 @@ class ProductController extends CrudController
     public function actionSpecifications($id = null, array $categories = [])
     {
         $model = $this->model->findOne($id) ?: $this->model;
-        $specifications = ProductSpecification::find()->byAssignedCategies($categories)->asArray()->all();
+        $specifications = ProductSpecification::find()->byAssignedCategies($categories)->asObject()->all();
         
         $variations = [
             'items' => ArrayHelper::map($specifications, 'id', 'name'),
@@ -52,8 +52,8 @@ class ProductController extends CrudController
         ];
         
         foreach ($specifications as $s) {
-            $variations['data_options']['options'][$s['id']] = [
-                'data-options' => Html::renderSelectOptions(null, ArrayHelper::map($s['options'], 'id', 'name')),
+            $variations['data_options']['options'][$s->id] = [
+                'data-options' => Html::renderSelectOptions(null, ArrayHelper::map($s->options, 'id', 'name')),
             ];
         }
         

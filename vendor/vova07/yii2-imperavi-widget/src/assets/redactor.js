@@ -120,13 +120,13 @@
 		maxHeight: false,
 
 		linebreaks: false,
-		replaceDivs: false,
-		paragraphize: false,
+		replaceDivs: true,
+		paragraphize: true,
 		cleanStyleOnEnter: false,
 		enterKey: true,
 
 		cleanOnPaste: true,
-		cleanSpaces: false,
+		cleanSpaces: true,
 		pastePlainText: false,
 
 		autosave: false, // false or url

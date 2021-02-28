@@ -8,6 +8,8 @@ use yii\db\Expression;
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
+    use ActiveQueryTrait;
+    
     public $table_name;
     public $lang;
     
@@ -17,6 +19,17 @@ class ActiveQuery extends \yii\db\ActiveQuery
         $this->lang = Yii::$app->language;
         
         return parent::init();
+    }
+    
+    public function populate($rows)
+    {
+        $result = parent::populate($rows);
+        
+        if ($this->asObject) {
+            $result = Yii::$app->services->array->toObjects($result);
+        }
+        
+        return $result;
     }
     
     public function bySlug($slug)

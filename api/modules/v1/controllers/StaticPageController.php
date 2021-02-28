@@ -26,7 +26,7 @@ class StaticpageController extends RestController
     
     public function actionView($name)
     {
-        if ($model = StaticPage::find()->andWhere(['name' => $name])->one()) {
+        if ($model = StaticPage::find()->with(['blocks'])->andWhere(['name' => $name])->one()) {
             return $model;
         } else {
             throw new \yii\web\NotFoundHttpException;

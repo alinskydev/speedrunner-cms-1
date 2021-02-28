@@ -243,7 +243,7 @@ class Widget extends BaseWidget
         }
         
         $this->settings['minHeight'] = 250;
-        $this->settings['paragraphize'] = false;
+        $this->settings['paragraphize'] = true;
         $this->settings['replaceDivs'] = false;
         
         $selector = Json::encode($this->selector);

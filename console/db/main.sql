@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.29, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: sr-cms
+-- Host: 127.0.0.1    Database: sr-cms-1
 -- ------------------------------------------------------
 -- Server version	5.7.29
 
@@ -174,7 +174,7 @@ CREATE TABLE `banner_group` (
   PRIMARY KEY (`id`),
   KEY `banner_id` (`banner_id`) USING BTREE,
   KEY `sort` (`sort`),
-  CONSTRAINT `banner_group_ibfk_1` FOREIGN KEY (`banner_id`) REFERENCES `Banner` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `banner_group_ibfk_1` FOREIGN KEY (`banner_id`) REFERENCES `banner` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -363,8 +363,8 @@ CREATE TABLE `blog_comment` (
   KEY `blog_id` (`blog_id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `status` (`status`),
-  CONSTRAINT `blog_comment_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `Blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `blog_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `blog_comment_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `blog_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -394,8 +394,8 @@ CREATE TABLE `blog_rate` (
   PRIMARY KEY (`id`),
   KEY `blog_id` (`blog_id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
-  CONSTRAINT `blog_rate_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `Blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `blog_rate_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `blog_rate_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `blog_rate_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -447,7 +447,7 @@ CREATE TABLE `blog_tag_ref` (
   `lang` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   KEY `blog_id` (`blog_id`) USING BTREE,
   KEY `tag_id` (`tag_id`) USING BTREE,
-  CONSTRAINT `blog_tag_ref_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `Blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `blog_tag_ref_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `blog_tag_ref_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `blog_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -479,8 +479,8 @@ CREATE TABLE `log_action` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `model_class` (`model_class`),
-  CONSTRAINT `log_action_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=523 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `log_action_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=517 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,7 +552,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,1,2,7,1,0,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(5,1,8,9,1,1,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-10-02 23:25:55'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}','2020-09-12 15:00:00','2020-12-03 09:56:08');
+INSERT INTO `menu` VALUES (1,1,1,14,0,0,'{\"de\": \"Root\", \"en\": \"Root\", \"ru\": \"Корень\"}','null','2020-09-12 15:00:00','2020-09-12 15:00:00'),(2,1,2,7,1,1,'{\"de\": \"1 de\", \"en\": \"1 en\", \"ru\": \"1 ru\"}','{\"de\": \"\", \"en\": \"cecwe\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(3,1,3,4,2,1,'{\"de\": \"1-1\", \"en\": \"1-1\", \"ru\": \"1-1\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(4,1,5,6,2,1,'{\"de\": \"1-2\", \"en\": \"1-2\", \"ru\": \"1-2\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-09-12 15:00:00'),(5,1,8,9,1,1,'{\"de\": \"2\", \"en\": \"2\", \"ru\": \"2\"}','{\"de\": \"\", \"en\": \"dawd\", \"ru\": \"\"}','2020-09-12 15:00:00','2020-10-02 23:25:55'),(25,1,10,13,1,1,'{\"de\": \"3\", \"en\": \"3\", \"ru\": \"3\"}','{\"de\": \"\", \"en\": \"\", \"ru\": \"\"}','2020-09-12 15:00:00','2021-02-24 07:39:47'),(26,1,11,12,2,1,'{\"de\": \"3-1\", \"en\": \"3-1\", \"ru\": \"3-1\"}','{\"de\": \"/qwe\", \"en\": \"/qwe\", \"ru\": \"/qwe\"}','2020-09-12 15:00:00','2021-02-24 07:39:08');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,7 +607,7 @@ CREATE TABLE `order` (
   UNIQUE KEY `key` (`key`),
   KEY `user_id` (`user_id`),
   KEY `status` (`status`),
-  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -640,8 +640,8 @@ CREATE TABLE `order_product` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   KEY `order_id` (`order_id`) USING BTREE,
-  CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `Order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -714,8 +714,8 @@ CREATE TABLE `product` (
   KEY `main_category_id` (`main_category_id`) USING BTREE,
   KEY `sku` (`sku`),
   KEY `price` (`price`),
-  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`main_category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `product_ibfk_3` FOREIGN KEY (`brand_id`) REFERENCES `ProductBrand` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`main_category_id`) REFERENCES `product_category` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `product_ibfk_3` FOREIGN KEY (`brand_id`) REFERENCES `product_brand` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -808,8 +808,8 @@ CREATE TABLE `product_category_ref` (
   `category_id` int(11) NOT NULL,
   KEY `product_id` (`product_id`) USING BTREE,
   KEY `category_id` (`category_id`) USING BTREE,
-  CONSTRAINT `product_category_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_category_ref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_category_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_category_ref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -835,8 +835,8 @@ CREATE TABLE `product_category_specification_ref` (
   `specification_id` int(11) NOT NULL,
   KEY `specification_id` (`specification_id`) USING BTREE,
   KEY `category_id` (`category_id`) USING BTREE,
-  CONSTRAINT `product_category_specification_ref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `ProductCategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_category_specification_ref_ibfk_3` FOREIGN KEY (`specification_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_category_specification_ref_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_category_specification_ref_ibfk_3` FOREIGN KEY (`specification_id`) REFERENCES `product_specification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -862,8 +862,8 @@ CREATE TABLE `product_option_ref` (
   `option_id` int(11) NOT NULL,
   KEY `product_id` (`product_id`) USING BTREE,
   KEY `option_id` (`option_id`) USING BTREE,
-  CONSTRAINT `product_option_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_option_ref_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductSpecificationOption` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_option_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_option_ref_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `product_specification_option` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -889,8 +889,8 @@ CREATE TABLE `product_related_ref` (
   `related_id` int(11) NOT NULL,
   KEY `product_id` (`product_id`) USING BTREE,
   KEY `related_id` (`related_id`) USING BTREE,
-  CONSTRAINT `product_related_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_related_ref_ibfk_2` FOREIGN KEY (`related_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_related_ref_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_related_ref_ibfk_2` FOREIGN KEY (`related_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -951,7 +951,7 @@ CREATE TABLE `product_specification_option` (
   PRIMARY KEY (`id`),
   KEY `specification_id` (`specification_id`) USING BTREE,
   KEY `sort` (`sort`),
-  CONSTRAINT `product_specification_option_ibfk_1` FOREIGN KEY (`specification_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_specification_option_ibfk_1` FOREIGN KEY (`specification_id`) REFERENCES `product_specification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -990,9 +990,9 @@ CREATE TABLE `product_variation` (
   KEY `option_id` (`option_id`) USING BTREE,
   KEY `sku` (`sku`),
   KEY `sort` (`sort`),
-  CONSTRAINT `product_variation_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_variation_ibfk_2` FOREIGN KEY (`specification_id`) REFERENCES `ProductSpecification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_variation_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `ProductSpecificationOption` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `product_variation_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_variation_ibfk_2` FOREIGN KEY (`specification_id`) REFERENCES `product_specification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_variation_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `product_specification_option` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1030,7 +1030,6 @@ CREATE TABLE `seo_meta` (
 
 LOCK TABLES `seo_meta` WRITE;
 /*!40000 ALTER TABLE `seo_meta` DISABLE KEYS */;
-INSERT INTO `seo_meta` VALUES (1,'Blog',8,'en','{\"title\": \"rsg awd qw\", \"og:image\": \"/uploads/media/svg_html.svg\", \"og:title\": \"qwdqwd\", \"description\": \"qwdqwd\", \"og:description\": \"qwdqw\"}'),(5,'Product',3,'en','{\"title\": \"awda\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(6,'Staticpage',16,'en','{\"title\": \"qwe en\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(11,'BlockPage',3,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(12,'ProductCategory',122,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(14,'ProductCategory',123,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(16,'ProductCategory',121,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(17,'Product',2,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(18,'Blog',2,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(20,'Blog',8,'ru','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(21,'ProductCategory',120,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(32,'Staticpage',16,'ru','{\"title\": \"qwe ru\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(33,'Staticpage',16,'de','{\"title\": \"qwe de\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}'),(34,'Page',1,'en','{\"title\": \"\", \"og:image\": \"\", \"og:title\": \"\", \"description\": \"\", \"og:description\": \"\"}');
 /*!40000 ALTER TABLE `seo_meta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1048,7 +1047,7 @@ CREATE TABLE `staticpage` (
   `has_seo_meta` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1083,8 +1082,8 @@ CREATE TABLE `staticpage_block` (
   KEY `staticpage_id` (`staticpage_id`) USING BTREE,
   KEY `part_index` (`part_index`),
   KEY `name` (`name`),
-  CONSTRAINT `staticpage_block_ibfk_1` FOREIGN KEY (`staticpage_id`) REFERENCES `Staticpage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `staticpage_block_ibfk_1` FOREIGN KEY (`staticpage_id`) REFERENCES `staticpage` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1235,7 +1234,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`),
   KEY `role` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1264,7 +1263,7 @@ CREATE TABLE `user_design` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_design_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1293,7 +1292,7 @@ CREATE TABLE `user_notification` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `user_notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `user_notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1321,8 +1320,8 @@ CREATE TABLE `user_profile` (
   `address` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userprofile_ibfk_1` (`user_id`),
-  CONSTRAINT `user_profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `user_profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1344,4 +1343,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-22  3:30:08
+-- Dump completed on 2021-02-28 16:38:21

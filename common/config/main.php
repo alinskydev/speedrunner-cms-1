@@ -4,7 +4,7 @@ $app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
 $routes_file = __DIR__ . "/../../$app/config/routes.php";
 $routes = $app && file_exists($routes_file) ? require $routes_file : [];
 
-$config = [
+return [
     'timeZone' => 'UTC',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -97,10 +97,3 @@ $config = [
         ],
     ],
 ];
-
-if (YII_DEBUG) {
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = 'yii\debug\Module';
-}
-
-return $config;

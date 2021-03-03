@@ -1,6 +1,6 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -14,3 +14,10 @@ return [
         ],
     ],
 ];
+
+if (YII_DEBUG) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = 'yii\debug\Module';
+}
+
+return $config;

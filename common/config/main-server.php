@@ -1,6 +1,6 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -18,3 +18,5 @@ return [
         ],
     ],
 ];
+
+return $config;

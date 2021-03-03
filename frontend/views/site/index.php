@@ -2,6 +2,8 @@
 
 (new \backend\modules\Seo\services\SeoMetaService($page))->register();
 
+$this->title = Yii::$app->services->settings->site_name;
+
 ?>
 
 <?php foreach ($categories as $c) { ?>

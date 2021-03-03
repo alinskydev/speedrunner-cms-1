@@ -50,8 +50,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     ['target' => '_blank']
                 ),
             ],
-            'created',
-            'updated',
+            'created_at',
+            'updated_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update}{delete}',

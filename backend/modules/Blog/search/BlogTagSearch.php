@@ -15,7 +15,7 @@ class BlogTagSearch extends BlogTag
     {
         return [
             [['id'], 'integer'],
-            [['name', 'created'], 'safe'],
+            [['name', 'created_at'], 'safe'],
         ];
     }
     
@@ -44,7 +44,7 @@ class BlogTagSearch extends BlogTag
         ]);
         
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'created', $this->created]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at]);
         
 		return $dataProvider;
     }

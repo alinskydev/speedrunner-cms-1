@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'style' => 'min-width: 300px;',
                 ]
             ],
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{view} {link}',

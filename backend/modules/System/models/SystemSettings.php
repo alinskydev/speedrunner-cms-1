@@ -16,6 +16,16 @@ class SystemSettings extends ActiveRecord
         return '{{%system_settings}}';
     }
     
+    public function behaviors()
+    {
+        return [
+            'cache' => [
+                'class' => \speedrunner\behaviors\CacheBehavior::className(),
+                'tags' => ['system_settings'],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [

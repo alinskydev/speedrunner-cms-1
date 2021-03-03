@@ -34,6 +34,9 @@ return [
                 ],
             ],
         ],
+        'view' => [
+            'class' => 'frontend\components\View',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

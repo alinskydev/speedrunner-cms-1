@@ -4,6 +4,7 @@ namespace backend\modules\Staticpage\services;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\caching\TagDependency;
 
 use backend\modules\Staticpage\models\Staticpage;
 
@@ -15,7 +16,9 @@ class StaticpageService
     public function __construct()
     {
         if (self::$pages === null) {
-            self::$pages = Staticpage::find()->with(['blocks'])->indexBy('name')->all();
+            self::$pages = Yii::$app->db->cache(function ($db) {
+                return Staticpage::find()->with(['blocks'])->indexBy('name')->all();
+            }, 0, new TagDependency(['tags' => 'staticpages']));
         }
     }
     

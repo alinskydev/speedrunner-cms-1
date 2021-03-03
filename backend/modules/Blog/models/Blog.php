@@ -49,7 +49,7 @@ class Blog extends ActiveRecord
             [['full_description'], 'string'],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['published'], 'date', 'format' => 'php: d.m.Y H:i'],
+            [['published_at'], 'date', 'format' => 'php: d.m.Y H:i'],
             [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
             
@@ -68,9 +68,9 @@ class Blog extends ActiveRecord
             'short_description' => Yii::t('app', 'Short description'),
             'full_description' => Yii::t('app', 'Full description'),
             'images' => Yii::t('app', 'Images'),
-            'published' => Yii::t('app', 'Published'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'published_at' => Yii::t('app', 'Published at'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'tags_tmp' => Yii::t('app', 'Tags'),
         ];
@@ -91,7 +91,7 @@ class Blog extends ActiveRecord
     
     public function beforeSave($insert)
     {
-        $this->published = $this->published ?: date('Y-m-d H:i:s');
+        $this->published_at = $this->published_at ?: date('Y-m-d H:i:s');
         return parent::beforeSave($insert);
     }
     

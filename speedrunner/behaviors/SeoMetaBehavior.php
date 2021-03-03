@@ -24,20 +24,13 @@ class SeoMetaBehavior extends Behavior
     
     public function afterSave($event)
     {
-        $model_class = StringHelper::basename($this->owner->className());
+        $filter = [
+            'model_class' => StringHelper::basename($this->owner->className()),
+            'model_id' => $this->owner->id,
+            'lang' => Yii::$app->language,
+        ];
         
-        $seo_mdl = SeoMeta::find()
-            ->andWhere([
-                'model_class' => $model_class,
-                'model_id' => $this->owner->id,
-                'lang' => Yii::$app->language,
-            ])
-            ->one() ?? new SeoMeta([
-                'model_class' => $model_class,
-                'model_id' => $this->owner->id,
-                'lang' => Yii::$app->language,
-            ]);
-        
+        $seo_mdl = SeoMeta::find()->andWhere($filter)->one() ?? new SeoMeta($filter);
         $seo_mdl->value = Yii::$app->request->post('SeoMeta');
         $seo_mdl->save();
     }

@@ -33,7 +33,7 @@ class BlogComment extends ActiveRecord
             'user_id' => Yii::t('app', 'User'),
             'text' => Yii::t('app', 'Text'),
             'status' => Yii::t('app', 'Status'),
-            'created' => Yii::t('app', 'Created'),
+            'created_at' => Yii::t('app', 'Created at'),
         ];
     }
     

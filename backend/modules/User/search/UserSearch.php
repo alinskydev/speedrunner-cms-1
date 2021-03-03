@@ -15,7 +15,7 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['username', 'role', 'email', 'full_name', 'phone', 'address', 'created', 'updated'], 'safe'],
+            [['username', 'role', 'email', 'full_name', 'phone', 'address', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
@@ -50,8 +50,8 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'user_profile.full_name', $this->full_name])
             ->andFilterWhere(['like', 'user_profile.phone', $this->phone])
             ->andFilterWhere(['like', 'user_profile.address', $this->address])
-            ->andFilterWhere(['like', 'user.created', $this->created])
-            ->andFilterWhere(['like', 'user.updated', $this->updated]);
+            ->andFilterWhere(['like', 'user.created_at', $this->created_at])
+            ->andFilterWhere(['like', 'user.updated_at', $this->updated_at]);
         
         foreach ($this->profile_attributes as $p_a) {
             $dataProvider->sort->attributes[$p_a] = [

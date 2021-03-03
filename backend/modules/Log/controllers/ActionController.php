@@ -28,7 +28,7 @@ class ActionController extends CrudController
                 'duration' => 0,
                 'dependency' => [
                     'class' => \yii\caching\DbDependency::className(),
-                    'sql' => LogAction::find()->select('COUNT(*)')->createCommand()->getRawSql(),
+                    'sql' => LogAction::find()->select('MAX(id)')->createCommand()->getRawSql(),
                 ],
                 'variations' => [
                     Yii::$app->language,

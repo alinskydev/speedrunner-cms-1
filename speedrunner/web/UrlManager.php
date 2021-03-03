@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://phe.me
- * @copyright Copyright (c) 2014 Pheme
- * @license MIT http://opensource.org/licenses/MIT
- */
 
 namespace speedrunner\web;
 
@@ -11,49 +6,28 @@ use Yii;
 use yii\web\UrlRuleInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\caching\TagDependency;
 
 use backend\modules\System\models\SystemLanguage;
 
-/**
- * @author Aris Karageorgos <aris@phe.me>
- */
+
 class UrlManager extends \yii\web\UrlManager
 {
     public static $currentLanguage;
-    /**
-     * @var array Supported languages
-     */
     public $languages;
-
-    /**
-     * @var array Language aliases
-     */
     public $aliases = [];
-
-    /**
-     * @var bool Whether to display the source app language in the URL
-     */
     public $displaySourceLanguage = false;
-    
-    /**
-     * @var bool Whether to rewrite the baseUrl in th URL
-     */
     public $rewriteBaseUrl = true;
-
-    /**
-     * @inheritdoc
-     */
+    
     public function init()
     {
-        $this->languages = SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
+        $this->languages = Yii::$app->db->cache(function ($db) {
+            return SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
+        }, 0, new TagDependency(['tags' => 'active_system_languages']));
+        
         parent::init();
     }
-
-    /**
-     * Parses the URL and sets the language accordingly
-     * @param \yii\web\Request $request
-     * @return array|bool
-     */
+    
     public function parseRequest($request)
     {
         if ($this->enablePrettyUrl) {
@@ -90,12 +64,7 @@ class UrlManager extends \yii\web\UrlManager
         
         return parent::parseRequest($request);
     }
-
-    /**
-     * Adds language functionality to URL creation
-     * @param array|string $params
-     * @return string
-     */
+    
     public function createUrl($params)
     {
         $params = (array)$params;

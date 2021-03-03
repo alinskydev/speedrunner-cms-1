@@ -10,31 +10,18 @@ class SeoMetaEnums
     public static function types()
     {
         return [
-            'title' => [
-                'label' => 'Title',
-                'input_type' => 'text_input',
-                'register_type' => 'title',
-            ],
-            'description' => [
-                'label' => 'Description',
+            'head' => [
+                'label' => 'Head',
                 'input_type' => 'text_area',
-                'register_type' => 'name',
             ],
-            'og:title' => [
-                'label' => 'Og:title',
-                'input_type' => 'text_input',
-                'register_type' => 'property',
-            ],
-            'og:description' => [
-                'label' => 'Og:description',
+            'body_top' => [
+                'label' => 'Body top',
                 'input_type' => 'text_area',
-                'register_type' => 'property',
             ],
-            'og:image' => [
-                'label' => 'Og:image',
-                'input_type' => 'elfinder',
-                'register_type' => 'url',
-            ]
+            'body_bottom' => [
+                'label' => 'Body bottom',
+                'input_type' => 'text_area',
+            ],
         ];
     }
 }

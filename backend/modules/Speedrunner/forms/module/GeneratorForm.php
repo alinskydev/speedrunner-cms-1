@@ -197,7 +197,7 @@ class GeneratorForm extends Model
         $rules = [];
         
         foreach ($columns as $column) {
-            if ($column->autoIncrement || in_array($column->name, ['created', 'updated'])) {
+            if ($column->autoIncrement || in_array($column->name, ['created_at', 'updated_at'])) {
                 continue;
             }
             

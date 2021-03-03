@@ -27,7 +27,7 @@ class BlogTag extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
-            'created' => Yii::t('app', 'Created'),
+            'created_at' => Yii::t('app', 'Created at'),
         ];
     }
 }

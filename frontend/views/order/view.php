@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 
 $this->title = Yii::t('app', 'Order №{id}', ['id' => $model->id]);
 
-$attrs = ['full_name', 'phone', 'email', 'address', 'created'];
+$attrs = ['full_name', 'phone', 'email', 'address', 'created_at'];
 
 ?>
 

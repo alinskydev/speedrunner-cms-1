@@ -28,6 +28,8 @@ class StaticpageController extends Controller
                 if ($relation_mdl = ArrayHelper::getValue($blocks, $key)) {
                     $relation_mdl->value = ArrayHelper::getValue($p_d, 'value');
                     $relation_mdl->save();
+                    
+                    Yii::$app->session->setFlash('success', [Yii::t('app', 'Record has been saved')]);
                 }
             }
         }

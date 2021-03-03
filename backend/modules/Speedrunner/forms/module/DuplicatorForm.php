@@ -97,7 +97,7 @@ class DuplicatorForm extends Model
             foreach ($tables as $t) {
                 if (strpos($t, $this->module_name_from) === 0) {
                     $new_table_name = str_replace($this->module_name_from, $this->module_name_to, $t);
-                    $sql[] = "CREATE TABLE $new_table_name LIKE $t;";
+                    $sql[] = "CREATE TABLE $new_table_name LIKE $t";
                 }
             }
             

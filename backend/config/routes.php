@@ -6,8 +6,6 @@ return [
     
     '/' => 'site/index',
     'error' => 'site/error',
-    'change-password' => 'site/change-password',
-    'information' => 'site/information',
     
-    'staticpage/update/<name>' => 'staticpage/staticpage/update',
+    'staticpage/<name>' => 'staticpage/staticpage/update',
 ];

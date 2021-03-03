@@ -22,7 +22,7 @@ return [
                 'afterSearch' => 'd.m.Y',
             ],
             'attributes' => [
-                'created', 'updated', 'datetime', 'published'
+                'created_at', 'updated_at', 'published_at', 'datetime',
             ]
         ],
         'date' => [
@@ -33,7 +33,7 @@ return [
                 'afterSearch' => 'd.m.Y',
             ],
             'attributes' => [
-                'date'
+                'date',
             ]
         ],
         'time' => [
@@ -44,7 +44,7 @@ return [
                 'afterSearch' => 'H:i',
             ],
             'attributes' => [
-                'time'
+                'time',
             ]
         ],
         'month' => [
@@ -55,7 +55,7 @@ return [
                 'afterSearch' => 'm.Y',
             ],
             'attributes' => [
-                'month'
+                'month',
             ]
         ],
     ],

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+$this->title = Yii::t('app', 'Contact');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

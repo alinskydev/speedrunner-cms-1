@@ -20,6 +20,8 @@ class SettingsController extends Controller
                 if ($model = ArrayHelper::getValue($settings, $key)) {
                     $model->value = ArrayHelper::getValue($p_d, 'value');
                     $model->save();
+                    
+                    Yii::$app->session->setFlash('success', [Yii::t('app', 'Record has been saved')]);
                 }
             }
             

@@ -77,6 +77,14 @@ return [
         ],
     ],
     [
+        'label' => Yii::t('app', 'SEO'),
+        'icon' => Html::tag('i', null, ['class' => 'fab fa-searchengin']),
+        'items' => [
+            ['label' => Yii::t('app', 'Meta'),'url' => ['/seo/meta/update']],
+            ['label' => Yii::t('app', 'Files'),'url' => ['/seo/file/update']],
+        ],
+    ],
+    [
         'label' => Yii::t('app', 'Cache'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']),
         'items' => [
@@ -94,5 +102,3 @@ return [
         ],
     ],
 ];
-
-?>

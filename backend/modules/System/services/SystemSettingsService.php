@@ -4,6 +4,8 @@ namespace backend\modules\System\services;
  
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\caching\TagDependency;
+
 use backend\modules\System\models\SystemSettings;
 
 
@@ -14,7 +16,11 @@ class SystemSettingsService
     public function __construct()
     {
         if (self::$attributes === null) {
-            self::$attributes = ArrayHelper::map(SystemSettings::find()->asArray()->all(), 'name', 'value');
+            $settings = Yii::$app->db->cache(function ($db) {
+                return SystemSettings::find()->asArray()->all();
+            }, 0, new TagDependency(['tags' => 'system_settings']));
+            
+            self::$attributes = ArrayHelper::map($settings, 'name', 'value');
         }
     }
     

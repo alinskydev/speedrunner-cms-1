@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => ArrayHelper::getColumn($searchModel->enums->locations(), 'label'),
                 'value' => fn ($model) => ArrayHelper::getValue($model->enums->locations(), "$model->location.label"),
             ],
-            'created',
-            'updated',
+            'created_at',
+            'updated_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update}',

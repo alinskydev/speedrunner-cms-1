@@ -15,7 +15,7 @@ class BannerSearch extends Banner
     {
         return [
             [['id'], 'integer'],
-            [['name', 'location', 'created', 'updated'], 'safe'],
+            [['name', 'location', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
@@ -45,8 +45,8 @@ class BannerSearch extends Banner
         ]);
         
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         
 		return $dataProvider;
     }

@@ -97,12 +97,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        Setting values to default attributes
         
-        if (array_key_exists('created', $this->attributes)) {
-            $this->created = $this->created ?? date('Y-m-d H:i:s');
+        if (array_key_exists('created_at', $this->attributes)) {
+            $this->created_at = $this->created_at ?? date('Y-m-d H:i:s');
         }
         
-        if (array_key_exists('updated', $this->attributes)) {
-            $this->updated = date('Y-m-d H:i:s');
+        if (array_key_exists('updated_at', $this->attributes)) {
+            $this->updated_at = date('Y-m-d H:i:s');
         }
         
         //        HTML purifier

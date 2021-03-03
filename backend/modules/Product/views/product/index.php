@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 }
             ],
             'quantity',
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',

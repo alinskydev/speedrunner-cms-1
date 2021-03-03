@@ -59,8 +59,8 @@ class Menu extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'parent_id' => Yii::t('app', 'Parent'),
         ];

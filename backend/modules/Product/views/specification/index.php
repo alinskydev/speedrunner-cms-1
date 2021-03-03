@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'use_filter:boolean',
             'use_compare:boolean',
             'use_detail:boolean',
-            'created',
-            'updated',
+            'created_at',
+            'updated_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',

@@ -30,20 +30,24 @@ class SeoMeta extends ActiveRecord
         }
         
         foreach ((array)$this->value as $key => $v) {
-            if (!array_key_exists($key, $this->enums->types()) || !is_string($v)) {
+            if (!is_string($v) || !array_key_exists($key, $this->enums->types())) {
                 $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
             }
         }
     }
     
-    public function attributeLabels()
+    public function beforeSave($insert)
     {
-        return [
-            'id' => Yii::t('app', 'Id'),
-            'model_class' => Yii::t('app', 'Model class'),
-            'model_id' => Yii::t('app', 'Model id'),
-            'lang' => Yii::t('app', 'Language'),
-            'value' => Yii::t('app', 'Value'),
-        ];
+        $this->lang = Yii::$app->language;
+        return parent::beforeSave($insert);
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->model_class == 'SeoMeta') {
+            $this->updateAttributes(['model_id' => $this->id]);
+        }
+        
+        return parent::afterSave($insert, $changedAttributes);
     }
 }

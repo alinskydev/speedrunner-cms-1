@@ -96,13 +96,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => implode('<br>', ArrayHelper::getColumn($model->tags, 'name')),
             ],
             [
-                'attribute' => 'published',
+                'attribute' => 'published_at',
                 'filterInputOptions' => [
                     'class' => 'form-control',
                     'data-toggle' => 'datepicker'
                 ]
             ],
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

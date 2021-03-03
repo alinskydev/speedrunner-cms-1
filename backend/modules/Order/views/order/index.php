@@ -123,7 +123,7 @@ $enums_class_name = str_replace('\models\\', '\enums\\', $searchModel->className
                     return Html::tag('div', $result, ['class' => 'dropdown']);
                 },
             ],
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{link} {update} {delete}',

@@ -34,7 +34,7 @@ class LogAction extends ActiveRecord
             'type' => Yii::t('app', 'Type'),
             'model_class' => Yii::t('app', 'Action'),
             'model_id' => Yii::t('app', 'Action'),
-            'created' => Yii::t('app', 'Created'),
+            'created_at' => Yii::t('app', 'Created at'),
             
             'attrs_old' => Yii::t('app', 'Old value'),
             'attrs_new' => Yii::t('app', 'New value'),

@@ -24,7 +24,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'category_id', 'tags_tmp'], 'integer'],
-            [['name', 'slug', 'created', 'updated', 'published'], 'safe'],
+            [['name', 'slug', 'created_at', 'updated_at', 'published_at'], 'safe'],
         ];
     }
     
@@ -58,9 +58,9 @@ class BlogSearch extends Blog
         ]);
         
         $query->andFilterWhere(['like', 'blog.slug', $this->slug])
-            ->andFilterWhere(['like', 'blog.published', $this->published])
-            ->andFilterWhere(['like', 'blog.created', $this->created])
-            ->andFilterWhere(['like', 'blog.updated', $this->updated])
+            ->andFilterWhere(['like', 'blog.published_at', $this->published_at])
+            ->andFilterWhere(['like', 'blog.created_at', $this->created_at])
+            ->andFilterWhere(['like', 'blog.updated_at', $this->updated_at])
             ->andFilterWhere(['like', 'blog_tag.id', $this->tags_tmp]);
         
         //        Translations

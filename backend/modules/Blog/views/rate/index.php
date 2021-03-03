@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             'mark',
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{delete}',

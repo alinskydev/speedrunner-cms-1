@@ -14,6 +14,16 @@ class SystemLanguage extends ActiveRecord
         return '{{%system_language}}';
     }
     
+    public function behaviors()
+    {
+        return [
+            'cache' => [
+                'class' => \speedrunner\behaviors\CacheBehavior::className(),
+                'tags' => ['active_system_languages'],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [
@@ -43,8 +53,8 @@ class SystemLanguage extends ActiveRecord
             'image' => Yii::t('app', 'Image'),
             'is_active' => Yii::t('app', 'Active'),
             'is_main' => Yii::t('app', 'Main'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
         ];
     }
     

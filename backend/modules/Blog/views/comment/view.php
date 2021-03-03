@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 ])->dropDownList(ArrayHelper::getColumn($model->enums->statuses(), 'label'));
                             },
                         ],
-                        'created',
+                        'created_at',
                     ],
                 ]) ?>
             </div>

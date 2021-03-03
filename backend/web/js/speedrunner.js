@@ -48,7 +48,7 @@ $(function() {
     
     //      Datepickers
     
-    $(document).on('mousedown', '[data-toggle="datepicker"], input[name*="Search[created]"], input[name*="Search[updated]"]', function() {
+    $(document).on('mousedown', '[data-toggle="datepicker"], input[name*="Search[created_at]"], input[name*="Search[updated_at]"]', function() {
         if (!$(this).hasClass("hasDatepicker")) {
             $(this).datepicker({
                 format: 'dd.mm.yyyy',

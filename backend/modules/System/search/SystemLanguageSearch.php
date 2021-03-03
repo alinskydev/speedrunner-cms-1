@@ -15,7 +15,7 @@ class SystemLanguageSearch extends SystemLanguage
     {
         return [
             [['id', 'is_active', 'is_main'], 'integer'],
-            [['name', 'code', 'image', 'created', 'updated'], 'safe'],
+            [['name', 'code', 'image', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
@@ -48,8 +48,8 @@ class SystemLanguageSearch extends SystemLanguage
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         
 		return $dataProvider;
     }

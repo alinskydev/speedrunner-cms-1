@@ -51,8 +51,8 @@ class Banner extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'location' => Yii::t('app', 'Location'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'groups_tmp' => Yii::t('app', 'Groups'),
         ];

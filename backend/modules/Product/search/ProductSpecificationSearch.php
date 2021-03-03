@@ -16,7 +16,7 @@ class ProductSpecificationSearch extends ProductSpecification
     {
         return [
             [['id', 'use_filter', 'use_compare', 'use_detail'], 'integer'],
-            [['name', 'created', 'updated'], 'safe'],
+            [['name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class ProductSpecificationSearch extends ProductSpecification
             'use_detail' => $this->use_detail,
         ]);
         
-        $query->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+        $query->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         
         //        Translations
         

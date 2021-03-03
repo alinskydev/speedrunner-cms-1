@@ -32,40 +32,16 @@ class SeoMetaService
         return ArrayHelper::getValue($seo_meta_mdl, 'value', []);
     }
     
-    public function register()
+    public function register($group = 'page')
     {
         $seo_meta = $this->getMetaValue();
-        $seo_meta_types = (new SeoMeta())->enums->types();
         
-        foreach ($seo_meta_types as $key => $s_m_t) {
-            $value = ArrayHelper::getValue($seo_meta, $key);
-            
-            switch ($s_m_t['register_type']) {
-                case 'title':
-                    Yii::$app->view->title = $value;
-                    break;
-                    
-                case 'name':
-                    Yii::$app->view->registerMetaTag([
-                        'name' => $key,
-                        'content' => $value,
-                    ]);
-                    break;
-                    
-                case 'property':
-                    Yii::$app->view->registerMetaTag([
-                        'property' => $key,
-                        'content' => $value,
-                    ]);
-                    break;
-                    
-                case 'url':
-                    Yii::$app->view->registerMetaTag([
-                        'property' => $key,
-                        'content' => $value ? Yii::$app->urlManager->createAbsoluteFileUrl($value) : null,
-                    ]);
-                    break;
-            }
-        }
+        Yii::$app->view->params['seo_meta'][$group] = [
+            'head' => ArrayHelper::getValue($seo_meta, 'head'),
+            'body' => [
+                'top' => ArrayHelper::getValue($seo_meta, 'body_top'),
+                'bottom' => ArrayHelper::getValue($seo_meta, 'body_bottom'),
+            ],
+        ];
     }
 }

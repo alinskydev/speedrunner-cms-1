@@ -31,7 +31,7 @@ class BlogRate extends ActiveRecord
             'blog_id' => Yii::t('app', 'Blog'),
             'user_id' => Yii::t('app', 'User'),
             'mark' => Yii::t('app', 'Mark'),
-            'created' => Yii::t('app', 'Created'),
+            'created_at' => Yii::t('app', 'Created at'),
         ];
     }
     

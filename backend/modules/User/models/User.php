@@ -137,8 +137,8 @@ class User extends ActiveRecord implements IdentityInterface
             'role' => Yii::t('app', 'Role'),
             'email' => Yii::t('app', 'Email'),
             'image' => Yii::t('app', 'Image'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'new_password' => Yii::t('app', 'New password'),
             

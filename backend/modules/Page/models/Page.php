@@ -51,8 +51,8 @@ class Page extends ActiveRecord
             'slug' => Yii::t('app', 'Slug'),
             'image' => Yii::t('app', 'Image'),
             'description' => Yii::t('app', 'Description'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
         ];
     }
 }

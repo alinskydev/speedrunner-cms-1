@@ -58,8 +58,8 @@ class ProductSpecification extends ActiveRecord
             'use_filter' => Yii::t('app', 'Use in filter'),
             'use_compare' => Yii::t('app', 'Use in compare'),
             'use_detail' => Yii::t('app', 'Use in detail page'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'options_tmp' => Yii::t('app', 'Options'),
         ];

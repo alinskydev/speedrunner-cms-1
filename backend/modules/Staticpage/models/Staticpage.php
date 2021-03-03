@@ -23,6 +23,10 @@ class Staticpage extends ActiveRecord
             'seo_meta' => [
                 'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
+            'cache' => [
+                'class' => \speedrunner\behaviors\CacheBehavior::className(),
+                'tags' => ['staticpages'],
+            ],
         ];
     }
     

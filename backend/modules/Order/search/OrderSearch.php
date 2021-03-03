@@ -16,7 +16,7 @@ class OrderSearch extends Order
         return [
             [['id', 'user_id', 'total_price'], 'integer'],
             [['full_name', 'phone', 'email', 'delivery_type', 'payment_type'], 'safe'],
-            [['status', 'key', 'created', 'updated'], 'safe'],
+            [['status', 'key', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
@@ -53,8 +53,8 @@ class OrderSearch extends Order
         $query->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'key', $this->key])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         
         $query->andFilterWhere([
             'or',

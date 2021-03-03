@@ -49,8 +49,8 @@ class ProductVariation extends ActiveRecord
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'SKU'),
             'images' => Yii::t('app', 'Images'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
         ];
     }
     

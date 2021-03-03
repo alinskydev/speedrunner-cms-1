@@ -26,7 +26,7 @@ $seo_meta_types = (new SeoMeta())->enums->types();
                     echo Html::input('text', "SeoMeta[$key]", $value, ['class' => 'form-control']);
                     break;
                 case 'text_area':
-                    echo Html::textArea("SeoMeta[$key]", $value, ['class' => 'form-control', 'rows' => 5]);
+                    echo Html::textArea("SeoMeta[$key]", $value, ['class' => 'form-control', 'rows' => 10]);
                     break;
                 case 'imperavi':
                     echo Widget::widget([

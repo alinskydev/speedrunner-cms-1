@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'filter' => ArrayHelper::getColumn($searchModel['comments']->enums->statuses(), 'label'),
                             'value' => fn ($model) => ArrayHelper::getValue($searchModel['comments']->enums->statuses(), "$model->status.label"),
                         ],
-                        'created',
+                        'created_at',
                     ],
                 ]); ?>
                 
@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
                         ],
                         'mark',
-                        'created',
+                        'created_at',
                     ],
                 ]); ?>
                 

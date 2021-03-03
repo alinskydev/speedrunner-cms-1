@@ -7,6 +7,7 @@ use frontend\forms\OrderForm;
 
 (new \backend\modules\Seo\services\SeoMetaService($page))->register();
 
+$this->title = Yii::t('app', 'Cart');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

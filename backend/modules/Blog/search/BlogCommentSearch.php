@@ -15,7 +15,7 @@ class BlogCommentSearch extends BlogComment
     {
         return [
             [['id', 'blog_id', 'user_id'], 'integer'],
-            [['text', 'status', 'created'], 'safe'],
+            [['text', 'status', 'created_at'], 'safe'],
         ];
     }
     
@@ -48,7 +48,7 @@ class BlogCommentSearch extends BlogComment
         ]);
         
         $query->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', 'created', $this->created]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at]);
         
 		return $dataProvider;
     }

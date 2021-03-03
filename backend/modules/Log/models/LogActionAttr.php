@@ -24,7 +24,7 @@ class LogActionAttr extends ActiveRecord
             [['name'], 'string', 'max' => 100],
             
             [['name'], 'in', 'not' => true, 'range' => [
-                'id', 'created', 'updated',
+                'id', 'created_at', 'updated_at',
             ]],
         ];
     }

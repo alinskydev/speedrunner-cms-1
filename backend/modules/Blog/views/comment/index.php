@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
                 'value' => fn ($model) => ArrayHelper::getValue($searchModel->enums->statuses(), "$model->status.label"),
             ],
-            'created',
+            'created_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{view} {delete}',

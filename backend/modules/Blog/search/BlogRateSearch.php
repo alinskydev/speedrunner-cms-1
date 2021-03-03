@@ -17,7 +17,7 @@ class BlogRateSearch extends BlogRate
     {
         return [
             [['id', 'blog_id', 'user_id', 'mark'], 'integer'],
-            [['created'], 'safe'],
+            [['created_at'], 'safe'],
         ];
     }
     
@@ -49,7 +49,7 @@ class BlogRateSearch extends BlogRate
             'mark' => $this->mark,
         ]);
         
-        $query->andFilterWhere(['like', 'created', $this->created]);
+        $query->andFilterWhere(['like', 'created_at', $this->created_at]);
         
 		return $dataProvider;
     }

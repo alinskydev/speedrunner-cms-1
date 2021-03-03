@@ -18,7 +18,7 @@ class LogActionSearch extends LogAction
     {
         return [
             [['id', 'user_id', 'model_id'], 'integer'],
-            [['type', 'model_class', 'created'], 'safe'],
+            [['type', 'model_class', 'created_at'], 'safe'],
             [['attrs_old', 'attrs_new'], 'safe'],
         ];
     }
@@ -54,7 +54,7 @@ class LogActionSearch extends LogAction
         ]);
         
         $query->andFilterWhere(['like', 'log_action.type', $this->type])
-            ->andFilterWhere(['like', 'log_action.created', $this->created])
+            ->andFilterWhere(['like', 'log_action.created_at', $this->created_at])
             ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_old])
             ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_new]);
         

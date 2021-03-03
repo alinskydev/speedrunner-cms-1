@@ -93,8 +93,8 @@ class Order extends ActiveRecord
             
             'status' => Yii::t('app', 'Status'),
             'key' => Yii::t('app', 'Key'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'products_tmp' => Yii::t('app', 'Products'),
         ];

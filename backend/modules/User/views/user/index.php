@@ -47,8 +47,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'email:email',
             'full_name',
             'phone',
-            'created',
-            'updated',
+            'created_at',
+            'updated_at',
             [
                 'class' => 'speedrunner\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',

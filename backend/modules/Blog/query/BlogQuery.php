@@ -11,6 +11,6 @@ class BlogQuery extends ActiveQuery
 {
     public function published()
     {
-        return $this->andWhere(['<=', 'blog.published', date('Y-m-d H:i:s')]);
+        return $this->andWhere(['<=', 'blog.published_at', date('Y-m-d H:i:s')]);
     }
 }

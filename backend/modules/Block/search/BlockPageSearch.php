@@ -24,7 +24,7 @@ class BlockPageSearch extends BlockPage
     {
         return [
             [['id'], 'integer'],
-            [['name', 'slug', 'created', 'updated'], 'safe'],
+            [['name', 'slug', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
@@ -53,8 +53,8 @@ class BlockPageSearch extends BlockPage
         ]);
         
         $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         
         //        Translations
         

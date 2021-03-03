@@ -27,7 +27,7 @@ echo UpdateWidget::widget([
                 ],
                 'slug' => 'text_input',
                 [
-                    'name' => 'published',
+                    'name' => 'published_at',
                     'type' => 'text_input',
                     'options' => [
                         'data-toggle' => 'datetimepicker',

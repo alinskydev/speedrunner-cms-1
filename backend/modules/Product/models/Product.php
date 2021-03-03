@@ -150,8 +150,8 @@ class Product extends ActiveRecord
             'discount' => Yii::t('app', 'Discount'),
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'SKU'),
-            'created' => Yii::t('app', 'Created'),
-            'updated' => Yii::t('app', 'Updated'),
+            'created_at' => Yii::t('app', 'Created at'),
+            'updated_at' => Yii::t('app', 'Updated at'),
             
             'categories_tmp' => Yii::t('app', 'Categories'),
             'options_tmp' => Yii::t('app', 'Options'),

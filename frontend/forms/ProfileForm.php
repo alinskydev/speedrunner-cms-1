@@ -33,6 +33,8 @@ class ProfileForm extends Model
         foreach (self::PROFILE_ATTRIBUTES as $a) {
             $this->{$a} = $this->user->{$a};
         }
+        
+        return parent::init();
     }
     
     public function formName()

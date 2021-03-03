@@ -31,7 +31,7 @@ class SeoFileForm extends Model
     {
         return [
             [['robots'], 'string'],
-            [['sitemap'], 'file', 'extensions' => ['xml', 'png'], 'maxSize' => 1024 * 1024 * 100],
+            [['sitemap'], 'file', 'extensions' => ['xml'], 'maxSize' => 1024 * 1024 * 100],
         ];
     }
     
@@ -58,7 +58,9 @@ class SeoFileForm extends Model
     {
         file_put_contents(static::$files_url['robots'], $this->robots);
         
-        $this->sitemap->saveAs(static::$files_url['sitemap']);
+        if ($this->sitemap instanceof UploadedFile) {
+            $this->sitemap->saveAs(static::$files_url['sitemap']);
+        }
         
         return true;
     }

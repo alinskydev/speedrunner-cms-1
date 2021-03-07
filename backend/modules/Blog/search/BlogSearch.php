@@ -24,7 +24,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'category_id', 'tags_tmp'], 'integer'],
-            [['name', 'slug', 'created_at', 'updated_at', 'published_at'], 'safe'],
+            [['name', 'slug', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     

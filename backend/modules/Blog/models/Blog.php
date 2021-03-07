@@ -43,7 +43,7 @@ class Blog extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'image'], 'required'],
             [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],

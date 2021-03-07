@@ -24,6 +24,15 @@ class CacheBehavior extends Behavior
     
     public function process($event)
     {
-        TagDependency::invalidate(Yii::$app->cache, $this->tags);
+        $apps_cache_path = [
+            'api' => Yii::getAlias('@api/runtime/cache'),
+            'backend' => Yii::getAlias('@backend/runtime/cache'),
+            'frontend' => Yii::getAlias('@frontend/runtime/cache'),
+        ];
+        
+        foreach ($apps_cache_path as $key => $path) {
+            Yii::$app->cache->cachePath = $path;
+            TagDependency::invalidate(Yii::$app->cache, $this->tags);
+        }
     }
 }

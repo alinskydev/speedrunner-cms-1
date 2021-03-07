@@ -52,7 +52,7 @@ class LogActionService extends ActiveService
             
             if (in_array($a->name, $json_attrs)) {
                 if ($view_type == 'short') {
-                    $value = count($value);
+                    $value = is_countable($value) ? count($value) : 0;
                 } else {
                     $value = str_replace(['{', '}', '"'], null, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
                 }

@@ -41,29 +41,30 @@ class DestroyerForm extends Model
     public function process()
     {
         foreach ($this->modules as $m) {
-            $module = strtolower($m);
             
             //        Files
             
-            if ($dir = Yii::getAlias("@backend/modules/$module")) {
+            $dir = Yii::getAlias("@backend/modules/$m");
+            
+            if (is_dir($dir)) {
                 FileHelper::removeDirectory($dir);
             }
             
             //        DB
             
             $tables = Yii::$app->db->schema->getTableNames();
-            $sql[] = 'SET FOREIGN_KEY_CHECKS = 0;';
+            $table_prefix = strtolower($m);
+            $sql[] = 'SET FOREIGN_KEY_CHECKS = 0';
             
             foreach ($tables as $t) {
-                if (strpos($t, $m) === 0) {
-                    $sql[] = "DROP TABLE $t;";
+                if (strpos($t, $table_prefix) === 0) {
+                    $sql[] = "DROP TABLE `$t`";
                 }
             }
             
-            $sql[] = 'SET FOREIGN_KEY_CHECKS = 1;';
-            Yii::$app->db->createCommand(implode(';', $sql))->execute();
+            $sql[] = 'SET FOREIGN_KEY_CHECKS = 1';
         }
         
-        return true;
+        return Yii::$app->db->createCommand(implode(';', $sql))->execute();
     }
 }

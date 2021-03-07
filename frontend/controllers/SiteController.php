@@ -9,7 +9,6 @@ use yii\helpers\ArrayHelper;
 
 use frontend\forms\ContactForm;
 
-use backend\modules\Blog\models\Blog;
 use backend\modules\Product\models\ProductCategory;
 
 

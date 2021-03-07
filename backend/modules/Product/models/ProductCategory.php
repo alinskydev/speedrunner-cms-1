@@ -118,4 +118,14 @@ class ProductCategory extends ActiveRecord
     {
         return new \speedrunner\db\NestedSetsQuery(get_called_class());
     }
+    
+    public function beforeDelete()
+    {
+        if (Product::find()->andWhere(['main_category_id' => $this->id])->exists()) {
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete category which contains any products'));
+            return false;
+        }
+        
+        return parent::beforeDelete();
+    }
 }

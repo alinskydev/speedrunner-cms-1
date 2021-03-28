@@ -20,7 +20,7 @@ class LoginForm extends Model
         return [
             [['username', 'password'], 'required'],
             [['remember_me'], 'boolean'],
-            [['password'], 'validatePassword'],
+            [['password'], 'passwordValidation'],
         ];
     }
     
@@ -33,12 +33,12 @@ class LoginForm extends Model
         ];
     }
     
-    public function validatePassword($attribute, $params)
+    public function passwordValidation($attribute, $params)
     {
         $this->user = User::findByUsername($this->username);
         
-        if (!$this->user || !$this->user->validatePassword($this->password)) {
-            $this->addError($attribute, Yii::t('app', 'Incorrect password'));
+        if (!$this->user || !$this->user->validatePassword($this->{$attribute})) {
+            $this->addError($attribute, Yii::t('app', 'Incorrect {attribute}', ['attribute' => $this->getAttributeLabel('password')]));
         }
     }
     

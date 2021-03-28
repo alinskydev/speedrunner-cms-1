@@ -50,7 +50,7 @@ class ItemsListController extends Controller
                 'class' => Actions\web\ItemsListAction::className(),
                 'model_class' => ProductBrand::className(),
                 'attribute' => 'name',
-                'type' => 'translation',
+                'type' => 'self',
             ],
             'product-specifications' => [
                 'class' => Actions\web\ItemsListAction::className(),

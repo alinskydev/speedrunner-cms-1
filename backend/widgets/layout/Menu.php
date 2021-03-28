@@ -19,7 +19,7 @@ class Menu extends \yii\widgets\Menu
         foreach ($items as &$item) {
             $item['label'] = ArrayHelper::getValue($item, 'icon') . ArrayHelper::getValue($item, 'label');
             
-            if ($url = ArrayHelper::getValue($item, 'url')) {
+            if (ArrayHelper::getValue($item, 'active') === null && $url = ArrayHelper::getValue($item, 'url')) {
                 if (is_array($url)) {
                     $item['active'] = strpos($url[0], $controller_id) !== false;
                 } else {

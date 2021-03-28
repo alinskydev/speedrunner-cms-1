@@ -19,5 +19,5 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= $form->field($model, 'full_name')->textInput() ?>
     <?= $form->field($model, 'phone')->textInput() ?>
     
-    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary']) ?>
 <?php ActiveForm::end(); ?>

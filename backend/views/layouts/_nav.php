@@ -17,7 +17,11 @@ return [
         'label' => Yii::t('app', 'Static pages'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-file-alt']),
         'items' => ArrayHelper::getColumn(Staticpage::find()->asArray()->all(), function($value) {
-            return ['label' => $value['label'], 'url' => ['/staticpage/staticpage/update', 'name' => $value['name']]];
+            return [
+                'label' => $value['label'],
+                'url' => ['/staticpage/staticpage/update', 'name' => $value['name']],
+                'active' => (Yii::$app->controller->uniqueId == 'staticpage/staticpage') && (Yii::$app->request->get('name') == $value['name']),
+            ];
         }),
     ],
     [

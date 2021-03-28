@@ -118,8 +118,12 @@ class Order extends ActiveRecord
         $old_status_action = ArrayHelper::getValue($this->enums->statuses(), "{$oldAttributes['status']}.save_action");
         $new_status_action = ArrayHelper::getValue($this->enums->statuses(), "$this->status.save_action");
         
-        if ($new_status_action == 'minus') {
-            $this->products_tmp = OrderProduct::find()->select(['id', 'product_id', 'quantity'])->indexBy('id')->asArray()->all();;
+        if (!$insert && $this->scenario == self::SCENARIO_DEFAULT && $this->status != 'new') {
+            $this->products_tmp = OrderProduct::find()
+                ->andWhere(['order_id' => $this->id])
+                ->select(['id', 'product_id', 'quantity'])
+                ->indexBy('id')
+                ->asArray()->all();;
         }
         
         if ($new_status_action != $old_status_action) {

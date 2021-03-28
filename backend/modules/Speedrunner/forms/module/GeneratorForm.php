@@ -124,7 +124,7 @@ class GeneratorForm extends Model
             FileHelper::createDirectory($dir, $mode = 0644);
             
             $file_content = Yii::$app->controller->renderPartial("$folder_template_render/models/Model.php", ['model' => $this]);
-            $file = fopen($dir . $this->table_name . '.php', 'w');
+            $file = fopen($dir . $this->model_name . '.php', 'w');
             fwrite($file, $file_content);
             fclose($file);
         }
@@ -136,7 +136,7 @@ class GeneratorForm extends Model
             FileHelper::createDirectory($dir, $mode = 0644);
             
             $file_content = Yii::$app->controller->renderPartial("$folder_template_render/search/Model.php", ['model' => $this]);
-            $file = fopen($dir . $this->table_name . 'Search.php', 'w');
+            $file = fopen($dir . $this->model_name . 'Search.php', 'w');
             fwrite($file, $file_content);
             fclose($file);
         }

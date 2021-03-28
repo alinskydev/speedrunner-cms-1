@@ -13,8 +13,12 @@ class DeleteAction extends Action
     
     public function run()
     {
+        if (!($primary_key = ArrayHelper::getValue($this->controller->model->primaryKey(), 0))) {
+            throw new \yii\web\HttpException(422, 'Primary key not set');
+        }
+        
         $id = Yii::$app->request->post('selection') ?? Yii::$app->request->get('id');
-        $models = $this->controller->model->find()->andWhere(['id' => $id])->all();
+        $models = $this->controller->model->find()->andWhere([$primary_key => $id])->all();
         
         $transaction = Yii::$app->db->beginTransaction();
         

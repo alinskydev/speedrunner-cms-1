@@ -67,17 +67,19 @@ function selectCategories($data, $categories)
                                 nodesArr.push(selectedNodes[key]["key"]);
                             }
                             
-                            el = data.tree.$div;
-                            action = el.data("action");
-                            sendData = {
-                                id: el.data("id"),
-                                categories: nodesArr
-                            };
-                            
-                            $.get(action, sendData, function(data) {
-                                $("#specifications-wrapper").html(data.specifications);
-                                $("#variation-specification").html(data.variations).trigger("change");
-                            });
+                            if (selectedNodes.length > 0) {
+                                el = data.tree.$div;
+                                action = el.data("action");
+                                sendData = {
+                                    id: el.data("id"),
+                                    categories: nodesArr
+                                };
+                                
+                                $.get(action, sendData, function(data) {
+                                    $("#specifications-wrapper").html(data.specifications);
+                                    $("#variation-specification").html(data.variations).trigger("change");
+                                });
+                            }
                         }'),
                         'filter' => [
                             'autoExpand' => true,
@@ -110,9 +112,15 @@ function selectCategories($data, $categories)
     document.addEventListener('DOMContentLoaded', function() {
         let tree;
         
-        $('input[name="fancytree_search"]').on('keyup', function(e) {
+        $(document).on('keyup', 'input[name="fancytree_search"]', function() {
             tree = $.ui.fancytree.getTree();
             tree.filterBranches.call(tree, $(this).val(), {});
+        });
+        
+        $(document).on('change', '#product-main_category_id', function() {
+            tree = $.ui.fancytree.getTree();
+            tree.selectAll(false);
+            tree.getNodeByKey($(this).val()).setSelected(true);
         });
         
         //        ----------------------------------------------------------------------

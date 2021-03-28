@@ -147,6 +147,9 @@ $(function() {
     $(document).on('click', '[data-toggle="imperavi"]', function() {
         if ($(this).closest('.redactor-box').length === 0) {
             $(this).redactor({
+                minHeight: 250,
+                paragraphize: true,
+                replaceDivs: false,
                 imageManagerJson: ImperaviImagesGetUrl,
                 imageUpload: ImperaviImageUploadUrl,
                 imageDelete: ImperaviImageDeleteUrl,

@@ -64,36 +64,36 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                                 $input_value,
                                                 [
                                                     'uncheck' => 0,
-                                                    'id' => "block-$key-$a_key",
+                                                    'id' => "block-$model->id-$key-$a_key",
                                                     'class' => 'custom-control-input',
                                                 ]
                                             );
                                             
-                                            $checkbox .= Html::label(null, "block-$key-$a_key", ['class' => 'custom-control-label']);
+                                            $checkbox .= Html::label(null, "block-$model->id-$key-$a_key", ['class' => 'custom-control-label']);
                                             echo Html::tag('div', $checkbox, ['class' => 'custom-control custom-switch float-left']);
-                                            
-                                            break;
-                                        case 'imperavi':
-                                            echo Widget::widget([
-                                                'name' => $input_name,
-                                                'value' => $input_value,
-                                                'id' => "redactor-$key",
-                                                'options' => [
-                                                    'data-toggle' => 'imperavi',
-                                                ]
-                                            ]);
                                             
                                             break;
                                         case 'elfinder':
                                             echo Html::tag(
                                                 'div',
                                                 InputFile::widget([
-                                                    'id' => "elfinder-$key",
+                                                    'id' => "elfinder-$model->id-$key-$a_key",
                                                     'name' => $input_name,
                                                     'value' => $input_value,
                                                 ]),
                                                 ['data-toggle' => 'elfinder']
                                             );
+                                            
+                                            break;
+                                        case 'imperavi':
+                                            echo Widget::widget([
+                                                'name' => $input_name,
+                                                'value' => $input_value,
+                                                'id' => "redactor-$model->id-$key-$a_key",
+                                                'options' => [
+                                                    'data-toggle' => 'imperavi',
+                                                ]
+                                            ]);
                                             
                                             break;
                                     }

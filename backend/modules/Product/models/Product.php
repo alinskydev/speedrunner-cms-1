@@ -117,6 +117,7 @@ class Product extends ActiveRecord
             [['price', 'quantity'], 'integer', 'min' => 0],
             [['discount'], 'integer', 'min' => 0, 'max' => 100],
             [['name', 'slug', 'sku'], 'string', 'max' => 100],
+            [['sku'], 'unique'],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
             [['slug'], 'unique'],

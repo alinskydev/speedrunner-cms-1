@@ -168,10 +168,9 @@ class DocumentatorForm extends Model
         header('Content-Type: application/zip');
         header("Content-Disposition: attachment; filename=$file_name");
         readfile($file);
-        unlink($file); 
-        die;
+        unlink($file);
         
-        return true;
+        die;
     }
     
     private static function implodeRecursive($separator, $arrayvar)

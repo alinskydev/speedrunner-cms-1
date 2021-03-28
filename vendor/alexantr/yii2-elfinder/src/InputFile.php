@@ -5,6 +5,7 @@ namespace alexantr\elfinder;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\View;
@@ -181,6 +182,9 @@ class InputFile extends InputWidget
             } else {
                 $value = $this->value;
             }
+            
+            $value = $value ?: ArrayHelper::getValue($this->options, 'value');
+            
             if ($value !== null) {
                 $replace['{preview}'] = Html::tag($this->previewTag, call_user_func($this->preview, $value), $this->previewOptions);
             }

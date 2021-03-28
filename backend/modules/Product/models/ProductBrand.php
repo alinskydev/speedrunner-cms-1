@@ -22,10 +22,6 @@ class ProductBrand extends ActiveRecord
                 'slugAttribute' => 'slug',
                 'immutable' => true,
             ],
-            'translation' => [
-                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
-                'attributes' => ['name', 'description'],
-            ],
             'seo_meta' => [
                 'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
@@ -36,7 +32,6 @@ class ProductBrand extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['description'], 'string'],
             [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['slug'], 'unique'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
@@ -50,7 +45,6 @@ class ProductBrand extends ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'slug' => Yii::t('app', 'Slug'),
             'image' => Yii::t('app', 'Image'),
-            'description' => Yii::t('app', 'Description'),
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
         ];

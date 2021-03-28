@@ -10,8 +10,6 @@ use yii\bootstrap\Dropdown;
 $this->title = Yii::t('app', 'Orders');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-$enums_class_name = str_replace('\models\\', '\enums\\', $searchModel->className()) . 'Enums';
-
 ?>
 
 <h2 class="main-title">
@@ -45,7 +43,7 @@ $enums_class_name = str_replace('\models\\', '\enums\\', $searchModel->className
                     'pluginOptions' => [
                         'allowClear' => true,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createUrl(['items-list/users', 'role' => 'registered']),
+                            'url' => Yii::$app->urlManager->createUrl(['items-list/users']),
                             'dataType' => 'json',
                             'delay' => 300,
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')

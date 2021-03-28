@@ -46,7 +46,7 @@ class ProfileForm extends Model
     {
         return [
             [['full_name'], 'required'],
-            [['confirm_password'], 'required', 'when' => fn ($model) => $model->new_password],
+            [['confirm_password'], 'required', 'enableClientValidation' => false, 'when' => fn ($model) => $model->new_password],
             
             [['full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 1000],

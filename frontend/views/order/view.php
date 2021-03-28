@@ -5,26 +5,24 @@ use yii\helpers\ArrayHelper;
 
 $this->title = Yii::t('app', 'Order №{id}', ['id' => $model->id]);
 
-$attrs = ['full_name', 'phone', 'email', 'address', 'created_at'];
-
 ?>
 
+<?= $model->getAttributeLabel('full_name') . ': ' . $model->full_name; ?>
+<br>
+
 <?= $model->getAttributeLabel('status'); ?>:
-<?= ArrayHelper::getValue($model->statuses(), "$model->status.label"); ?>
+<?= ArrayHelper::getValue($model->enums->statuses(), "$model->status.label"); ?>
+<br>
 
 <?= $model->getAttributeLabel('delivery_type'); ?>:
-<?= ArrayHelper::getValue($model->deliveryTypes(), "$model->delivery_type.label"); ?>
+<?= ArrayHelper::getValue($model->enums->deliveryTypes(), "$model->delivery_type.label"); ?>
+<br>
 
 <?= $model->getAttributeLabel('payment_type'); ?>:
-<?= ArrayHelper::getValue($model->paymentTypes(), "$model->payment_type.label"); ?>
-
-<?php foreach ($attrs as $a) { ?>
-    <?= $model->getAttributeLabel($a) . ': ' . $model->{$a}; ?>
-<?php } ?>
+<?= ArrayHelper::getValue($model->enums->paymentTypes(), "$model->payment_type.label"); ?>
+<br>
 
 <?php foreach ($model->products as $key => $p) { ?>
-    <?php $product_mdl = $p->product ?>
-    
     <?= $p->quantity ?>
     
     <?= Yii::t('app', 'Price: {price}', [

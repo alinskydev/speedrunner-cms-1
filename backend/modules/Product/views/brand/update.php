@@ -17,7 +17,6 @@ echo UpdateWidget::widget([
                 'name' => 'text_input',
                 'slug' => 'text_input',
                 'image' => 'elfinder',
-                'description' => 'imperavi',
             ],
         ],
     ],

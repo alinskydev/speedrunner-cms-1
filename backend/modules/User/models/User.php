@@ -7,8 +7,6 @@ use speedrunner\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use speedrunner\validators\UnchangeableValidator;
-use yii\web\UploadedFile;
-use speedrunner\services\FileService;
 
 
 class User extends ActiveRecord implements IdentityInterface
@@ -107,9 +105,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email', 'role', 'full_name'], 'required'],
-            [['new_password'], 'required', 'enableClientValidation' => false, 'when' => function($model) {
-                return $model->isNewRecord;
-            }],
+            [['new_password'], 'required', 'enableClientValidation' => false, 'when' => fn($model) => $model->isNewRecord],
             
             [['username', 'email'], 'unique'],
             [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
@@ -160,6 +156,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function getDesign()
     {
         return $this->hasOne(UserDesign::className(), ['user_id' => 'id']);
+    }
+    
+    public static function find()
+    {
+        return parent::find()->with(['profile', 'design']);
     }
     
     public function afterFind()

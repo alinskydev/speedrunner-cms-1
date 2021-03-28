@@ -40,7 +40,7 @@ $(function() {
             processData: false,
             success: function(data) {
                 if (data === '1') {
-                    $('#main-modal').modal('hide');
+                    $(el.data('el')).modal('hide');
                 } else {
                     $(el.data('el')).html(data);
                 }

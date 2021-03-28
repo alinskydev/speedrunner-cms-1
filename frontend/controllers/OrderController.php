@@ -16,7 +16,7 @@ class OrderController extends Controller
 {
     public function actionView($key)
     {
-        $model = Order::find()->with(['products.product'])->andWhere(['key' => $key])->one();
+        $model = Order::find()->with(['products'])->andWhere(['key' => $key])->one();
         
         if (!$model) {
             return $this->redirect(Yii::$app->request->referrer);
@@ -33,7 +33,7 @@ class OrderController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($key = $model->save()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Your order is successfully created'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Your order has been successfully created'));
                 return $this->redirect(['view', 'key' => $key]);
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred'));

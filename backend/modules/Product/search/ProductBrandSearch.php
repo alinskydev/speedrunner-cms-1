@@ -52,23 +52,10 @@ class ProductBrandSearch extends ProductBrand
             'id' => $this->id,
         ]);
         
-        $query->andFilterWhere(['like', 'slug', $this->slug])
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
             ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
-        
-        //        Translations
-        
-        $lang = Yii::$app->language;
-        
-        foreach ($this->behaviors['translation']->attributes as $t_a) {
-            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
-            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
-            
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ["json_$t_a" => SORT_ASC],
-                'desc' => ["json_$t_a" => SORT_DESC],
-            ];
-        }
         
 		return $dataProvider;
     }

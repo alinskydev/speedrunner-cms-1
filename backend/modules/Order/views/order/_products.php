@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use backend\modules\Order\models\OrderProduct;
 
 $relations = ArrayHelper::merge($model->products, [new OrderProduct]);
-$is_block_disabled = !$model->isNewRecord && ArrayHelper::getValue($model->enums->statuses(), "$model->status.save_action") == 'minus';
+$is_block_disabled = !$model->isNewRecord && $model->status != 'new';
 
 ?>
 

@@ -24,7 +24,7 @@ class ProductController extends Controller
             }
         }
         
-        $category = $category ?? new ProductCategory();
+        $category = $category ?? new ProductCategory(['name' => Yii::t('app', 'Catalog')]);
         
         return $this->render('catalog', [
             'category' => $category,

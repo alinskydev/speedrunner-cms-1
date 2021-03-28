@@ -20,6 +20,6 @@ use yii\bootstrap\ActiveForm;
 <?= $form->field($model, 'email')->textInput() ?>
 <?= $form->field($model, 'phone')->textInput() ?>
 <?= $form->field($model, 'address')->textArea(['rows' => 5]) ?>
-<?= $form->field($model, 'delivery_type')->dropDownList($model->order->deliveryTypes()) ?>
+<?= $form->field($model, 'delivery_type')->dropDownList($model->order->enums->deliveryTypes()) ?>
 
 <?php ActiveForm::end(); ?>

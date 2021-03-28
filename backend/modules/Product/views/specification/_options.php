@@ -33,7 +33,6 @@ $options = ArrayHelper::merge($model->options, [new ProductSpecificationOption])
                 <td>
                     <?= $form->field($o, 'name', ['template' => '{input}'])->textInput([
                         'name' => "ProductSpecification[options_tmp][$o_id][name]",
-                        'class' => 'form-control',
                     ]) ?>
                 </td>
                 

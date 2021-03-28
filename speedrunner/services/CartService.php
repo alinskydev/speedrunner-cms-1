@@ -21,11 +21,11 @@ class CartService
         $cart = Yii::$app->session->get('cart', []);
         
         if ($quantity > 0) {
-            $cart['products'][$id] = $product->attributes;
-            $cart['products'][$id]['total_quantity'] = $quantity;
-            $cart['products'][$id]['total_price'] = $product->service->realPrice() * $quantity;
+            $cart['products'][$product->id] = $product->attributes;
+            $cart['products'][$product->id]['total_quantity'] = $quantity;
+            $cart['products'][$product->id]['total_price'] = $product->service->realPrice() * $quantity;
         } else {
-            ArrayHelper::remove($cart['products'], $id);
+            ArrayHelper::remove($cart['products'], $product->id);
         }
         
         if ($cart['products']) {

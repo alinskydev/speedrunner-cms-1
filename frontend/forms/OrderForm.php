@@ -7,8 +7,6 @@ use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Order\models\Order;
-use backend\modules\Order\models\OrderProduct;
-use backend\modules\Product\models\Product;
 use backend\modules\User\models\User;
 
 
@@ -45,7 +43,7 @@ class OrderForm extends Model
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
             
-            [['delivery_type'], 'in', 'range' => array_keys($this->order->deliveryTypes())],
+            [['delivery_type'], 'in', 'range' => array_keys($this->order->enums->deliveryTypes())],
         ];
     }
     
@@ -83,8 +81,8 @@ class OrderForm extends Model
         
         //        Mailing
         
-        Yii::$app->services->mail->send($this->email, Yii::t('app_mail', 'Your order has been created'), 'order_created', [
-            'key' => $this->order->key,
+        Yii::$app->services->mail->send($order->email, Yii::t('app_mail', 'Your order has been created'), 'order_created', [
+            'order' => $order->attributes,
         ]);
         
         return $this->order->key;

@@ -2,7 +2,7 @@
 
 use yii\widgets\LinkPager;
 
-$this->title = !$category->isNewRecord ? $category->name : Yii::t('app', 'Catalog');
+$this->title = $category->name;
 
 if (!$category->isNewRecord) {
     $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Catalog'), 'url' => ['product/catalog', 'url' => null]];
@@ -16,4 +16,4 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
-<?= $category->name ?>
+<?= $this->title ?>

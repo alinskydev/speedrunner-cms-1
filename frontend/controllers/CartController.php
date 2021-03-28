@@ -6,6 +6,8 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
 
+use backend\modules\Product\models\Product;
+
 
 class CartController extends Controller
 {
@@ -16,7 +18,7 @@ class CartController extends Controller
         $render_type = Yii::$app->request->isAjax ? 'renderPartial' : 'render';
         
         return call_user_func(
-            [$this, $render_type]
+            [$this, $render_type],
             'index',
             [
                 'page' => $page['page'],
@@ -35,7 +37,9 @@ class CartController extends Controller
     
     public function actionChange()
     {
-        if (!$id || !($product = Product::findOne(Yii::$app->request->post('id'))) {
+        $product = Product::findOne(Yii::$app->request->post('id'));
+        
+        if (!$product) {
             Yii::$app->session->setFlash('warning', Yii::t('app', 'Product not found'));
             return $this->redirect(Yii::$app->request->referrer);
         }

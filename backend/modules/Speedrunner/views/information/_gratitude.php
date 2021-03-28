@@ -50,8 +50,8 @@ $external_components = [
     
     <div class="card-body">
         Special thanks to the <a href="https://www.yiiframework.com" target="_blank">Yii2 Framework</a> development group.<br>
-        If you liked this CMS, then you can <a href="https://www.yiiframework.com/contribute" target="_blank">help</a> or
-        <a href="https://opencollective.com/yiisoft" target="_blank">donate</a> to Yii Yii Framework team.
+        If you like this CMS, then you can <a href="https://www.yiiframework.com/contribute" target="_blank">help</a> or
+        <a href="https://opencollective.com/yiisoft" target="_blank">donate</a> to Yii Framework team.
     </div>
 </div>
 

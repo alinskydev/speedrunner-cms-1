@@ -10,9 +10,9 @@ Speedrunner CMS, based on Yii2 framework, aims to speed up and simplify developm
 **Downloading**
 Clone repository by using
 ```
-git clone https://github.com/sr-projects/speedrunner-cms-1.git <your-folder>
+git clone https://github.com/alinskydev/speedrunner-cms-1.git <your-folder>
 ```
-or download as [zip file](https://github.com/sr-projects/speedrunner-cms-1/archive/master.zip).
+or download as [zip file](https://github.com/alinskydev/speedrunner-cms-1/archive/master.zip).
 
 **Creating DB**
 Create database and fill config in `/common/config/main-local.php`.

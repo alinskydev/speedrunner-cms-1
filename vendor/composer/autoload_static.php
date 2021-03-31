@@ -31,6 +31,7 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         array (
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
+            'yii\\imagine\\' => 12,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
@@ -108,6 +109,10 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         array (
             'Opis\\Closure\\' => 13,
         ),
+        'I' => 
+        array (
+            'Imagine\\' => 8,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -144,6 +149,10 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         'yii\\jui\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
+        ),
+        'yii\\imagine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-imagine/src',
         ),
         'yii\\gii\\' => 
         array (
@@ -319,6 +328,10 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
         ),
+        'Imagine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/imagine/imagine/src',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -369,13 +382,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
     );
 
     public static $prefixesPsr0 = array (
-        'y' => 
-        array (
-            'yii\\image\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/yurkinx/yii2-image',
-            ),
-        ),
         'H' => 
         array (
             'HTMLPurifier' => 

@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'f445113ce65ededd19e14d22e54c460a1f174879',
+    'reference' => '4352dc5f2e63750e9ce5862b1442c7c9ced32d0f',
     'name' => 'yiisoft/yii2-app-advanced',
   ),
   'versions' => 
@@ -276,6 +276,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '53330f47520498c0ae1f61f7e2c90f55690c06a3',
+    ),
+    'imagine/imagine' => 
+    array (
+      'pretty_version' => '1.2.4',
+      'version' => '1.2.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd2e18be6e930ca169e4f921ef73ebfc061bf55d8',
     ),
     'kartik-v/bootstrap-fileinput' => 
     array (
@@ -875,7 +884,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'f445113ce65ededd19e14d22e54c460a1f174879',
+      'reference' => '4352dc5f2e63750e9ce5862b1442c7c9ced32d0f',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (
@@ -922,6 +931,15 @@ private static $installed = array (
       ),
       'reference' => 'c02adc552bcf3a0ef6f3694a9dcbf209f4885ab1',
     ),
+    'yiisoft/yii2-imagine' => 
+    array (
+      'pretty_version' => '2.3.0',
+      'version' => '2.3.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b103b1b1deb786d4d5fe955898ec866dbee5c1b4',
+    ),
     'yiisoft/yii2-jui' => 
     array (
       'pretty_version' => '2.0.7',
@@ -939,16 +957,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '09659a55959f9e64b8178d842b64a9ffae42b994',
-    ),
-    'yurkinx/yii2-image' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => '590795d0e94c909c636cba1007a619012e118ac9',
     ),
   ),
 );

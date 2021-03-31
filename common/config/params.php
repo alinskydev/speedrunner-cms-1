@@ -14,7 +14,7 @@ return [
     ],
     
     'formats' => [
-        'image' => ['jpg', 'jpeg', 'png', 'gif'],
+        'image' => ['jpg', 'jpeg', 'png', 'gif', 'webp'],
     ],
     
     'date_formats' => [

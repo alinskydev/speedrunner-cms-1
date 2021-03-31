@@ -6,7 +6,9 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\FileHelper;
-use Yii\image\drivers\Image as ImageDriver;
+
+use yii\imagine\Image;
+use Imagine\Image\ManipulatorInterface;
 
 
 class ImageService
@@ -26,21 +28,19 @@ class ImageService
             $thumb = "$dir/$image_name";
             
             if (!is_file($thumb)) {
-                $new_thumb = Yii::$app->image->load($image);
+                $new_thumb = new Image();
+                $new_thumb::$thumbnailBackgroundAlpha = 0;
                 
                 switch ($type) {
                     case 'crop':
-                        $new_thumb->resize($width_height[0], $width_height[1], ImageDriver::INVERSE);
+                        $new_thumb = $new_thumb->thumbnail($image, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_OUTBOUND);
                         break;
                     case 'resize':
-                        $opacity = in_array($new_thumb->mime, ['image/png']) ? 0 : 100;
-                        $new_thumb->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
-                        $new_thumb->background('#fff', $opacity);
+                        $new_thumb = $new_thumb->thumbnail($image, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_INSET);
                         break;
                 }
                 
-                $new_thumb->crop($width_height[0], $width_height[1]);
-                $new_thumb->save($thumb, 90);
+                $new_thumb->save($thumb, ['quality' => 100]);
             }
             
             return str_replace(Yii::getAlias('@frontend/web'), null, $thumb);

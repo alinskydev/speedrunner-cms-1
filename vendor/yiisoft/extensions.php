@@ -103,15 +103,6 @@ return array (
       '@yii/gii' => $vendorDir . '/yiisoft/yii2-gii/src',
     ),
   ),
-  'yurkinx/yii2-image' => 
-  array (
-    'name' => 'yurkinx/yii2-image',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@yii/image' => $vendorDir . '/yurkinx/yii2-image/yii/image',
-    ),
-  ),
   'kartik-v/yii2-widget-fileinput' => 
   array (
     'name' => 'kartik-v/yii2-widget-fileinput',
@@ -155,6 +146,15 @@ return array (
     'alias' => 
     array (
       '@alexantr/elfinder' => $vendorDir . '/alexantr/yii2-elfinder/src',
+    ),
+  ),
+  'yiisoft/yii2-imagine' => 
+  array (
+    'name' => 'yiisoft/yii2-imagine',
+    'version' => '2.3.0.0',
+    'alias' => 
+    array (
+      '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine/src',
     ),
   ),
 );

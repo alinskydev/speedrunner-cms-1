@@ -5,8 +5,10 @@ namespace speedrunner\services;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
-use Yii\image\drivers\Image as ImageDriver;
 use yii\web\UploadedFile;
+
+use yii\imagine\Image;
+use Imagine\Image\ManipulatorInterface;
 
 
 class FileService
@@ -27,13 +29,10 @@ class FileService
         $file_name = md5(strtotime('now') . Yii::$app->security->generateRandomString()) . '.' . $file->extension;
         
         if ($width_height) {
-            $image = Yii::$app->image->load($file->tempName);
-            
-            $image->resize($width_height[0], $width_height[1], ImageDriver::ADAPT);
-            $image->background('#fff', in_array($image->mime, ['image/png']) ? 0 : 100);
-            $image->crop($width_height[0], $width_height[1]);
-            
-            $image->save("$dir/$file_name", 100);
+            $image = new Image();
+            $image::$thumbnailBackgroundAlpha = 0;
+            $image = $image->thumbnail($file->tempName, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_INSET);
+            $image->save("$dir/$file_name", ['quality' => 100]);
         } else {
             $file->saveAs("$dir/$file_name");
         }

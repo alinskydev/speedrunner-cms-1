@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'yii\\image\\' => array($vendorDir . '/yurkinx/yii2-image'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
     'Behat\\Gherkin' => array($vendorDir . '/behat/gherkin/src'),

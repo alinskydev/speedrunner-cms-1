@@ -31,17 +31,4 @@ class SeoMetaService
         
         return ArrayHelper::getValue($seo_meta_mdl, 'value', []);
     }
-    
-    public function register($group = 'page')
-    {
-        $seo_meta = $this->getMetaValue();
-        
-        Yii::$app->view->params['seo_meta'][$group] = [
-            'head' => ArrayHelper::getValue($seo_meta, 'head'),
-            'body' => [
-                'top' => ArrayHelper::getValue($seo_meta, 'body_top'),
-                'bottom' => ArrayHelper::getValue($seo_meta, 'body_bottom'),
-            ],
-        ];
-    }
 }

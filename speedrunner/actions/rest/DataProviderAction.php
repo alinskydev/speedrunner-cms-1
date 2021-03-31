@@ -4,19 +4,24 @@ namespace speedrunner\actions\rest;
 
 use Yii;
 use yii\base\Action;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use yii\db\ActiveRecord;
 
 
 class DataProviderAction extends Action
 {
-    public ActiveRecord $model;
-    public array $render_params = [];
+    public Model $model;
+    public string $model_class;
+    public array $model_params = [];
+    
+    public ?\Closure $render_params;
     
     public function run()
     {
-        $params = Yii::$app->request->get('filter');
-        array_walk_recursive($params, function(&$v) { $v = trim($v); });
+        $this->model = $this->model ?? new $this->model_class($this->model_params);
+        
+        $params = Yii::$app->request->get('filter', []);
+        array_walk_recursive($params, fn (&$v) => $v = trim($v));
         
         $this->model = $this->model->searchModel;
         $this->model->load([$this->model->formName() => $params]);
@@ -25,9 +30,11 @@ class DataProviderAction extends Action
         $dataProvider = $this->model->search();
         $dataProvider->pagination->totalCount = $dataProvider->query->count();
         
+        $render_params = $this->render_params ?? fn () => [];
+        
         $this->model->afterSearch();
         
-        $render_params = [
+        return ArrayHelper::merge([
             'data' => $dataProvider,
             'links' => $dataProvider->pagination->getLinks(true),
             'pagination' => [
@@ -36,8 +43,6 @@ class DataProviderAction extends Action
                 'current_page' => $dataProvider->pagination->page + 1,
                 'page_size' => $dataProvider->pagination->pageSize,
             ],
-        ];
-        
-        return ArrayHelper::merge($render_params, $this->render_params);
+        ], $render_params());
     }
 }

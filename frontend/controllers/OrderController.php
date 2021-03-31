@@ -33,10 +33,10 @@ class OrderController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($key = $model->save()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Your order has been successfully created'));
+                Yii::$app->session->addFlash('success', Yii::t('app', 'order_create_success_alert'));
                 return $this->redirect(['view', 'key' => $key]);
             } else {
-                Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred'));
+                Yii::$app->session->addFlash('danger', Yii::t('app', 'An error occurred'));
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }

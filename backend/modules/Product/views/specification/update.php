@@ -14,9 +14,8 @@ echo UpdateWidget::widget([
             'label' => Yii::t('app', 'Information'),
             'attributes' => [
                 'name' => 'text_input',
-                'use_filter' => 'checkbox',
-                'use_compare' => 'checkbox',
-                'use_detail' => 'checkbox',
+                'view_filter' => 'checkbox',
+                'view_compare' => 'checkbox',
             ],
         ],
         

@@ -22,6 +22,11 @@ class TranslationMessage extends ActiveRecord
         ];
     }
     
+    public function getSource()
+    {
+        return $this->hasOne(TranslationSource::className(), ['id' => 'id']);
+    }
+    
     public function getLang()
     {
         return $this->hasOne(SystemLanguage::className(), ['code' => 'language']);

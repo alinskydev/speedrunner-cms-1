@@ -2,9 +2,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
-
-use backend\modules\System\models\SystemLanguage;
+use backend\widgets\grid\GridView;
+use yii\bootstrap\Dropdown;
 
 $this->title = Yii::t('app', 'Translations');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -13,6 +12,31 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
+    <div class="float-right">
+        <?= Html::a(
+            Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Import'),
+            '#',
+            [
+                'class' => 'btn btn-info btn-icon',
+                'data-sr-trigger' => 'ajax-button',
+                'data-sr-url' => Yii::$app->urlManager->createUrl(['translation/source/import']),
+                'data-sr-wrapper' => '#main-modal',
+                'data-sr-callback' => '$("#main-modal").modal()',
+            ]
+        ); ?>
+        
+        <?= Html::a(
+            Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Export'),
+            '#',
+            [
+                'class' => 'btn btn-success btn-icon',
+                'data-sr-trigger' => 'ajax-button',
+                'data-sr-url' => Yii::$app->urlManager->createUrl(['translation/source/export']),
+                'data-sr-wrapper' => '#main-modal',
+                'data-sr-callback' => '$("#main-modal").modal()',
+            ]
+        ); ?>
+    </div>
 </h2>
 
 <div class="main-shadow p-3">
@@ -42,7 +66,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => (bool)ArrayHelper::getValue($model, 'currentTranslation.translation'),
             ],
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update}',
                 'buttons' => [],
             ],

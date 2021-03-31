@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 
 $this->title = Yii::t('app', 'Product brands');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
+                'class' => 'backend\widgets\grid\CheckboxColumn',
             ],
             [
                 'header' => false,
@@ -46,14 +46,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'value' => fn ($model) => Html::a(
                     $model->slug,
-                    Yii::$app->urlManagerFrontend->createUrl(['product/index', 'brand' => $model->slug]),
+                    Yii::$app->urlManagerFrontend->createUrl(['product/catalog', 'brands[]' => $model->slug]),
                     ['target' => '_blank']
                 ),
             ],
             'created_at',
             'updated_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [],
             ],

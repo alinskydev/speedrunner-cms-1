@@ -11,47 +11,51 @@ use backend\modules\Product\models\Product;
 
 class CartService
 {
-    public static function changeQuantity(Product $product, int $quantity)
+    public $cart;
+    
+    public function __construct()
+    {
+        $this->cart = Yii::$app->session->get('cart', []);
+    }
+    
+    public function changeQuantity(Product $product, int $quantity)
     {
         if ($product->quantity < $quantity) {
-            Yii::$app->session->setFlash('warning', Yii::t('app', 'Not enough quantity'));
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'Not enough quantity'));
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        $cart = Yii::$app->session->get('cart', []);
-        
         if ($quantity > 0) {
-            $cart['products'][$product->id] = $product->attributes;
-            $cart['products'][$product->id]['total_quantity'] = $quantity;
-            $cart['products'][$product->id]['total_price'] = $product->service->realPrice() * $quantity;
+            $this->cart['products'][$product->id] = $product->attributes;
+            $this->cart['products'][$product->id]['total_quantity'] = $quantity;
+            $this->cart['products'][$product->id]['total_price'] = $product->service->realPrice() * $quantity;
         } else {
-            ArrayHelper::remove($cart['products'], $product->id);
+            ArrayHelper::remove($this->cart['products'], $product->id);
         }
         
-        if ($cart['products']) {
-            $quantities = ArrayHelper::getColumn($cart['products'], 'total_quantity');
-            $total_prices = ArrayHelper::getColumn($cart['products'], 'total_price');
+        if ($this->cart['products']) {
+            $quantities = ArrayHelper::getColumn($this->cart['products'], 'total_quantity');
+            $total_prices = ArrayHelper::getColumn($this->cart['products'], 'total_price');
             
-            $cart['total'] = [
+            $this->cart['total'] = [
                 'quantity' => array_sum($quantities),
                 'price' => array_sum($total_prices),
             ];
             
-            Yii::$app->session->set('cart', $cart);
+            Yii::$app->session->set('cart', $this->cart);
         } else {
             Yii::$app->session->remove('cart');
         }
         
-        return $cart;
+        return $this->cart;
     }
     
-    public static function createOrder(Order $order)
+    public function createOrder(Order $order)
     {
         $total_price = 0;
         $total_quantity = 0;
         
-        $cart = Yii::$app->session->get('cart', []);
-        $cart_products = ArrayHelper::getValue($cart, 'products', []);
+        $cart_products = ArrayHelper::getValue($this->cart, 'products', []);
         $cart_products = ArrayHelper::getColumn($cart_products, 'total_quantity');
         
         $products = Product::find()->andWhere(['id' => array_keys($cart_products)])->all();

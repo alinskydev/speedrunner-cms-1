@@ -30,6 +30,8 @@ class AppAsset extends AssetBundle
         'js/bootstrap-datetimepicker.min.js',
         'js/select2.full.min.js',
         'js/jquery.toast.js',
+        
+        'js/sr-triggers.js',
         'js/speedrunner.js',
     ];
     

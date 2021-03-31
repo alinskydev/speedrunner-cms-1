@@ -4,6 +4,7 @@ namespace backend\modules\System\controllers;
 
 use Yii;
 use yii\web\Controller;
+use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\System\models\SystemSettings;
@@ -11,6 +12,16 @@ use backend\modules\System\models\SystemSettings;
 
 class SettingsController extends Controller
 {
+    public function actions()
+    {
+        return [
+            'sort' => [
+                'class' => Actions\web\SortAction::className(),
+                'model_class' => SystemSettings::className(),
+            ],
+        ];
+    }
+    
     public function actionUpdate()
     {
         $settings = SystemSettings::find()->indexBy('id')->orderBy('sort')->all();
@@ -31,21 +42,5 @@ class SettingsController extends Controller
         return $this->render('update', [
             'settings' => $settings,
         ]);
-    }
-    
-    public function actionSort()
-    {
-        $post = Yii::$app->request->post();
-        
-        if ($post['oldIndex'] > $post['newIndex']){
-            $params = ['and', ['>=', 'sort', $post['newIndex']], ['<', 'sort', $post['oldIndex']]];
-            $counter = 1;
-        } else {
-            $params = ['and', ['<=', 'sort', $post['newIndex']], ['>', 'sort', $post['oldIndex']]];
-            $counter = -1;
-        }
-        
-        SystemSettings::updateAllCounters(['sort' => $counter], $params);
-        SystemSettings::updateAll(['sort' => $post['newIndex']], ['id' => $post['id']]);
     }
 }

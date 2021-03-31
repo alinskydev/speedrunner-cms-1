@@ -42,14 +42,14 @@ echo UpdateWidget::widget([
                     'name' => 'total_quantity',
                     'type' => 'text_input',
                     'options' => [
-                        'disabled' => true,
+                        'readonly' => true,
                     ]
                 ],
                 [
                     'name' => 'total_price',
                     'type' => 'text_input',
                     'options' => [
-                        'disabled' => true,
+                        'readonly' => true,
                     ]
                 ],
             ],

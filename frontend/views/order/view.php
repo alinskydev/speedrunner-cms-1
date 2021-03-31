@@ -39,5 +39,5 @@ $this->title = Yii::t('app', 'Order №{id}', ['id' => $model->id]);
 ]) ?>
 
 <?= Yii::t('app', 'Total price: {price} сум', [
-    'price' => Yii::$app->formatter->asDecimal($model->service->realTotalPrice())
+    'price' => Yii::$app->formatter->asDecimal($model->checkout_price)
 ]) ?>

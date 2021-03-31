@@ -7,6 +7,8 @@ use speedrunner\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
+use backend\modules\System\models\SystemLanguage;
+
 
 class TranslationSource extends ActiveRecord
 {
@@ -32,6 +34,7 @@ class TranslationSource extends ActiveRecord
             'message' => Yii::t('app', 'Message'),
             
             'translations_tmp' => Yii::t('app', 'Translations'),
+            
             'has_translation' => Yii::t('app', 'Has translation'),
         ];
     }
@@ -49,11 +52,11 @@ class TranslationSource extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->translations_tmp) {
-            $available_langs = Yii::$app->services->i18n::$languages;
+            $available_langs = array_keys(SystemLanguage::find()->indexBy('code')->asArray()->all());
             
             foreach ($this->translations_tmp as $key => $value) {
-                if (array_key_exists($key, $available_langs)) {
-                    $relation_mdl = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $key])->one() ?: new TranslationMessage;
+                if (in_array($key, $available_langs)) {
+                    $relation_mdl = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $key])->one() ?: new TranslationMessage();
                     $relation_mdl->id = $this->id;
                     $relation_mdl->language = $key;
                     $relation_mdl->translation = $value;

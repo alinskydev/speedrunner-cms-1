@@ -24,7 +24,7 @@ class ActionController extends CrudController
         return [
             'cache' => [
                 'class' => \yii\filters\PageCache::className(),
-                'only' => ['index', 'view'],
+                'only' => ['index'],
                 'duration' => 0,
                 'dependency' => [
                     'class' => \yii\caching\DbDependency::className(),
@@ -46,9 +46,9 @@ class ActionController extends CrudController
         return ArrayHelper::merge($actions, [
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
-                'render_params' => [
+                'render_params' => fn () => [
                     'log_action_models_list' => (new LogActionModelsList())::$data,
-                ]
+                ],
             ],
         ]);
     }

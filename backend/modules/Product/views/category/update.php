@@ -15,8 +15,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 <?php $form = ActiveForm::begin([
     'options' => [
         'id' => 'update-form',
-        'data-toggle' => 'ajax-form',
-        'data-el' => '#nav-item-content',
+        'data-sr-trigger' => 'ajax-form',
+        'data-sr-wrapper' => '#nav-item-content',
     ],
 ]); ?>
 

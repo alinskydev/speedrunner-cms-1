@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
+                'class' => 'backend\widgets\grid\CheckboxColumn',
             ],
             [
                 'attribute' => 'id',
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'mark',
             'created_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{delete}',
                 'buttons' => [],
             ],

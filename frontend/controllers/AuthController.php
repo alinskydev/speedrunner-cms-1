@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use common\forms\LoginForm;
-use frontend\forms\RequestResetPasswordForm;
+use frontend\forms\ResetPasswordRequestForm;
 use frontend\forms\ResetPasswordForm;
 use frontend\forms\SignupForm;
 
@@ -22,10 +22,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'request-reset-password', 'reset-password'],
+                'only' => ['logout', 'signup', 'reset-password-request', 'reset-password'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'request-reset-password', 'reset-password'],
+                        'actions' => ['signup', 'reset-password-request', 'reset-password'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -53,15 +53,15 @@ class AuthController extends Controller
                 'model_class' => SignupForm::className(),
                 'render_view' => 'signup',
                 'run_method' => 'signup',
-                'success_message' => 'You have been registered successfully',
+                'success_message' => 'signup_success_alert',
                 'redirect_route' => ['site/index'],
             ],
-            'request-reset-password' => [
+            'reset-password-request' => [
                 'class' => Actions\web\FormAction::className(),
-                'model_class' => RequestResetPasswordForm::className(),
-                'render_view' => 'request_reset_password',
+                'model_class' => ResetPasswordRequestForm::className(),
+                'render_view' => 'reset_password_request',
                 'run_method' => 'sendEmail',
-                'success_message' => 'Check your email inbox for further instructions',
+                'success_message' => 'reset_password_request_success_alert',
                 'redirect_route' => ['site/index'],
             ],
             'reset-password' => [
@@ -70,7 +70,7 @@ class AuthController extends Controller
                 'model_params' => ['token' => Yii::$app->request->get('token')],
                 'render_view' => 'reset_password',
                 'run_method' => 'resetPassword',
-                'success_message' => 'New password saved',
+                'success_message' => 'reset_password_success_alert',
                 'redirect_route' => ['site/index'],
             ],
         ];

@@ -11,8 +11,8 @@ use yii\bootstrap\ActiveForm;
     'options' => [
         'id' => 'order-form',
         'class' => 'checkout-form',
-        'data-toggle' => 'ajax-form',
-        'data-el' => '.order-form-wrapper',
+        'data-sr-trigger' => 'ajax-form',
+        'data-sr-wrapper' => '#order-form-wrapper',
     ],
 ]); ?>
 

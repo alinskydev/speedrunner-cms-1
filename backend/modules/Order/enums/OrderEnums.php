@@ -25,8 +25,8 @@ class OrderEnums
             'cash' => [
                 'label' => Yii::t('app', 'Cash'),
             ],
-            'bank_card' => [
-                'label' => Yii::t('app', 'Bank card'),
+            'online' => [
+                'label' => Yii::t('app', 'Online'),
             ],
         ];
     }
@@ -37,27 +37,27 @@ class OrderEnums
             'new' => [
                 'label' => Yii::t('app', 'New'),
                 'class' => 'light',
-                'save_action' => 'plus',
+                'products_action' => 'plus',
             ],
             'confirmed' => [
                 'label' => Yii::t('app', 'Confirmed'),
                 'class' => 'warning',
-                'save_action' => 'minus',
+                'products_action' => 'minus',
             ],
             'payed' => [
                 'label' => Yii::t('app', 'Payed'),
                 'class' => 'info',
-                'save_action' => 'minus',
+                'products_action' => 'minus',
             ],
             'completed' => [
                 'label' => Yii::t('app', 'Completed'),
                 'class' => 'success',
-                'save_action' => 'minus',
+                'products_action' => 'minus',
             ],
             'canceled' => [
                 'label' => Yii::t('app', 'Canceled'),
                 'class' => 'danger',
-                'save_action' => 'plus',
+                'products_action' => 'plus',
             ],
         ];
     }

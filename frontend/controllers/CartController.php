@@ -40,7 +40,7 @@ class CartController extends Controller
         $product = Product::findOne(Yii::$app->request->post('id'));
         
         if (!$product) {
-            Yii::$app->session->setFlash('warning', Yii::t('app', 'Product not found'));
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'Product not found'));
             return $this->redirect(Yii::$app->request->referrer);
         }
         

@@ -4,6 +4,8 @@ namespace backend\modules\Product\models;
 
 use Yii;
 use speedrunner\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use speedrunner\validators\SlugValidator;
 
 
 class ProductBrand extends ActiveRecord
@@ -32,9 +34,9 @@ class ProductBrand extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'slug', 'image'], 'string', 'max' => 100],
-            [['slug'], 'unique'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['name', 'image'], 'string', 'max' => 100],
+            
+            [['slug'], SlugValidator::className()],
         ];
     }
     
@@ -48,5 +50,15 @@ class ProductBrand extends ActiveRecord
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
         ];
+    }
+    
+    public function beforeDelete()
+    {
+        if (Product::find()->andWhere(['brand_id' => $this->id])->exists()) {
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete record which contains any products'));
+            return false;
+        }
+        
+        return parent::beforeDelete();
     }
 }

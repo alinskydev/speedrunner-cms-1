@@ -14,7 +14,7 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id', 'user_id', 'total_price'], 'integer'],
+            [['id', 'user_id', 'total_price', 'checkout_price'], 'integer'],
             [['full_name', 'phone', 'email', 'delivery_type', 'payment_type'], 'safe'],
             [['status', 'key', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -23,7 +23,11 @@ class OrderSearch extends Order
     public function search()
     {
         $query = Order::find()
-            ->with(['user']);
+            ->with(['user'])
+            ->select([
+                '*',
+                "(total_price) + (delivery_price) as checkout_price",
+            ]);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,6 +66,15 @@ class OrderSearch extends Order
             ['like', 'phone', $this->full_name],
             ['like', 'email', $this->full_name],
         ]);
+        
+        $query->andFilterWhere([
+            "(total_price) + (delivery_price)" => $this->checkout_price,
+        ]);
+        
+        $dataProvider->sort->attributes['checkout_price'] = [
+            'asc' => ['checkout_price' => SORT_ASC],
+            'desc' => ['checkout_price' => SORT_DESC],
+        ];
         
 		return $dataProvider;
     }

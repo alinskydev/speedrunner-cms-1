@@ -6,7 +6,6 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use speedrunner\services\FileService;
 
 
 class StaticpageBlock extends ActiveRecord
@@ -25,7 +24,7 @@ class StaticpageBlock extends ActiveRecord
             [['value'], 'boolean', 'when' => function ($model) {
                 return in_array($model->type, ['checkbox']);
             }],
-            [['value'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
+            [['value'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
                 return in_array($model->type, ['files']);
             }],
             [['value'], 'valueValidation', 'when' => function ($model) {
@@ -46,7 +45,8 @@ class StaticpageBlock extends ActiveRecord
                 if (!$key || !in_array($key, $attrs)) {
                     $error_msg = Yii::t('app', 'Invalid type in {label}', ['label' => $this->label]);
                     $this->addError($attribute, $error_msg);
-                    Yii::$app->session->addFlash('danger', $error_msg);
+                    
+                    return Yii::$app->session->addFlash('danger', $error_msg);
                 }
             }
         }
@@ -110,7 +110,7 @@ class StaticpageBlock extends ActiveRecord
                 
                 if ($files = UploadedFile::getInstances($this, $this->id)) {
                     foreach ($files as $f) {
-                        $file_url = (new FileService($f))->save();
+                        $file_url = Yii::$app->services->file->save($f);
                         
                         if ($this->has_translation) {
                             $files_arr[$lang][] = $file_url;
@@ -133,7 +133,7 @@ class StaticpageBlock extends ActiveRecord
     {
         if ($this->type == 'files') {
             foreach ($this->value as $v) {
-                FileService::delete($v);
+                Yii::$app->services->file->delete($v);
             }
         }
         

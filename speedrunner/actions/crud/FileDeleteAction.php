@@ -5,7 +5,6 @@ namespace speedrunner\actions\crud;
 use Yii;
 use yii\base\Action;
 use yii\helpers\ArrayHelper;
-use speedrunner\services\FileService;
 
 
 class FileDeleteAction extends Action
@@ -26,7 +25,7 @@ class FileDeleteAction extends Action
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            FileService::delete($images[$key]);
+            Yii::$app->services->file->delete($images[$key]);
             unset($images[$key]);
             
             return $model->updateAttributes([

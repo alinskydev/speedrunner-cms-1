@@ -40,7 +40,7 @@ class SystemLanguage extends ActiveRecord
     public function isMainValidation($attribute, $params, $validator)
     {
         if (ArrayHelper::getValue($this->oldAttributes, $attribute) && !$this->{$attribute}) {
-            $this->addError($attribute, Yii::t('app', 'One of the languages must be main'));
+            return $this->addError($attribute, Yii::t('app', 'One of the languages must be main'));
         }
     }
     

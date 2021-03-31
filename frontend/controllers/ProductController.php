@@ -11,7 +11,7 @@ use backend\modules\Product\models\ProductCategory;
 
 class ProductController extends Controller
 {
-    public function actionCatalog($url)
+    public function actionCatalog($url = null)
     {
         $slug = explode('/', $url);
         $slug = end($slug);

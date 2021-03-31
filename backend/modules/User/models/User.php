@@ -60,7 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['image'],
                 'multiple' => false,
-                'save_dir' => 'files/profile',
+                'save_dir' => 'uploaded/profile',
             ],
             'relations_one_one' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
@@ -113,7 +113,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
             [['role'], 'in', 'range' => array_keys($this->enums->roles())],
-            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
+            [['image'], 'file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             
             [['design_theme'], 'in', 'range' => array_keys($this->enums->designThemes())],

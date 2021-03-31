@@ -11,7 +11,7 @@ use backend\modules\Menu\models\Menu;
 AppAsset::register($this);
 
 $seo_meta = SeoMeta::find()->andWhere(['model_class' => 'SeoMeta', 'lang' => Yii::$app->language])->one() ?: new SeoMeta();
-(new \backend\modules\Seo\services\SeoMetaService($seo_meta))->register('global');
+$seo_meta->registerSeoMeta('global');
 
 $is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
 $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
@@ -65,6 +65,10 @@ $flashes = Yii::$app->session->getAllFlashes();
 ]) ?>
 
 <?= $content ?>
+
+<div class="modal fade" id="main-modal">
+    <div class="modal-dialog"></div>
+</div>
 
 <div class="alert-wrapper">
     <?php print_r($flashes) ?>

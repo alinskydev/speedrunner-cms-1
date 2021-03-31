@@ -52,11 +52,12 @@ class ConnectionController extends Controller
                             
                             'attributes' => [
 	                        	[
-	                        		'pattern' => '/\.(html|xhtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/i',
+	                        		'pattern' => '/\s|\.(html|xhtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/i', // Dissllow spaces and extensions
 	                        		'read' => false,
 	                        		'write' => false,
 	                        		'locked' => true,
 	                        		'hidden' => true,
+                                    'message' => 'qwe',
 	                        	]
 	                        ],
                         ],

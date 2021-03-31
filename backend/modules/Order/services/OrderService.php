@@ -9,11 +9,6 @@ use speedrunner\services\ActiveService;
 
 class OrderService extends ActiveService
 {
-    public function realTotalPrice()
-    {
-        return $this->model->total_price + $this->model->delivery_price;
-    }
-    
     public function changeStatus($status)
     {
         $this->model->scenario = $this->model::SCENARIO_CHANGE_STATUS;
@@ -31,22 +26,30 @@ class OrderService extends ActiveService
         $transaction = Yii::$app->db->beginTransaction();
         
         foreach ($this->model->products as $p) {
-            if (!$p->product) {
+            $relation_name = $p->variation ? 'variation' : 'product';
+            
+            if (!($relation_model = $p->{$relation_name})) {
                 continue;
             }
             
-            $p->product->quantity += $new_status_action == 'plus' ? $p->quantity : (0 - $p->quantity);
+            $relation_model->quantity += $new_status_action == 'plus' ? $p->quantity : (0 - $p->quantity);
             
-            if (!$p->product->validate()) {
+            if (!$relation_model->validate()) {
                 Yii::$app->session->addFlash('danger', Yii::t('app', 'Not enough quantity for {product}', [
-                    'product' => $p->product->name,
+                    'product' => $relation_model->name,
                 ]));
                 
                 $transaction->rollBack();
                 return false;
             }
             
-            $p->product->updateAttributes(['quantity' => $p->product->quantity]);
+            $relation_model->updateAttributes(['quantity' => $relation_model->quantity]);
+            
+            if ($relation_name == 'variation' && $p->product) {
+                $p->product->scenario = $p->product::SCENARIO_CHANGE_QUANTITY;
+                $p->product->service->assignVariationAttributes($p->product->variations[0], false);
+                $p->product->save();
+            }
         }
         
         $transaction->commit();

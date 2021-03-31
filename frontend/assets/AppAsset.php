@@ -9,12 +9,16 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
+    
     public $css = [
-        'css/re-style.css',
     ];
+    
     public $js = [
+        'admin/js/sr-triggers.js',
+        
         'js/re-script.js',
     ];
+    
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

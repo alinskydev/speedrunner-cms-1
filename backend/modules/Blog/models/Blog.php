@@ -5,6 +5,7 @@ namespace backend\modules\Blog\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use speedrunner\validators\SlugValidator;
 
 
 class Blog extends ActiveRecord
@@ -44,14 +45,14 @@ class Blog extends ActiveRecord
     {
         return [
             [['name', 'image'], 'required'],
-            [['name', 'slug', 'image'], 'string', 'max' => 100],
+            [['name', 'image'], 'string', 'max' => 100],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
-            [['slug'], 'unique'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             [['published_at'], 'date', 'format' => 'php: d.m.Y H:i'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
+            
+            [['slug'], SlugValidator::className()],
             
             [['category_id'], 'exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
         ];

@@ -2,9 +2,8 @@
 
 return [
     'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
-    'switcher_template' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
     
-    'fileInput_pluginOptions' => [
+    'fileInput_plugin_options' => [
         'initialPreviewAsData' => true,
         'overwriteInitial' => false,
         'maxFileSize' => 1024,
@@ -40,15 +39,4 @@ return [
             'close' => '<i class="fas fa-times"></i>',
         ]
     ],
-    
-    'pager_options' => [
-        'options' => ['class' => 'pagination'],
-        'linkContainerOptions' => ['class' => 'page-item'],
-        'linkOptions' => ['class' => 'page-link'],
-        'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link'],
-        'firstPageLabel' => '<i class="fas fa-angle-double-left"></i>',
-        'prevPageLabel' => '<i class="fas fa-angle-left"></i>',
-        'nextPageLabel' => '<i class="fas fa-angle-right"></i>',
-        'lastPageLabel' => '<i class="fas fa-angle-double-right"></i>',
-    ]
 ];

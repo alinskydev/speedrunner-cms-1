@@ -7,7 +7,7 @@ use speedrunner\controllers\RestController;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use frontend\forms\ContactForm;
+use frontend\forms\FeedbackForm;
 
 
 class FeedbackController extends RestController
@@ -29,7 +29,7 @@ class FeedbackController extends RestController
         return [
             'send' => [
                 'class' => Actions\rest\FormAction::className(),
-                'model' => new ContactForm(),
+                'model_class' => FeedbackForm::className(),
                 'run_method' => 'sendEmail',
             ],
         ];

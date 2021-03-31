@@ -34,6 +34,9 @@ namespace backend\modules\<?= $model->module_name ?>\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+<?php if (isset($attrs['slug'])) { ?>
+use speedrunner\validators\SlugValidator;
+<?php } ?>
 
 
 class <?= $model->model_name ?> extends ActiveRecord

@@ -13,6 +13,10 @@ return [
         'groups' => 'Groups',
     ],
     
+    'formats' => [
+        'image' => ['jpg', 'jpeg', 'png', 'gif'],
+    ],
+    
     'date_formats' => [
         'datetime' => [
             'formats' => [
@@ -23,7 +27,7 @@ return [
             ],
             'attributes' => [
                 'created_at', 'updated_at', 'published_at', 'datetime',
-            ]
+            ],
         ],
         'date' => [
             'formats' => [
@@ -34,7 +38,7 @@ return [
             ],
             'attributes' => [
                 'date',
-            ]
+            ],
         ],
         'time' => [
             'formats' => [
@@ -45,7 +49,7 @@ return [
             ],
             'attributes' => [
                 'time',
-            ]
+            ],
         ],
         'month' => [
             'formats' => [
@@ -56,7 +60,7 @@ return [
             ],
             'attributes' => [
                 'month',
-            ]
+            ],
         ],
     ],
 ];

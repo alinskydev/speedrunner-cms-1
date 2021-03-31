@@ -19,9 +19,10 @@ class ImageService
         FileHelper::createDirectory($dir);
         
         $image = Yii::getAlias('@frontend/web') . $image_url;
+        $extension = pathinfo($image, PATHINFO_EXTENSION);
         
-        if (is_file($image) && getimagesize($image)) {
-            $image_name = md5(filemtime($image) . filesize($image)) . '.' . pathinfo($image, PATHINFO_EXTENSION);
+        if (is_file($image) && in_array($extension, Yii::$app->params['formats']['image'])) {
+            $image_name = md5(filemtime($image) . filesize($image)) . ".$extension";
             $thumb = "$dir/$image_name";
             
             if (!is_file($thumb)) {

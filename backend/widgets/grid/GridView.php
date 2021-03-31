@@ -5,13 +5,14 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace speedrunner\widgets\grid;
+namespace backend\widgets\grid;
 
 use Closure;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\i18n\Formatter;
@@ -258,14 +259,14 @@ class GridView extends BaseListView
      * - `{sorter}`: the sorter. See [[renderSorter()]].
      * - `{pager}`: the pager. See [[renderPager()]].
      */
-    public $layout = "{items} {pager} {summary}";
-
+    public $layout = '{items}{pager}{summary}';
+    
     public $buttons = [
         'delete' => [
             'label' => 'Delete all',
-            'icon' => 'fas fa-trash',
-            'url' => ['delete'],
-            'css_class' => 'danger'
+            'icon_class' => 'fas fa-trash',
+            'action' => ['delete'],
+            'css_class' => 'danger',
         ],
     ];
 
@@ -288,8 +289,6 @@ class GridView extends BaseListView
         if (!isset($this->filterRowOptions['id'])) {
             $this->filterRowOptions['id'] = $this->options['id'] . '-filters';
         }
-
-        $this->pager = $this->pager ?: Yii::$app->params['pager_options'];
 
         $this->initColumns();
     }
@@ -387,24 +386,27 @@ class GridView extends BaseListView
 
         if ($this->buttons) {
             $buttons = [];
-
+            
             foreach ($this->buttons as $key => $b) {
+                $icon_class = ArrayHelper::getValue($b, 'icon_class');
+                $label = Yii::t('app', ArrayHelper::getValue($b, 'label'));
+                
                 $buttons[] = Html::submitButton(
-                    Html::tag('i', null, ['class' => $b['icon']]) . Yii::t('app', $b['label']),
+                    ($icon_class ? Html::tag('i', null, ['class' => $icon_class]) : null) . $label,
                     [
-                        'formaction' => Url::to($b['url']),
+                        'formaction' => Url::to($b['action']),
                         'onclick' => 'return confirm("' . Yii::t('app', 'Are you sure?') . '")',
-                        'class' => 'btn btn-' . $b['css_class'] . ' btn-icon',
+                        'class' => 'btn btn-' . ArrayHelper::getValue($b, 'css_class') . ($icon_class ? ' btn-icon' : null),
                     ]
                 );
             }
-
+            
             $result = Html::beginForm();
             $result .= $table;
             $result .= Html::tag('div', implode(Html::tag('span', null, ['class' => 'mx-1']), $buttons), [
                 'class' => 'common-buttons main-shadow p-2 d-none'
             ]);
-
+            
             $result .= Html::endForm();
             return $result;
         } else {

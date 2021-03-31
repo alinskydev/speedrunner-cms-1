@@ -15,7 +15,7 @@ class ProductSpecificationSearch extends ProductSpecification
     public function rules()
     {
         return [
-            [['id', 'use_filter', 'use_compare', 'use_detail'], 'integer'],
+            [['id', 'view_filter', 'view_compare'], 'integer'],
             [['name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -42,9 +42,8 @@ class ProductSpecificationSearch extends ProductSpecification
         
         $query->andFilterWhere([
             'id' => $this->id,
-            'use_filter' => $this->use_filter,
-            'use_compare' => $this->use_compare,
-            'use_detail' => $this->use_detail,
+            'view_filter' => $this->view_filter,
+            'view_compare' => $this->view_compare,
         ]);
         
         $query->andFilterWhere(['like', 'created_at', $this->created_at])

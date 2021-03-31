@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace speedrunner\widgets\grid;
+namespace backend\widgets\grid;
 
 use Yii;
 use yii\helpers\Html;

@@ -50,7 +50,7 @@ class ProfileForm extends Model
             
             [['full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 1000],
-            [['image'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024],
+            [['image'], 'file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
         ];

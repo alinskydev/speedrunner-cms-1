@@ -13,17 +13,18 @@ class UserNotificationService extends ActiveService
 {
     public function __construct(?UserNotification $model = null)
     {
-        $this->model = $model ?? new UserNotification();
+        $this->model = $model;
     }
     
-    public function create(array $user_ids, $action_type, $action_id, array $params = [])
+    public static function create(array $user_ids, $action_type, $action_id, array $params = [])
     {
         foreach ($user_ids as $user_id) {
-            $this->model->user_id = $user_id;
-            $this->model->action_type = $action_type;
-            $this->model->action_id = $action_id;
-            $this->model->params = $params;
-            $this->model->save();
+            $model = new UserNotification();
+            $model->user_id = $user_id;
+            $model->action_type = $action_type;
+            $model->action_id = $action_id;
+            $model->params = $params;
+            $model->save();
         }
     }
     

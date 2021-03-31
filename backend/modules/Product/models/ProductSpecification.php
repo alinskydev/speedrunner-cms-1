@@ -45,7 +45,7 @@ class ProductSpecification extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
-            [['use_filter', 'use_compare', 'use_detail'], 'boolean'],
+            [['view_filter', 'view_compare'], 'boolean'],
             [['options_tmp'], 'safe'],
         ];
     }
@@ -55,9 +55,8 @@ class ProductSpecification extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
-            'use_filter' => Yii::t('app', 'Use in filter'),
-            'use_compare' => Yii::t('app', 'Use in compare'),
-            'use_detail' => Yii::t('app', 'Use in detail page'),
+            'view_filter' => Yii::t('app', 'View in filter'),
+            'view_compare' => Yii::t('app', 'View in compare'),
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
             

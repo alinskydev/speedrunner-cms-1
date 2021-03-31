@@ -4,6 +4,8 @@ namespace backend\modules\Page\models;
 
 use Yii;
 use speedrunner\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use speedrunner\validators\SlugValidator;
 
 
 class Page extends ActiveRecord
@@ -36,10 +38,10 @@ class Page extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'slug', 'image'], 'string', 'max' => 100],
-            [['slug'], 'unique'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['name', 'image'], 'string', 'max' => 100],
             [['description'], 'string'],
+            
+            [['slug'], SlugValidator::className()],
         ];
     }
     

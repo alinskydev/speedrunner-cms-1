@@ -3,9 +3,10 @@
 namespace speedrunner\validators;
 
 use Yii;
-use yii\validators\Validator;
 use yii\helpers\ArrayHelper;
 use yii\base\DynamicModel;
+
+use yii\validators\Validator;
 
 
 class UnchangeableValidator extends Validator
@@ -19,7 +20,7 @@ class UnchangeableValidator extends Validator
         ]);
         
         if (!$model->isNewRecord && $model->{$attribute} != ArrayHelper::getValue($model->oldAttributes, $attribute)) {
-            $this->addError($model, $attribute, $message);
+            return $this->addError($model, $attribute, $message);
         }
     }
 }

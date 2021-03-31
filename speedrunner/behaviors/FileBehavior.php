@@ -7,7 +7,6 @@ use yii\base\Behavior;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use speedrunner\services\FileService;
 
 
 class FileBehavior extends Behavior
@@ -48,7 +47,7 @@ class FileBehavior extends Behavior
                 
                 if ($value = UploadedFile::getInstances($this->owner, $a)) {
                     foreach ($value as $v) {
-                        $new_value[] = (new FileService($v))->save($this->save_dir, $this->width_height);
+                        $new_value[] = Yii::$app->services->file->save($v, $this->save_dir, $this->width_height);
                     }
                     
                     $this->owner->{$a} = array_merge($old_value, $new_value);
@@ -61,8 +60,8 @@ class FileBehavior extends Behavior
                 $old_value = ArrayHelper::getValue($this->owner, "oldAttributes.$a");
                 
                 if ($value = UploadedFile::getInstance($this->owner, $a)) {
-                    $this->owner->{$a} = (new FileService($value))->save($this->save_dir, $this->width_height);
-                    FileService::delete($old_value);
+                    $this->owner->{$a} = Yii::$app->services->file->save($value, $this->save_dir, $this->width_height);
+                    Yii::$app->services->file->delete($old_value);
                 } else {
                     $this->owner->{$a} = $this->owner->{$a} ?: $old_value;
                 }
@@ -75,12 +74,12 @@ class FileBehavior extends Behavior
         if ($this->multiple) {
             foreach ($this->attributes as $a) {
                 foreach ($this->owner->{$a} as $value) {
-                    FileService::delete($value);
+                    Yii::$app->services->file->delete($value);
                 }
             }
         } else {
             foreach ($this->attributes as $a) {
-                FileService::delete($this->owner->{$a});
+                Yii::$app->services->file->delete($this->owner->{$a});
             }
         }
     }

@@ -29,7 +29,7 @@ class BlogController extends RestController
         return [
             'index' => [
                 'class' => Actions\rest\DataProviderAction::className(),
-                'model' => new Blog(),
+                'model_class' => Blog::className(),
             ],
         ];
     }

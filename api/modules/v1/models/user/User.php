@@ -18,8 +18,8 @@ class User
             'phone',
             'address',
             'image' => fn ($model) => $model->image ? Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image) : null,
-            'created',
-            'updated',
+            'created_at',
+            'updated_at',
         ];
     }
 }

@@ -32,7 +32,7 @@ class DeleteAction extends Action
         $transaction->commit();
         
         if ($this->success_message) {
-            Yii::$app->session->setFlash('success', [Yii::t('app', $this->success_message)]);
+            Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
         }
         
         return $this->controller->redirect(Yii::$app->request->referrer);

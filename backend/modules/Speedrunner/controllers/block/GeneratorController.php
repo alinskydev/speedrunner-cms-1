@@ -18,9 +18,9 @@ class GeneratorController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->process()) {
-                Yii::$app->session->setFlash('success', ['Successfully done']);
+                Yii::$app->session->addFlash('success', 'Successfully done');
             } else {
-                Yii::$app->session->setFlash('danger', ['An error occurred']);
+                Yii::$app->session->addFlash('danger', 'An error occurred');
             }
             
             return $this->refresh();

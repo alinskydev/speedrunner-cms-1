@@ -45,9 +45,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'label')->textInput() ?>
                 
-                <?= $form->field($model, 'has_seo_meta', [
-                    'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                ])->checkbox([
+                <?= $form->field($model, 'has_seo_meta')->checkbox([
                     'class' => 'custom-control-input'
                 ])->label(null, [
                     'class' => 'custom-control-label'

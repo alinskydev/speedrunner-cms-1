@@ -85,6 +85,7 @@ return [
             'components' => [
                 'array' => 'speedrunner\services\ArrayService',
                 'cart' => 'speedrunner\services\CartService',
+                'file' => 'speedrunner\services\FileService',
                 'html' => 'speedrunner\services\HtmlService',
                 'i18n' => 'speedrunner\services\I18NService',
                 'image' => 'speedrunner\services\ImageService',

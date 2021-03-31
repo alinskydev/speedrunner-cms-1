@@ -6,9 +6,9 @@ use Yii;
 use yii\base\Model;
 
 
-class ContactForm extends Model
+class FeedbackForm extends Model
 {
-    public $name;
+    public $full_name;
     public $email;
     public $phone;
     public $message;
@@ -16,8 +16,8 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            [['name', 'email', 'message'], 'required'],
-            [['name', 'email', 'phone'], 'string', 'max' => 100],
+            [['full_name', 'email', 'message'], 'required'],
+            [['full_name', 'email', 'phone'], 'string', 'max' => 100],
             [['message'], 'string', 'max' => 1000],
             [['email'], 'email'],
         ];
@@ -26,7 +26,7 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('app', 'Name'),
+            'full_name' => Yii::t('app', 'Full name'),
             'email' => Yii::t('app', 'Email'),
             'phone' => Yii::t('app', 'Phone'),
             'message' => Yii::t('app', 'Message'),

@@ -25,7 +25,7 @@ class OrderController extends CrudController
     
     public function findModel($id)
     {
-        return $this->model->find()->with(['products.product'])->andWhere(['id' => $id])->one();
+        return $this->model->find()->with(['products.product.variations', 'products.variation'])->andWhere(['id' => $id])->one();
     }
     
     public function actionChangeStatus($id, $status)

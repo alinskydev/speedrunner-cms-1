@@ -125,10 +125,6 @@ function selectCategories($data, $categories)
         
         //        ----------------------------------------------------------------------
         
-        $(document).on('change', '#variation-specification', function() {
-            $('#variation-option').html($(this).find(':selected').data('options') ? $(this).find(':selected').data('options') : null);
-        });
-        
         $(document).on('submit', '#update-form', function() {
             tree = $.ui.fancytree.getTree();
 			tree.generateFormElements('Product[categories_tmp][]');

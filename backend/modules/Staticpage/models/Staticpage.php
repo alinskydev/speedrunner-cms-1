@@ -5,8 +5,6 @@ namespace backend\modules\Staticpage\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 
-use backend\modules\Staticpage\services\StaticpageService;
-
 
 class Staticpage extends ActiveRecord
 {

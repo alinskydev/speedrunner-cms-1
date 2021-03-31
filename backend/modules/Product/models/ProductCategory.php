@@ -122,7 +122,7 @@ class ProductCategory extends ActiveRecord
     public function beforeDelete()
     {
         if (Product::find()->andWhere(['main_category_id' => $this->id])->exists()) {
-            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete category which contains any products'));
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete record which contains any products'));
             return false;
         }
         

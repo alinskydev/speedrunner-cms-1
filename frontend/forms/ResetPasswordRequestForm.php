@@ -7,7 +7,7 @@ use yii\base\Model;
 use backend\modules\User\models\User;
 
 
-class RequestResetPasswordForm extends Model
+class ResetPasswordRequestForm extends Model
 {
     public $email;
     
@@ -16,7 +16,11 @@ class RequestResetPasswordForm extends Model
         return [
             [['email'], 'required'],
             [['email'], 'email'],
-            [['email'], 'exist', 'targetClass' => '\backend\modules\User\models\User', 'message' => Yii::t('app', 'There is no user with this email address')],
+            [
+                ['email'],
+                'exist',
+                'targetClass' => '\backend\modules\User\models\User', 'message' => Yii::t('app', 'There is no user with this email address')
+            ],
         ];
     }
     

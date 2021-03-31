@@ -17,6 +17,10 @@ class ProductVariation extends ActiveRecord
     public function behaviors()
     {
         return [
+            'translation' => [
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name'],
+            ],
             'files' => [
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
@@ -28,13 +32,13 @@ class ProductVariation extends ActiveRecord
     public function rules()
     {
         return [
-            [['specification_id', 'option_id'], 'required'],
+            [['name', 'price', 'quantity', 'sku'], 'required'],
+            [['name', 'sku'], 'string', 'max' => 100],
             [['price', 'quantity'], 'integer', 'min' => 0],
-            [['sku'], 'string', 'max' => 100],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
-            
-            [['specification_id'], 'exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id'],
-            [['option_id'], 'exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id'],
+            [['sku'], 'unique'],
+            [['discount'], 'integer', 'min' => 0, 'max' => 100],
+            [['discount'], 'default', 'value' => 0],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024]],
         ];
     }
     
@@ -43,24 +47,17 @@ class ProductVariation extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'product_id' => Yii::t('app', 'Product'),
-            'specification_id' => Yii::t('app', 'Specification'),
-            'option_id' => Yii::t('app', 'Option'),
+            'name' => Yii::t('app', 'Name'),
             'price' => Yii::t('app', 'Price'),
+            'discount' => Yii::t('app', 'Discount'),
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'SKU'),
             'images' => Yii::t('app', 'Images'),
-            'created_at' => Yii::t('app', 'Created at'),
-            'updated_at' => Yii::t('app', 'Updated at'),
         ];
     }
     
-    public function getSpecification()
+    public function getProduct()
     {
-        return $this->hasOne(ProductSpecification::className(), ['id' => 'specification_id']);
-    }
-    
-    public function getOption()
-    {
-        return $this->hasOne(ProductSpecificationOption::className(), ['id' => 'option_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

@@ -77,10 +77,7 @@ use yii\web\JsExpression;
                                 case 'checkbox':
                                     echo $form->field(
                                         $model, $name,
-                                        ArrayHelper::merge(
-                                            ['checkboxTemplate' => Yii::$app->params['switcher_template']],
-                                            ArrayHelper::getValue($attribute, 'container_options', [])
-                                        )
+                                        ArrayHelper::getValue($attribute, 'container_options', [])
                                     )->checkbox(
                                         ArrayHelper::merge(
                                             ['class' => 'custom-control-input'],
@@ -172,7 +169,7 @@ use yii\web\JsExpression;
                                                     'accept' => 'image/*',
                                                     'multiple' => $multiple,
                                                 ],
-                                                'pluginOptions' => array_merge(Yii::$app->params['fileInput_pluginOptions'], [
+                                                'pluginOptions' => array_merge(Yii::$app->params['fileInput_plugin_options'], [
                                                     'deleteUrl' => ArrayHelper::getValue($attribute, 'widget_options.delete_url'),
                                                     'initialPreview' => $initial_preview,
                                                     'initialPreviewConfig' => $initial_preview_config,

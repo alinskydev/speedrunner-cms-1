@@ -35,7 +35,7 @@ class ProfileController extends Controller
                 'model_class' => ProfileForm::className(),
                 'render_view' => 'update',
                 'run_method' => 'update',
-                'success_message' => 'Profile has been updated',
+                'success_message' => 'profile_update_success_alert',
                 'redirect_route' => ['update'],
             ],
         ];

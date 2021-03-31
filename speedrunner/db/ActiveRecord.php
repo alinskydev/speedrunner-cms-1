@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\HtmlPurifier;
 
+use backend\modules\Seo\services\SeoMetaService;
+
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
@@ -45,10 +47,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return parent::init();
     }
     
+    //        Applying API fields
+    
     public function fields()
     {
-        //        API fields
-        
         $class_name = StringHelper::basename(get_called_class());
         
         $module_name = str_replace('backend\modules\\', null, get_called_class());
@@ -60,10 +62,26 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return class_exists($api_class_name) ? (new $api_class_name())->fields() : parent::fields();
     }
     
+    //        Seo meta registration
+    
+    public function registerSeoMeta($group = 'page')
+    {
+        $seo_meta_service = new SeoMetaService($this);
+        $seo_meta = $seo_meta_service->getMetaValue();
+        
+        Yii::$app->view->params['seo_meta'][$group] = [
+            'head' => ArrayHelper::getValue($seo_meta, 'head'),
+            'body' => [
+                'top' => ArrayHelper::getValue($seo_meta, 'body_top'),
+                'bottom' => ArrayHelper::getValue($seo_meta, 'body_bottom'),
+            ],
+        ];
+    }
+    
+    //        Setting query
+    
     public static function find()
     {
-        //        Setting query
-        
         $query_class_name = str_replace('\models\\', '\query\\', get_called_class()) . 'Query';
         return class_exists($query_class_name) ? new $query_class_name(get_called_class()) : new ActiveQuery(get_called_class());
     }

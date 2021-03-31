@@ -1,53 +1,5 @@
 $(function() {
     
-    //      Ajax button
-    
-    let el, action, sendData;
-    
-    $(document).on('click', '[data-toggle="ajax-button"]', function(e) {
-        e.preventDefault();
-        
-        el = $(this);
-        action = el.data('action');
-        sendData = {};
-        
-        $.get(action, sendData, function(data) {
-            switch (el.data('type')) {
-                case 'el':
-                    $(el.data('el')).html(data);
-                    break;
-                case 'modal':
-                    $('#main-modal').html(data).modal();
-                    break;
-            }
-        });
-    });
-    
-    //      Ajax form
-    
-    $(document).on('submit', '[data-toggle="ajax-form"]', function(e) {
-        e.preventDefault();
-        
-        el = $(this);
-        action = el.attr('action');
-        sendData = new FormData(el[0]);
-        
-        $.ajax({
-            type: "POST",
-            url: action,
-            data: sendData,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                if (data === '1') {
-                    $(el.data('el')).modal('hide');
-                } else {
-                    $(el.data('el')).html(data);
-                }
-            }
-        });
-    });
-    
     //      Cart changing quantity
     
     let quantity;

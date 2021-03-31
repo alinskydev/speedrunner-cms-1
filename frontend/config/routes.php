@@ -4,7 +4,7 @@ return [
     'login' => 'auth/login',
     'signup' => 'auth/signup',
     'logout' => 'auth/logout',
-    'request-reset-password' => 'auth/request-reset-password',
+    'reset-password-request' => 'auth/reset-password-request',
     'reset-password/<token>' => 'auth/reset-password',
     
     '/' => 'site/index',

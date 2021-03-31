@@ -5,10 +5,13 @@ namespace backend\modules\Product\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use speedrunner\validators\SlugValidator;
 
 
 class Product extends ActiveRecord
 {
+    const SCENARIO_CHANGE_QUANTITY = 'change_quantity';
+    
     public $categories_tmp;
     public $options_tmp;
     public $related_tmp;
@@ -17,6 +20,14 @@ class Product extends ActiveRecord
     public static function tableName()
     {
         return '{{%product}}';
+    }
+    
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CHANGE_QUANTITY] = [];
+        
+        return $scenarios;
     }
     
     public function behaviors()
@@ -49,7 +60,7 @@ class Product extends ActiveRecord
                         'relation' => 'variations',
                         'attributes' => [
                             'main' => 'product_id',
-                            'relational' => ['specification_id', 'option_id'],
+                            'relational' => ['name', 'price', 'discount', 'quantity', 'sku'],
                         ],
                     ],
                 ],
@@ -89,7 +100,7 @@ class Product extends ActiveRecord
                 'relations_one_many' => [
                     'variations_tmp' => [
                         'relation' => 'variations',
-                        'attributes' => ['price', 'quantity', 'sku'],
+                        'attributes' => ['name', 'price', 'discount', 'quantity', 'sku'],
                     ],
                 ],
                 'relations_many_many' => [
@@ -113,17 +124,20 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'main_category_id', 'price', 'quantity', 'sku'], 'required'],
+            [['name', 'brand_id', 'main_category_id'], 'required'],
+            [['price', 'quantity', 'sku'], 'required', 'enableClientValidation' => false, 'when' => fn ($model) => !$model->variations_tmp],
+            
             [['price', 'quantity'], 'integer', 'min' => 0],
             [['discount'], 'integer', 'min' => 0, 'max' => 100],
-            [['name', 'slug', 'sku'], 'string', 'max' => 100],
+            [['discount'], 'default', 'value' => 0],
+            [['name', 'sku'], 'string', 'max' => 100],
             [['sku'], 'unique'],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
-            [['slug'], 'unique'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => ['jpg', 'jpeg', 'png', 'gif'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024]],
             [['variations_tmp'], 'safe'],
+            
+            [['slug'], SlugValidator::className()],
             
             [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
             [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
@@ -192,5 +206,21 @@ class Product extends ActiveRecord
     public function getVariations()
     {
         return $this->hasMany(ProductVariation::className(), ['product_id' => 'id'])->orderBy('sort');
+    }
+    
+    public function beforeValidate()
+    {
+        //        Setting values from first variation
+        
+        if ($this->variations_tmp) {
+            $first_variation = reset($this->variations_tmp);
+            
+            $this->price = ArrayHelper::getValue($first_variation, 'price');
+            $this->discount = ArrayHelper::getValue($first_variation, 'discount');
+            $this->quantity = ArrayHelper::getValue($first_variation, 'quantity');
+            $this->sku = ArrayHelper::getValue($first_variation, 'sku');
+        }
+        
+        return parent::beforeValidate();
     }
 }

@@ -26,12 +26,12 @@ class SeoMeta extends ActiveRecord
     public function valueValidation($attribute, $params, $validator)
     {
         if (!is_array($this->value)) {
-            $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
+            return $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
         }
         
         foreach ((array)$this->value as $key => $v) {
             if (!is_string($v) || !array_key_exists($key, $this->enums->types())) {
-                $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
+                return $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
             }
         }
     }

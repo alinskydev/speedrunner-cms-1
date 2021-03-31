@@ -20,7 +20,7 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 
 $this->title = Yii::t('app', '<?= $title ?>s');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
+                'class' => 'backend\widgets\grid\CheckboxColumn',
             ],
 <?php
     foreach ($attrs as $key => $a) {
@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     }
 ?>
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '<?= implode(null, $buttons_template) ?>',
                 'buttons' => [],
             ],

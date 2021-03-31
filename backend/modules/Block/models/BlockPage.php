@@ -5,6 +5,7 @@ namespace backend\modules\Block\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use speedrunner\validators\SlugValidator;
 
 
 class BlockPage extends ActiveRecord
@@ -53,10 +54,10 @@ class BlockPage extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'slug'], 'string', 'max' => 100],
-            [['slug'], 'unique'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            [['name'], 'string', 'max' => 100],
             [['blocks_tmp'], 'safe'],
+            
+            [['slug'], SlugValidator::className()],
         ];
     }
     

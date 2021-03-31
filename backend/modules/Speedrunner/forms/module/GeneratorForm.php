@@ -201,6 +201,11 @@ class GeneratorForm extends Model
                 continue;
             }
             
+            if ($column->name == 'slug') {
+                $types['slug'][] = $column->name;
+                continue;
+            }
+            
             if (!$column->allowNull && $column->defaultValue === null && !in_array($column->type, ['date', 'time', 'datetime'])) {
                 $types['required'][] = $column->name;
             }
@@ -209,8 +214,14 @@ class GeneratorForm extends Model
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
-                case Schema::TYPE_TINYINT:
                     $types['integer'][] = $column->name;
+                    break;
+                case Schema::TYPE_TINYINT:
+                    if ($column->size == 1) {
+                        $types['boolean'][] = $column->name;
+                    } else {
+                        $types['integer'][] = $column->name;
+                    }
                     break;
                 case Schema::TYPE_BOOLEAN:
                     $types['boolean'][] = $column->name;
@@ -234,7 +245,7 @@ class GeneratorForm extends Model
                         $types['safe'][] = $column->name;
                     }
                     break;
-                default: // strings
+                default:
                     if ($column->size > 0) {
                         $lengths[$column->size][] = $column->name;
                     } else {
@@ -244,7 +255,13 @@ class GeneratorForm extends Model
         }
         
         foreach ($types as $type => $columns) {
-            $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+            switch ($type) {
+                case 'slug':
+                    $rules[] = "[['" . implode("', '", $columns) . "'], SlugValidator::className()]";
+                    break;
+                default:
+                    $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+            }
         }
         
         foreach ($lengths as $length => $columns) {

@@ -15,8 +15,12 @@ class NestedSetUrlRule extends BaseObject implements UrlRuleInterface
     public function createUrl($manager, $route, $params)
     {
         if ($route == $this->route) {
-            $path = "/$this->path/" . $params['url'];
-            unset($params['url']);
+            $path = "/$this->path";
+            
+            if (isset($params['url'])) {
+                $path .= '/' . $params['url'];
+                unset($params['url']);
+            }
             
             if ($params) {
                 $path .= '?';

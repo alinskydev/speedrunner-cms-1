@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use yii\web\JsExpression;
 use kartik\select2\Select2;

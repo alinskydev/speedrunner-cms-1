@@ -6,7 +6,6 @@ use Yii;
 use speedrunner\controllers\CrudController;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
-use speedrunner\services\FileService;
 
 use backend\modules\Block\models\BlockPage;
 use backend\modules\Block\models\BlockType;
@@ -110,7 +109,7 @@ class PageController extends CrudController
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            FileService::delete($images[$key]);
+            Yii::$app->services->file->delete($images[$key]);
             unset($images[$key]);
             
             if ($model->type->has_translation) {

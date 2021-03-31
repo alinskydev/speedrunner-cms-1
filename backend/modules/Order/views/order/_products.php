@@ -15,7 +15,7 @@ $is_block_disabled = !$model->isNewRecord && $model->status != 'new';
         <tr>
             <th style="width: 50px;"></th>
             <th><?= $relations[0]->getAttributeLabel('product_id') ?></th>
-            <th><?= $relations[0]->getAttributeLabel('quantity') ?></th>
+            <th><?= $relations[0]->getAttributeLabel('total_price') ?></th>
             <th style="width: 50px;"></th>
         </tr>
     </thead>
@@ -32,33 +32,52 @@ $is_block_disabled = !$model->isNewRecord && $model->status != 'new';
                 </td>
                 
                 <td>
-                    <?php
-                        if ($value->isNewRecord || $value->product) {
-                            echo $form->field($value, 'product_id', [
-                                'template' => '{input}',
-                                'enableClientValidation' => false,
-                            ])->dropDownList(
-                                [$value->product_id => ArrayHelper::getValue($value, 'product.name')],
-                                [
-                                    'name' => "Order[products_tmp][$value_id][product_id]",
-                                    'id' => "select2-products-$value_id",
-                                    'data-toggle' => 'select2-ajax',
-                                    'data-action' => Yii::$app->urlManager->createUrl(['items-list/products']),
-                                ]
-                            );
-                        } else {
-                            echo $form->field($value, 'product_json', ['template' => '{input}'])->textInput([
-                                'value' => ArrayHelper::getValue($value->product_json, 'name'),
-                                'name' => false,
-                            ]);
-                        }
-                    ?>
+                    <?php if ($is_block_disabled) { ?>
+                        <?= $form->field($value, 'product_id', [
+                            'options' => ['class' => 'form-group mb-3'],
+                        ])->textInput([
+                            'value' => ArrayHelper::getValue($value, 'product_json.name'),
+                        ]) ?>
+                        
+                        <?php if ($variation_name = ArrayHelper::getValue($value, 'product_json.variation.name')) { ?>
+                            <?= $form->field($value, 'variation_id')->textInput([
+                                'value' => $variation_name,
+                            ]) ?>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?= $form->field($value, 'product_id', [
+                            'enableClientValidation' => false,
+                            'options' => ['class' => 'form-group mb-3'],
+                        ])->dropDownList(
+                            [$value->product_id => ArrayHelper::getValue($value, 'product.name')],
+                            [
+                                'name' => "Order[products_tmp][$value_id][product_id]",
+                                'id' => "select2-products-$value_id",
+                                'disabled' => $is_block_disabled,
+                                'data-toggle' => 'select2-ajax',
+                                'data-action' => Yii::$app->urlManager->createUrl(['items-list/products']),
+                                
+                                'data-variation-toggle' => true,
+                                'data-variation-action' => Yii::$app->urlManager->createUrl(['product/product/variations']),
+                                'data-variation-id' => $value->variation_id,
+                                'data-variation-name' => "Order[products_tmp][$value_id][variation_id]",
+                            ]
+                        ); ?>
+                        
+                        <div class="order-products-variation-wrapper"></div>
+                    <?php } ?>
+                    
+                    <?= $form->field($value, 'quantity', [
+                        'options' => ['class' => 'mt-3'],
+                    ])->textInput([
+                        'name' => "Order[products_tmp][$value_id][quantity]",
+                    ]) ?>
                 </td>
                 
                 <td>
-                    <?= $form->field($value, 'quantity', ['template' => '{input}'])->textInput([
-                        'name' => "Order[products_tmp][$value_id][quantity]",
-                    ]) ?>
+                    <?= $form->field($value, 'price', ['options' => ['class' => 'form-group mb-3']])->textInput(['readonly' => true]) ?>
+                    <?= $form->field($value, 'discount', ['options' => ['class' => 'form-group mb-3']])->textInput(['readonly' => true]) ?>
+                    <?= $form->field($value, 'total_price')->textInput(['readonly' => true]) ?>
                 </td>
                 
                 <td>
@@ -80,3 +99,28 @@ $is_block_disabled = !$model->isNewRecord && $model->status != 'new';
         </tr>
     </tfoot>
 </table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let el, action, sendData;
+        
+        $(document).on('change', '[data-variation-toggle]', function() {
+            el = $(this);
+            action = el.data('variation-action');
+            
+            sendData = {
+                id: el.val(),
+                variation_id: el.data('variation-id'),
+                name: el.data('variation-name'),
+            };
+            
+            $.get(action, sendData, (data) => {
+                $($(this).closest('tr').find('.order-products-variation-wrapper')).html(data);
+            });
+        });
+        
+        <?php if (!$is_block_disabled) { ?>
+            $('[data-variation-toggle]').trigger('change');
+        <?php } ?>
+    });
+</script>

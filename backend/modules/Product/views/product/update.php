@@ -4,8 +4,6 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use backend\widgets\crud\UpdateWidget;
 
-use backend\modules\Product\models\ProductCategory;
-
 $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -35,10 +33,13 @@ echo UpdateWidget::widget([
         'stock' => [
             'label' => Yii::t('app', 'Stock'),
             'attributes' => [
-                'sku' => 'text_input',
-                'quantity' => 'text_input',
+                Html::tag('div', Yii::t('app', 'Values will be taken automatically from the first variation (if any)'), [
+                    'class' => 'alert alert-info mb-4',
+                ]),
                 'price' => 'text_input',
                 'discount' => 'text_input',
+                'quantity' => 'text_input',
+                'sku' => 'text_input',
             ],
         ],
         
@@ -67,10 +68,7 @@ echo UpdateWidget::widget([
                 [
                     'name' => 'main_category_id',
                     'type' => 'select',
-                    'data' => ArrayHelper::map(
-                        ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
-                        'id', 'text'
-                    ),
+                    'data' => ArrayHelper::map($categories['list'], 'id', 'text'),
                     'options' => [
                         'data-toggle' => 'select2',
                         'prompt' => ' ',
@@ -81,7 +79,7 @@ echo UpdateWidget::widget([
                     'type' => 'render',
                     'view' => '_categories',
                     'params' => [
-                        'data' => ProductCategory::findOne(1)->tree(),
+                        'data' => $categories['tree'],
                     ],
                 ],
             ],

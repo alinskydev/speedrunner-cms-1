@@ -7,7 +7,7 @@ use yii\web\Controller;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use frontend\forms\ContactForm;
+use frontend\forms\FeedbackForm;
 
 use backend\modules\Product\models\ProductCategory;
 
@@ -22,10 +22,10 @@ class SiteController extends Controller
             ],
             'contact' => [
                 'class' => Actions\web\FormAction::className(),
-                'model_class' => ContactForm::className(),
+                'model_class' => FeedbackForm::className(),
                 'render_view' => 'contact',
                 'run_method' => 'sendEmail',
-                'success_message' => 'Thank you for contacting us. We will respond to you as soon as possible.',
+                'success_message' => 'contact_success_alert',
                 'redirect_route' => ['site/index'],
             ],
         ];

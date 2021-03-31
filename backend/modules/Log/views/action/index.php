@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'created_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{view} {link}',
                 'buttons' => [
                     'link' => function ($url, $model, $key) {
@@ -102,17 +102,17 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     },
                     'view' => function ($url, $model, $key) {
                         return Html::button(
-                            Html::tag('i', null, [
-                                'class' => 'fas fa-eye',
-                                'data-toggle' => 'ajax-button',
-                                'data-action' => Yii::$app->urlManager->createUrl(['log/action/view', 'id' => $model->id]),
-                                'data-type' => 'modal',
-                            ]),
+                            Html::tag('i', null, ['class' => 'fas fa-eye']),
                             [
                                 'class' => 'btn btn-link p-0',
                                 'data-pjax' => 0,
                                 'title' => Yii::t('app', 'View'),
                                 'data-toggle' => 'tooltip',
+                                
+                                'data-sr-trigger' => 'ajax-button',
+                                'data-sr-url' => Yii::$app->urlManager->createUrl(['log/action/view', 'id' => $model->id]),
+                                'data-sr-wrapper' => '#main-modal',
+                                'data-sr-callback' => '$("#main-modal").modal()',
                             ]
                         );
                     },

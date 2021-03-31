@@ -2,11 +2,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
-
-use backend\modules\Product\models\ProductCategory;
 
 $this->title = Yii::t('app', 'Products');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -28,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
+                'class' => 'backend\widgets\grid\CheckboxColumn',
             ],
             [
                 'header' => false,
@@ -58,10 +56,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
-                'filter' => ArrayHelper::map(
-                    ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
-                    'id', 'text'
-                ),
+                'filter' => ArrayHelper::map($categories, 'id', 'text'),
                 'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
@@ -101,7 +96,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'quantity',
             'created_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'buttons' => [],
             ],

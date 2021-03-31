@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = Yii::t('app', 'Request reset password');
+$this->title = Yii::t('app', 'Reset password request');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>

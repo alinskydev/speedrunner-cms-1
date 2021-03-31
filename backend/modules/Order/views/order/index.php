@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use yii\bootstrap\Dropdown;
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue($model->enums->paymentTypes(), "$model->payment_type.label"),
             ],
             [
-                'attribute' => 'total_price',
+                'attribute' => 'checkout_price',
                 'format' => 'raw',
                 'value' => function ($model) {
                     $prices = ['total_quantity', 'total_price', 'delivery_price'];
@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         $result[] = $model->getAttributeLabel($p) . ': ' . ArrayHelper::getValue($model, $p, 0);
                     }
                     
-                    $result[] = Yii::t('app', 'Checkout price') . ": " . $model->service->realTotalPrice();
+                    $result[] = '<hr>' . Html::tag('b', $model->getAttributeLabel('checkout_price') . ": $model->checkout_price");
                     
                     return implode('<br>', $result);
                 }
@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'created_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{link} {update} {delete}',
                 'buttons' => [
                     'link' => function($url, $model, $key) {

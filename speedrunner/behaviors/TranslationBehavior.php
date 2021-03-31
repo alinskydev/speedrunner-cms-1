@@ -8,6 +8,8 @@ use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 
+use backend\modules\System\models\SystemLanguage;
+
 
 class TranslationBehavior extends Behavior
 {
@@ -31,14 +33,14 @@ class TranslationBehavior extends Behavior
     
     public function beforeSave($event)
     {
+        $langs = SystemLanguage::find()->asObject()->all();
+        
         foreach ($this->attributes as $a) {
             if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
                 $json[Yii::$app->language] = $this->owner->{$a};
             } else {
-                $langs = Yii::$app->services->i18n::$languages;
-                
                 foreach ($langs as $l) {
-                    $json[$l['code']] = $this->owner->{$a};
+                    $json[$l->code] = $this->owner->{$a};
                 }
             }
             

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 
 use backend\modules\System\models\SystemLanguage;
 
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created_at',
             'updated_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
             ],
         ],

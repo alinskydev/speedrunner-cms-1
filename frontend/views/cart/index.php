@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 
 use frontend\forms\OrderForm;
 
-(new \backend\modules\Seo\services\SeoMetaService($page))->register();
+$page->registerSeoMeta();
 
 $this->title = Yii::t('app', 'Cart');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'price' => Yii::$app->formatter->asDecimal($cart['total']['price'])
     ]) ?>
     
-    <div class="order-form-wrapper">
+    <div id="order-form-wrapper">
         <?= $this->render('@frontend/views/order/create', [
             'model' => new OrderForm(),
         ]); ?>

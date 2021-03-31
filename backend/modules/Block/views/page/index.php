@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 
 use backend\modules\Block\models\BlockType;
 
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\CheckboxColumn',
+                'class' => 'backend\widgets\grid\CheckboxColumn',
             ],
             [
                 'attribute' => 'id',
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created_at',
             'updated_at',
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{assign} {update} {delete}',
                 'buttons' => [
                     'assign' => function($url, $model, $key) {

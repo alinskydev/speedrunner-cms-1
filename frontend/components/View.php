@@ -5,8 +5,6 @@ namespace frontend\components;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Seo\models\SeoMeta;
-
 
 class View extends \yii\web\View
 {

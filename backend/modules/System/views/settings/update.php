@@ -65,9 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             
                                             break;
                                         case 'checkbox':
-                                            echo Html::label('&nbsp;<br>') . $form->field($s, 'value', [
-                                                'checkboxTemplate' => Yii::$app->params['switcher_template'],
-                                            ])->checkbox([
+                                            echo Html::label('&nbsp;<br>') . $form->field($s, 'value')->checkbox([
                                                 'name' => "SystemSettings[$s->id][value]",
                                                 'id' => "systemsettings-$s->id",
                                                 'class' => 'custom-control-input',
@@ -110,9 +108,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        let id, oldIndex, newIndex, sendData,
-            action = '<?= Yii::$app->urlManager->createUrl(['system/settings/sort']) ?>',
-            token = $('meta[name=csrf-token]').attr('content');
+        let id, action, sendData,
+            oldIndex, newIndex;
+        
+        action = '<?= Yii::$app->urlManager->createUrl(['system/settings/sort']) ?>';
         
         $('#sortable').sortable({
             handle: '.table-sorter',
@@ -126,10 +125,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 if (oldIndex !== newIndex) {
                     sendData = {
-                        '_csrf-backend': token,
-                        'id': id,
-                        'oldIndex': oldIndex,
-                        'newIndex': newIndex
+                        "_csrf-backend": $('meta[name=csrf-token]').attr('content'),
+                        id: id,
+                        old_index: oldIndex,
+                        new_index: newIndex
                     };
                     
                     $.post(action, sendData);

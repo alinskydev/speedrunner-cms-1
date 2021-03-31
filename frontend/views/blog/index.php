@@ -13,6 +13,4 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <?= LinkPager::widget([
     'pagination' => $blogs->pagination,
-    'prevPageLabel' => '<',
-    'nextPageLabel' => '>',
 ]); ?>

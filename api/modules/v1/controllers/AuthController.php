@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 use common\forms\LoginForm;
 use frontend\forms\SignupForm;
-use frontend\forms\RequestResetPasswordForm;
+use frontend\forms\ResetPasswordRequestForm;
 
 
 class AuthController extends RestController
@@ -22,7 +22,7 @@ class AuthController extends RestController
                 'actions' => [
                     'login' => ['post'],
                     'signup' => ['post'],
-                    'request-reset-password' => ['post'],
+                    'reset-password-request' => ['post'],
                 ],
             ],
         ]);
@@ -41,9 +41,9 @@ class AuthController extends RestController
                 'model_class' => SignupForm::className(),
                 'run_method' => 'signup',
             ],
-            'request-reset-password' => [
+            'reset-password-request' => [
                 'class' => Actions\rest\FormAction::className(),
-                'model_class' => RequestResetPasswordForm::className(),
+                'model_class' => ResetPasswordRequestForm::className(),
                 'run_method' => 'sendEmail',
             ],
         ];

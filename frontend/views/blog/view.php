@@ -1,6 +1,6 @@
 <?php
 
-(new \backend\modules\Seo\services\SeoMetaService($model))->register();
+$model->registerSeoMeta();
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blogs'), 'url' => ['blog/index']];

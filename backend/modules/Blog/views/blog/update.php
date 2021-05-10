@@ -33,7 +33,7 @@ echo UpdateWidget::widget([
                         'data-toggle' => 'datetimepicker',
                     ],
                 ],
-                'image' => 'elfinder',
+                'image' => 'file_manager',
                 [
                     'name' => 'tags_tmp',
                     'type' => 'select2_ajax',
@@ -59,7 +59,7 @@ echo UpdateWidget::widget([
                     ]
                 ],
                 'short_description' => 'text_area',
-                'full_description' => 'imperavi',
+                'full_description' => 'text_editor',
             ],
         ],
         

@@ -9,7 +9,6 @@ use yii\helpers\ArrayHelper;
 
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
     public $baseUrl = '@web';
     
     public $css = [

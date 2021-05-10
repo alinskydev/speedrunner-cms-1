@@ -35,9 +35,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],
             'label',
             [
-                'attribute' => 'type',
+                'attribute' => 'input_type',
                 'filter' => Yii::$app->params['input_types'],
-                'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->type),
+                'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->input_type),
             ],
             [
                 'class' => 'backend\widgets\grid\ActionColumn',

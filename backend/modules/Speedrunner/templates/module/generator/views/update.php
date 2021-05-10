@@ -35,8 +35,8 @@ echo UpdateWidget::widget([
             case 'text_input':
             case 'text_area':
             case 'checkbox':
-            case 'elfinder':
-            case 'imperavi':
+            case 'file_manager':
+            case 'text_editor':
                 echo "                '$key' => '{$a['type']}',\n";
                 break;
             

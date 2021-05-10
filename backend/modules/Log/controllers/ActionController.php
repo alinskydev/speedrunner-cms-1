@@ -46,7 +46,7 @@ class ActionController extends CrudController
         return ArrayHelper::merge($actions, [
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
-                'render_params' => fn () => [
+                'render_params' => fn() => [
                     'log_action_models_list' => (new LogActionModelsList())::$data,
                 ],
             ],

@@ -29,13 +29,13 @@ class ProductController extends CrudController
         return ArrayHelper::merge($actions, [
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
-                'render_params' => fn () => [
+                'render_params' => fn() => [
                     'categories' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                 ],
             ],
             'create' => [
                 'class' => Actions\crud\CreateAction::className(),
-                'render_params' => fn () => [
+                'render_params' => fn() => [
                     'categories' => [
                         'list' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                         'tree' => ProductCategory::findOne(1)->tree(),
@@ -44,7 +44,7 @@ class ProductController extends CrudController
             ],
             'update' => [
                 'class' => Actions\crud\UpdateAction::className(),
-                'render_params' => fn () => [
+                'render_params' => fn() => [
                     'categories' => [
                         'list' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                         'tree' => ProductCategory::findOne(1)->tree(),

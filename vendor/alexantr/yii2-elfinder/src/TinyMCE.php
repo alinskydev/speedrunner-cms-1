@@ -22,7 +22,7 @@ class TinyMCE
     public static function getFilePickerCallback($url, $popupSettings = [], $view = null)
     {
         $default = [
-            'title' => 'elFinder',
+            'title' => Yii::t('app', 'File manager'),
             'width' => 900,
             'height' => 500,
         ];

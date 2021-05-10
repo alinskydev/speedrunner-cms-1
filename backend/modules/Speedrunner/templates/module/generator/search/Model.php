@@ -23,10 +23,6 @@ namespace backend\modules\<?= $model->module_name ?>\search;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
-<?php if ($model->attrs_translation) { ?>
-use yii\db\Expression;
-<?php } ?>
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->model_name ?>;
 
@@ -54,40 +50,8 @@ class <?= $model->model_name ?>Search extends <?= $model->model_name . "\n" ?>
     {
         $query = <?= $model->model_name ?>::find();
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 30,
-                'pageSizeLimit' => [1, 30],
-            ],
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC]
-            ],
-        ]);
-        
-        if (!$this->validate()) {
-            $query->andWhere('false');
-            return $dataProvider;
-        }
-        
         <?= implode("\n        ", $searchConditions) ?>
         
-<?php if ($model->attrs_translation) { ?>
-        //        Translations
-        
-        $lang = Yii::$app->language;
-        
-        foreach ($this->behaviors['translation']->attributes as $t_a) {
-            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
-            $query->addSelect(['*', new Expression("$t_a->>'$.$lang' as json_$t_a")]);
-            
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ["json_$t_a" => SORT_ASC],
-                'desc' => ["json_$t_a" => SORT_DESC],
-            ];
-        }
-        
-<?php } ?>
-		return $dataProvider;
+        return Yii::$app->services->data->search($this, $query, $attribute_groups);
     }
 }

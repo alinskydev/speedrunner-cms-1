@@ -29,14 +29,14 @@ class PageController extends CrudController
             'create' => [
                 'class' => Actions\crud\CreateAction::className(),
                 'render_view' => 'assign',
-                'render_params' => [
+                'render_params' => fn() => [
                     'types' => $block_types,
                 ],
             ],
             'assign' => [
                 'class' => Actions\crud\UpdateAction::className(),
                 'render_view' => 'assign',
-                'render_params' => [
+                'render_params' => fn() =>[
                     'types' => $block_types,
                 ],
             ],
@@ -60,9 +60,9 @@ class PageController extends CrudController
             $blocks = ArrayHelper::index($model->blocks, 'id');
             
             foreach ($post_data as $key => $p_d) {
-                if ($relation_mdl = ArrayHelper::getValue($blocks, $key)) {
-                    $relation_mdl->value = ArrayHelper::getValue($p_d, 'value');
-                    $relation_mdl->save();
+                if ($relation_model = ArrayHelper::getValue($blocks, $key)) {
+                    $relation_model->value = ArrayHelper::getValue($p_d, 'value');
+                    $relation_model->save();
                 }
             }
             

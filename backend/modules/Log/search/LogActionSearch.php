@@ -4,7 +4,6 @@ namespace backend\modules\Log\search;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
 
 use backend\modules\Log\models\LogAction;
 
@@ -30,34 +29,11 @@ class LogActionSearch extends LogAction
             ->with(['user'])
             ->groupBy('log_action.id');
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 30,
-                'pageSizeLimit' => [1, 30],
-            ],
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC]
-            ],
-        ]);
+        $attribute_groups = [
+            'match' => ['log_action.id', 'log_action.user_id', 'log_action.model_class', 'log_action.model_id'],
+            'like' => ['log_action.type', 'attrs_old' => 'log_action_attr.name', 'attrs_new' => 'log_action_attr.name'],
+        ];
         
-        if (!$this->validate()) {
-            $query->andWhere('false');
-            return $dataProvider;
-        }
-        
-        $query->andFilterWhere([
-            'log_action.id' => $this->id,
-            'log_action.user_id' => $this->user_id,
-            'log_action.model_class' => $this->model_class,
-            'log_action.model_id' => $this->model_id,
-        ]);
-        
-        $query->andFilterWhere(['like', 'log_action.type', $this->type])
-            ->andFilterWhere(['like', 'log_action.created_at', $this->created_at])
-            ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_old])
-            ->andFilterWhere(['like', 'log_action_attr.name', $this->attrs_new]);
-        
-		return $dataProvider;
+        return Yii::$app->services->data->search($this, $query, $attribute_groups);
     }
 }

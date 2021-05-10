@@ -120,6 +120,61 @@
             "install-path": "../alexantr/yii2-elfinder"
         },
         {
+            "name": "alexantr/yii2-tinymce",
+            "version": "0.1.1",
+            "version_normalized": "0.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexantr/yii2-tinymce.git",
+                "reference": "2e7fc590a6df4970c42fdb0e232f2c9f8eddc400"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexantr/yii2-tinymce/zipball/2e7fc590a6df4970c42fdb0e232f2c9f8eddc400",
+                "reference": "2e7fc590a6df4970c42fdb0e232f2c9f8eddc400",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.6"
+            },
+            "time": "2018-08-08T06:07:21+00:00",
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "alexantr\\tinymce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Yashkin",
+                    "email": "alex@yashkin.by"
+                }
+            ],
+            "description": "TinyMCE widget for Yii 2",
+            "keywords": [
+                "editor",
+                "tinymce",
+                "widget",
+                "wysiwyg",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/alexantr/yii2-tinymce/issues",
+                "source": "https://github.com/alexantr/yii2-tinymce"
+            },
+            "install-path": "../alexantr/yii2-tinymce"
+        },
+        {
             "name": "behat/gherkin",
             "version": "v4.6.2",
             "version_normalized": "4.6.2.0",

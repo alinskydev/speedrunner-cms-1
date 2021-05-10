@@ -5,15 +5,12 @@ namespace backend\modules\Order\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\behaviors\AttributeBehavior;
 
 use backend\modules\User\models\User;
 
 
 class Order extends ActiveRecord
 {
-    const SCENARIO_CHANGE_STATUS = 'change_status';
-    
     public $products_tmp;
     
     public $checkout_price;
@@ -25,17 +22,16 @@ class Order extends ActiveRecord
     
     public function scenarios()
     {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CHANGE_STATUS] = ['status'];
-        
-        return $scenarios;
+        return ArrayHelper::merge(parent::scenarios(), [
+            'change_status' => ['status'],
+        ]);
     }
     
     public function behaviors()
     {
         return [
             'attributes' => [
-                'class' => AttributeBehavior::className(),
+                'class' => \yii\behaviors\AttributeBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'key',
                 ],
@@ -129,7 +125,7 @@ class Order extends ActiveRecord
         
         //        Setting old products
         
-        if (!$insert && $this->scenario == self::SCENARIO_DEFAULT && $this->status != 'new') {
+        if (!$insert && $this->scenario == 'default' && $this->status != 'new') {
             $this->products_tmp = ArrayHelper::index($this->products, 'id');
         }
         

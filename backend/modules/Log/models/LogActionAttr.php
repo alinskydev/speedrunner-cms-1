@@ -5,7 +5,7 @@ namespace backend\modules\Log\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\db\JsonExpression;
+use speedrunner\validators\EitherValidator;
 
 
 class LogActionAttr extends ActiveRecord
@@ -19,8 +19,8 @@ class LogActionAttr extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['value_old'], 'required', 'when' => fn ($model) => empty($model->value_new)],
-            [['value_new'], 'required', 'when' => fn ($model) => empty($model->value_old)],
+            [['value_old'], EitherValidator::className(), 'either_attributes' => ['value_new']],
+            [['value_new'], EitherValidator::className(), 'either_attributes' => ['value_old']],
             [['name'], 'string', 'max' => 100],
             
             [['name'], 'in', 'not' => true, 'range' => [

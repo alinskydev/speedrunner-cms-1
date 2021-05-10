@@ -11,8 +11,6 @@ use speedrunner\validators\UnchangeableValidator;
 
 class User extends ActiveRecord implements IdentityInterface
 {
-    const SCENARIO_UPDATE_PROFILE = 'update_profile';
-    
     const PASSWORD_RESET_TOKEN_EXPIRE = 3600;
     
     public $new_password;
@@ -44,13 +42,12 @@ class User extends ActiveRecord implements IdentityInterface
     
     public function scenarios()
     {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_UPDATE_PROFILE] = [
-            'new_password', 'full_name', 'phone', 'address',
-            'design_theme', 'design_font', 'design_border_radius',
-        ];
-        
-        return $scenarios;
+        return ArrayHelper::merge(parent::scenarios(), [
+            'update_profile' => [
+                'full_name', 'phone', 'address', 'new_password',
+                'design_theme', 'design_font', 'design_border_radius',
+            ],
+        ]);
     }
     
     public function behaviors()
@@ -113,7 +110,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
             [['role'], 'in', 'range' => array_keys($this->enums->roles())],
-            [['image'], 'file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024],
+            [['image'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             
             [['design_theme'], 'in', 'range' => array_keys($this->enums->designThemes())],

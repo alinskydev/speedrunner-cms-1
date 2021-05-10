@@ -19,19 +19,19 @@ class Block extends ActiveRecord
     {
         return [
             [['value'], 'string', 'when' => function ($model) {
-                return in_array($model->type->type, ['text_input', 'text_area', 'imperavi', 'elfinder']);
+                return in_array($model->type->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']);
             }],
             [['value'], 'boolean', 'when' => function ($model) {
-                return in_array($model->type->type, ['checkbox']);
+                return in_array($model->type->input_type, ['checkbox']);
             }],
-            [['value'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
-                return in_array($model->type->type, ['files']);
+            [['value'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
+                return in_array($model->type->input_type, ['files']);
             }],
             [['value'], 'valueValidation', 'when' => function ($model) {
-                return in_array($model->type->type, ['groups']);
+                return in_array($model->type->input_type, ['groups']);
             }],
             [['value'], 'default', 'value' => function ($model) {
-                return in_array($model->type->type, ['files', 'groups']) ? [] : '';
+                return in_array($model->type->input_type, ['files', 'groups']) ? [] : '';
             }],
         ];
     }
@@ -71,7 +71,7 @@ class Block extends ActiveRecord
     {
         $this->value = $this->type->has_translation ? ArrayHelper::getValue($this->value, Yii::$app->language) : $this->value;
         
-        if (!$this->value && in_array($this->type->type, ['files', 'groups'])) {
+        if (!$this->value && in_array($this->type->input_type, ['files', 'groups'])) {
             $this->value = [];
         }
         
@@ -80,11 +80,11 @@ class Block extends ActiveRecord
     
     public function beforeValidate()
     {
-        if (!$this->isNewRecord && $this->type->type == 'files' && $files = UploadedFile::getInstances($this, $this->id)) {
+        if (!$this->isNewRecord && $this->type->input_type == 'files' && $files = UploadedFile::getInstances($this, $this->id)) {
             $this->value = $files;
         }
         
-        if ($this->type->type == 'groups' && !is_array($this->value)) {
+        if ($this->type->input_type == 'groups' && !is_array($this->value)) {
             $this->value = [];
         }
         
@@ -97,7 +97,7 @@ class Block extends ActiveRecord
         
         $lang = Yii::$app->language;
         
-        if ($this->type->type == 'groups') {
+        if ($this->type->input_type == 'groups') {
             if ($this->type->has_translation) {
                 $json = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 $json[$lang] = array_values($this->value) ?: [];
@@ -116,11 +116,11 @@ class Block extends ActiveRecord
         //        Images
         
         if ($insert) {
-            if (in_array($this->type->type, ['files', 'groups'])) {
+            if (in_array($this->type->input_type, ['files', 'groups'])) {
                 $this->value = [];
             }
         } else {
-            if ($this->type->type == 'files') {
+            if ($this->type->input_type == 'files') {
                 $old_files = ArrayHelper::getValue($this->oldAttributes, 'value', []);
                 
                 if ($files = UploadedFile::getInstances($this, $this->id)) {
@@ -146,7 +146,7 @@ class Block extends ActiveRecord
     
     public function afterDelete()
     {
-        if ($this->type->type == 'files') {
+        if ($this->type->input_type == 'files') {
             foreach ($this->value as $v) {
                 Yii::$app->services->file->delete($v);
             }

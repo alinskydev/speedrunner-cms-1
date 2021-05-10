@@ -9,8 +9,8 @@ $this->title = 'Block generator';
 $this->params['breadcrumbs'][] = ['label' => 'Speedrunner', 'url' => ['/speedrunner/speedrunner']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
-$attr_types = Yii::$app->params['input_types'];
-unset($attr_types['select'], $attr_types['select2_ajax']);
+$attr_input_types = Yii::$app->params['input_types'];
+unset($attr_input_types['select'], $attr_input_types['select2_ajax']);
 
 ?>
 
@@ -47,8 +47,8 @@ unset($attr_types['select'], $attr_types['select2_ajax']);
                             <th style="width: 15%;">Name</th>
                             <th style="width: 15%;">Label</th>
                             <th style="width: 4%;">I18N</th>
-                            <th style="width: 15%;">Type</th>
-                            <th style="width: 30%;">Attrs (for "groups" type)</th>
+                            <th style="width: 15%;">Input type</th>
+                            <th style="width: 30%;">Attrs (for "groups" input type)</th>
                             <th style="width: 15%;">Image</th>
                             <th style="width: 3%;"></th>
                         </tr>
@@ -86,9 +86,9 @@ unset($attr_types['select'], $attr_types['select2_ajax']);
                             
                             <td>
                                 <?= Html::dropdownList(
-                                    'GeneratorForm[blocks][__key__][type]',
+                                    'GeneratorForm[blocks][__key__][input_type]',
                                     null,
-                                    $attr_types,
+                                    $attr_input_types,
                                     ['class' => 'form-control']
                                 ); ?>
                             </td>
@@ -115,7 +115,7 @@ unset($attr_types['select'], $attr_types['select2_ajax']);
                                             'style' => 'border: 0; width: 1px; position: absolute; z-index: -1; left: 50%;'
                                         ]
                                     ]),
-                                    ['data-toggle' => 'elfinder']
+                                    ['data-toggle' => 'file_manager']
                                 ); ?>
                             </td>
                             

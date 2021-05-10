@@ -16,6 +16,11 @@ class ProductService extends ActiveService
         return round($this->model->price * (1 - $this->model->discount / 100));
     }
     
+    public function related()
+    {
+        return $this->model->find()->andWhere(['id' => $this->model->related_ids])->asObject()->all();
+    }
+    
     public function assignVariationAttributes(ProductVariation $variation, $with_images = true)
     {
         $this->model->price = $variation->price;

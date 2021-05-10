@@ -116,21 +116,21 @@ $(function() {
         }
     });
     
-    //      ElFinder
+    //      File manager
     
-    let elfinderId, elfinderParams,
-        elfinderUrl = $('meta[name="elfinder-connection-url"]').attr('content');
+    let fileManagerId, fileManagerParams,
+        fileManagerUrl = $('meta[name="file-manager-connection-url"]').attr('content');
     
-    $(document).on('click', '[data-toggle="elfinder"] .yii2-elfinder-select-button', function() {
+    $(document).on('click', '[data-toggle="file_manager"] .yii2-elfinder-select-button', function() {
         if ($(this).hasClass('elfinder-initialized')) {
             return false;
         }
         
-        elfinderId = $(this).closest('.elfinder-container').find('.yii2-elfinder-input').attr('id');
-        elfinderParams = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=900,height=600';
+        fileManagerId = $(this).closest('.elfinder-container').find('.yii2-elfinder-input').attr('id');
+        fileManagerParams = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=900,height=600';
         
-        alexantr.elFinder.registerSelectButton($(this).attr('id'), elfinderUrl + '?id=' + elfinderId);
-        window.open(elfinderUrl + '?id=' + elfinderId, 'elfinder-select-file', elfinderParams).focus();
+        alexantr.elFinder.registerSelectButton($(this).attr('id'), fileManagerUrl + '?id=' + fileManagerId);
+        window.open(fileManagerUrl + '?id=' + fileManagerId, 'elfinder-select-file', fileManagerParams).focus();
     });
     
     $(document).on('click', '.btn-elfinder-remove', function() {
@@ -138,32 +138,44 @@ $(function() {
         $(this).closest('.elfinder-container').find('input').removeAttr('value');
     });
     
-    //      Imperavi
+    //      Text editor
     
-    let ImperaviImagesGetUrl = $('meta[name="imperavi-images-get-connection-url"]').attr('content'),
-        ImperaviImageUploadUrl = $('meta[name="imperavi-image-upload-connection-url"]').attr('content'),
-        ImperaviImageDeleteUrl = $('meta[name="imperavi-image-delete-connection-url"]').attr('content');
+    let textEditorBaseUrl = $('meta[name="text-editor-base-url"]').attr('content'),
+        textEditorFilePickerUrl = $('meta[name="text-editor-file-picker-connection-url"]').attr('content'),
+        textEditorImageUploadUrl = $('meta[name="text-editor-image-upload-connection-url"]').attr('content');
     
-    $(document).on('click', '[data-toggle="imperavi"]', function() {
-        if ($(this).closest('.redactor-box').length === 0) {
-            $(this).redactor({
-                minHeight: 250,
-                paragraphize: true,
-                replaceDivs: false,
-                imageManagerJson: ImperaviImagesGetUrl,
-                imageUpload: ImperaviImageUploadUrl,
-                imageDelete: ImperaviImageDeleteUrl,
-                plugins: [
-                    'fontcolor', 'fontsize', 'table', 'clips', 'fullscreen', 'imagemanager'
-                ],
-                lang: $('html').attr('lang'),
-                uploadImageFields: {
-                    "_csrf-backend": csrf
-                },
-                imageUploadErrorCallback: function (response) {
-                    alert('An error occurred during the upload process!');
-                }
-            });
+    alexantr.tinyMceWidget.setBaseUrl(textEditorBaseUrl);
+    
+    let textEditorParams = {
+        height: '300px',
+        language: $('html').attr('lang'),
+        relative_urls: false,
+        force_p_newlines : true,
+        forced_root_block : false,
+        fontsize_formats: '8px 10px 12px 14px 16px 18px 24px 36px 48px',
+        file_picker_callback: alexantr.elFinder.filePickerCallback({
+            title: 'File manager',
+            width: 900,
+            height: 500,
+            file: textEditorFilePickerUrl
+        }),
+        images_upload_url: textEditorImageUploadUrl,
+        plugins: [
+            'advlist autolink lists link charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'table contextmenu paste textcolor colorpicker advcode',
+            'media image'
+        ],
+        menu: [],
+        toolbar: [
+            'undo redo | cut copy paste | fontselect | fontsizeselect | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor',
+            'outdent indent | alignleft aligncenter alignright alignjustify | bullist numlist table | link anchor image media | charmap | searchreplace visualblocks preview code fullscreen'
+        ]
+    };
+    
+    $(document).on('click', '[data-toggle="text_editor"]', function() {
+        if ($(this).prev('.mce-tinymce').length === 0) {
+            alexantr.tinyMceWidget.register($(this).attr('id'), textEditorParams);
         }
     });
     
@@ -173,7 +185,10 @@ $(function() {
         if (!$(this).hasClass('ui-sortable')) {
             $(this).sortable({
                 handle: '.table-sorter',
-                placeholder: 'sortable-placeholder'
+                placeholder: 'sortable-placeholder',
+                start: function(event, ui) {
+                    ui.placeholder.height(ui.helper.outerHeight());
+                }
             });
         }
     });
@@ -231,22 +246,6 @@ $(function() {
         }
     }
     
-    //      Save & reload
-    
-    let url, urlParams;
-    
-    $(document).on('click', '[data-toggle="save-and-update"]', function() {
-        el = $(this).closest('form');
-        url = new URL(location.origin + el.attr('action'));
-        urlParams = new URLSearchParams(url.search);
-        
-        if (!urlParams.has('save-and-update')) {
-            urlParams.append('save-and-update', 1);
-        }
-        
-        el.attr('action', url.pathname + '?' + urlParams.toString()).submit();
-    });
-    
     //      GridView common button
     
     let selection = $('.grid-view [name="selection[]"]');
@@ -276,7 +275,7 @@ $(function() {
         rand = Date.now();
         
         relHtml = relHtmlTmp[el.data('table')].replace(/\__key__/g, rand);
-        el.closest('table').find('tbody').append(relHtml).find('[data-toggle="imperavi"]').click();
+        el.closest('table').find('tbody').append(relHtml).find('[data-toggle="text_editor"]').click();
     });
     
     $(document).on('click', '.table-relations .btn-remove', function() {

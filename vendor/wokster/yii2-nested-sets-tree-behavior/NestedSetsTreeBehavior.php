@@ -2,7 +2,10 @@
 
 namespace wokster\treebehavior;
 
+use Yii;
 use yii\base\Behavior;
+use yii\helpers\ArrayHelper;
+use yii\helpers\StringHelper;
 use yii\db\Expression;
 
 
@@ -54,11 +57,17 @@ class NestedSetsTreeBehavior extends Behavior
     public function tree()
     {
         $makeNode = function ($node) {
-            $newData = [];
+            $newData = [
+                'expanded' => (bool)ArrayHelper::getValue(
+                    Yii::$app->session->get('expanded'),
+                    StringHelper::baseName($this->owner::className()) . ".{$node['id']}"
+                ),
+            ];
             
             if (is_callable($makeLink = $this->makeLinkCallable)) {
                 $newData[$this->hrefOutAttribute] = $makeLink($node);
             }
+            
             return array_merge($node, $newData);
         };
 
@@ -66,16 +75,12 @@ class NestedSetsTreeBehavior extends Behavior
         $trees = array();
         $lang = \Yii::$app->language;
         
-        $collection = $this->owner->children()
-            ->select([
-                '*',
-                new Expression("IF(expanded, 1, null) as expanded"),
-            ]);
+        $collection = $this->owner->children()->select(['*']);
         
         if ($this->isAttributeTranslatable) {
-            $collection->addSelect(new Expression("$this->labelAttribute->>'$.$lang' as title"));
+            $collection->addSelect([new Expression("$this->labelAttribute->>'$.$lang' as $this->labelOutAttribute")]);
         } else {
-            $collection->addSelect("$this->labelAttribute as title");
+            $collection->addSelect("$this->labelAttribute as $this->labelOutAttribute");
         }
         
         foreach ($this->jsonAttributes as $a) {

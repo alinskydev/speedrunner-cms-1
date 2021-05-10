@@ -7,7 +7,7 @@ foreach ($specifications as $key => $s) {
     echo Html::tag('h5', $s->name);
     
     echo Html::checkboxList(
-        'Product[options_tmp][' . $s->id . '][]',
+        "Product[options_tmp][$s->id][]",
         $options,
         ArrayHelper::map($s->options, 'id', 'name'),
         [

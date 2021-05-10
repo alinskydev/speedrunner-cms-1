@@ -17,7 +17,7 @@ class DeleteAction extends Action
             throw new \yii\web\HttpException(422, 'Primary key not set');
         }
         
-        $id = Yii::$app->request->post('selection') ?? Yii::$app->request->get('id');
+        $id = Yii::$app->request->post('selection') ?? Yii::$app->request->get($primary_key);
         $models = $this->controller->model->find()->andWhere([$primary_key => $id])->all();
         
         $transaction = Yii::$app->db->beginTransaction();

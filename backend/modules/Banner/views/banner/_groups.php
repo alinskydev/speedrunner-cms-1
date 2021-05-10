@@ -6,7 +6,6 @@ use alexantr\elfinder\InputFile;
 
 use backend\modules\Banner\models\BannerGroup;
 
-
 $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
 
 ?>
@@ -65,13 +64,13 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 
                 <td>
                     <?= $form->field($value, 'image', [
-                        'template' => '{input}',
+                        'enableClientValidation' => false,
                         'options' => [
-                            'data-toggle' => 'elfinder',
+                            'data-toggle' => 'file_manager',
                         ],
                     ])->widget(InputFile::className(), [
                         'options' => [
-                            'id' => "elfinder-$value_id-1",
+                            'id' => "banner-group-image-$value_id",
                             'name' => "Banner[groups_tmp][$value_id][image]",
                         ]
                     ]) ?>

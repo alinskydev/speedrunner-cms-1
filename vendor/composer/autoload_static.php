@@ -72,6 +72,7 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         ),
         'a' => 
         array (
+            'alexantr\\tinymce\\' => 17,
             'alexantr\\elfinder\\' => 18,
         ),
         'W' => 
@@ -231,6 +232,10 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
+        ),
+        'alexantr\\tinymce\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alexantr/yii2-tinymce/src',
         ),
         'alexantr\\elfinder\\' => 
         array (

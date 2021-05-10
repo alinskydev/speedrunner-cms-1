@@ -21,7 +21,7 @@ class SeoMetaService
     
     public function getMetaValue()
     {
-        $seo_meta_mdl = SeoMeta::find()
+        $model = SeoMeta::find()
             ->andWhere([
                 'model_class' => StringHelper::basename($this->model->className()),
                 'model_id' => $this->model->id,
@@ -29,6 +29,6 @@ class SeoMetaService
             ])
             ->one();
         
-        return ArrayHelper::getValue($seo_meta_mdl, 'value', []);
+        return ArrayHelper::getValue($model, 'value', []);
     }
 }

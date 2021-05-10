@@ -7,14 +7,18 @@ return [
         'checkbox' => 'Checkbox',
         'select' => 'Select',
         'select2_ajax' => 'Select 2 (AJAX)',
-        'elfinder' => 'File manager',
-        'imperavi' => 'Text editor',
+        'file_manager' => 'File manager',
+        'text_editor' => 'Text editor',
         'files' => 'Files',
         'groups' => 'Groups',
     ],
     
-    'formats' => [
+    'extensions' => [
+        'application' => ['doc', 'docx', 'rtf', 'xls', 'xlsx', 'pdf'], 
+        'audio' => ['mp3', 'ogg'],
         'image' => ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+        'text' => ['txt', 'csv'],
+        'video' => ['mp4', 'flv'],
     ],
     
     'date_formats' => [

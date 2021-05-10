@@ -30,7 +30,8 @@
         "codeception/codeception": "^4.1",
         "guzzlehttp/guzzle": "^7.2",
         "alexantr/yii2-elfinder": "^1.7",
-        "yiisoft/yii2-imagine": "^2.3"
+        "yiisoft/yii2-imagine": "^2.3",
+        "alexantr/yii2-tinymce": "^0.1.1"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.0.0",

@@ -76,7 +76,7 @@ class Widget extends BaseWidget
      */
     public $settings = [
         'plugins' => [
-            'fontcolor', 'fontsize', 'table', 'clips', 'fullscreen',
+            'fontcolor', 'fontsize', 'table', 'fullscreen',
         ],
     ];
 

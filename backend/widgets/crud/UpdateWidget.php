@@ -31,5 +31,3 @@ class UpdateWidget extends Widget
         ]);
     }
 }
-
-?>

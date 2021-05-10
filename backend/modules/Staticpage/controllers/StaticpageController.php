@@ -24,9 +24,9 @@ class StaticpageController extends Controller
             $blocks = ArrayHelper::index($model->blocks, 'id');
             
             foreach ($post_data as $key => $p_d) {
-                if ($relation_mdl = ArrayHelper::getValue($blocks, $key)) {
-                    $relation_mdl->value = ArrayHelper::getValue($p_d, 'value');
-                    $relation_mdl->save();
+                if ($relation_model = ArrayHelper::getValue($blocks, $key)) {
+                    $relation_model->value = ArrayHelper::getValue($p_d, 'value');
+                    $relation_model->save();
                     
                     Yii::$app->session->setFlash('success', [Yii::t('app', 'Record has been saved')]);
                 }

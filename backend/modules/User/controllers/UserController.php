@@ -22,6 +22,9 @@ class UserController extends CrudController
     {
         $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
         
+        $profile_update_model = clone(Yii::$app->user->identity);
+        $profile_update_model->scenario = 'update_profile';
+        
         return ArrayHelper::merge($actions, [
             'file-delete' => [
                 'class' => Actions\crud\FileDeleteAction::className(),
@@ -29,7 +32,7 @@ class UserController extends CrudController
             ],
             'profile-update' => [
                 'class' => Actions\web\FormAction::className(),
-                'model' => Yii::$app->user->identity,
+                'model' => $profile_update_model,
                 'render_view' => 'profile_update',
                 'run_method' => 'save',
                 'success_message' => 'Profile has been updated',

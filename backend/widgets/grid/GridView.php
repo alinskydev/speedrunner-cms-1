@@ -259,16 +259,9 @@ class GridView extends BaseListView
      * - `{sorter}`: the sorter. See [[renderSorter()]].
      * - `{pager}`: the pager. See [[renderPager()]].
      */
-    public $layout = '{items}{pager}{summary}';
+    public $layout = '{summary}{items}{pager}';
     
-    public $buttons = [
-        'delete' => [
-            'label' => 'Delete all',
-            'icon_class' => 'fas fa-trash',
-            'action' => ['delete'],
-            'css_class' => 'danger',
-        ],
-    ];
+    public $buttons;
 
 
     /**
@@ -289,6 +282,16 @@ class GridView extends BaseListView
         if (!isset($this->filterRowOptions['id'])) {
             $this->filterRowOptions['id'] = $this->options['id'] . '-filters';
         }
+        
+        $this->buttons = $this->buttons ?? [
+            Html::tag('h6', Yii::t('app', 'Actions'), ['class' => 'bg-light p-2']),
+            'delete' => [
+                'label' => 'Delete all',
+                'icon_class' => 'fas fa-trash',
+                'action' => ['delete'],
+                'css_class' => 'danger',
+            ],
+        ];
 
         $this->initColumns();
     }
@@ -340,7 +343,7 @@ class GridView extends BaseListView
     {
         $filterUrl = isset($this->filterUrl) ? $this->filterUrl : Yii::$app->request->url;
         $id = $this->filterRowOptions['id'];
-        $filterSelector = "#$id input, #$id select";
+        $filterSelector = "#$id input, #$id select, .grid-view-per-page";
         if (isset($this->filterSelector)) {
             $filterSelector .= ', ' . $this->filterSelector;
         }
@@ -383,35 +386,48 @@ class GridView extends BaseListView
         ]);
 
         $table = Html::tag('table', implode("\n", $content), $this->tableOptions);
+        
+        $result = Html::beginForm();
+        
+        $per_page_block = Html::dropDownList('per-page', Yii::$app->request->get('per-page'), [
+            30 => Yii::t('app', 'Show {quantity} records', ['quantity' => 30]),
+            50 => Yii::t('app', 'Show {quantity} records', ['quantity' => 50]),
+            100 => Yii::t('app', 'Show {quantity} records', ['quantity' => 100]),
+        ], [
+            'class' => 'form-control w-auto grid-view-per-page bg-primary text-white',
+        ]);
+        
+        $result .= Html::tag('div', $per_page_block, ['class' => 'float-right mb-3']);
+        $result .= $table;
 
         if ($this->buttons) {
             $buttons = [];
             
-            foreach ($this->buttons as $key => $b) {
-                $icon_class = ArrayHelper::getValue($b, 'icon_class');
-                $label = Yii::t('app', ArrayHelper::getValue($b, 'label'));
+            foreach ($this->buttons as $key => $button) {
+                $icon_class = ArrayHelper::getValue($button, 'icon_class');
+                $label = Yii::t('app', ArrayHelper::getValue($button, 'label'));
                 
-                $buttons[] = Html::submitButton(
-                    ($icon_class ? Html::tag('i', null, ['class' => $icon_class]) : null) . $label,
-                    [
-                        'formaction' => Url::to($b['action']),
-                        'onclick' => 'return confirm("' . Yii::t('app', 'Are you sure?') . '")',
-                        'class' => 'btn btn-' . ArrayHelper::getValue($b, 'css_class') . ($icon_class ? ' btn-icon' : null),
-                    ]
-                );
+                if (is_array($button)) {
+                    $buttons[] = Html::submitButton(
+                        ($icon_class ? Html::tag('i', null, ['class' => $icon_class]) : null) . $label,
+                        [
+                            'formaction' => Url::to($button['action']),
+                            'onclick' => 'return confirm("' . Yii::t('app', 'Are you sure?') . '")',
+                            'class' => 'btn m-1 btn-' . ArrayHelper::getValue($button, 'css_class') . ($icon_class ? ' btn-icon' : null),
+                        ]
+                    );
+                } else {
+                    $buttons[] = $button;
+                }
             }
             
-            $result = Html::beginForm();
-            $result .= $table;
-            $result .= Html::tag('div', implode(Html::tag('span', null, ['class' => 'mx-1']), $buttons), [
+            $result .= Html::tag('div', implode(null, $buttons), [
                 'class' => 'common-buttons main-shadow p-2 d-none'
             ]);
-            
-            $result .= Html::endForm();
-            return $result;
-        } else {
-            return $table;
         }
+        
+        $result .= Html::endForm();
+        return $result;
     }
 
     /**

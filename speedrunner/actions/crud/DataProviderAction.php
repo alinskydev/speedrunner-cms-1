@@ -22,8 +22,10 @@ class DataProviderAction extends Action
         $model->load($params);
         $model->beforeSearch();
         
+        $dataProvider = $model->search();
+        
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
-        $render_params = $this->render_params ?? fn () => [];
+        $render_params = $this->render_params ?? fn() => [];
         
         $model->afterSearch();
         
@@ -32,7 +34,7 @@ class DataProviderAction extends Action
             $this->render_view,
             ArrayHelper::merge([
                 'searchModel' => $model,
-                'dataProvider' => $model->search(),
+                'dataProvider' => $dataProvider,
             ], $render_params())
         );
     }

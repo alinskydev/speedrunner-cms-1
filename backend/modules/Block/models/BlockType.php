@@ -27,7 +27,7 @@ class BlockType extends ActiveRecord
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
             'label' => Yii::t('app', 'Label'),
-            'type' => Yii::t('app', 'Type'),
+            'input_type' => Yii::t('app', 'Input type'),
             'image' => Yii::t('app', 'Image'),
         ];
     }

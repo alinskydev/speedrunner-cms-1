@@ -38,6 +38,7 @@ class OrderProduct extends ActiveRecord
             'product_id' => Yii::t('app', 'Product'),
             'variation_id' => Yii::t('app', 'Variation'),
             'product_json' => Yii::t('app', 'Product'),
+            'image' => Yii::t('app', 'Image'),
             'price' => Yii::t('app', 'Price'),
             'quantity' => Yii::t('app', 'Quantity'),
             'total_price' => Yii::t('app', 'Total price'),

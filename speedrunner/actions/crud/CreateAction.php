@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class CreateAction extends FormAction
 {
-    public string $render_view = 'update';
+    public ?string $render_view = 'update';
     
     public string $run_method = 'save';
     
@@ -19,7 +19,7 @@ class CreateAction extends FormAction
     
     public function run()
     {
-        $this->model = $this->controller->model;
+        $this->model = $this->model ?? $this->controller->model;
         return parent::run();
     }
 }

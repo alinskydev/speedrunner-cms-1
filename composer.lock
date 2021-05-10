@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "739e6439d54dfe193b1e51dc11acf279",
+    "content-hash": "1a6e66969731976bd7df5cab7c7b9ddf",
     "packages": [
         {
             "name": "2amigos/yii2-arrayquery-component",
@@ -122,6 +122,58 @@
                 "source": "https://github.com/alexantr/yii2-elfinder"
             },
             "time": "2019-05-14T13:11:53+00:00"
+        },
+        {
+            "name": "alexantr/yii2-tinymce",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexantr/yii2-tinymce.git",
+                "reference": "2e7fc590a6df4970c42fdb0e232f2c9f8eddc400"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexantr/yii2-tinymce/zipball/2e7fc590a6df4970c42fdb0e232f2c9f8eddc400",
+                "reference": "2e7fc590a6df4970c42fdb0e232f2c9f8eddc400",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.6"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "alexantr\\tinymce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Yashkin",
+                    "email": "alex@yashkin.by"
+                }
+            ],
+            "description": "TinyMCE widget for Yii 2",
+            "keywords": [
+                "editor",
+                "tinymce",
+                "widget",
+                "wysiwyg",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/alexantr/yii2-tinymce/issues",
+                "source": "https://github.com/alexantr/yii2-tinymce"
+            },
+            "time": "2018-08-08T06:07:21+00:00"
         },
         {
             "name": "behat/gherkin",

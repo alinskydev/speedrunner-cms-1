@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use alexantr\elfinder\InputFile;
-use vova07\imperavi\Widget;
+use alexantr\tinymce\TinyMCE;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
@@ -65,12 +65,12 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                     <?= $form->field($model, 'name')->textInput() ?>
                     <?= $form->field($model, 'slug')->textInput() ?>
                     <?= $form->field($model, 'image')->widget(InputFile::className()) ?>
-                    <?= $form->field($model, 'description')->widget(Widget::className()) ?>
+                    <?= $form->field($model, 'description')->widget(TinyMCE::className()) ?>
                     
                     <?php
                         if ($model->isNewRecord) {
                             echo $form->field($model, 'parent_id')->dropDownList(
-                                ArrayHelper::map($categories_list, 'id', 'text'),
+                                ArrayHelper::map($parents, 'id', 'text'),
                                 [
                                     'class' => 'form-control',
                                     'data-toggle' => 'select2',

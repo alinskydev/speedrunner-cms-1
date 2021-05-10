@@ -28,6 +28,7 @@ return array(
     'dosamigos\\arrayquery\\' => array($vendorDir . '/2amigos/yii2-arrayquery-component/src'),
     'creocoder\\nestedsets\\' => array($vendorDir . '/creocoder/yii2-nested-sets/src'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
+    'alexantr\\tinymce\\' => array($vendorDir . '/alexantr/yii2-tinymce/src'),
     'alexantr\\elfinder\\' => array($vendorDir . '/alexantr/yii2-elfinder/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),

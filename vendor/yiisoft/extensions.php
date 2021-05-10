@@ -157,4 +157,13 @@ return array (
       '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine/src',
     ),
   ),
+  'alexantr/yii2-tinymce' => 
+  array (
+    'name' => 'alexantr/yii2-tinymce',
+    'version' => '0.1.1.0',
+    'alias' => 
+    array (
+      '@alexantr/tinymce' => $vendorDir . '/alexantr/yii2-tinymce/src',
+    ),
+  ),
 );

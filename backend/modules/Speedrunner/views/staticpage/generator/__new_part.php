@@ -1,6 +1,6 @@
 <div class="part">
     <h4 class="mb-4">
-        <?= $part_name . ' (' . $part_index . ')' ?>
+        <?= "$part_name ($part_index)" ?>
         <button type="button" class="btn btn-danger btn-icon float-right btn-part-remove">
             <i class="fas fa-trash"></i>
             Delete
@@ -13,8 +13,8 @@
                 <th style="width: 15%;">Name</th>
                 <th style="width: 15%;">Label</th>
                 <th style="width: 4%;">I18N</th>
-                <th style="width: 15%;">Type</th>
-                <th style="width: 45%;">Attrs (for "groups" type)</th>
+                <th style="width: 15%;">Input type</th>
+                <th style="width: 45%;">Attrs (for "groups" input type)</th>
                 <th style="width: 3%;"></th>
             </tr>
         </thead>

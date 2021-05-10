@@ -10,7 +10,7 @@ class Menu extends \yii\widgets\Menu
 {
     protected function normalizeItems($items, &$active)
     {
-        $items = self::addIconToLabelAndActivate($items, Yii::$app->controller->getUniqueId());
+        $items = self::addIconToLabelAndActivate($items, Yii::$app->controller->getUniqueId() . '/');
         return parent::normalizeItems($items, $active);
     }
     

@@ -3,6 +3,7 @@
 namespace speedrunner\services;
 
 use Yii;
+use yii\swiftmailer\Mailer;
 
 
 class MailService
@@ -17,11 +18,23 @@ class MailService
         
         $message = Yii::$app->controller->renderPartial($view, ['data' => $data]);
         
-        $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8\r\n";
-        $headers .= 'From: <noreply@' . Yii::$app->request->hostName . ">\r\n";
+        $mailer = new Mailer([
+            'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'localhost',
+                'username' => 'noreply@local.host',
+                'password' => 'password',
+                'port' => '587', // Port 25 is a very common port too
+            ],
+        ]);
         
-        return mail($email, $subject, $message, $headers);
+        return $mailer->compose()
+            ->setFrom(['noreply@local.host' => Yii::$app->services->settings->site_name])
+            ->setTo($email)
+            ->setSubject($subject)
+            ->setHtmlBody($message)
+            ->send();
     }
     
     public function changeDir($dir)

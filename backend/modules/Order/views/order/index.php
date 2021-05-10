@@ -94,7 +94,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'status',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->enums->statuses(), "$model->status.label"),
                 'value' => function ($model) {
                     $result = Html::a(
                         ArrayHelper::getValue($model->enums->statuses(), "$model->status.label") . Html::tag('b', null, ['class' => 'caret']),

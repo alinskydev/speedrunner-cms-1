@@ -4,14 +4,14 @@ namespace speedrunner\db;
 
 use Yii;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
-    use ActiveQueryTrait;
-    
     public $table_name;
     public $lang;
+    public $asObject;
     
     public function init()
     {
@@ -21,11 +21,31 @@ class ActiveQuery extends \yii\db\ActiveQuery
         return parent::init();
     }
     
+    public function asObject($value = true)
+    {
+        $this->asArray = $value;
+        $this->asObject = $value;
+        
+        return $this;
+    }
+    
     public function populate($rows)
     {
         $result = parent::populate($rows);
         
         if ($this->asObject) {
+            $behaviors = (new $this->modelClass)->behaviors();
+            
+            if ($attributes = ArrayHelper::getValue($behaviors, 'translation.attributes')) {
+                $result = array_map(function($value) use ($attributes) {
+                    foreach ($attributes as $a) {
+                        $value[$a] = ArrayHelper::getValue(json_decode($value[$a]), $this->lang);
+                    }
+                    
+                    return $value;
+                }, $result);
+            }
+            
             $result = Yii::$app->services->array->toObjects($result);
         }
         
@@ -37,19 +57,8 @@ class ActiveQuery extends \yii\db\ActiveQuery
         return $this->andWhere(["$this->table_name.slug" => $slug]);
     }
     
-    public function setTranslationAttributes(array $attributes)
-    {
-        foreach ($attributes as $a) {
-            $this->addSelect([new Expression("$this->table_name.$a->>'$.$this->lang' as $a")]);
-        }
-        
-        return $this;
-    }
-    
     public function itemsList($attribute, $type, $q = null, $limit = 20)
     {
-        $this->table_name = $this->modelClass::tableName();
-        
         switch ($type) {
             case 'self':
                 $this->select([

@@ -91,6 +91,7 @@ return [
     [
         'label' => Yii::t('app', 'Cache'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']),
+        'visible' => YII_ENV_DEV,
         'items' => [
             ['label' => Yii::t('app', 'Remove thumbs'), 'url' => ['/cache/remove-thumbs']],
             ['label' => Yii::t('app', 'Clear'), 'url' => ['/cache/clear']],

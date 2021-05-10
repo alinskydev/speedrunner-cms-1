@@ -8,6 +8,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
+$related = $model->service->related();
+
 echo UpdateWidget::widget([
     'model' => $model,
     'has_seo_meta' => true,
@@ -26,7 +28,7 @@ echo UpdateWidget::widget([
                     ]
                 ],
                 'short_description' => 'text_area',
-                'full_description' => 'imperavi',
+                'full_description' => 'text_editor',
             ],
         ],
         
@@ -100,16 +102,16 @@ echo UpdateWidget::widget([
             'label' => Yii::t('app', 'Related'),
             'attributes' => [
                 [
-                    'name' => 'related_tmp',
+                    'name' => 'related_ids',
                     'type' => 'select2_ajax',
-                    'data' => ArrayHelper::map($model->related, 'id', 'name'),
+                    'data' => ArrayHelper::map($related, 'id', 'name'),
                     'widget_options' => [
                         'ajax_url' => Yii::$app->urlManager->createUrl(['items-list/products', 'id' => $model->id]),
                     ],
                     'options' => [
                         'options' => [
                             'multiple' => true,
-                            'value' => ArrayHelper::getColumn($model->related, 'id'),
+                            'value' => ArrayHelper::getColumn($related, 'id'),
                         ],
                     ]
                 ],

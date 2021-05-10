@@ -99,7 +99,8 @@ class DocumentatorForm extends Model
                         $params['get'] = ArrayHelper::getColumn($params['get'], 'name');
                     }
                     
-                    $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $params['get']));
+                    $get_param_values = array_map(fn ($value) => "{{$value}}", $params['get']);
+                    $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $get_param_values));
                     $url = Yii::$app->urlManagerApi->createFileUrl($link);
                     
                     //        POST params

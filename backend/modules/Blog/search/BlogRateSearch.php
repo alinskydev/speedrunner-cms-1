@@ -4,7 +4,6 @@ namespace backend\modules\Blog\search;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
 
 use backend\modules\Blog\models\BlogRate;
 
@@ -26,31 +25,11 @@ class BlogRateSearch extends BlogRate
         $query = BlogRate::find()
             ->with(['blog', 'user']);
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 30,
-                'pageSizeLimit' => [1, 30],
-            ],
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC]
-            ],
-        ]);
+        $attribute_groups = [
+            'match' => ['id', 'blog_id', 'user_id', 'mark'],
+            'like' => ['created_at'],
+        ];
         
-        if (!$this->validate()) {
-            $query->andWhere('false');
-            return $dataProvider;
-        }
-        
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'blog_id' => $this->blog_id,
-            'user_id' => $this->user_id,
-            'mark' => $this->mark,
-        ]);
-        
-        $query->andFilterWhere(['like', 'created_at', $this->created_at]);
-        
-		return $dataProvider;
+        return Yii::$app->services->data->search($this, $query, $attribute_groups);
     }
 }

@@ -36,10 +36,10 @@ class LogActionBehavior extends Behavior
         $changedAttributes = $event->changedAttributes;
         
         foreach ($this->relations_one_one as $r_key => $r) {
-            $relation_mdl = $this->owner->{$r_key};
+            $relation_model = $this->owner->{$r_key};
             
             foreach ($r['attributes'] as $a) {
-                $changedAttributes[$a] = ArrayHelper::getValue($relation_mdl, $a);
+                $changedAttributes[$a] = ArrayHelper::getValue($relation_model, $a);
             }
         }
         
@@ -47,17 +47,17 @@ class LogActionBehavior extends Behavior
             $owner = clone($this->owner);
             $this->extraAttributes[$r_key] = ['old' => [], 'new' => []];
             
-            foreach ($owner->{$r['relation']} as $key => $relation_mdl) {
+            foreach ($owner->{$r['relation']} as $key => $relation_model) {
                 foreach ($r['attributes'] as $a) {
-                    $this->extraAttributes[$r_key]['old'][$key][$relation_mdl->getAttributeLabel($a)] = $relation_mdl->{$a};
+                    $this->extraAttributes[$r_key]['old'][$key][$relation_model->getAttributeLabel($a)] = $relation_model->{$a};
                 }
             }
             
             $owner->refresh();
             
-            foreach ($owner->{$r['relation']} as $key => $relation_mdl) {
+            foreach ($owner->{$r['relation']} as $key => $relation_model) {
                 foreach ($r['attributes'] as $a) {
-                    $this->extraAttributes[$r_key]['new'][$key][$relation_mdl->getAttributeLabel($a)] = $relation_mdl->{$a};
+                    $this->extraAttributes[$r_key]['new'][$key][$relation_model->getAttributeLabel($a)] = $relation_model->{$a};
                 }
             }
         }
@@ -78,17 +78,17 @@ class LogActionBehavior extends Behavior
         $attributes = $this->owner->oldAttributes;
         
         foreach ($this->relations_one_one as $r_key => $r) {
-            $relation_mdl = $this->owner->{$r_key};
+            $relation_model = $this->owner->{$r_key};
             
             foreach ($r['attributes'] as $a) {
-                $attributes[$a] = ArrayHelper::getValue($relation_mdl, $a);
+                $attributes[$a] = ArrayHelper::getValue($relation_model, $a);
             }
         }
         
         foreach ($this->relations_one_many as $r_key => $r) {
-            foreach ($this->owner->{$r['relation']} as $key => $relation_mdl) {
+            foreach ($this->owner->{$r['relation']} as $key => $relation_model) {
                 foreach ($r['attributes'] as $a) {
-                    $this->extraAttributes[$r_key]['old'][$key][$relation_mdl->getAttributeLabel($a)] = $relation_mdl->{$a};
+                    $this->extraAttributes[$r_key]['old'][$key][$relation_model->getAttributeLabel($a)] = $relation_model->{$a};
                 }
                 
                 $this->extraAttributes[$r_key]['new'] = [];

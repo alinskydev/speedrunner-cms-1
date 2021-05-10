@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use alexantr\elfinder\InputFile;
-use vova07\imperavi\Widget;
+use alexantr\tinymce\TinyMCE;
 
 $attrs = ArrayHelper::index($model->attrs, 'name');
 
@@ -41,7 +41,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                     $input_name = "StaticpageBlock[$model->id][value][$key][$a_key]";
                                     $input_value = ArrayHelper::getValue($group, $a_key);
                                     
-                                    switch ($a_value['type']) {
+                                    switch ($a_value['input_type']) {
                                         case 'text_input':
                                             echo Html::textInput(
                                                 $input_name,
@@ -73,7 +73,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                             echo Html::tag('div', $checkbox, ['class' => 'custom-control custom-switch float-left']);
                                             
                                             break;
-                                        case 'elfinder':
+                                        case 'file_manager':
                                             echo Html::tag(
                                                 'div',
                                                 InputFile::widget([
@@ -81,17 +81,17 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                                     'name' => $input_name,
                                                     'value' => $input_value,
                                                 ]),
-                                                ['data-toggle' => 'elfinder']
+                                                ['data-toggle' => 'file_manager']
                                             );
                                             
                                             break;
-                                        case 'imperavi':
-                                            echo Widget::widget([
+                                        case 'text_editor':
+                                            echo TinyMCE::widget([
                                                 'name' => $input_name,
                                                 'value' => $input_value,
                                                 'id' => "redactor-$model->id-$key-$a_key",
                                                 'options' => [
-                                                    'data-toggle' => 'imperavi',
+                                                    'data-toggle' => 'text_editor',
                                                 ]
                                             ]);
                                             

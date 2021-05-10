@@ -23,7 +23,11 @@ class ImageService
         $image = Yii::getAlias('@frontend/web') . $image_url;
         $extension = pathinfo($image, PATHINFO_EXTENSION);
         
-        if (is_file($image) && in_array($extension, Yii::$app->params['formats']['image'])) {
+        if (!is_file($image)) {
+            return Yii::$app->services->settings->image_placeholder;
+        }
+        
+        if (in_array($extension, Yii::$app->params['extensions']['image'])) {
             $image_name = md5(filemtime($image) . filesize($image)) . ".$extension";
             $thumb = "$dir/$image_name";
             

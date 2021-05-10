@@ -38,11 +38,16 @@ echo UpdateWidget::widget([
                     'name' => 'image',
                     'type' => 'files',
                     'multiple' => false,
+                    'options' => [
+                        'pluginOptions' => [
+                            'initialPreviewConfig' => [['key' => $model->image, 'downloadUrl' => $model->image]],
+                        ],
+                    ],
                     'widget_options' => [
                         'delete_url' => Yii::$app->urlManager->createUrl([
                             'user/user/file-delete', 'id' => $model->id, 'attr' => 'image'
                         ]),
-                    ]
+                    ],
                 ],
                 'full_name' => 'text_input',
                 'phone' => 'text_input',

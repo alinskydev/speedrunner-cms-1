@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use backend\widgets\grid\GridView;
-use yii\bootstrap\Dropdown;
 
 $this->title = Yii::t('app', 'Translations');
 $this->params['breadcrumbs'][] = ['label' => $this->title];

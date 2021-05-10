@@ -13,7 +13,7 @@ class CacheController extends Controller
     public function actionRemoveThumbs()
     {
         $dirs = [
-            '@frontend/web/assets/elfinder',
+            '@frontend/web/assets/file_manager',
             '@frontend/web/assets/thumbs',
         ];
         

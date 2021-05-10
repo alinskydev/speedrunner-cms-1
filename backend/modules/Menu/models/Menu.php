@@ -35,19 +35,12 @@ class Menu extends ActiveRecord
         ];
     }
     
-    public function transactions()
-    {
-        return [
-            static::SCENARIO_DEFAULT => static::OP_ALL,
-        ];
-    }
-    
     public function rules()
     {
         return [
             [['name'], 'required'],
-            [['name', 'url'], 'string', 'max' => 100],
             [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
+            [['name', 'url'], 'string', 'max' => 100],
             
             [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
         ];

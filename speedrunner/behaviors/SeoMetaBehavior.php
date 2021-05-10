@@ -30,9 +30,9 @@ class SeoMetaBehavior extends Behavior
             'lang' => Yii::$app->language,
         ];
         
-        $seo_mdl = SeoMeta::find()->andWhere($filter)->one() ?? new SeoMeta($filter);
-        $seo_mdl->value = Yii::$app->request->post('SeoMeta');
-        $seo_mdl->save();
+        $seo_model = SeoMeta::find()->andWhere($filter)->one() ?? new SeoMeta($filter);
+        $seo_model->value = Yii::$app->request->post('SeoMeta');
+        $seo_model->save();
     }
     
     public function afterDelete($event)

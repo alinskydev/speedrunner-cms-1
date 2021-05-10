@@ -4,8 +4,6 @@ namespace backend\modules\Blog\search;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 
 use backend\modules\Blog\models\Blog;
 
@@ -33,50 +31,13 @@ class BlogSearch extends Blog
         $query = Blog::find()
             ->joinWith(['tags'])
             ->with(['category'])
-            ->select(['blog.*'])
             ->groupBy('id');
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 30,
-                'pageSizeLimit' => [1, 30],
-            ],
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC]
-            ],
-        ]);
+        $attribute_groups = [
+            'match' => ['blog.id', 'blog.category_id', 'tags_tmp' => 'blog_tag.id'],
+            'like' => ['blog.slug', 'blog.published_at', 'blog.created_at', 'blog.updated_at'],
+        ];
         
-        if (!$this->validate()) {
-            $query->andWhere('false');
-            return $dataProvider;
-        }
-        
-        $query->andFilterWhere([
-            'blog.id' => $this->id,
-            'blog.category_id' => $this->category_id,
-        ]);
-        
-        $query->andFilterWhere(['like', 'blog.slug', $this->slug])
-            ->andFilterWhere(['like', 'blog.published_at', $this->published_at])
-            ->andFilterWhere(['like', 'blog.created_at', $this->created_at])
-            ->andFilterWhere(['like', 'blog.updated_at', $this->updated_at])
-            ->andFilterWhere(['like', 'blog_tag.id', $this->tags_tmp]);
-        
-        //        Translations
-        
-        $lang = Yii::$app->language;
-        
-        foreach ($this->behaviors['translation']->attributes as $t_a) {
-            $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT(blog.$t_a, '$.$lang'))"), strtolower($this->{$t_a})]);
-            $query->addSelect([new Expression("blog.$t_a->>'$.$lang' as json_$t_a")]);
-            
-            $dataProvider->sort->attributes[$t_a] = [
-                'asc' => ["json_$t_a" => SORT_ASC],
-                'desc' => ["json_$t_a" => SORT_DESC],
-            ];
-        }
-        
-		return $dataProvider;
+        return Yii::$app->services->data->search($this, $query, $attribute_groups);
     }
 }

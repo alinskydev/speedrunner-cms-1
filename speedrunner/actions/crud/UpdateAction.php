@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class UpdateAction extends FormAction
 {
-    public string $render_view = 'update';
+    public ?string $render_view = 'update';
     
     public string $run_method = 'save';
     public ?string $success_message = 'Record has been saved';
@@ -17,7 +17,9 @@ class UpdateAction extends FormAction
     
     public function run($id = null)
     {
-        if (!($model = $this->controller->findModel($id))) {
+        $model = $this->model ?? $this->controller->findModel($id);
+        
+        if (!$model) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         

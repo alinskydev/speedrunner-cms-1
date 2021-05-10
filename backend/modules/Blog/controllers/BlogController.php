@@ -56,9 +56,9 @@ class BlogController extends CrudController
             $searchModel[$key] = $m->searchModel;
             $searchModel[$key]->enums = $m->enums;
             $dataProvider[$key] = $searchModel[$key]->search(Yii::$app->request->queryParams);
-            $dataProvider[$key]->pagination->pageParam = 'dp_' . $key;
+            $dataProvider[$key]->pagination->pageParam = "dp_$key";
             $dataProvider[$key]->pagination->pageSize = 20;
-            $dataProvider[$key]->sort->sortParam = 'dp_' . $key . '-sort';
+            $dataProvider[$key]->sort->sortParam = "dp_$key-sort";
             $dataProvider[$key]->query->andWhere(['blog_id' => $id]);
         }
         

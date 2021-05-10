@@ -15,7 +15,7 @@ echo UpdateWidget::widget([
             'attributes' => [
                 'name' => 'text_input',
                 'code' => 'text_input',
-                'image' => 'elfinder',
+                'image' => 'file_manager',
                 'is_active' => 'checkbox',
                 'is_main' => 'checkbox',
             ],

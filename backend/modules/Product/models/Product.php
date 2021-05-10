@@ -10,11 +10,8 @@ use speedrunner\validators\SlugValidator;
 
 class Product extends ActiveRecord
 {
-    const SCENARIO_CHANGE_QUANTITY = 'change_quantity';
-    
     public $categories_tmp;
     public $options_tmp;
-    public $related_tmp;
     public $variations_tmp;
     
     public static function tableName()
@@ -24,10 +21,9 @@ class Product extends ActiveRecord
     
     public function scenarios()
     {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CHANGE_QUANTITY] = [];
-        
-        return $scenarios;
+        return ArrayHelper::merge(parent::scenarios(), [
+            'change_quantity' => [],
+        ]);
     }
     
     public function behaviors()
@@ -85,14 +81,6 @@ class Product extends ActiveRecord
                             'relational' => 'option_id',
                         ],
                     ],
-                    'related_tmp' => [
-                        'model' => new ProductRelatedRef(),
-                        'relation' => 'related',
-                        'attributes' => [
-                            'main' => 'product_id',
-                            'relational' => 'related_id',
-                        ],
-                    ],
                 ],
             ],
             'log_actions' => [
@@ -110,10 +98,6 @@ class Product extends ActiveRecord
                     ],
                     'options_tmp' => [
                         'relation' => 'options',
-                        'attribute' => 'name',
-                    ],
-                    'related_tmp' => [
-                        'relation' => 'related',
                         'attribute' => 'name',
                     ],
                 ],
@@ -134,7 +118,8 @@ class Product extends ActiveRecord
             [['sku'], 'unique'],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            [['related_ids'], 'default', 'value' => []],
             [['variations_tmp'], 'safe'],
             
             [['slug'], SlugValidator::className()],
@@ -144,7 +129,7 @@ class Product extends ActiveRecord
             
             [['categories_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id']],
             [['options_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id']],
-            [['related_tmp'], 'each', 'rule' => ['exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'filter' => function ($query) {
+            [['related_ids'], 'each', 'rule' => ['exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'filter' => function ($query) {
                 $query->andFilterWhere(['!=', 'id', $this->id]);
             }]],
         ];
@@ -165,12 +150,12 @@ class Product extends ActiveRecord
             'discount' => Yii::t('app', 'Discount'),
             'quantity' => Yii::t('app', 'Quantity'),
             'sku' => Yii::t('app', 'SKU'),
+            'related_ids' => Yii::t('app', 'Related'),
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
             
             'categories_tmp' => Yii::t('app', 'Categories'),
             'options_tmp' => Yii::t('app', 'Options'),
-            'related_tmp' => Yii::t('app', 'Related'),
             'variations_tmp' => Yii::t('app', 'Variations'),
         ];
     }
@@ -195,12 +180,6 @@ class Product extends ActiveRecord
     {
         return $this->hasMany(ProductSpecificationOption::className(), ['id' => 'option_id'])
             ->viaTable('product_option_ref', ['product_id' => 'id']);
-    }
-    
-    public function getRelated()
-    {
-        return $this->hasMany(self::className(), ['id' => 'related_id'])
-            ->viaTable('product_related_ref', ['product_id' => 'id']);
     }
     
     public function getVariations()

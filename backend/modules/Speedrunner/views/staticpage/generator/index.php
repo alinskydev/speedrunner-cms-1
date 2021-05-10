@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div id="tab-information" class="tab-pane active">
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'label')->textInput() ?>
+                <?= $form->field($model, 'route')->textInput() ?>
                 
                 <?= $form->field($model, 'has_seo_meta')->checkbox([
                     'class' => 'custom-control-input'

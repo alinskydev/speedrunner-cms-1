@@ -38,11 +38,6 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
-            'useFileTransport' => true,
-        ],
 
         //        URL managers
 
@@ -81,6 +76,7 @@ return [
             'components' => [
                 'array' => 'speedrunner\services\ArrayService',
                 'cart' => 'speedrunner\services\CartService',
+                'data' => 'speedrunner\services\DataService',
                 'file' => 'speedrunner\services\FileService',
                 'html' => 'speedrunner\services\HtmlService',
                 'i18n' => 'speedrunner\services\I18NService',

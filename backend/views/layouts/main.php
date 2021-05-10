@@ -2,9 +2,11 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\web\AssetManager;
 use backend\assets\AppAsset;
 
 AppAsset::register($this);
+(new \alexantr\tinymce\TinyMCE(['name' => false]))->run();
 
 ?>
 
@@ -17,10 +19,10 @@ AppAsset::register($this);
     <meta name="theme-color" content="#067a7d">
     <link rel="shortcut icon" href="<?= Yii::getAlias('@web/favicon.svg') ?>">
     
-    <meta name="elfinder-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-input']) ?>">
-    <meta name="imperavi-images-get-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-images-get']) ?>">
-    <meta name="imperavi-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-image-upload']) ?>">
-    <meta name="imperavi-image-delete-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/imperavi-image-delete']) ?>">
+    <meta name="file-manager-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-input']) ?>">
+    <meta name="text-editor-base-url" content="<?= (new AssetManager())->getBundle('\alexantr\tinymce\WidgetAsset')->baseUrl . '/' ?>">
+    <meta name="text-editor-file-picker-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce']) ?>">
+    <meta name="text-editor-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce-image-upload']) ?>">
     
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>

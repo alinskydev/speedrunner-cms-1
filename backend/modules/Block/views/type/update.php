@@ -14,7 +14,7 @@ echo UpdateWidget::widget([
             'label' => Yii::t('app', 'Information'),
             'attributes' => [
                 'label' => 'text_input',
-                'image' => 'elfinder',
+                'image' => 'file_manager',
             ],
         ],
     ],

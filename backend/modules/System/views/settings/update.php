@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use alexantr\elfinder\InputFile;
-use vova07\imperavi\Widget;
+use alexantr\tinymce\TinyMCE;
 
 $this->title = Yii::t('app', 'System settings');
 $this->params['breadcrumbs'][] = $this->title;
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                             <div class="w-100">
                                 <?php
-                                    switch ($s->type) {
+                                    switch ($s->input_type) {
                                         case 'text_input':
                                             echo $form->field($s, 'value')->textInput([
                                                 'name' => "SystemSettings[$s->id][value]",
@@ -74,21 +74,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ]);
                                             
                                             break;
-                                        case 'imperavi':
-                                            echo $form->field($s, 'value')->widget(Widget::className(), [
-                                                'options' => [
-                                                    'name' => "SystemSettings[$s->id][value]",
-                                                    'id' => "systemsettings-$s->id",
-                                                ],
-                                            ])->label($s->label);
-                                            
-                                            break;
-                                        case 'elfinder':
+                                        case 'file_manager':
                                             echo $form->field($s, 'value')->widget(InputFile::className(), [
                                                 'options' => [
                                                     'name' => "SystemSettings[$s->id][value]",
                                                     'id' => "systemsettings-$s->id",
                                                 ]
+                                            ])->label($s->label);
+                                            
+                                            break;
+                                        case 'text_editor':
+                                            echo $form->field($s, 'value')->widget(TinyMCE::className(), [
+                                                'options' => [
+                                                    'name' => "SystemSettings[$s->id][value]",
+                                                    'id' => "systemsettings-$s->id",
+                                                ],
                                             ])->label($s->label);
                                             
                                             break;
@@ -117,7 +117,9 @@ $this->params['breadcrumbs'][] = $this->title;
             handle: '.table-sorter',
             placeholder: 'sortable-placeholder mb-2',
             start: function(event, ui) {
-                id = ui.item[0].dataset.id;
+                ui.placeholder.height(ui.helper.outerHeight());
+                
+                id = ui.item.data('id');
                 oldIndex = ui.item.index();
             },
             stop: function(event, ui) {

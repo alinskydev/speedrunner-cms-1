@@ -30,10 +30,10 @@ class SystemSettings extends ActiveRecord
     {
         return [
             [['value'], 'string', 'max' => '100', 'when' => function ($model) {
-                return in_array($model->type, ['text_input', 'text_area', 'imperavi', 'elfinder']);
+                return in_array($model->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']);
             }],
             [['value'], 'boolean', 'when' => function ($model) {
-                return in_array($model->type, ['checkbox']);
+                return in_array($model->input_type, ['checkbox']);
             }],
         ];
     }

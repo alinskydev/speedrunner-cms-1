@@ -30,7 +30,7 @@ class DataProviderAction extends Action
         $dataProvider = $this->model->search();
         $dataProvider->pagination->totalCount = $dataProvider->query->count();
         
-        $render_params = $this->render_params ?? fn () => [];
+        $render_params = $this->render_params ?? fn() => [];
         
         $this->model->afterSearch();
         

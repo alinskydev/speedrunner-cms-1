@@ -65,6 +65,8 @@ class DestroyerForm extends Model
             $sql[] = 'SET FOREIGN_KEY_CHECKS = 1';
         }
         
-        return Yii::$app->db->createCommand(implode(';', $sql))->execute();
+        Yii::$app->db->createCommand(implode(';', $sql))->execute();
+        
+        return true;
     }
 }

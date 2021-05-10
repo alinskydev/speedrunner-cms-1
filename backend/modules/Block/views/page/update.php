@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block pages'), 'url'
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 foreach ($blocks as $key => $b) {
-    switch ($b->type->type) {
+    switch ($b->type->input_type) {
         case 'text_input':
         case 'text_area':
             $attribute = [
@@ -31,8 +31,8 @@ foreach ($blocks as $key => $b) {
             ];
             break;
         
-        case 'elfinder':
-        case 'imperavi':
+        case 'file_manager':
+        case 'text_editor':
             $attribute = [
                 'options' => [
                     'options' => [
@@ -77,7 +77,7 @@ foreach ($blocks as $key => $b) {
     
     $attribute = $attribute ? ArrayHelper::merge([
         'name' => 'value',
-        'type' => $b->type->type,
+        'type' => $b->type->input_type,
         'container_options' => [
             'template' => "{beginLabel} {$b->type->label} {endLabel} {input}{hint}{error}",
         ],

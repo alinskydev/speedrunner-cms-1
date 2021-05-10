@@ -312,9 +312,7 @@ class GeneratorForm extends Model
     {
         $columns = ArrayHelper::map($columns, 'name', 'type');
         $attrs_translation = array_keys($this->attrs_translation);
-        $conditions = [];
-        $likeConditions = [];
-        $hashConditions = [];
+        $condition_groups = [];
         
         foreach ($columns as $column => $type) {
             switch ($type) {
@@ -329,28 +327,25 @@ class GeneratorForm extends Model
                 case Schema::TYPE_MONEY:
                 case Schema::TYPE_TIME:
                 case Schema::TYPE_TIMESTAMP:
-                    $hashConditions[] = "'{$column}' => \$this->{$column},";
+                    $condition_groups['match'][] = $column;
                     break;
                 case Schema::TYPE_TEXT:
                 case Schema::TYPE_JSON:
                     break;
                 default:
-                    $likeKeyword = 'like';
-                    $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";
+                    $condition_groups['like'][] = $column;
                     break;
             }
         }
         
-        if (!empty($hashConditions)) {
-            $conditions[] = "\$query->andFilterWhere([\n"
-                . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions)
-                . "\n" . str_repeat(' ', 8) . "]);\n";
+        $filter[] = "\$attribute_groups = [";
+        
+        foreach ($condition_groups as $group_name => $conditions) {
+            $conditions = implode("', '", $conditions);
+            $filter[] = "    '$group_name' => ['$conditions'],";
         }
         
-        if (!empty($likeConditions)) {
-            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
-        }
-        
-        return $conditions;
+        $filter[] = "];\n";
+        return $filter;
     }
 }

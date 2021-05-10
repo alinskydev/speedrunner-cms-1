@@ -654,6 +654,15 @@ header .dropdown-toggle::after {
     opacity: 1;
 }
 
+.grid-view .summary {
+    float: left;
+    margin: 0.5rem 0;
+}
+
+.grid-view img {
+    max-width: 50px;
+}
+
 .main-shadow,
 .dropdown-menu {
     box-shadow: -1px 1px 5px 0px rgba(6, 122, 125, 0.3);
@@ -1055,10 +1064,6 @@ span.fancytree-active span.fancytree-title,
     text-align: center;
     vertical-align: middle !important;
     cursor: move;
-}
-
-.ui-sortable-handle.ui-sortable-helper {
-    background: #eee;
 }
 
 .yii2-elfinder-input-preview {

@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use vova07\imperavi\Widget;
 use alexantr\elfinder\InputFile;
+use alexantr\tinymce\TinyMCE;
 use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
@@ -124,7 +124,7 @@ use yii\web\JsExpression;
                                     );
                                     break;
                                     
-                                case 'elfinder':
+                                case 'file_manager':
                                     echo $form->field(
                                         $model, $name,
                                         ArrayHelper::getValue($attribute, 'container_options', [])
@@ -134,12 +134,12 @@ use yii\web\JsExpression;
                                     );
                                     break;
                                     
-                                case 'imperavi':
+                                case 'text_editor':
                                     echo $form->field(
                                         $model, $name,
                                         ArrayHelper::getValue($attribute, 'container_options', [])
                                     )->widget(
-                                        Widget::className(),
+                                        TinyMCE::className(),
                                         ArrayHelper::getValue($attribute, 'options', [])
                                     );
                                     break;
@@ -151,9 +151,7 @@ use yii\web\JsExpression;
                                     $initial_preview = $multiple ? ($files ?? []) : ($files ?? '');
                                     $initial_preview_config = $multiple ? (
                                         ArrayHelper::getColumn($files ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value])
-                                    ) : (
-                                        $files ? [['key' => $files, 'downloadUrl' => $files]] : []
-                                    );
+                                    ) : [];
                                     
                                     echo $form->field(
                                         $model, $name,
@@ -197,8 +195,8 @@ use yii\web\JsExpression;
                                         ),
                                         Yii::$app->controller
                                     );
-                                    
                                     break;
+                                    
                                 default:
                                     echo $attribute;
                             }

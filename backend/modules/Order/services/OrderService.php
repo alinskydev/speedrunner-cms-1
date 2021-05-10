@@ -11,7 +11,7 @@ class OrderService extends ActiveService
 {
     public function changeStatus($status)
     {
-        $this->model->scenario = $this->model::SCENARIO_CHANGE_STATUS;
+        $this->model->scenario = 'change_status';
         $this->model->status = $status;
         
         if ($this->model->save()) {
@@ -46,7 +46,7 @@ class OrderService extends ActiveService
             $relation_model->updateAttributes(['quantity' => $relation_model->quantity]);
             
             if ($relation_name == 'variation' && $p->product) {
-                $p->product->scenario = $p->product::SCENARIO_CHANGE_QUANTITY;
+                $p->product->scenario = 'change_quantity';
                 $p->product->service->assignVariationAttributes($p->product->variations[0], false);
                 $p->product->save();
             }

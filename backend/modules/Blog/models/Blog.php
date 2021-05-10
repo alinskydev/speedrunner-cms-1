@@ -49,7 +49,7 @@ class Blog extends ActiveRecord
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
             [['published_at'], 'date', 'format' => 'php: d.m.Y H:i'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['formats']['image'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
             
             [['slug'], SlugValidator::className()],
@@ -86,7 +86,7 @@ class Blog extends ActiveRecord
     {
         return $this->hasMany(BlogTag::className(), ['id' => 'tag_id'])
             ->viaTable('blog_tag_ref', ['blog_id' => 'id'], function ($query) {
-                $query->onCondition(['lang' => Yii::$app->language]);
+                $query->onCondition(['language' => Yii::$app->language]);
             });
     }
     
@@ -104,27 +104,27 @@ class Blog extends ActiveRecord
         
         if ($this->tags_tmp) {
             foreach ($this->tags_tmp as $value) {
-                $tag_mdl = BlogTag::findOne($value);
+                $tag_model = BlogTag::findOne($value);
                 
-                if (!$tag_mdl) {
-                    $tag_mdl = new BlogTag();
-                    $tag_mdl->name = $value;
-                    $tag_mdl->save();
+                if (!$tag_model) {
+                    $tag_model = new BlogTag();
+                    $tag_model->name = $value;
+                    $tag_model->save();
                 }
                 
                 if (!in_array($value, $tags)) {
-                    $relation_mdl = new BlogTagRef();
-                    $relation_mdl->blog_id = $this->id;
-                    $relation_mdl->tag_id = $tag_mdl->id;
-                    $relation_mdl->lang = Yii::$app->language;
-                    $relation_mdl->save();
+                    $relation_model = new BlogTagRef();
+                    $relation_model->blog_id = $this->id;
+                    $relation_model->tag_id = $tag_model->id;
+                    $relation_model->language = Yii::$app->language;
+                    $relation_model->save();
                 }
                 
                 ArrayHelper::remove($tags, $value);
             }
         }
         
-        BlogTagRef::deleteAll(['blog_id' => $this->id, 'tag_id' => $tags, 'lang' => Yii::$app->language]);
+        BlogTagRef::deleteAll(['blog_id' => $this->id, 'tag_id' => $tags, 'language' => Yii::$app->language]);
         
         return parent::afterSave($insert, $changedAttributes);
     }

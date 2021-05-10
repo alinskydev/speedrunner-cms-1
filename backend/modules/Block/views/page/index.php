@@ -55,8 +55,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             ['assign', 'id' => $model->id],
                             [
                                 'title' => Yii::t('app', 'Assign'),
-                                'data-toggle' => 'tooltip',
-                                'data-pjax' => 0,
+                                'data' => [
+                                    'toggle' => 'tooltip',
+                                    'pjax' => 0,
+                                ],
                             ]
                         );
                     },

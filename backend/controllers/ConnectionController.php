@@ -14,23 +14,6 @@ class ConnectionController extends Controller
     public function actions()
     {
         return [
-            'imperavi-images-get' => [
-                'class' => 'vova07\imperavi\actions\GetImagesAction',
-                'url' => '/uploaded/editor', // Directory URL address, where files are stored.
-                'path' => '@frontend/web/uploaded/editor', // Or absolute path to directory where files are stored.
-                'options' => ['only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.ico']], // These options are by default.
-            ],
-            'imperavi-image-upload' => [
-                'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => '/uploaded/editor', // Directory URL address, where files are stored.
-                'path' => '@frontend/web/uploaded/editor', // Or absolute path to directory where files are stored.
-            ],
-            'imperavi-image-delete' => [
-                'class' => 'vova07\imperavi\actions\DeleteFileAction',
-                'url' => '/uploaded/editor', // Directory URL address, where files are stored.
-                'path' => '@frontend/web/uploaded/editor', // Or absolute path to directory where files are stored.
-            ],
-            
             'elfinder' => [
                 'class' => 'alexantr\elfinder\ConnectorAction',
                 'options' => [
@@ -68,6 +51,16 @@ class ConnectionController extends Controller
                 'class' => 'alexantr\elfinder\InputFileAction',
                 'connectorRoute' => 'elfinder',
             ],
+            
+            'tinymce' => [
+                'class' => 'alexantr\elfinder\TinyMCEAction',
+                'connectorRoute' => 'elfinder',
+            ],
+//            'tinymce-image-upload' => [
+//                'class' => 'alexantr\tinymce\actions\UploadFileAction',
+//                'url' => '/uploaded/editor', // Directory URL address, where files are stored.
+//                'path' => '@frontend/web/uploaded/editor', // Or absolute path to directory where files are stored.
+//            ],
         ];
     }
 }

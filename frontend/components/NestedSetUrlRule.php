@@ -10,7 +10,7 @@ use yii\base\BaseObject;
 class NestedSetUrlRule extends BaseObject implements UrlRuleInterface
 {
     public $route;
-    public $path = 'nested-set';
+    public $path;
     
     public function createUrl($manager, $route, $params)
     {

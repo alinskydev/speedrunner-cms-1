@@ -77,9 +77,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             }'),
                             'dragDrop' => new JsExpression('function(node, data) {
                                 $.get(data.tree.$div.data("action_move"), {
-                                    item: data.otherNode.data.id,
-                                    action: data.hitMode,
-                                    second: node.data.id
+                                    first_id: data.otherNode.data.id,
+                                    second_id: node.data.id,
+                                    action: data.hitMode
                                 }, function() {
                                     data.otherNode.moveTo(node, data.hitMode);
                                 });

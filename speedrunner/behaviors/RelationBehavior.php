@@ -30,16 +30,16 @@ class RelationBehavior extends Behavior
     public function oneOne()
     {
         foreach ($this->attributes as $a) {
-            $relation_mdl = $this->owner->{$a['relation']} ? clone($this->owner->{$a['relation']}) : $a['model'];
-            $relation_mdl->{$a['attributes']['main']} = $this->owner->id;
+            $relation_model = $this->owner->{$a['relation']} ? clone($this->owner->{$a['relation']}) : $a['model'];
+            $relation_model->{$a['attributes']['main']} = $this->owner->id;
             
             foreach ($a['attributes']['relational'] as $a_r) {
                 if ($this->owner->isAttributeActive($a_r)) {
-                    $relation_mdl->{$a_r} = $this->owner->{$a_r};
+                    $relation_model->{$a_r} = $this->owner->{$a_r};
                 }
             }
             
-            $relation_mdl->save();
+            $relation_model->save();
         }
     }
     
@@ -57,15 +57,15 @@ class RelationBehavior extends Behavior
                 $counter = 0;
                 
                 foreach ($attribute as $key => $value) {
-                    $relation_mdl = clone(ArrayHelper::getValue($relations, $key, $a['model']));
-                    $relation_mdl->{$a['attributes']['main']} = $this->owner->id;
+                    $relation_model = clone(ArrayHelper::getValue($relations, $key, $a['model']));
+                    $relation_model->{$a['attributes']['main']} = $this->owner->id;
                     
                     foreach ($a['attributes']['relational'] as $p) {
-                        isset($value[$p]) ? $relation_mdl->{$p} = $value[$p] : null;
+                        isset($value[$p]) ? $relation_model->{$p} = $value[$p] : null;
                     }
                     
-                    $relation_mdl->sort = $counter;
-                    $relation_mdl->save();
+                    $relation_model->sort = $counter;
+                    $relation_model->save();
                     
                     ArrayHelper::remove($relations, $key);
                     $counter++;
@@ -89,10 +89,10 @@ class RelationBehavior extends Behavior
             if ($attribute) {
                 foreach ($attribute as $value) {
                     if (!in_array($value, $relations)) {
-                        $relation_mdl = clone($a['model']);
-                        $relation_mdl->{$a['attributes']['main']} = $this->owner->id;
-                        $relation_mdl->{$a['attributes']['relational']} = $value;
-                        $relation_mdl->save();
+                        $relation_model = clone($a['model']);
+                        $relation_model->{$a['attributes']['main']} = $this->owner->id;
+                        $relation_model->{$a['attributes']['relational']} = $value;
+                        $relation_model->save();
                     }
                     
                     ArrayHelper::remove($relations, $value);

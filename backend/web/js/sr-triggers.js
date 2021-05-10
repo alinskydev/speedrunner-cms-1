@@ -7,7 +7,8 @@ $(function() {
     function ajaxSend(event, el, url, method = 'get', sentData = {}, callback = false) {
         event.preventDefault();
         
-        let ajaxExtraParams = {};
+        let ajaxExtraParams = {},
+            insertType = el.data('sr-insert-type');
         
         if (sentData instanceof FormData) {
             ajaxExtraParams = {
@@ -18,7 +19,7 @@ $(function() {
         
         $.ajax({...ajaxExtraParams, ...{
             url: url,
-            method: method,
+            type: method,
             data: sentData,
             
             success: function(data) {
@@ -27,7 +28,11 @@ $(function() {
                 
                 switch (typeof(el.data('sr-wrapper'))) {
                     case 'string':
-                        $(el.data('sr-wrapper')).html(data);
+                        if (insertType === undefined) {
+                            $(el.data('sr-wrapper')).html(data);
+                        } else {
+                            eval("$(el.data('sr-wrapper'))." + insertType + "(data)");
+                        }
                         break;
                         
                     case 'object':

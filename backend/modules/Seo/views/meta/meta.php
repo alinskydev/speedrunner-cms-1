@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use alexantr\elfinder\InputFile;
-use vova07\imperavi\Widget;
+use alexantr\tinymce\TinyMCE;
 
 use backend\modules\Seo\models\SeoMeta;
 use backend\modules\Seo\services\SeoMetaService;
@@ -28,15 +28,15 @@ $seo_meta_types = (new SeoMeta())->enums->types();
                 case 'text_area':
                     echo Html::textArea("SeoMeta[$key]", $value, ['class' => 'form-control', 'rows' => 10]);
                     break;
-                case 'imperavi':
-                    echo Widget::widget([
+                case 'file_manager':
+                    echo InputFile::widget([
                         'name' => "SeoMeta[$key]",
                         'value' => $value,
                         'id' => 'seo-meta-' . Inflector::slug($key),
                     ]);
                     break;
-                case 'elfinder':
-                    echo InputFile::widget([
+                case 'text_editor':
+                    echo TinyMCE::widget([
                         'name' => "SeoMeta[$key]",
                         'value' => $value,
                         'id' => 'seo-meta-' . Inflector::slug($key),

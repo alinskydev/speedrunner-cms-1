@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4352dc5f2e63750e9ce5862b1442c7c9ced32d0f',
+    'reference' => 'fe1d93210e510c1cc9fd0c5e42dbbacd2a1e6ca4',
     'name' => 'yiisoft/yii2-app-advanced',
   ),
   'versions' => 
@@ -51,6 +51,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '868088746cefe3fdc576475ae50a398eeba86e99',
+    ),
+    'alexantr/yii2-tinymce' => 
+    array (
+      'pretty_version' => '0.1.1',
+      'version' => '0.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2e7fc590a6df4970c42fdb0e232f2c9f8eddc400',
     ),
     'behat/gherkin' => 
     array (
@@ -884,7 +893,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4352dc5f2e63750e9ce5862b1442c7c9ced32d0f',
+      'reference' => 'fe1d93210e510c1cc9fd0c5e42dbbacd2a1e6ca4',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (

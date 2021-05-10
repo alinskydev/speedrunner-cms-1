@@ -4,7 +4,6 @@ namespace speedrunner\validators;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\base\DynamicModel;
 
 use yii\validators\Validator;
 use yii\validators\UniqueValidator;
@@ -16,6 +15,7 @@ class SlugValidator extends Validator
 {
     public $params = [
         'pattern' => '/^[a-zA-Z0-9\-]+$/',
+        'min' => 1,
         'max' => 100,
     ];
     
@@ -23,6 +23,6 @@ class SlugValidator extends Validator
     {
         (new UniqueValidator())->validateAttribute($model, $attribute);
         (new RegularExpressionValidator(['pattern' => $this->params['pattern']]))->validateAttribute($model, $attribute);
-        (new StringValidator(['max' => 100]))->validateAttribute($model, $attribute);
+        (new StringValidator(['min' => $this->params['min'], 'max' => $this->params['max']]))->validateAttribute($model, $attribute);
     }
 }

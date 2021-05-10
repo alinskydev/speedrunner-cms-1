@@ -41,12 +41,11 @@ class CartService
                 'quantity' => array_sum($quantities),
                 'price' => array_sum($total_prices),
             ];
-            
-            Yii::$app->session->set('cart', $this->cart);
         } else {
-            Yii::$app->session->remove('cart');
+            $this->cart = [];
         }
         
+        Yii::$app->session->set('cart', $this->cart);
         return $this->cart;
     }
     

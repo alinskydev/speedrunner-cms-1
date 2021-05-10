@@ -56,7 +56,7 @@ JSEXP;
             $callback = <<<JSEXP
 function (file) {
     var el = window.opener.jQuery("#$id"),
-        filetypeImageArr = ["png", "jpg", "jpeg", "ico", "bmp", "svg"],
+        filetypeImageArr = ["png", "jpg", "jpeg", "ico", "bmp", "svg", "webp"],
         filetypeAudioArr = ["mp3", "ogg"],
         filetypeVideoArr = ["mp4", "flv"],
         value = file.$fileParam,

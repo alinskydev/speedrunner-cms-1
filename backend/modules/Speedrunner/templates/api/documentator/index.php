@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 
 $this->title = Yii::$app->services->settings->site_name . ' API';
 
@@ -59,7 +58,7 @@ $tabs = array_keys($result);
                                     Base url
                                 </th>
                                 <td>
-                                    <?= Url::base(true); ?>
+                                    <?= Yii::$app->request->hostInfo ?>
                                 </td>
                             </tr>
                             
@@ -74,23 +73,24 @@ $tabs = array_keys($result);
                             
                             <tr>
                                 <th>
-                                    List query arguments (as GET params)
-                                </th>
-                                <td>
-                                    Sorting: ?sort=<b>{attribute}</b> or ?sort=<b>-{attribute}</b><br>
-                                    Number of records: ?per-page=<b>{number}</b><br>
-                                    Pagination: ?page=<b>{number}</b><br>
-                                    Filtering: ?filter[<b>{attribute}</b>]=<b>{value}</b>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <th>
                                     Auth
                                 </th>
                                 <td>
                                     Basic (send <b>access_token</b> as <b>username</b>)<br>
                                     <b>Access_token</b> will be changed after setting a new password
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th>
+                                    List query arguments (as GET params)
+                                </th>
+                                <td>
+                                    To change language: /api/<b>{lang}</b>/{route}<br>
+                                    Filtering: ?filter[<b>{attribute}</b>]=<b>{value}</b><br>
+                                    Sorting: ?sort=<b>{attribute}</b> or ?sort=<b>-{attribute}</b><br>
+                                    Number of records: ?per-page=<b>{number}</b><br>
+                                    Pagination: ?page=<b>{number}</b>
                                 </td>
                             </tr>
                         </tbody>

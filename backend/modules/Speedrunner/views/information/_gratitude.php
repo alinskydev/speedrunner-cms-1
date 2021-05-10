@@ -21,10 +21,6 @@ $external_components = [
         'description' => 'Fancytree widget',
         'link' => 'https://github.com/wbraganca/yii2-fancytree-widget',
     ],
-    'vova07/yii2-imperavi-widget' => [
-        'description' => 'Imperavi widget',
-        'link' => 'https://github.com/vova07/yii2-imperavi-widget',
-    ],
     'kartik-v/yii2-widget-select2' => [
         'description' => 'Select2 widget',
         'link' => 'https://github.com/kartik-v/yii2-widget-select2',
@@ -32,6 +28,10 @@ $external_components = [
     'kartik-v/yii2-widget-fileinput' => [
         'description' => 'FileInput widget',
         'link' => 'https://github.com/kartik-v/yii2-widget-fileinput',
+    ],
+    'alexantr/yii2-tinymce' => [
+        'description' => 'TinyMCE widget',
+        'link' => 'https://github.com/alexantr/yii2-tinymce',
     ],
     'alexantr/yii2-elfinder' => [
         'description' => 'ElFinder widget',

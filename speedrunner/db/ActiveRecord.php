@@ -12,8 +12,6 @@ use backend\modules\Seo\services\SeoMetaService;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
-    const HTMLPURIFY_EXCLUDE_CLASSES = [];
-    
     public $enums = null;
     public $searchModel = null;
     public $service = null;
@@ -125,12 +123,21 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML purifier
         
-        $class_name = StringHelper::basename(get_called_class());
-        
-        if (!in_array($class_name, self::HTMLPURIFY_EXCLUDE_CLASSES)) {
-            foreach ($this->dirtyAttributes as $key => $a) {
-                ($a && is_string($a)) ? $this->{$key} = HtmlPurifier::process($a) : null;
-//                ($a && is_string($a)) ? $this->{$key} = htmlspecialchars($a, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : null;
+        foreach ($this->dirtyAttributes as $key => $a) {
+            if ($a && is_string($a)) {
+                $this->{$key} = HtmlPurifier::process($a, [
+                    'Attr.DefaultImageAlt' => '',
+                ]);
+                
+                $allowed_chars = [
+                    '%7B' => '{',
+                    '%7D' => '}',
+                    '&amp;' => '&',
+                ];
+                
+                foreach ($allowed_chars as $from => $to) {
+                    $this->{$key} = str_replace($from, $to, $this->{$key});
+                }
             }
         }
         

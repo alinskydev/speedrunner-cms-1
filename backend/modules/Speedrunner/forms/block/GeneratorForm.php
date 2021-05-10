@@ -33,7 +33,7 @@ class GeneratorForm extends Model
         BlockType::deleteAll();
         BlockPage::deleteAll();
         
-        $attrs = ['name', 'label', 'type', 'image', 'has_translation'];
+        $attrs = ['name', 'label', 'input_type', 'image', 'has_translation'];
         
         foreach ($this->blocks as $b) {
             $block = new BlockType();

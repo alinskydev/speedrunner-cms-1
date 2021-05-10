@@ -11,7 +11,7 @@ foreach ($blocks as $key => $block_part) {
     $tabs[$block_part[0]->part_index]['label'] = $key;
     
     foreach ($block_part as $b) {
-        switch ($b->type) {
+        switch ($b->input_type) {
             case 'text_input':
             case 'text_area':
                 $attribute = [
@@ -33,8 +33,8 @@ foreach ($blocks as $key => $block_part) {
                 ];
                 break;
             
-            case 'elfinder':
-            case 'imperavi':
+            case 'file_manager':
+            case 'text_editor':
                 $attribute = [
                     'options' => [
                         'options' => [
@@ -79,7 +79,7 @@ foreach ($blocks as $key => $block_part) {
         
         $attribute = $attribute ? ArrayHelper::merge([
             'name' => 'value',
-            'type' => $b->type,
+            'type' => $b->input_type,
             'container_options' => [
                 'template' => "{beginLabel} {$b->label} {endLabel} {input}{hint}{error}",
             ],
@@ -93,7 +93,17 @@ echo UpdateWidget::widget([
     'model' => $new_block,
     'seo_meta_model' => $model,
     'has_seo_meta' => $model->has_seo_meta,
-    'save_buttons' => ['save'],
+    'save_buttons' => [
+        $model->route ? Html::a(
+            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . Yii::t('app', 'Link'),
+            Yii::$app->urlManagerFrontend->createUrl($model->route),
+            [
+                'class' => 'btn btn-info btn-icon',
+                'target' => '_blank',
+            ]
+        ) : null,
+        'save',
+    ],
     'form_options' => [
         'fieldConfig' => ['enableClientValidation' => false],
     ],

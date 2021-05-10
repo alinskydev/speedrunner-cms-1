@@ -56,11 +56,11 @@ class TranslationSource extends ActiveRecord
             
             foreach ($this->translations_tmp as $key => $value) {
                 if (in_array($key, $available_langs)) {
-                    $relation_mdl = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $key])->one() ?: new TranslationMessage();
-                    $relation_mdl->id = $this->id;
-                    $relation_mdl->language = $key;
-                    $relation_mdl->translation = $value;
-                    $relation_mdl->save();
+                    $relation_model = TranslationMessage::find()->andWhere(['id' => $this->id, 'language' => $key])->one() ?: new TranslationMessage();
+                    $relation_model->id = $this->id;
+                    $relation_model->language = $key;
+                    $relation_model->translation = $value;
+                    $relation_model->save();
                 }
             }
         }

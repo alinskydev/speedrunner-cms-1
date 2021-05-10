@@ -59,18 +59,12 @@ class ProductCategory extends ActiveRecord
         ];
     }
     
-    public function transactions()
-    {
-        return [
-            static::SCENARIO_DEFAULT => static::OP_ALL,
-        ];
-    }
-    
     public function rules()
     {
         return [
             [['name'], 'required'],
             [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
+            
             [['name', 'slug', 'image'], 'string', 'max' => 100],
             [['description'], 'string'],
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],

@@ -137,7 +137,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             connectWith: '#sortable-to',
             helper: 'clone',
             start: function (event, ui) {
+                ui.placeholder.height(ui.helper.outerHeight());
+                
                 $(ui.item).show();
+                
                 clone = $(ui.item).clone();
                 before = $(ui.item).prev();
                 parent = $(ui.item).parent();

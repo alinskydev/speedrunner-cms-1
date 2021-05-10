@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             ],\n";
                 break;
             
-            case 'elfinder':
+            case 'file_manager':
                 echo "            [
                 'header' => false,
                 'format' => 'raw',

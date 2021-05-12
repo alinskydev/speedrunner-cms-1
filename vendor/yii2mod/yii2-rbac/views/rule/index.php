@@ -1,6 +1,6 @@
 <?php
 
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'speedrunner\widgets\grid\SerialColumn',
+                'class' => 'backend\widgets\grid\SerialColumn',
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'label' => Yii::t('yii2mod.rbac', 'Name'),
             ],
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
             ],
         ],

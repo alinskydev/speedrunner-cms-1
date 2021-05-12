@@ -1,6 +1,6 @@
 <?php
 
-use speedrunner\widgets\grid\GridView;
+use backend\widgets\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => ArrayHelper::merge($gridViewColumns, [
             [
-                'class' => 'speedrunner\widgets\grid\ActionColumn',
+                'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{view}',
             ],
         ]),

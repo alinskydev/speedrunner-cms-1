@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use backend\widgets\layout\Menu;
 
 ?>
@@ -8,9 +9,14 @@ use backend\widgets\layout\Menu;
     <div class="nav-wrapper-side <?= Yii::$app->session->get('nav') ? 'opened' : null ?>">
         <div class="d-flex">
             <div class="item">
-                <button type="button" class="btn btn-link nav-side-toggle" data-action="<?= Yii::$app->urlManager->createUrl(['session/set']) ?>">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <?= Html::button(Html::tag('i', null, ['class' => 'fas fa-bars']), [
+                    'class' => 'btn btn-link nav-side-toggle',
+                    'data-sr-trigger' => 'toggle_session',
+                    'data-sr-callback' => "$('.nav-wrapper-side').toggleClass('opened');",
+                    'data-sr-url' => Yii::$app->urlManager->createUrl(['session/set']),
+                    'data-sr-name' => 'nav',
+                    'data-sr-value' => '0',
+                ]) ?>
             </div>
             
             <a href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>" class="site-logo">

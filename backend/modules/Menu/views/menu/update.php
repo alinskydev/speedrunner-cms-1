@@ -46,7 +46,7 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
                                 ArrayHelper::map($parents, 'id', 'text'),
                                 [
                                     'class' => 'form-control',
-                                    'data-toggle' => 'select2',
+                                    'data-sr-trigger' => 'select2',
                                 ]
                             );
                         }

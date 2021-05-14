@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 
                 <?= $form->field($model, 'module_name_from')->dropDownList($model->modulesList(), [
                     'class' => 'form-control',
-                    'data-toggle' => 'select2',
+                    'data-sr-trigger' => 'select2',
                     'prompt' => ' ',
                 ]) ?>
                 

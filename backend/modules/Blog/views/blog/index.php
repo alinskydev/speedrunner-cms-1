@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'published_at',
                 'filterInputOptions' => [
                     'class' => 'form-control',
-                    'data-toggle' => 'datepicker'
+                    'data-sr-trigger' => 'datepicker'
                 ]
             ],
             'created_at',

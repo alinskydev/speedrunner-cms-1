@@ -21,7 +21,7 @@ $relations = ArrayHelper::merge($model->variations, [new ProductVariation]);
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <?php foreach ($relations as $value) { ?>
             <?php $value_id = $value->isNewRecord ? '__key__' : $value->id ?>
             

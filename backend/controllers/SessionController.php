@@ -29,7 +29,7 @@ class SessionController extends Controller
                 
                 return $this->redirect(Yii::$app->request->referrer);
             case 'nav':
-                Yii::$app->session->set($name, (bool)$value);
+                Yii::$app->session->set($name, !Yii::$app->session->get($name));
                 return true;
             default:
                 Yii::$app->session->addFlash('warning', Yii::t('app', 'Parameter not found'));

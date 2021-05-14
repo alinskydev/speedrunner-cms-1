@@ -30,7 +30,7 @@ echo UpdateWidget::widget([
                     'name' => 'published_at',
                     'type' => 'text_input',
                     'options' => [
-                        'data-toggle' => 'datetimepicker',
+                        'data-sr-trigger' => 'datetimepicker',
                     ],
                 ],
                 'image' => 'file_manager',

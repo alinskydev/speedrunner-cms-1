@@ -54,7 +54,7 @@ unset($attr_input_types['select'], $attr_input_types['select2_ajax']);
                         </tr>
                     </thead>
                     
-                    <tbody data-toggle="sortable">
+                    <tbody data-sr-tirgger="sortable">
                         <tr class="table-new-relation" data-table="blocks">
                             <td>
                                 <div class="btn btn-primary table-sorter">
@@ -115,7 +115,7 @@ unset($attr_input_types['select'], $attr_input_types['select2_ajax']);
                                             'style' => 'border: 0; width: 1px; position: absolute; z-index: -1; left: 50%;'
                                         ]
                                     ]),
-                                    ['data-toggle' => 'file_manager']
+                                    ['data-sr-trigger' => 'file_manager']
                                 ); ?>
                             </td>
                             

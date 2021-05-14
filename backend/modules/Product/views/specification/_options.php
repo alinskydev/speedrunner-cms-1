@@ -19,7 +19,7 @@ $options = ArrayHelper::merge($model->options, [new ProductSpecificationOption])
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <?php foreach ($options as $o) { ?>
             <?php $o_id = $o->isNewRecord ? '__key__' : $o->id ?>
             

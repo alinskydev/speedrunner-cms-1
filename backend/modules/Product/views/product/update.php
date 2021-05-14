@@ -72,7 +72,7 @@ echo UpdateWidget::widget([
                     'type' => 'select',
                     'data' => ArrayHelper::map($categories['list'], 'id', 'text'),
                     'options' => [
-                        'data-toggle' => 'select2',
+                        'data-sr-trigger' => 'select2',
                         'prompt' => ' ',
                     ],
                 ],

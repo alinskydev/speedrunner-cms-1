@@ -42,7 +42,7 @@ $relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $rel
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <?= "<?php foreach (\$relations as \$value) { ?>\n" ?>
             <?= "<?php \$value_id = \$value->isNewRecord ? '__key__' : \$value->id ?>\n" ?>
             

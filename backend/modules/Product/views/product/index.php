@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
-                    'data-toggle' => 'select2',
+                    'data-sr-trigger' => 'select2',
                 ],
             ],
             [

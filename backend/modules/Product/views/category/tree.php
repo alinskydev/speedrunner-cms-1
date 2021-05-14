@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     document.addEventListener('DOMContentLoaded', function() {
         let tree;
         
-        $('input[name="fancytree_search"]').on('keyup', function(e) {
+        $('input[name="fancytree_search"]').on('keyup', function() {
             tree = $.ui.fancytree.getTree();
             tree.filterBranches.call(tree, $(this).val(), {});
         });

@@ -14,7 +14,6 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/all.min.css',
         'css/bootstrap.min.css',
-        'css/bootstrap-datepicker.min.css',
         'css/bootstrap-datetimepicker.min.css',
         'css/select2.min.css',
         'css/jquery.toast.css',
@@ -25,12 +24,12 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/popper.min.js',
         'js/bootstrap.min.js',
-        'js/bootstrap-datepicker.min.js',
         'js/bootstrap-datetimepicker.min.js',
         'js/select2.full.min.js',
         'js/jquery.toast.js',
         
-        'js/sr-triggers.js',
+        'js/speedrunner-triggers.js',
+        'js/speedrunner-ajax-triggers.js',
         'js/speedrunner.js',
     ];
     

@@ -24,7 +24,7 @@ unset($attr_types['groups']);
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <?php foreach ($columns as $c) { ?>
             <tr>
                 <td>

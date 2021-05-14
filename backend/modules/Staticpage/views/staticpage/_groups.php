@@ -21,7 +21,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
     <?= Html::hiddenInput("StaticpageBlock[$model->id][value]", null); ?>
     
     <table class="table table-relations">
-        <tbody data-toggle="sortable">
+        <tbody data-sr-tirgger="sortable">
             <?php foreach ($groups as $key => $group) { ?>
                 <tr class="<?= strval($key) == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= "groups-$model->id" ?>">
                     <td>
@@ -81,7 +81,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                                     'name' => $input_name,
                                                     'value' => $input_value,
                                                 ]),
-                                                ['data-toggle' => 'file_manager']
+                                                ['data-sr-trigger' => 'file_manager']
                                             );
                                             
                                             break;
@@ -91,7 +91,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                                 'value' => $input_value,
                                                 'id' => "redactor-$model->id-$key-$a_key",
                                                 'options' => [
-                                                    'data-toggle' => 'text_editor',
+                                                    'data-sr-trigger' => 'text_editor',
                                                 ]
                                             ]);
                                             

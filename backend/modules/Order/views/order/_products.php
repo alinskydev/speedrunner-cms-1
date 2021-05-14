@@ -20,7 +20,7 @@ $is_block_disabled = !$model->isNewRecord && $model->status != 'new';
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <?php foreach ($relations as $value) { ?>
             <?php $value_id = $value->isNewRecord ? '__key__' : $value->id ?>
             
@@ -54,8 +54,8 @@ $is_block_disabled = !$model->isNewRecord && $model->status != 'new';
                                 'name' => "Order[products_tmp][$value_id][product_id]",
                                 'id' => "select2-products-$value_id",
                                 'disabled' => $is_block_disabled,
-                                'data-toggle' => 'select2-ajax',
-                                'data-action' => Yii::$app->urlManager->createUrl(['items-list/products']),
+                                'data-sr-trigger' => 'select2-ajax',
+                                'data-url' => Yii::$app->urlManager->createUrl(['items-list/products']),
                                 
                                 'data-variation-toggle' => true,
                                 'data-variation-action' => Yii::$app->urlManager->createUrl(['product/product/variations']),

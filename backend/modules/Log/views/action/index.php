@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 },
                 'filterInputOptions' => [
                     'class' => 'form-control',
-                    'data-toggle' => 'select2',
+                    'data-sr-trigger' => 'select2',
                 ]
             ],
             [

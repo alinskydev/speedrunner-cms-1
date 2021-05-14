@@ -81,7 +81,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function find()
     {
         $query_class_name = str_replace('\models\\', '\query\\', get_called_class()) . 'Query';
-        return class_exists($query_class_name) ? new $query_class_name(get_called_class()) : new ActiveQuery(get_called_class());
+        
+        if (class_exists($query_class_name)) {
+            return Yii::createObject($query_class_name, [get_called_class()]);
+        } else {
+            return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+        }
     }
     
     public function afterFind()

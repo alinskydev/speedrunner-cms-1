@@ -18,7 +18,7 @@ use yii\helpers\Html;
         </tr>
     </thead>
     
-    <tbody data-toggle="sortable">
+    <tbody data-sr-tirgger="sortable">
         <tr class="table-new-relation" data-table="view_relations">
             <td>
                 <div class="btn btn-primary table-sorter">

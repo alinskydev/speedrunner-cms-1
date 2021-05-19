@@ -70,7 +70,7 @@ class ProductCategory extends ActiveRecord
             [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
             
             [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
-            [['specifications_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id']],
+            [['specifications_tmp'], 'exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id', 'allowArray' => true],
         ];
     }
     

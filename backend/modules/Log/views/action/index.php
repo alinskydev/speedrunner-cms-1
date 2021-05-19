@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             [
                                 'target' => '_blank',
                                 'title' => Yii::t('app', 'Link'),
-                                'data-toggle' => 'tooltip',
+                                'data-sr-trigger' => 'tooltip',
                                 'data-pjax' => 0,
                             ]
                         );
@@ -104,12 +104,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         return Html::button(
                             Html::tag('i', null, ['class' => 'fas fa-eye']),
                             [
+                                'title' => Yii::t('app', 'View'),
                                 'class' => 'btn btn-link p-0',
                                 'data-pjax' => 0,
-                                'title' => Yii::t('app', 'View'),
-                                'data-toggle' => 'tooltip',
                                 
-                                'data-sr-trigger' => 'ajax-button',
+                                'data-sr-trigger' => 'tooltip ajax-button',
                                 'data-sr-url' => Yii::$app->urlManager->createUrl(['log/action/view', 'id' => $model->id]),
                                 'data-sr-wrapper' => '#main-modal',
                                 'data-sr-callback' => '$("#main-modal").modal()',

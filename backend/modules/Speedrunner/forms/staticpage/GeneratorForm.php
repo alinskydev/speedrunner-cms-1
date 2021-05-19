@@ -23,8 +23,7 @@ class GeneratorForm extends Model
     {
         return [
             [['name', 'label'], 'required'],
-            [['name', 'label'], 'string', 'max' => 100],
-            [['route'], 'string'],
+            [['name', 'label', 'route'], 'string', 'max' => 100],
             [['has_seo_meta'], 'boolean'],
             [['blocks'], 'safe'],
         ];

@@ -78,8 +78,6 @@ class ActiveQuery extends \yii\db\ActiveQuery
                 ]);
                 
                 break;
-            default:
-                $this->andWhere('false');
         }
         
         return $this->limit($limit);

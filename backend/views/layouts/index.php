@@ -8,14 +8,6 @@ use yii\widgets\Menu;
 
 AppAsset::register($this);
 
-//-----------------------------------------------------------------------------------
-
-$is_home = Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index';
-
-$menu_items = require '_nav.php';
-
-$flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE);
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -42,7 +34,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
     
     <nav class="container-fluid">
         <?= Menu::widget([
-            'items' => $menu_items,
+            'items' => require '_nav.php',
             'options' => ['class' => 'nav-items'],
             'labelTemplate' => '<div class="parent h4 font-weight-normal">{label}</div>',
             'submenuTemplate' => '<ul class="items">{items}</ul>',
@@ -53,7 +45,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
 </div>
 
 <div id="main-alert">
-    <?= $flashes ?>
+    <?= json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE) ?>
 </div>
 
 <?php $this->endBody() ?>

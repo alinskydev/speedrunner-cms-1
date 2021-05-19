@@ -150,7 +150,7 @@ $(function() {
     //      Popover & tooltip
     
     $('[data-sr-trigger*="popover"]').popover({placement: 'top', trigger: 'hover'});
-    $('[data-sr-trigger*="tooltip"]').not('td .action-buttons [data-sr-trigger="tooltip"]').tooltip();
+    $('[data-sr-trigger*="tooltip"]').not('td .action-buttons [data-sr-trigger*="tooltip"]').tooltip();
     $('td .action-buttons [data-sr-trigger*="tooltip"]').tooltip({placement: 'left'});
     
     //      Toggle session

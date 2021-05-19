@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             [
                                 'target' => '_blank',
                                 'title' => Yii::t('app', 'Link'),
-                                'data-toggle' => 'tooltip',
+                                'data-sr-trigger' => 'tooltip',
                                 'data-pjax' => 0,
                             ]
                         );

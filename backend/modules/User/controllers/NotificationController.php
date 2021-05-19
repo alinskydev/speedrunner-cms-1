@@ -19,7 +19,7 @@ class NotificationController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
-        return $this->redirect(ArrayHelper::getValue($model->service->actionData(), 'url'));
+        return $this->redirect(ArrayHelper::getValue($model->service->actionData(), 'url', Yii::$app->request->referrer));
     }
     
     public function actionClear()

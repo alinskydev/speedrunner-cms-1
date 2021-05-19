@@ -118,7 +118,7 @@ class Product extends ActiveRecord
             [['sku'], 'unique'],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            [['images'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024, 'allowArray' => true],
             [['related_ids'], 'default', 'value' => []],
             [['variations_tmp'], 'safe'],
             
@@ -127,11 +127,11 @@ class Product extends ActiveRecord
             [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
             [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
             
-            [['categories_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id']],
-            [['options_tmp'], 'each', 'rule' => ['exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id']],
-            [['related_ids'], 'each', 'rule' => ['exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'filter' => function ($query) {
-                $query->andFilterWhere(['!=', 'id', $this->id]);
-            }]],
+            [['categories_tmp'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            [['options_tmp'], 'exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            [['related_ids'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'allowArray' => true, 'filter' => function ($query) {
+                $query->andWhere(['!=', 'id', $this->id]);
+            }],
         ];
     }
     

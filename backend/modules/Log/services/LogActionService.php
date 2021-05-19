@@ -70,14 +70,14 @@ class LogActionService extends ActiveService
     
     public function findAndFill()
     {
-        if ($model = ArrayHelper::getValue(LogActionModelsList::$data, $this->model->model_class)) {
+        if ($model = ArrayHelper::getValue((new LogActionModelsList())::$data, $this->model->model_class)) {
             if ($index_url = ArrayHelper::getValue($model, 'index_url')) {
                 $model['index_url'] = [$index_url[0], $index_url[1] => $this->model['model_id']];
             }
             
             return $model;
         } else {
-            throw new \yii\web\HttpException(404, "The requested model '$name' not found");
+            throw new \yii\web\HttpException(404, "The requested model '{$this->model->model_class}' not found");
         }
     }
 }

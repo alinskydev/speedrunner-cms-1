@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use backend\widgets\grid\GridView;
 
-use backend\modules\System\models\SystemLanguage;
-
 $this->title = Yii::t('app', 'System languages');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

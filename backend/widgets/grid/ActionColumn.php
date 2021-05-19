@@ -179,7 +179,7 @@ class ActionColumn extends Column
                 $options = array_merge([
                     'aria-label' => $title,
                     'title' => $title,
-                    'data-toggle' => 'tooltip',
+                    'data-sr-trigger' => 'tooltip',
                     'data-pjax' => 0,
                 ], $additionalOptions, $this->buttonOptions);
                 

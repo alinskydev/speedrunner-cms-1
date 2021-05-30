@@ -49,7 +49,7 @@ class Blog extends ActiveRecord
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
             [['published_at'], 'date', 'format' => 'php: d.m.Y H:i'],
-            [['images'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024, 'allowArray' => true],
+            [['images'], 'each','rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
             [['tags_tmp'], 'safe'],
             
             [['slug'], SlugValidator::className()],

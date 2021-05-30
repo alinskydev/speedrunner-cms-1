@@ -137,6 +137,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 $allowed_chars = [
                     '%7B' => '{',
                     '%7D' => '}',
+                    '%3A' => ':',
                     '&amp;' => '&',
                 ];
                 

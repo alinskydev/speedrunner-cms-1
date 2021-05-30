@@ -26,19 +26,12 @@ class CreateAction extends Action
         $model->setAttributes($this->model_params, false);
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->makeRoot()) {
-                if ($parent = $model->findOne($model->parent_id)) {
-                    $model->refresh();
-                    $model->appendTo($parent);
-                }
-                
-                if ($this->success_message) {
-                    Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
-                }
-            } else {
-                if ($this->error_message) {
-                    Yii::$app->session->addFlash('danger', Yii::t('app', $this->error_message));
-                }
+            $parent = $model->findOne($model->parent_id);
+            $model->refresh();
+            $model->appendTo($parent);
+            
+            if ($this->success_message) {
+                Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
             }
             
             if (!$this->redirect_route) {

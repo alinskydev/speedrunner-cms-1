@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'data-action_move' => Yii::$app->urlManager->createUrl(['menu/menu/move']),
                     ],
                     'options' => [
-                        'source' => $data,
+                        'source' => $root->tree(),
                         'extensions' => ['dnd', 'filter'],
                         'init' => new JsExpression('function(event, data) {
                             $("#nav-item-content").load(data.tree.$div.data("action_create"));

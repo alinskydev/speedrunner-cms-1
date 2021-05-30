@@ -35,7 +35,7 @@ class NestedSetsController extends Controller
             'create' => [
                 'class' => Actions\nested_sets\CreateAction::className(),
                 'render_params' => fn() => [
-                    'parents' => $this->model->find()->itemsTree('name', 'translation')->asArray()->all(),
+                    'parents' => $this->model->find()->itemsTree('name', 'translation', null, null)->asArray()->all(),
                 ],
             ],
             'update' => [

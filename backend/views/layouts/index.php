@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\Alert;
-use yii\widgets\Menu;
+use backend\widgets\layout\Menu;
 
 AppAsset::register($this);
 

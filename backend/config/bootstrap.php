@@ -33,6 +33,7 @@ Yii::$container->set('alexantr\tinymce\TinyMCE', [
     'clientOptions' => [
         'height' => '300px',
         'relative_urls' => false,
+        'convert_urls' => false,
         'force_p_newlines' => true,
         'forced_root_block' => false,
         'fontsize_formats' => '8px 10px 12px 14px 16px 18px 24px 36px 48px',

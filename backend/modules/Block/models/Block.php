@@ -24,7 +24,7 @@ class Block extends ActiveRecord
             [['value'], 'boolean', 'when' => function ($model) {
                 return in_array($model->type->input_type, ['checkbox']);
             }],
-            [['value'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024, 'allowArray' => true, 'when' => function ($model) {
+            [['value'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
                 return in_array($model->type->input_type, ['files']);
             }],
             [['value'], 'valueValidation', 'when' => function ($model) {

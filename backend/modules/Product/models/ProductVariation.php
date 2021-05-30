@@ -38,7 +38,7 @@ class ProductVariation extends ActiveRecord
             [['sku'], 'unique'],
             [['discount'], 'integer', 'min' => 0, 'max' => 100],
             [['discount'], 'default', 'value' => 0],
-            [['images'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024, 'allowArray' => true],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
         ];
     }
     

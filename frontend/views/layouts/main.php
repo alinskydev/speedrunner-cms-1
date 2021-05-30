@@ -53,7 +53,7 @@ $flashes = Yii::$app->session->getAllFlashes();
 <?= Html::a(
     Html::tag('i', '&nbsp;', ['class' => 'fas fa-sign-out-alt']) . Yii::t('app', 'Logout'),
     ['auth/logout'],
-    ['class' => 'dropdown-item px-3', 'data-method' => 'POST']
+    ['class' => 'dropdown-item px-3', 'data-method' => 'post']
 ) ?>
 
 <?= Breadcrumbs::widget([

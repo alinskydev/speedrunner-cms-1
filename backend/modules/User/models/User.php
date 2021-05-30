@@ -116,6 +116,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['design_theme'], 'in', 'range' => array_keys($this->enums->designThemes())],
             [['design_font'], 'in', 'range' => array_keys($this->enums->designFonts())],
             [['design_border_radius'], 'integer', 'min' => 0],
+            [['design_theme'], 'default', 'value' => 'nav_left'],
+            [['design_font'], 'default', 'value' => 'roboto'],
             [['design_border_radius'], 'default', 'value' => 0],
             
             [['role'], UnchangeableValidator::className(), 'when' => fn ($model) => $model->id == 1],

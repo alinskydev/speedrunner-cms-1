@@ -118,7 +118,7 @@ class Product extends ActiveRecord
             [['sku'], 'unique'],
             [['short_description'], 'string', 'max' => 1000],
             [['full_description'], 'string'],
-            [['images'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024, 'allowArray' => true],
+            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
             [['related_ids'], 'default', 'value' => []],
             [['variations_tmp'], 'safe'],
             

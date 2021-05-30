@@ -35,7 +35,7 @@ class ConnectionController extends Controller
                             
                             'attributes' => [
 	                        	[
-	                        		'pattern' => '/\s|\.(html|xhtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/i', // Dissllow spaces and extensions
+	                        		'pattern' => '/\s|\.(html|xhtml|phtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/i', // Dissllow spaces and extensions
 	                        		'read' => false,
 	                        		'write' => false,
 	                        		'locked' => true,

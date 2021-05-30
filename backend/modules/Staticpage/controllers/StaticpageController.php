@@ -20,6 +20,8 @@ class StaticpageController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         
+        $model->save();
+        
         if ($post_data = Yii::$app->request->post('StaticpageBlock')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
             
@@ -31,13 +33,7 @@ class StaticpageController extends Controller
                     Yii::$app->session->setFlash('success', [Yii::t('app', 'Record has been saved')]);
                 }
             }
-        }
-        
-        if (Yii::$app->request->post('SeoMeta')) {
-            $model->save();
-        }
-        
-        if (Yii::$app->request->isPost) {
+            
             return $this->refresh();
         }
         

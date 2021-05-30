@@ -19,11 +19,17 @@ class TreeAction extends Action
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         $render_params = $this->render_params ?? fn() => [];
         
+        $root = $this->controller->model->find()->andWhere($this->filter)->one();
+        
+        if (!$root) {
+            return $this->controller->redirect(Yii::$app->request->referrer);
+        }
+        
         return call_user_func(
             [$this->controller, $render_type],
             $this->render_view,
             ArrayHelper::merge([
-                'data' => $this->controller->model->find()->andWhere($this->filter)->one()->tree(),
+                'root' => $root,
             ], $render_params())
         );
     }

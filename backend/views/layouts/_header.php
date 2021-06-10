@@ -11,7 +11,6 @@ $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
 
 $breadcrumbs = $this->params['breadcrumbs'] ?? [];
-$bookmark_add_value = implode(' &rsaquo; ', ArrayHelper::getColumn($breadcrumbs, 'label'));
 
 $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->user->id])->orderBy('id DESC')->limit(10)->all();
 
@@ -22,13 +21,13 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
         <div class="header-right">
             <div class="item dropdown">
                 <button type="button" class="btn btn-link dropdown-toggle flag-wrapper" data-toggle="dropdown">
-                    <img src="<?= Yii::$app->services->image->thumb($langs[Yii::$app->language]['image'], [30, 20]) ?>">
+                    <img src="<?= Yii::$app->services->image->thumb($langs[Yii::$app->language]['image'], [30, 20], 'crop') ?>">
                 </button>
                 
                 <div class="dropdown-menu dropdown-menu-right">
                     <?php foreach ($langs as $l) { ?>
                         <a class="dropdown-item small font-weight-bold" href="<?= $l['url'] ?>">
-                            <img class="mr-1" src="<?= Yii::$app->services->image->thumb($l['image'], [30, 20]) ?>">
+                            <img class="mr-1" src="<?= Yii::$app->services->image->thumb($l['image'], [30, 20], 'crop') ?>">
                             <?= $l['name'] ?>
                         </a>
                     <?php } ?>
@@ -97,69 +96,6 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                             echo Html::tag('div', Yii::t('app', 'No notifications'), ['class' => 'px-4']);
                         }
                     ?>
-                </div>
-            </div>
-            
-            <div class="item dropdown">
-                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="fas fa-bookmark"></i>
-                </button>
-                
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="px-3 py-1">
-                        <div class="h5 m-0">
-                            <?= Yii::t('app', 'Bookmarks') ?>
-                        </div>
-                    </div>
-                    
-                    <div class="dropdown-divider"></div>
-                    
-                    <div class="px-3">
-                        <?php
-                            foreach (Yii::$app->session->get('bookmarks', []) as $key => $b) {
-                                $buttons = [
-                                    Html::a(
-                                        Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . $b,
-                                        $key,
-                                        ['class' => 'btn btn-primary btn-block btn-icon']
-                                    ),
-                                    Html::a(
-                                        Html::tag('i', '&nbsp;', ['class' => 'fas fa-times']),
-                                        ['/session/remove'],
-                                        [
-                                            'class' => 'btn btn-danger',
-                                            'data-method' => 'post',
-                                            'data-params' => [
-                                                'name' => 'bookmarks',
-                                                'value' => $key,
-                                            ],
-                                        ]
-                                    ),
-                                ];
-                                
-                                echo Html::tag('div', implode(null, $buttons), ['class' => 'btn-group btn-block text-nowrap']);
-                            }
-                        ?>
-                    </div>
-                    
-                    <div class="dropdown-divider"></div>
-                    
-                    <div class="px-3">
-                        <?php
-                            echo Html::a(
-                                Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Add'),
-                                ['/session/set'],
-                                [
-                                    'class' => 'btn btn-success btn-block btn-icon',
-                                    'data-method' => 'post',
-                                    'data-params' => [
-                                        'name' => 'bookmarks',
-                                        'value' => $bookmark_add_value ?: Yii::t('app', 'Link'),
-                                    ],
-                                ]
-                            );
-                        ?>
-                    </div>
                 </div>
             </div>
             

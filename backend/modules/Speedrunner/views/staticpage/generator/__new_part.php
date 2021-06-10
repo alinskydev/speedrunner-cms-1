@@ -19,7 +19,7 @@
             </tr>
         </thead>
         
-        <tbody data-sr-tirgger="sortable"></tbody>
+        <tbody data-sr-trigger="sortable"></tbody>
         
         <tfoot>
             <tr>

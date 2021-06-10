@@ -32,6 +32,7 @@ Yii::$container->set('yii\bootstrap\Modal', [
 Yii::$container->set('alexantr\tinymce\TinyMCE', [
     'clientOptions' => [
         'height' => '300px',
+        'verify_html' => false,
         'relative_urls' => false,
         'convert_urls' => false,
         'force_p_newlines' => true,

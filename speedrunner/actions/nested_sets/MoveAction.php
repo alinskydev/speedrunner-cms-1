@@ -19,6 +19,8 @@ class MoveAction extends Action
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
+        $first_model->scenario = 'move';
+        
         switch ($action) {
             case 'after':
                 $first_model->insertAfter($second_model);

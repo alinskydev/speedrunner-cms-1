@@ -66,7 +66,7 @@ class PageController extends CrudController
                 }
             }
             
-            if (Yii::$app->request->get('save-and-update')) {
+            if (Yii::$app->request->get('save_and_update')) {
                 return $this->redirect(['update', 'id' => $model->id]);
             } else {
                 return $this->redirect(['index']);

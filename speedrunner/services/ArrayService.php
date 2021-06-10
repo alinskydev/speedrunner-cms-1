@@ -7,6 +7,11 @@ use Yii;
 
 class ArrayService
 {
+    public static function asObjects(array $array)
+    {
+        return json_decode(json_encode($array, JSON_UNESCAPED_UNICODE), false);
+    }
+    
     public static function buildFullPath(array $array, $attr, $children_attr = 'children', $parent_value = null, $separator = '/')
     {
         foreach ($array as &$arr) {
@@ -18,10 +23,5 @@ class ArrayService
         }
         
         return $array;
-    }
-    
-    public static function toObjects(array $array)
-    {
-        return json_decode(json_encode($array, JSON_UNESCAPED_UNICODE), false);
     }
 }

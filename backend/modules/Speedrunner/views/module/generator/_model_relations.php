@@ -27,7 +27,7 @@ $types = [
         </tr>
     </thead>
     
-    <tbody data-sr-tirgger="sortable">
+    <tbody data-sr-trigger="sortable">
         <?php foreach ($foreign_keys as $fks_key => $fks) { ?>
             <?php foreach ($fks as $key => $fk) { ?>
                 <?php

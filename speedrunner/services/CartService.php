@@ -51,9 +51,6 @@ class CartService
     
     public function createOrder(Order $order)
     {
-        $total_price = 0;
-        $total_quantity = 0;
-        
         $cart_products = ArrayHelper::getValue($this->cart, 'products', []);
         $cart_products = ArrayHelper::getColumn($cart_products, 'total_quantity');
         

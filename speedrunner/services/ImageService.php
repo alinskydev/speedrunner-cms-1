@@ -13,7 +13,7 @@ use Imagine\Image\ManipulatorInterface;
 
 class ImageService
 {
-    public static function thumb($image_url, $width_height, $type = 'crop')
+    public static function thumb($image_url, $width_height, $type = 'resize')
     {
         $width_height_string = implode('x', $width_height);
         
@@ -36,11 +36,11 @@ class ImageService
                 $new_thumb::$thumbnailBackgroundAlpha = 0;
                 
                 switch ($type) {
-                    case 'crop':
-                        $new_thumb = $new_thumb->thumbnail($image, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_OUTBOUND);
-                        break;
                     case 'resize':
                         $new_thumb = $new_thumb->thumbnail($image, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_INSET);
+                        break;
+                    case 'crop':
+                        $new_thumb = $new_thumb->thumbnail($image, $width_height[0], $width_height[1], ManipulatorInterface::THUMBNAIL_OUTBOUND);
                         break;
                 }
                 

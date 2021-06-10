@@ -21,7 +21,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
     <?= Html::hiddenInput("StaticpageBlock[$model->id][value]", null); ?>
     
     <table class="table table-relations">
-        <tbody data-sr-tirgger="sortable">
+        <tbody data-sr-trigger="sortable">
             <?php foreach ($groups as $key => $group) { ?>
                 <tr class="<?= strval($key) == '__key__' ? 'table-new-relation' : null ?>" data-table="<?= "groups-$model->id" ?>">
                     <td>
@@ -77,7 +77,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                             echo Html::tag(
                                                 'div',
                                                 InputFile::widget([
-                                                    'id' => "elfinder-$model->id-$key-$a_key",
+                                                    'id' => "elfinder-$key",
                                                     'name' => $input_name,
                                                     'value' => $input_value,
                                                 ]),
@@ -89,7 +89,7 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                                             echo TinyMCE::widget([
                                                 'name' => $input_name,
                                                 'value' => $input_value,
-                                                'id' => "redactor-$model->id-$key-$a_key",
+                                                'id' => "redactor-$key",
                                                 'options' => [
                                                     'data-sr-trigger' => 'text_editor',
                                                 ]

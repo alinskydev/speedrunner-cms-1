@@ -83,6 +83,7 @@ class InputFile extends InputWidget
         parent::init();
         
         $this->buttonText = Yii::t('app', 'Browse');
+        $this->options['id'] .= '-' . uniqid();
         
         $this->preview = function ($value) {
             if (!is_file(($file = Yii::getAlias("@frontend/web/$value")))) {

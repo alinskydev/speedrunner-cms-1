@@ -127,7 +127,7 @@ $(function() {
         ]
     };
     
-    $(document).on('mousedown', '[data-sr-trigger*="text_editor"]', function() {
+    $(document).on('click', '[data-sr-trigger*="text_editor"]', function() {
         if ($(this).prev('.mce-tinymce').length === 0) {
             alexantr.tinyMceWidget.register($(this).attr('id'), textEditorParams);
         }

@@ -23,7 +23,7 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
         </tr>
     </thead>
     
-    <tbody data-sr-tirgger="sortable">
+    <tbody data-sr-trigger="sortable">
         <?php foreach ($relations as $value) { ?>
             <?php $value_id = $value->isNewRecord ? '__key__' : $value->id ?>
             
@@ -64,7 +64,7 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 
                 <td>
                     <?= $form->field($value, 'image', [
-                        'enableClientValidation' => false,
+                        'template' => '{input}',
                         'options' => [
                             'data-sr-trigger' => 'file_manager',
                         ],

@@ -54,7 +54,7 @@ unset($attr_input_types['select'], $attr_input_types['select2_ajax']);
                         </tr>
                     </thead>
                     
-                    <tbody data-sr-tirgger="sortable">
+                    <tbody data-sr-trigger="sortable">
                         <tr class="table-new-relation" data-table="blocks">
                             <td>
                                 <div class="btn btn-primary table-sorter">

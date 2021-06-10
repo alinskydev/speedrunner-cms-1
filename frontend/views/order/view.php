@@ -25,19 +25,14 @@ $this->title = Yii::t('app', 'Order №{id}', ['id' => $model->id]);
 <?php foreach ($model->products as $key => $p) { ?>
     <?= $p->quantity ?>
     
-    <?= Yii::t('app', 'Price: {price}', [
-        'price' => Yii::$app->formatter->asDecimal($p->total_price)
-    ]) ?>
+    <?= Yii::$app->services->formatter->asPrice($p->total_price) ?>
 <?php } ?>
 
-<?= Yii::t('app', 'Products price: {price} сум', [
-    'price' => Yii::$app->formatter->asDecimal($model->total_price)
-]) ?>
+Total
+<?= Yii::$app->services->formatter->asPrice($model->total_price) ?>
 
-<?= Yii::t('app', 'Delivery price: {price} сум', [
-    'price' => Yii::$app->formatter->asDecimal($model->delivery_price)
-]) ?>
+Delivery
+<?= Yii::$app->services->formatter->asPrice($model->delivery_price) ?>
 
-<?= Yii::t('app', 'Total price: {price} сум', [
-    'price' => Yii::$app->formatter->asDecimal($model->checkout_price)
-]) ?>
+Checkout
+<?= Yii::$app->services->formatter->asPrice($model->checkout_price) ?>

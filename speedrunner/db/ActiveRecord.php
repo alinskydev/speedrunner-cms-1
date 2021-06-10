@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\HtmlPurifier;
+use speedrunner\services\ActiveService;
 
 use backend\modules\Seo\services\SeoMetaService;
 
@@ -39,7 +40,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $service_class_name = str_replace('\models\\', '\services\\', get_called_class()) . 'Service';
         
         if ($this->service === null) {
-            $this->service = class_exists($service_class_name) ? new $service_class_name($this) : null;
+            $this->service = class_exists($service_class_name) ? new $service_class_name($this) : new ActiveService($this);
         }
         
         return parent::init();

@@ -27,7 +27,7 @@ class StaticpageService
         if ($page = ArrayHelper::getValue(self::$pages, $name)) {
             return [
                 'page' => $page,
-                'blocks' => Yii::$app->services->array->toObjects(ArrayHelper::map($page->blocks, 'name', 'value')),
+                'blocks' => Yii::$app->services->array->asObjects(ArrayHelper::map($page->blocks, 'name', 'value')),
             ];
         } else {
             throw new \yii\web\HttpException(404, "The requested static page '$name' not found");

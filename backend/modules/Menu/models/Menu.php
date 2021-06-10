@@ -16,6 +16,13 @@ class Menu extends ActiveRecord
         return '{{%menu}}';
     }
     
+    public function scenarios()
+    {
+        return ArrayHelper::merge(parent::scenarios(), [
+            'move' => [],
+        ]);
+    }
+    
     public function behaviors()
     {
         return [

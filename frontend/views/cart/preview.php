@@ -8,11 +8,9 @@ use yii\helpers\ArrayHelper;
 <?php if (isset($cart['products'])) { ?>
     <?php foreach ($cart['products'] as $p) { ?>
         <?= $p['name'] ?>
-        <?= Yii::$app->services->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100], 'resize') ?>
+        <?= Yii::$app->services->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100]) ?>
         
-        <?= Yii::t('app', 'Price: {price}', [
-            'price' => Yii::$app->formatter->asDecimal($p['total_price'])
-        ]) ?>
+        <?= Yii::$app->services->formatter->asPrice($p['total_price']) ?>
         
         <?= Yii::t('app', 'Quantity: {quantity}', [
             'quantity' => $p['total_quantity']
@@ -40,9 +38,7 @@ use yii\helpers\ArrayHelper;
         <?= Html::endForm(); ?>
     <?php } ?>
     
-    <?= Yii::t('app', 'Total price: {price}', [
-        'price' => Yii::$app->formatter->asDecimal($cart['total']['price'])
-    ]) ?>
+    <?= Yii::$app->services->formatter->asPrice($cart['total']['price']) ?>
 <?php } else { ?>
     <h2><?= Yii::t('app', 'Your cart is empty now') ?></h2>
 <?php } ?>

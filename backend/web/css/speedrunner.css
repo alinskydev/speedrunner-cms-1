@@ -951,6 +951,10 @@ span.fancytree-active span.fancytree-title,
     pointer-events: none;
 }
 
+table.multiple-input-list.table-renderer tr > td:first-child {
+    padding-left: 0.75rem;
+}
+
 
 
 @media (max-width: 1199px) {

@@ -17,6 +17,13 @@ class ProductCategory extends ActiveRecord
         return '{{%product_category}}';
     }
     
+    public function scenarios()
+    {
+        return ArrayHelper::merge(parent::scenarios(), [
+            'move' => [],
+        ]);
+    }
+    
     public function behaviors()
     {
         return [

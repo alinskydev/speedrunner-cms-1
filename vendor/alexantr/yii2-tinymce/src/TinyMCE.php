@@ -37,6 +37,7 @@ class TinyMCE extends InputWidget
     {
         parent::init();
         $this->clientOptions = ArrayHelper::merge($this->getPresetConfig(), $this->clientOptions);
+        $this->options['id'] .= '-' . uniqid();
     }
 
     /**

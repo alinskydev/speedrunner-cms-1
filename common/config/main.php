@@ -78,6 +78,7 @@ return [
                 'cart' => 'speedrunner\services\CartService',
                 'data' => 'speedrunner\services\DataService',
                 'file' => 'speedrunner\services\FileService',
+                'formatter' => 'speedrunner\services\FormatterService',
                 'html' => 'speedrunner\services\HtmlService',
                 'i18n' => 'speedrunner\services\I18NService',
                 'image' => 'speedrunner\services\ImageService',

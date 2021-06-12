@@ -13,6 +13,14 @@ class ConnectionController extends Controller
 {
     public function actions()
     {
+        $upload_allow = [];
+        
+        array_walk(Yii::$app->params['extensions'], function($extensions, $key) use (&$upload_allow) {
+            array_walk($extensions, function($value) use (&$upload_allow, $key) {
+                $upload_allow[] = "$key/$value";
+            });
+        });
+        
         return [
             'elfinder' => [
                 'class' => 'alexantr\elfinder\ConnectorAction',
@@ -20,7 +28,6 @@ class ConnectionController extends Controller
                     'roots' => [
                         [
                             'driver' => 'LocalFileSystem',
-                            
                             'path' => Yii::getAlias('@frontend/web/uploads/'),
                             'URL' => '/uploads/',
                             'mimeDetect' => 'internal',
@@ -29,18 +36,18 @@ class ConnectionController extends Controller
                             'tmbURL' => '/assets/elfinder',
                             'tmbCrop' => false,
                             
-                            'disabled' => [
-                                'chmod', 'editor', 'netmount', 'parents', 'resize'
-                            ],
+                            'disabled' => ['chmod', 'editor', 'netmount', 'parents', 'resize', 'extract', 'mkfile'],
+                            'uploadDeny' => ['all'],
+                            'uploadAllow' => $upload_allow,
+                            'uploadOrder' => ['deny', 'allow'],
                             
                             'attributes' => [
 	                        	[
-	                        		'pattern' => '/\s|\.(html|xhtml|phtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/i', // Dissllow spaces and extensions
+	                        		'pattern' => '/\.(html|xhtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/',
 	                        		'read' => false,
 	                        		'write' => false,
 	                        		'locked' => true,
 	                        		'hidden' => true,
-                                    'message' => 'qwe',
 	                        	]
 	                        ],
                         ],
@@ -51,16 +58,10 @@ class ConnectionController extends Controller
                 'class' => 'alexantr\elfinder\InputFileAction',
                 'connectorRoute' => 'elfinder',
             ],
-            
             'tinymce' => [
                 'class' => 'alexantr\elfinder\TinyMCEAction',
                 'connectorRoute' => 'elfinder',
             ],
-//            'tinymce-image-upload' => [
-//                'class' => 'alexantr\tinymce\actions\UploadFileAction',
-//                'url' => '/uploaded/editor', // Directory URL address, where files are stored.
-//                'path' => '@frontend/web/uploaded/editor', // Or absolute path to directory where files are stored.
-//            ],
         ];
     }
 }

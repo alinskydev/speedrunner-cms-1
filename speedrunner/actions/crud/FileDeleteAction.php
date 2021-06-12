@@ -25,8 +25,8 @@ class FileDeleteAction extends Action
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            unset($images[$key]);
             Yii::$app->services->file->delete($images[$key]);
+            unset($images[$key]);
             
             return $model->updateAttributes([
                 $attr => is_array($model->{$attr}) ? array_values($images) : '',

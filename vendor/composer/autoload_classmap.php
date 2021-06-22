@@ -593,6 +593,7 @@ return array(
     'elFinderVolumeLocalFileSystem' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeLocalFileSystem.class.php',
     'elFinderVolumeMySQL' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeMySQL.class.php',
     'elFinderVolumeOneDrive' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeOneDrive.class.php',
+    'elFinderVolumeSFTPphpseclib' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeSFTPphpseclib.class.php',
     'elFinderVolumeTrash' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeTrash.class.php',
     'elFinderVolumeTrashMySQL' => $vendorDir . '/studio-42/elfinder/php/elFinderVolumeTrashMySQL.class.php',
 );

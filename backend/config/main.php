@@ -27,11 +27,11 @@ return [
         'user' => ['class' => 'backend\modules\User\Module'],
     ],
     'as access' => [
-       'class' => 'yii2mod\rbac\filters\AccessControl',
-       'allowActions' => [
-           'auth/login',
-           'auth/logout',
-       ]
+        'class' => 'yii2mod\rbac\filters\AccessControl',
+        'allowActions' => [
+            'auth/login',
+            'auth/logout',
+        ],
     ],
     'components' => [
         'request' => [

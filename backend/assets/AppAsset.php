@@ -28,8 +28,8 @@ class AppAsset extends AssetBundle
         'js/select2.full.min.js',
         'js/jquery.toast.js',
         
-        'js/speedrunner-triggers.js',
         'js/speedrunner-ajax-triggers.js',
+        'js/speedrunner-triggers.js',
         'js/speedrunner.js',
     ];
     

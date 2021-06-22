@@ -13,8 +13,7 @@ class AppAsset extends AssetBundle
     ];
     
     public $js = [
-        'admin/js/sr-triggers.js',
-        
+        'admin/js/speedrunner-ajax-triggers.js',
         'js/re-script.js',
     ];
     

@@ -11,6 +11,15 @@ use zxbodya\yii2\elfinder\ConnectorAction;
 
 class ConnectionController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'tinymce-image-upload') {
+            $this->enableCsrfValidation = false;
+        }
+        
+        return parent::beforeAction($action);
+    }
+    
     public function actions()
     {
         $upload_allow = [];
@@ -43,7 +52,7 @@ class ConnectionController extends Controller
                             
                             'attributes' => [
 	                        	[
-	                        		'pattern' => '/\.(html|xhtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/',
+	                        		'pattern' => '/\.(html|xhtml|phtml|php|py|pl|sh|xml|js|gitignore|quarantine)$/',
 	                        		'read' => false,
 	                        		'write' => false,
 	                        		'locked' => true,
@@ -58,9 +67,15 @@ class ConnectionController extends Controller
                 'class' => 'alexantr\elfinder\InputFileAction',
                 'connectorRoute' => 'elfinder',
             ],
+            
             'tinymce' => [
                 'class' => 'alexantr\elfinder\TinyMCEAction',
                 'connectorRoute' => 'elfinder',
+            ],
+            'tinymce-image-upload' => [
+                'class' => 'alexantr\tinymce\actions\UploadFileAction',
+                'url' => '/uploaded/editor',
+                'path' => '@frontend/web/uploaded/editor',
             ],
         ];
     }

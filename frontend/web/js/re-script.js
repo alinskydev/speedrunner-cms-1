@@ -1,5 +1,7 @@
 $(function() {
     
+    let el, action, sendData;
+    
     //      Cart changing quantity
     
     let quantity;

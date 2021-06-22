@@ -63,7 +63,7 @@ class ItemsListController extends Controller
                 'model_class' => User::className(),
                 'attribute' => 'username',
                 'type' => 'self',
-                'filter' => ['User.role' => Yii::$app->request->get('role')],
+                'filter' => ['user.role' => Yii::$app->request->get('role')],
             ],
         ];
     }

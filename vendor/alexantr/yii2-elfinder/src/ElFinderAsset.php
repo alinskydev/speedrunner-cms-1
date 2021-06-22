@@ -9,9 +9,9 @@ class ElFinderAsset extends AssetBundle
     public $sourcePath = '@vendor/studio-42/elfinder';
     public $css = [
         'css/elfinder.min.css',
-        '/admin/vendor/elfinder/win10/css/theme.css',
+//        '/admin/vendor/elfinder/win10/css/theme.css',
 //        '/admin/vendor/elfinder/new/css/theme.css',
-//        '/admin/vendor/elfinder/material/css/theme-gray.css',
+        '/admin/vendor/elfinder/material/css/theme-gray.css',
     ];
     public $js = [
         'js/elfinder.min.js',

@@ -344,19 +344,19 @@ header .dropdown-toggle::after {
     margin: 0;
 }
 
-.nav-wrapper-full nav ul li > a {
+.nav-wrapper-full nav ul li a {
     display: block;
     color: #ACD3D4;
     transition: all 0.15s;
     text-decoration: none;
 }
 
-.nav-wrapper-full nav ul li.active > a,
-.nav-wrapper-full nav ul li > a:hover {
+.nav-wrapper-full nav ul li.active a,
+.nav-wrapper-full nav ul li a:hover {
     color: #fff;
 }
 
-.nav-wrapper-full nav ul li > a:before {
+.nav-wrapper-full nav ul li a:before {
     content: "\f105";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -389,8 +389,7 @@ header .dropdown-toggle::after {
 }
 
 .nav-wrapper-side.opened {
-    width: 250px;
-    min-width: 250px;
+    width: 300px;
 }
 
 .nav-wrapper-side .site-logo {

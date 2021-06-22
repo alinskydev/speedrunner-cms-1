@@ -104,7 +104,7 @@ $(function() {
         height: '300px',
         language: $('html').attr('lang'),
         relative_urls: false,
-        force_p_newlines : true,
+        force_p_newlines : false,
         forced_root_block : false,
         fontsize_formats: '8px 10px 12px 14px 16px 18px 24px 36px 48px',
         file_picker_callback: alexantr.elFinder.filePickerCallback({
@@ -122,7 +122,7 @@ $(function() {
         ],
         menu: [],
         toolbar: [
-            'undo redo | cut copy paste | fontselect | fontsizeselect | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor',
+            'undo redo | cut copy paste | fontselect | fontsizeselect | styleselect | removeformat bold italic underline strikethrough superscript subscript | forecolor backcolor',
             'outdent indent | alignleft aligncenter alignright alignjustify | bullist numlist table | link anchor image media | charmap | searchreplace visualblocks preview code fullscreen'
         ]
     };

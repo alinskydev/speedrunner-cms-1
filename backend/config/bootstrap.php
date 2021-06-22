@@ -32,24 +32,27 @@ Yii::$container->set('yii\bootstrap\Modal', [
 Yii::$container->set('alexantr\tinymce\TinyMCE', [
     'clientOptions' => [
         'height' => '300px',
-        'verify_html' => false,
         'relative_urls' => false,
         'convert_urls' => false,
-        'force_p_newlines' => true,
+        'paste_data_images' => true,
+        
+        'verify_html' => false,
+        'force_p_newlines' => false,
         'forced_root_block' => false,
         'fontsize_formats' => '8px 10px 12px 14px 16px 18px 24px 36px 48px',
+        
+        'menu' => [],
         'plugins' => [
             'advlist autolink lists link charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
             'table contextmenu paste textcolor colorpicker advcode',
             'media image',
         ],
-        'menu' => [],
         'toolbar' => [
             implode(' | ', [
                 'undo redo', 'cut copy paste',
                 'fontselect', 'fontsizeselect', 'styleselect',
-                'bold italic underline strikethrough superscript subscript',
+                'removeformat bold italic underline strikethrough superscript subscript',
                 'forecolor backcolor',
             ]),
             implode(' | ', [

@@ -27,27 +27,11 @@ class ProductCategory extends ActiveRecord
     public function behaviors()
     {
         return [
-            'tree' => [
-                'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
-                'treeAttribute' => 'tree',
-            ],
-            'htmlTree' => [
-                'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
-                'labelAttribute' => 'name',
-                'isAttributeTranslatable' => true,
-            ],
-            'sluggable' => [
-                'class' => \yii\behaviors\SluggableBehavior::className(),
-                'attribute' => 'name',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-            ],
+            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
+            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
-            ],
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_many_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
@@ -62,6 +46,15 @@ class ProductCategory extends ActiveRecord
                         ],
                     ],
                 ],
+            ],
+            'tree' => [
+                'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
+                'treeAttribute' => 'tree',
+            ],
+            'htmlTree' => [
+                'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
+                'labelAttribute' => 'name',
+                'isAttributeTranslatable' => true,
             ],
         ];
     }

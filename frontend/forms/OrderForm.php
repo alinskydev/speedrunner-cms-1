@@ -72,7 +72,7 @@ class OrderForm extends Model
         //        Notifications
         
         Yii::$app->services->notification->create(
-            User::find()->andWhere(['role' => 'admin'])->column(),
+            User::find()->andWhere(['role_id' => 1])->column(),
             'order_created', $this->order->id,
             [
                 'id' => $this->order->id,

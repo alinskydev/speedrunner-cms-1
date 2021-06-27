@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->services->html->saveButtons(['save']) ?>
+    <?= Yii::$app->helpers->html->saveButtons(['save']) ?>
 </h2>
 
 <div class="row">
@@ -29,11 +29,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#tab-assign">
                     <?= Yii::t('app', 'Assign') ?>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#tab-seo-meta">
-                    <?= Yii::t('app', 'SEO meta') ?>
                 </a>
             </li>
         </ul>
@@ -103,12 +98,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         <span class="fas fa-times"></span>
                     </button>
                 </div>
-            </div>
-            
-            <div id="tab-seo-meta" class="tab-pane fade">
-                <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                    'model' => $model,
-                ]) ?>
             </div>
         </div>
     </div>

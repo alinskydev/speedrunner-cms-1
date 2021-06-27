@@ -12,7 +12,6 @@ $related = $model->service->related();
 
 echo UpdateWidget::widget([
     'model' => $model,
-    'has_seo_meta' => true,
     'tabs' => [
         'information' => [
             'label' => Yii::t('app', 'Information'),

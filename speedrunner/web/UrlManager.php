@@ -103,6 +103,15 @@ class UrlManager extends \yii\web\UrlManager
         return Url::ensureScheme($url, $scheme);
     }
     
+    public function getRoute($params)
+    {
+        $params = (array)$params;
+        $language = ArrayHelper::remove($params, 'lang', self::$currentLanguage);
+        $url = preg_replace("-$this->baseUrl/$language/-", null, Url::to([$params[0]]), 1);
+        
+        return $url;
+    }
+    
     public function canBeCached(UrlRuleInterface $rule)
     {
         return false;

@@ -18,9 +18,6 @@ class Staticpage extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            ],
             'cache' => [
                 'class' => \speedrunner\behaviors\CacheBehavior::className(),
                 'tags' => ['staticpages'],
@@ -31,5 +28,14 @@ class Staticpage extends ActiveRecord
     public function getBlocks()
     {
         return $this->hasMany(StaticpageBlock::className(), ['staticpage_id' => 'id'])->orderBy('part_index');
+    }
+    
+    public function afterFind()
+    {
+        if ($this->has_seo_meta) {
+            $this->attachBehavior('seo_meta', \speedrunner\behaviors\SeoMetaBehavior::className());
+        }
+        
+        return parent::afterFind();
     }
 }

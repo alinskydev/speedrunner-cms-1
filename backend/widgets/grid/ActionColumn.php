@@ -222,7 +222,8 @@ class ActionColumn extends Column
                     ? call_user_func($this->visibleButtons[$name], $model, $key, $index)
                     : $this->visibleButtons[$name];
             } else {
-                $isVisible = true;
+                $route = Yii::$app->controller->getUniqueId() . "/$name";
+                $isVisible = Yii::$app->user->identity->role->service->isAllowedByRoute($route);
             }
             
             if ($isVisible && isset($this->buttons[$name])) {

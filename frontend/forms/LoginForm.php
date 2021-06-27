@@ -38,8 +38,9 @@ class LoginForm extends Model
     {
         $this->user = User::find()
             ->andWhere([
-                'username' => $this->username,
-                'role' => 'registered',
+                'and',
+                ['username' => $this->username],
+                'role_id IS NULL',
             ])
             ->one();
         

@@ -18,15 +18,8 @@ class ProductBrand extends ActiveRecord
     public function behaviors()
     {
         return [
-            'sluggable' => [
-                'class' => \yii\behaviors\SluggableBehavior::className(),
-                'attribute' => 'name',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-            ],
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            ],
+            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
+            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
         ];
     }
     

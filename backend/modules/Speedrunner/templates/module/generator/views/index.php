@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= "<?= \$this->title ?>\n" ?>
 <?php
     if (in_array('create', $model->controller_actions)) {
-        echo "    <?= Html::a(
+        echo "    <?= Yii::\$app->helpers->html->allowedLink(
         Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
         ['create'],
         ['class' => 'btn btn-primary btn-icon float-right']

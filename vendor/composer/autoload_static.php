@@ -38,7 +38,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
-            'yii2mod\\rbac\\' => 13,
         ),
         'w' => 
         array (
@@ -60,10 +59,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
             'kartik\\plugins\\fileinput\\' => 25,
             'kartik\\file\\' => 12,
             'kartik\\base\\' => 12,
-        ),
-        'd' => 
-        array (
-            'dosamigos\\arrayquery\\' => 21,
         ),
         'c' => 
         array (
@@ -179,10 +174,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
-        'yii2mod\\rbac\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yii2mod/yii2-rbac',
-        ),
         'wokster\\treebehavior\\' => 
         array (
             0 => __DIR__ . '/..' . '/wokster/yii2-nested-sets-tree-behavior',
@@ -220,10 +211,6 @@ class ComposerStaticInit79f26c986bacfbb4c80e2b402759fea3
         'kartik\\base\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
-        ),
-        'dosamigos\\arrayquery\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/2amigos/yii2-arrayquery-component/src',
         ),
         'creocoder\\nestedsets\\' => 
         array (

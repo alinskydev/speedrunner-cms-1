@@ -4,70 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb9d0a766e9c8c310dfc75f747189514",
+    "content-hash": "cc9ba0990f6d5109053ee2cad0925b65",
     "packages": [
-        {
-            "name": "2amigos/yii2-arrayquery-component",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/2amigos/yii2-arrayquery-component.git",
-                "reference": "7f621370e1e954237741aa6d23eb5a5f21c985f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-arrayquery-component/zipball/7f621370e1e954237741aa6d23eb5a5f21c985f3",
-                "reference": "7f621370e1e954237741aa6d23eb5a5f21c985f3",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "~2.0.11"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpunit/phpunit": "~5.6",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "dosamigos\\arrayquery\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "2amigOS! Consulting Group",
-                    "email": "hola@2amigos.us",
-                    "homepage": "http://2amigos.us",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Yii2 component that allows for searching/filtering the elements of an array.",
-            "homepage": "http://yiiwheels.com/extension/arrayquery-component",
-            "keywords": [
-                "2amigos",
-                "arrayquery",
-                "component",
-                "extension",
-                "yii",
-                "yii 2",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/dosamigos/yii2-arrayquery-component/issues",
-                "source": "https://github.com/dosamigos/yii2-arrayquery-component"
-            },
-            "time": "2017-07-05T10:05:39+00:00"
-        },
         {
             "name": "alexantr/yii2-elfinder",
             "version": "1.7.0",
@@ -4910,65 +4848,6 @@
                 "source": "https://github.com/xemlock/htmlpurifier-html5/tree/master"
             },
             "time": "2019-08-07T17:19:21+00:00"
-        },
-        {
-            "name": "yii2mod/yii2-rbac",
-            "version": "2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yii2mod/yii2-rbac.git",
-                "reference": "d6d236ff45910726081061c49b91f54642371283"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yii2mod/yii2-rbac/zipball/d6d236ff45910726081061c49b91f54642371283",
-                "reference": "d6d236ff45910726081061c49b91f54642371283",
-                "shasum": ""
-            },
-            "require": {
-                "2amigos/yii2-arrayquery-component": "~1.0",
-                "php": ">=7.0.0",
-                "yiisoft/yii2": "~2.0.13",
-                "yiisoft/yii2-jui": "~2.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0",
-                "phpunit/phpunit": "~6.0"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "yii2mod\\rbac\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Semenov",
-                    "email": "disemx@gmail.com"
-                },
-                {
-                    "name": "Igor Chepurnoi",
-                    "email": "chepurnoi.igor@gmail.com"
-                }
-            ],
-            "description": "RBAC management module for Yii2",
-            "keywords": [
-                "rbac gui",
-                "rbac management",
-                "rbac module",
-                "yii2",
-                "yii2 rbac",
-                "yii2-rbac"
-            ],
-            "support": {
-                "issues": "https://github.com/yii2mod/yii2-rbac/issues",
-                "source": "https://github.com/yii2mod/yii2-rbac/tree/master"
-            },
-            "time": "2018-01-15T15:53:16+00:00"
         },
         {
             "name": "yiisoft/yii2",

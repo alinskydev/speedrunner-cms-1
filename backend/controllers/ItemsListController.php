@@ -14,6 +14,7 @@ use backend\modules\Product\models\Product;
 use backend\modules\Product\models\ProductBrand;
 use backend\modules\Product\models\ProductSpecification;
 use backend\modules\User\models\User;
+use backend\modules\User\models\UserRole;
 
 
 class ItemsListController extends Controller
@@ -63,7 +64,13 @@ class ItemsListController extends Controller
                 'model_class' => User::className(),
                 'attribute' => 'username',
                 'type' => 'self',
-                'filter' => ['user.role' => Yii::$app->request->get('role')],
+                'filter' => ['role_id' => Yii::$app->request->get('role_id')],
+            ],
+            'user-roles' => [
+                'class' => Actions\web\ItemsListAction::className(),
+                'model_class' => UserRole::className(),
+                'attribute' => 'name',
+                'type' => 'translation',
             ],
         ];
     }

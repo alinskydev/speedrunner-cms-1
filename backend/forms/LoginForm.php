@@ -40,7 +40,7 @@ class LoginForm extends Model
             ->andWhere([
                 'and',
                 ['username' => $this->username],
-                ['!=', 'role', 'registered'],
+                'role_id IS NOT NULL',
             ])
             ->one();
         

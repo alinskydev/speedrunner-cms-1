@@ -9,7 +9,6 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
-    $config['modules']['rbac'] = 'yii2mod\rbac\Module';
     $config['modules']['speedrunner'] = 'backend\modules\Speedrunner\Module';
 }
 

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Html::a(
+    <?= Yii::$app->helpers->html->allowedLink(
         Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
         ['create'],
         ['class' => 'btn btn-primary btn-icon float-right']
@@ -95,6 +95,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
                 'value' => function ($model) {
+                    if (!Yii::$app->user->identity->role->service->isAllowedByRoute('order/order/change-status')) {
+                        return ArrayHelper::getValue($model->enums->statuses(), "$model->status.label");
+                    }
+                    
                     $result = Html::a(
                         ArrayHelper::getValue($model->enums->statuses(), "$model->status.label") . Html::tag('b', null, ['class' => 'caret']),
                         '#',

@@ -12,8 +12,8 @@ class Components
     
     public function __get($name)
     {
-        if ($service = ArrayHelper::getValue($this->components, $name)) {
-            return new $service;
+        if ($component = ArrayHelper::getValue($this->components, $name)) {
+            return new $component;
         } else {
             throw new \yii\web\HttpException(404, "The requested component '$name' not found");
         }

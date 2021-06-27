@@ -17,7 +17,7 @@ use yii\web\JsExpression;
 
 <h2 class="main-title">
     <?= $this->title ?>
-    <?= Yii::$app->services->html->saveButtons($save_buttons) ?>
+    <?= Yii::$app->helpers->html->saveButtons($save_buttons) ?>
 </h2>
 
 <div class="row">
@@ -208,7 +208,7 @@ use yii\web\JsExpression;
             <?php if ($has_seo_meta) { ?>
                 <div id="tab-seo-meta" class="tab-pane <?= !$tabs ? 'active' : 'fade' ?>">
                     <?= $this->render('@backend/modules/Seo/views/meta/meta', [
-                        'model' => $seo_meta_model ?? $model,
+                        'model' => $seo_meta_model,
                     ]) ?>
                 </div>
             <?php } ?>

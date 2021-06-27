@@ -22,9 +22,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 echo UpdateWidget::widget([
     'model' => $model,
-<?php if ($model->has_seo_meta) { ?>
-    'has_seo_meta' => true,
-<?php } ?>
     'tabs' => [
         'information' => [
             'label' => Yii::t('app', 'Information'),

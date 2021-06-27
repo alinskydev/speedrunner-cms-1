@@ -41,12 +41,13 @@ class LogActionModelsList
                     'label' => Yii::t('app', 'Users'),
                     'model' => ($model = new \backend\modules\User\models\User()),
                     'index_url' => ['/user/user/index', 'UserSearch[id]'],
-                    'relations' => [],
+                    'relations' => [
+                        'role_id' => ['link' => 'role', 'attr' => 'name'],
+                    ],
                     'attributes' => [
                         'translation' => [],
                         'boolean' => [],
                         'enum' => [
-                            'role' => $model->enums->roles(),
                             'design_theme' => $model->enums->designThemes(),
                             'design_font' => $model->enums->designFonts(),
                         ],

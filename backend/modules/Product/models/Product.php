@@ -29,12 +29,8 @@ class Product extends ActiveRecord
     public function behaviors()
     {
         return [
-            'sluggable' => [
-                'class' => \yii\behaviors\SluggableBehavior::className(),
-                'attribute' => 'name',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-            ],
+            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
+            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'short_description', 'full_description'],
@@ -43,9 +39,6 @@ class Product extends ActiveRecord
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['images'],
                 'multiple' => true,
-            ],
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_one_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),

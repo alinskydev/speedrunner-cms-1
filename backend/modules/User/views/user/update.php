@@ -17,9 +17,12 @@ echo UpdateWidget::widget([
                 'username' => 'text_input',
                 'email' => 'text_input',
                 [
-                    'name' => 'role',
-                    'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->enums->roles(), 'label'),
+                    'name' => 'role_id',
+                    'type' => 'select2_ajax',
+                    'data' => [$model->role_id => ArrayHelper::getValue($model->role, 'name')],
+                    'widget_options' => [
+                        'ajax_url' => Yii::$app->urlManager->createUrl(['items-list/user-roles']),
+                    ]
                 ],
                 [
                     'name' => 'new_password',

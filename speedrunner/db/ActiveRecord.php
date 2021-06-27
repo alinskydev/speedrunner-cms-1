@@ -139,12 +139,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($value) {
                 if (is_array($value)) {
                     array_walk_recursive($value, function(&$v, $k) use ($allowed_chars) {
-                        $v = Yii::$app->services->html->purify($v, $allowed_chars);
+                        $v = Yii::$app->helpers->html->purify($v, $allowed_chars);
                     });
                     
                     $this->{$attribute} = $value;
                 } else {
-                    $this->{$attribute} = Yii::$app->services->html->purify($value, $allowed_chars);
+                    $this->{$attribute} = Yii::$app->helpers->html->purify($value, $allowed_chars);
                 }
             }
         }

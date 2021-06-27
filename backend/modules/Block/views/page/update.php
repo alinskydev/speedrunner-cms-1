@@ -83,7 +83,6 @@ foreach ($blocks as $key => $b) {
         ],
     ], $attribute) : null;
     
-    
     $tabs[$b->id] = [
         'label' => $b->type->label,
         'attributes' => [$attribute],
@@ -92,6 +91,7 @@ foreach ($blocks as $key => $b) {
 
 echo UpdateWidget::widget([
     'model' => $new_block,
+    'seo_meta_model' => $model,
     'form_options' => [
         'fieldConfig' => ['enableClientValidation' => false],
     ],

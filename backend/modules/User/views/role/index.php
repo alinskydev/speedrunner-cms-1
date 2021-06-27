@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use backend\widgets\grid\GridView;
 
-$this->title = Yii::t('app', 'Blog categories');
+$this->title = Yii::t('app', 'User roles');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -23,38 +24,21 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'backend\widgets\grid\CheckboxColumn',
-            ],
-            [
-                'header' => false,
-                'format' => 'raw',
-                'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->services->image->thumb($model->image, [40, 40])),
-                'headerOptions' => [
-                    'style' => 'width: 65px;'
-                ],
-            ],
-            [
                 'attribute' => 'id',
                 'headerOptions' => [
                     'style' => 'width: 100px;'
                 ]
             ],
             'name',
-            [
-                'attribute' => 'slug',
-                'format' => 'raw',
-                'value' => fn ($model) => Html::a(
-                    $model->slug,
-                    Yii::$app->urlManagerFrontend->createUrl(['blog/index', 'slug' => $model->slug]),
-                    ['target' => '_blank']
-                ),
-            ],
             'created_at',
             'updated_at',
             [
                 'class' => 'backend\widgets\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update} {delete}',
+                'visibleButtons' => [
+                    'update' => fn($model) => $model->id != 1,
+                    'delete' => fn($model) => $model->id != 1,
+                ],
             ],
         ],
     ]); ?>

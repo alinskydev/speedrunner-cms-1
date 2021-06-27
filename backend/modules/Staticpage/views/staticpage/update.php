@@ -92,7 +92,6 @@ foreach ($blocks as $key => $block_part) {
 echo UpdateWidget::widget([
     'model' => $new_block,
     'seo_meta_model' => $model,
-    'has_seo_meta' => $model->has_seo_meta,
     'save_buttons' => [
         $model->route ? Html::a(
             Html::tag('i', null, ['class' => 'fas fa-external-link-alt']) . Yii::t('app', 'Link'),

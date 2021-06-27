@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     'link' => function ($model, $key, $index) {
                         return $model->type != 'deleted' && ArrayHelper::getValue($model->service->findAndFill(), 'index_url');
                     },
-                ]
+                ],
             ],
         ],
     ]); ?>

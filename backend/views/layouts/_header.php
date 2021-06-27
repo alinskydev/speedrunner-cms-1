@@ -43,13 +43,13 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
                             <?= $user->full_name ?>
                         </div>
                         <small>
-                            <?= ArrayHelper::getValue($user->enums->roles(), "$user->role.label") ?>
+                            <?= ArrayHelper::getValue($user, 'role.name') ?>
                         </small>
                     </div>
                     
                     <div class="dropdown-divider"></div>
                     
-                    <?= Html::a(
+                    <?= Yii::$app->helpers->html->allowedLink(
                         Html::tag('i', '&nbsp;', ['class' => 'fas fa-edit']) . Yii::t('app', 'Update'),
                         ['/user/user/profile-update'],
                         ['class' => 'dropdown-item px-3']

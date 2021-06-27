@@ -17,21 +17,21 @@ class BlockPage extends ActiveRecord
         return '{{%block_page}}';
     }
     
+    public function scenarios()
+    {
+        return ArrayHelper::merge(parent::scenarios(), [
+            'empty' => [],
+        ]);
+    }
+    
     public function behaviors()
     {
         return [
-            'sluggable' => [
-                'class' => \yii\behaviors\SluggableBehavior::className(),
-                'attribute' => 'name',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-            ],
+            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
+            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name'],
-            ],
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
             'relations_one_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),

@@ -56,6 +56,10 @@ class PageController extends CrudController
             return $this->redirect(Yii::$app->request->referrer);
         }
         
+        $model->scenario = 'empty';
+        $model->save();
+        $model->afterFind();
+        
         if ($post_data = Yii::$app->request->post('Block')) {
             $blocks = ArrayHelper::index($model->blocks, 'id');
             

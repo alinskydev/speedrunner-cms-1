@@ -45,7 +45,7 @@ class DuplicatorForm extends Model
     public static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
-            if (!in_array($key, ['rbac', 'debug', 'gii', 'speedrunner'])) {
+            if (!in_array($key, ['debug', 'gii', 'speedrunner'])) {
                 $result[ucfirst($key)] = ucfirst($key);
             }
         }

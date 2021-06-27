@@ -9,9 +9,6 @@ $config = [
             'password' => 'root',
             'charset' => 'utf8',
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
     ],
 ];
 

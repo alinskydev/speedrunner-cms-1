@@ -16,14 +16,21 @@ class Menu extends \yii\widgets\Menu
     
     private static function addIconToLabelAndActivate($items, $controller_id)
     {
+        $role = Yii::$app->user->identity->role;
+        
         foreach ($items as &$item) {
             $item['label'] = ArrayHelper::getValue($item, 'icon') . ArrayHelper::getValue($item, 'label');
             
-            if (ArrayHelper::getValue($item, 'active') === null && $url = ArrayHelper::getValue($item, 'url')) {
-                if (is_array($url)) {
-                    $item['active'] = strpos($url[0], $controller_id) !== false;
-                } else {
+            if ($url = ArrayHelper::getValue($item, 'url')) {
+                $url = is_array($url) ? $url[0] : $url;
+                $url = ltrim($url, '/');
+                
+                if (ArrayHelper::getValue($item, 'active') === null) {
                     $item['active'] = strpos($url, $controller_id) !== false;
+                }
+                
+                if (ArrayHelper::getValue($item, 'visible') === null) {
+                    $item['visible'] = $role->service->isAllowedByRoute($url);
                 }
             }
             

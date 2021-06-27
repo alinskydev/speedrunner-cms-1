@@ -12,10 +12,6 @@ $config = [
             'schemaCacheDuration' => 84000,
             'enableSchemaCache' => true,
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'cache' => 'yii\caching\FileCache',
-        ],
     ],
 ];
 

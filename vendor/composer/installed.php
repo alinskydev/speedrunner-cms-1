@@ -5,20 +5,11 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2d50087355bd7a2e1edbcc48ea43396cfcf2879e',
+        'reference' => '063e1ecbc24560873c4804f0b074091ae5983cf4',
         'name' => 'yiisoft/yii2-app-advanced',
         'dev' => true,
     ),
     'versions' => array(
-        '2amigos/yii2-arrayquery-component' => array(
-            'pretty_version' => '1.0.3',
-            'version' => '1.0.3.0',
-            'type' => 'yii2-extension',
-            'install_path' => __DIR__ . '/../2amigos/yii2-arrayquery-component',
-            'aliases' => array(),
-            'reference' => '7f621370e1e954237741aa6d23eb5a5f21c985f3',
-            'dev_requirement' => false,
-        ),
         'alexantr/yii2-elfinder' => array(
             'pretty_version' => '1.7.0',
             'version' => '1.7.0.0',
@@ -850,15 +841,6 @@
             'reference' => 'f0d563f9fd4a82a3d759043483f9a94c0d8c2255',
             'dev_requirement' => false,
         ),
-        'yii2mod/yii2-rbac' => array(
-            'pretty_version' => '2.3',
-            'version' => '2.3.0.0',
-            'type' => 'yii2-extension',
-            'install_path' => __DIR__ . '/../yii2mod/yii2-rbac',
-            'aliases' => array(),
-            'reference' => 'd6d236ff45910726081061c49b91f54642371283',
-            'dev_requirement' => false,
-        ),
         'yiisoft/yii2' => array(
             'pretty_version' => '2.0.40',
             'version' => '2.0.40.0',
@@ -874,7 +856,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2d50087355bd7a2e1edbcc48ea43396cfcf2879e',
+            'reference' => '063e1ecbc24560873c4804f0b074091ae5983cf4',
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-bootstrap' => array(

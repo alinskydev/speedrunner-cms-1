@@ -14,17 +14,18 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['username', 'role', 'email', 'full_name', 'phone', 'address', 'created_at', 'updated_at'], 'safe'],
+            [['username', 'role_id', 'email', 'full_name', 'phone', 'address', 'created_at', 'updated_at'], 'safe'],
         ];
     }
     
     public function search()
     {
         $query = User::find()
-            ->joinWith(['profile']);
+            ->joinWith(['profile'])
+            ->with(['role']);
         
         $attribute_groups = [
-            '=' => ['user.id', 'user.role'],
+            '=' => ['user.id', 'user.role_id'],
             'like' => [
                 'user.username', 'user.email', 'user.created_at', 'user.updated_at',
                 'user_profile.full_name', 'user_profile.phone', 'user_profile.address',

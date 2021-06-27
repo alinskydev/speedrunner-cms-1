@@ -1,10 +1,6 @@
 <?php
 
 $external_components = [
-    'yii2mod/yii2-rbac' => [
-        'description' => 'RBAC manager',
-        'link' => 'https://github.com/yii2mod/yii2-rbac',
-    ],
     'yurkinx/yii2-image' => [
         'description' => 'Image helper component',
         'link' => 'https://github.com/yurkinx/yii2-image',

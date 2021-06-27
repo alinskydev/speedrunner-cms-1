@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <h2 class="main-title">
     <?= $this->title ?>
     <div class="float-right">
-        <?= Html::a(
+        <?= Yii::$app->user->identity->role->service->isAllowedByRoute('translation/source/import') ? Html::a(
             Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Import'),
             '#',
             [
@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'data-sr-wrapper' => '#main-modal',
                 'data-sr-callback' => '$("#main-modal").modal()',
             ]
-        ); ?>
+        ) : null ?>
         
-        <?= Html::a(
+        <?= Yii::$app->user->identity->role->service->isAllowedByRoute('translation/source/export') ? Html::a(
             Html::tag('i', null, ['class' => 'fas fa-file-alt']) . Yii::t('app', 'Export'),
             '#',
             [
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'data-sr-wrapper' => '#main-modal',
                 'data-sr-callback' => '$("#main-modal").modal()',
             ]
-        ); ?>
+        ) : null ?>
     </div>
 </h2>
 

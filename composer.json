@@ -22,7 +22,6 @@
         "vova07/yii2-imperavi-widget": "*",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "yii2mod/yii2-rbac": "*",
         "creocoder/yii2-nested-sets": "^0.9.0",
         "wbraganca/yii2-fancytree-widget": "*",
         "wokster/yii2-nested-sets-tree-behavior": "*",

@@ -101,7 +101,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'role', 'full_name'], 'required'],
+            [['username', 'email', 'full_name'], 'required'],
             [['new_password'], 'required', 'enableClientValidation' => false, 'when' => fn($model) => $model->isNewRecord],
             
             [['username', 'email'], 'unique'],
@@ -109,7 +109,6 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'full_name', 'phone'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 1000],
             [['email'], 'email'],
-            [['role'], 'in', 'range' => array_keys($this->enums->roles())],
             [['image'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
             [['new_password'], 'string', 'min' => 8, 'max' => 50],
             
@@ -120,7 +119,9 @@ class User extends ActiveRecord implements IdentityInterface
             [['design_font'], 'default', 'value' => 'roboto'],
             [['design_border_radius'], 'default', 'value' => 0],
             
-            [['role'], UnchangeableValidator::className(), 'when' => fn ($model) => $model->id == 1],
+            [['role_id'], 'required', 'enableClientValidation' => false, 'when' => fn($model) => $model->id == 1],
+            [['role_id'], 'exist', 'targetClass' => UserRole::className(), 'targetAttribute' => 'id'],
+            [['role_id'], UnchangeableValidator::className(), 'when' => fn($model) => $model->id == 1],
         ];
     }
     
@@ -129,7 +130,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'id' => Yii::t('app', 'Id'),
             'username' => Yii::t('app', 'Username'),
-            'role' => Yii::t('app', 'Role'),
+            'role_id' => Yii::t('app', 'Role'),
             'email' => Yii::t('app', 'Email'),
             'image' => Yii::t('app', 'Image'),
             'created_at' => Yii::t('app', 'Created at'),
@@ -147,6 +148,11 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
+    public function getRole()
+    {
+        return $this->hasOne(UserRole::className(), ['id' => 'role_id']);
+    }
+    
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
@@ -159,7 +165,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function find()
     {
-        return parent::find()->with(['profile', 'design']);
+        return parent::find()->with(['profile', 'design', 'role']);
     }
     
     public function afterFind()
@@ -187,24 +193,6 @@ class User extends ActiveRecord implements IdentityInterface
         return parent::beforeSave($insert);
     }
     
-    public function afterSave($insert, $changedAttributes)
-    {
-        //        Assigning role
-        
-        if (array_key_exists('role', $changedAttributes)) {
-            $roles = Yii::$app->authManager->getRoles();
-            
-            if (!$insert) {
-                Yii::$app->authManager->revoke($roles[$changedAttributes['role']], $this->id);
-            }
-            
-            Yii::$app->authManager->assign($roles[$this->role], $this->id);
-            Yii::$app->authManager->invalidateCache();
-        }
-        
-        return parent::afterSave($insert, $changedAttributes);
-    }
-    
     public function beforeDelete()
     {
         if ($this->id == 1) {
@@ -213,16 +201,6 @@ class User extends ActiveRecord implements IdentityInterface
         }
         
         return parent::beforeDelete();
-    }
-    
-    public function afterDelete()
-    {
-        //        Detaching role
-        
-        $roles = Yii::$app->authManager->getRoles();
-        Yii::$app->authManager->revoke($roles[$this->role], $this->id);
-        
-        return parent::afterDelete();
     }
     
     //        YII2 default methods

@@ -3,17 +3,13 @@
 Yii::$container->set('yii\widgets\Breadcrumbs', [
     'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
     'options' => ['class' => 'breadcrumbs'],
-    'activeItemTemplate' => '<li><span>{link}</span></li>'
-]);
-
-Yii::$container->set('yii\bootstrap\ActiveField', [
-    'checkboxTemplate' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
+    'activeItemTemplate' => '<li><span>{link}</span></li>',
 ]);
 
 Yii::$container->set('yii\data\ActiveDataProvider', [
     'pagination' => [
         'defaultPageSize' => 30,
-        'pageSizeLimit' => [1, 30],
+        'pageSizeLimit' => [1, 100],
     ],
 ]);
 
@@ -26,6 +22,10 @@ Yii::$container->set('yii\widgets\LinkPager', [
     'prevPageLabel' => '<i class="fas fa-angle-left"></i>',
     'nextPageLabel' => '<i class="fas fa-angle-right"></i>',
     'lastPageLabel' => '<i class="fas fa-angle-double-right"></i>',
+]);
+
+Yii::$container->set('yii\bootstrap\ActiveField', [
+    'checkboxTemplate' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
 ]);
 
 Yii::$container->set('yii\bootstrap\Modal', [

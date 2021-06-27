@@ -30,7 +30,7 @@ class DestroyerForm extends Model
     public static function modulesList()
     {
         foreach (Yii::$app->modules as $key => $m) {
-            if (!in_array($key, ['rbac', 'debug', 'gii', 'seo', 'speedrunner', 'staticpage', 'system', 'translation', 'user'])) {
+            if (!in_array($key, ['debug', 'gii', 'seo', 'speedrunner', 'staticpage', 'system', 'translation', 'user'])) {
                 $result[ucfirst($key)] = ucfirst($key);
             }
         }

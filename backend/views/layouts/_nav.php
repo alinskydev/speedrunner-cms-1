@@ -11,7 +11,7 @@ return [
         'icon' => Html::tag('i', null, ['class' => 'fas fa-user']),
         'items' => [
             ['label' => Yii::t('app', 'Users'), 'url' => ['/user/user/index']],
-            ['label' => Yii::t('app', 'RBAC'), 'url' => ['/rbac/rbac/index'], 'visible' => YII_ENV_DEV],
+            ['label' => Yii::t('app', 'Roles'), 'url' => ['/user/role/index']],
         ],
     ],
     [

@@ -56,13 +56,11 @@ class <?= $model->model_name ?> extends ActiveRecord
     public function behaviors()
     {
         return [
+<?php if ($model->has_seo_meta) { ?>
+            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
+<?php } ?>
 <?php if (isset($attrs['slug'])) { ?>
-            'sluggable' => [
-                'class' => \yii\behaviors\SluggableBehavior::className(),
-                'attribute' => 'name',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-            ],
+            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
 <?php } ?>
 <?php if ($model->attrs_translation) { ?>
             'translation' => [
@@ -76,11 +74,6 @@ class <?= $model->model_name ?> extends ActiveRecord
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
                 'attributes' => ['<?= implode("', '", $file_attributes) ?>'],
                 'multiple' => true,
-            ],
-<?php } ?>
-<?php if ($model->has_seo_meta) { ?>
-            'seo_meta' => [
-                'class' => \speedrunner\behaviors\SeoMetaBehavior::className(),
             ],
 <?php } ?>
 <?php if ($model->view_relations) { ?>

@@ -8,7 +8,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use common\forms\LoginForm;
+use backend\forms\LoginForm;
 
 
 class AuthController extends Controller

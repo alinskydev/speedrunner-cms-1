@@ -47,14 +47,11 @@ class UpdateAction extends Action
         }
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
-        $render_params = $this->render_params ?? fn () => [];
+        $render_params = $this->render_params ?? fn() => [];
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
-            ArrayHelper::merge([
-                'model' => $model,
-            ], $render_params())
+            ArrayHelper::merge(['model' => $model], $render_params())
         );
     }
 }

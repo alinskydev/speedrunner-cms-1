@@ -31,7 +31,8 @@
         "guzzlehttp/guzzle": "^7.2",
         "alexantr/yii2-elfinder": "^1.7",
         "yiisoft/yii2-imagine": "^2.3",
-        "alexantr/yii2-tinymce": "^0.1.1"
+        "alexantr/yii2-tinymce": "^0.1.1",
+        "xemlock/htmlpurifier-html5": "^0.1.11"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.0.0",

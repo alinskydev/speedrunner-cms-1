@@ -83,6 +83,7 @@ return [
                 'i18n' => 'speedrunner\services\I18NService',
                 'image' => 'speedrunner\services\ImageService',
                 'mail' => 'speedrunner\services\MailService',
+                'string' => 'speedrunner\services\StringService',
                 
                 'notification' => 'backend\modules\User\services\UserNotificationService',
                 'settings' => 'backend\modules\System\services\SystemSettingsService',

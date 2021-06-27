@@ -46,7 +46,7 @@ class OrderService extends ActiveService
             $relation_model->updateAttributes(['quantity' => $relation_model->quantity]);
             
             if ($relation_name == 'variation' && $p->product) {
-                $p->product->scenario = 'change_quantity';
+                $p->product->scenario = 'empty';
                 $p->product->service->assignVariationAttributes($p->product->variations[0], false);
                 $p->product->save();
             }

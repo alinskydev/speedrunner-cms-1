@@ -32,7 +32,7 @@ class ProductSearch extends Product
             ->with(['brand', 'mainCategory']);
         
         $attribute_groups = [
-            'match' => ['id', 'brand_id', 'main_category_id', 'price', 'quantity', 'discount'],
+            '=' => ['id', 'brand_id', 'main_category_id', 'price', 'quantity', 'discount'],
             'like' => ['slug', 'sku', 'created_at', 'updated_at'],
         ];
         

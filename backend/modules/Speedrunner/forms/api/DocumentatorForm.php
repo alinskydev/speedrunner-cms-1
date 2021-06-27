@@ -138,9 +138,10 @@ class DocumentatorForm extends Model
             }
         }
         
-        $folder_template = Yii::getAlias('@backend/modules/Speedrunner/templates/api/documentator');
-        $folder_template_render = '@backend/modules/Speedrunner/templates/api/documentator/';
-        $file_content = Yii::$app->controller->renderPartial("$folder_template_render/index.php", ['result' => $result ?? []]);
+        $web_folder = Yii::getAlias('@backend/web');
+        $template_assets_folder = Yii::getAlias('@backend/modules/Speedrunner/templates/api/documentator/assets');
+        $template_file = '@backend/modules/Speedrunner/templates/api/documentator/index.php';
+        $template_file_content = Yii::$app->controller->renderPartial($template_file, ['result' => $result ?? []]);
         
         //        ZIP archive
         
@@ -148,20 +149,22 @@ class DocumentatorForm extends Model
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
         
-        $zip->addFromString('api.html', $file_content);
-        $zip->addFile("$folder_template/assets/css/bootstrap.min.css", 'assets/css/bootstrap.min.css');
-        $zip->addFile("$folder_template/assets/css/speedrunner.css", 'assets/css/speedrunner.css');
+        $zip->addFromString('index.html', $template_file_content);
         
-        $zip->addFile("$folder_template/assets/fonts/Oswald/ExtraLight.ttf", 'assets/fonts/Oswald/ExtraLight.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Oswald/Light.ttf", 'assets/fonts/Oswald/Light.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Oswald/Regular.ttf", 'assets/fonts/Oswald/Regular.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Oswald/Medium.ttf", 'assets/fonts/Oswald/Medium.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Oswald/SemiBold.ttf", 'assets/fonts/Oswald/SemiBold.ttf');
-        $zip->addFile("$folder_template/assets/fonts/Oswald/Bold.ttf", 'assets/fonts/Oswald/Bold.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/ExtraLight.ttf", 'assets/fonts/Oswald/ExtraLight.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/Light.ttf", 'assets/fonts/Oswald/Light.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/Regular.ttf", 'assets/fonts/Oswald/Regular.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/Medium.ttf", 'assets/fonts/Oswald/Medium.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/SemiBold.ttf", 'assets/fonts/Oswald/SemiBold.ttf');
+        $zip->addFile("$template_assets_folder/fonts/Oswald/Bold.ttf", 'assets/fonts/Oswald/Bold.ttf');
         
-        $zip->addFile("$folder_template/assets/js/jquery.js", 'assets/js/jquery.js');
-        $zip->addFile("$folder_template/assets/js/popper.min.js", 'assets/js/popper.min.js');
-        $zip->addFile("$folder_template/assets/js/bootstrap.min.js", 'assets/js/bootstrap.min.js');
+        $zip->addFile("$web_folder/css/bootstrap.min.css", 'assets/css/bootstrap.min.css');
+        $zip->addFile("$web_folder/css/speedrunner.css", 'assets/css/speedrunner.css');
+        $zip->addFile("$template_assets_folder/css/extra.css", 'assets/css/extra.css');
+        
+        $zip->addFile("$template_assets_folder/js/jquery.js", 'assets/js/jquery.js');
+        $zip->addFile("$web_folder/js/popper.min.js", 'assets/js/popper.min.js');
+        $zip->addFile("$web_folder/js/bootstrap.min.js", 'assets/js/bootstrap.min.js');
         
         $zip->close();
         

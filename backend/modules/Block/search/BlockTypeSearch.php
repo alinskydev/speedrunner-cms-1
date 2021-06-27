@@ -23,7 +23,7 @@ class BlockTypeSearch extends BlockType
         $query = BlockType::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['name', 'label', 'input_type', 'has_translation'],
         ];
         

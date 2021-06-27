@@ -36,7 +36,7 @@ class OrderSearch extends Order
         ]);
         
         $attribute_groups = [
-            'match' => ['id', 'user_id', 'total_price', 'delivery_type', 'payment_type', 'status'],
+            '=' => ['id', 'user_id', 'total_price', 'delivery_type', 'payment_type', 'status'],
             'like' => ['phone', 'email', 'key', 'created_at', 'updated_at'],
         ];
         

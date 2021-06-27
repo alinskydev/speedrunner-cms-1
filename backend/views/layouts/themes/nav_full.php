@@ -31,6 +31,6 @@ use backend\widgets\layout\Menu;
     <?= $content ?>
 </div>
 
-<div id="main-alert">
+<div id="alerts-wrapper">
     <?= $flashes ?>
 </div>

@@ -16,21 +16,18 @@ class ViewAction extends Action
     
     public function run($id)
     {
-        $model = $this->model ?? $this->controller->findModel($id);
+        $this->model = $this->model ?? $this->controller->findModel($id);
         
-        if (!$model) {
+        if (!$this->model) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         $render_params = $this->render_params ?? fn() => [];
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
-            ArrayHelper::merge([
-                'model' => $model,
-            ], $render_params())
+            ArrayHelper::merge(['model' => $this->model], $render_params())
         );
     }
 }

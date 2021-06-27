@@ -26,7 +26,7 @@ class BlogRateSearch extends BlogRate
             ->with(['blog', 'user']);
         
         $attribute_groups = [
-            'match' => ['id', 'blog_id', 'user_id', 'mark'],
+            '=' => ['id', 'blog_id', 'user_id', 'mark'],
             'like' => ['created_at'],
         ];
         

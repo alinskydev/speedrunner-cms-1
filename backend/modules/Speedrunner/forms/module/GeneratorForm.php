@@ -327,7 +327,7 @@ class GeneratorForm extends Model
                 case Schema::TYPE_MONEY:
                 case Schema::TYPE_TIME:
                 case Schema::TYPE_TIMESTAMP:
-                    $condition_groups['match'][] = $column;
+                    $condition_groups['='][] = $column;
                     break;
                 case Schema::TYPE_TEXT:
                 case Schema::TYPE_JSON:

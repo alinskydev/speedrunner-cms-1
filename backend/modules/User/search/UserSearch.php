@@ -24,7 +24,7 @@ class UserSearch extends User
             ->joinWith(['profile']);
         
         $attribute_groups = [
-            'match' => ['user.id', 'user.role'],
+            '=' => ['user.id', 'user.role'],
             'like' => [
                 'user.username', 'user.email', 'user.created_at', 'user.updated_at',
                 'user_profile.full_name', 'user_profile.phone', 'user_profile.address',

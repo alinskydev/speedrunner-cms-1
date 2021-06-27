@@ -31,7 +31,7 @@ class BlockPageSearch extends BlockPage
         $query = BlockPage::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['slug', 'created_at', 'updated_at'],
         ];
         

@@ -96,36 +96,10 @@ $(function() {
     
     let textEditorBaseUrl = $('meta[name="text-editor-base-url"]').attr('content'),
         textEditorFilePickerUrl = $('meta[name="text-editor-file-picker-connection-url"]').attr('content'),
-        textEditorImageUploadUrl = $('meta[name="text-editor-image-upload-connection-url"]').attr('content');
+        textEditorImageUploadUrl = $('meta[name="text-editor-image-upload-connection-url"]').attr('content'),
+        textEditorParams = JSON.parse($('meta[name="text-editor-params"]').attr('content'));
     
     alexantr.tinyMceWidget.setBaseUrl(textEditorBaseUrl);
-    
-    let textEditorParams = {
-        height: '300px',
-        language: $('html').attr('lang'),
-        relative_urls: false,
-        force_p_newlines : false,
-        forced_root_block : false,
-        fontsize_formats: '8px 10px 12px 14px 16px 18px 24px 36px 48px',
-        file_picker_callback: alexantr.elFinder.filePickerCallback({
-            title: 'File manager',
-            width: 900,
-            height: 500,
-            file: textEditorFilePickerUrl
-        }),
-        images_upload_url: textEditorImageUploadUrl,
-        plugins: [
-            'advlist autolink lists link charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'table contextmenu paste textcolor colorpicker advcode',
-            'media image'
-        ],
-        menu: [],
-        toolbar: [
-            'undo redo | cut copy paste | fontselect | fontsizeselect | styleselect | removeformat bold italic underline strikethrough superscript subscript | forecolor backcolor',
-            'outdent indent | alignleft aligncenter alignright alignjustify | bullist numlist table | link anchor image media | charmap | searchreplace visualblocks preview code fullscreen'
-        ]
-    };
     
     $(document).on('click', '[data-sr-trigger*="text_editor"]', function() {
         if ($(this).prev('.mce-tinymce').length === 0) {

@@ -5,7 +5,6 @@ namespace speedrunner\db;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use yii\helpers\HtmlPurifier;
 use speedrunner\services\ActiveService;
 
 use backend\modules\Seo\services\SeoMetaService;
@@ -129,21 +128,23 @@ class ActiveRecord extends \yii\db\ActiveRecord
         
         //        HTML purifier
         
-        foreach ($this->dirtyAttributes as $key => $a) {
-            if ($a && is_string($a)) {
-                $this->{$key} = HtmlPurifier::process($a, [
-                    'Attr.DefaultImageAlt' => '',
-                ]);
-                
-                $allowed_chars = [
-                    '%7B' => '{',
-                    '%7D' => '}',
-                    '%3A' => ':',
-                    '&amp;' => '&',
-                ];
-                
-                foreach ($allowed_chars as $from => $to) {
-                    $this->{$key} = str_replace($from, $to, $this->{$key});
+        $allowed_chars = [
+            '%7B' => '{',
+            '%7D' => '}',
+            '%3A' => ':',
+            '&amp;' => '&',
+        ];
+        
+        foreach ($this->dirtyAttributes as $attribute => $value) {
+            if ($value) {
+                if (is_array($value)) {
+                    array_walk_recursive($value, function(&$v, $k) use ($allowed_chars) {
+                        $v = Yii::$app->services->html->purify($v, $allowed_chars);
+                    });
+                    
+                    $this->{$attribute} = $value;
+                } else {
+                    $this->{$attribute} = Yii::$app->services->html->purify($value, $allowed_chars);
                 }
             }
         }

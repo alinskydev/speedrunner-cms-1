@@ -23,7 +23,7 @@ class BlogTagSearch extends BlogTag
         $query = BlogTag::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['name', 'created_at'],
         ];
         

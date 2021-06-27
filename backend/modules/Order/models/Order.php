@@ -30,13 +30,6 @@ class Order extends ActiveRecord
     public function behaviors()
     {
         return [
-            'attributes' => [
-                'class' => \yii\behaviors\AttributeBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'key',
-                ],
-                'value' => fn ($event) => md5(time() . Yii::$app->security->generateRandomString()),
-            ],
             'relations_one_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
                 'type' => 'oneMany',
@@ -119,11 +112,17 @@ class Order extends ActiveRecord
     
     public function beforeSave($insert)
     {
+        //        Setting random key
+        
+        if ($insert) {
+            $this->key = Yii::$app->services->string->randomize();
+        }
+        
+        //        Setting old products
+        
         $oldAttributes = $this->oldAttributes ?: $this->attributes;
         $old_status_action = ArrayHelper::getValue($this->enums->statuses(), "{$oldAttributes['status']}.products_action");
         $new_status_action = ArrayHelper::getValue($this->enums->statuses(), "$this->status.products_action");
-        
-        //        Setting old products
         
         if (!$insert && $this->scenario == 'default' && $this->status != 'new') {
             $this->products_tmp = ArrayHelper::index($this->products, 'id');

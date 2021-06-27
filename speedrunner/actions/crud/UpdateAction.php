@@ -17,13 +17,7 @@ class UpdateAction extends FormAction
     
     public function run($id = null)
     {
-        $model = $this->model ?? $this->controller->findModel($id);
-        
-        if (!$model) {
-            return $this->controller->redirect(Yii::$app->request->referrer);
-        }
-        
-        $this->model = $model;
-        return parent::run();
+        $this->model = $this->model ?? $this->controller->findModel($id);
+        return $this->model ? parent::run() : $this->controller->redirect(Yii::$app->request->referrer);
     }
 }

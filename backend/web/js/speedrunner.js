@@ -61,8 +61,8 @@ $(function() {
             info: '#80D1D5'
         };
     
-    if ($('#main-alert').html().trim() !== '[]') {
-        alertsJson = JSON.parse($('#main-alert').html());
+    if ($('#alerts-wrapper').html().trim() !== '[]') {
+        alertsJson = JSON.parse($('#alerts-wrapper').html());
         
         for (key in alertsJson) {
             for (alert_key in alertsJson[key]) {

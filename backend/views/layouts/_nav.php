@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+
 use backend\modules\Staticpage\models\Staticpage;
 
 return [
@@ -31,6 +32,11 @@ return [
             ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/tree']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/page/page/index']],
             ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],
+            ['template' => Html::tag(
+                'div',
+                Html::a(Yii::t('app', 'File manager'), 'javascript:void(0)', ['class' => 'yii2-elfinder-select-button']),
+                ['data-sr-trigger' => 'file_manager']
+            )],
         ],
     ],
     [

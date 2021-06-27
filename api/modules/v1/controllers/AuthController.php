@@ -7,7 +7,7 @@ use speedrunner\controllers\RestController;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use common\forms\LoginForm;
+use frontend\forms\LoginForm;
 use frontend\forms\SignupForm;
 use frontend\forms\ResetPasswordRequestForm;
 

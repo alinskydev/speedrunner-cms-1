@@ -23,7 +23,7 @@ class ProductSpecificationSearch extends ProductSpecification
         $query = ProductSpecification::find();
         
         $attribute_groups = [
-            'match' => ['id', 'view_filter', 'view_compare'],
+            '=' => ['id', 'view_filter', 'view_compare'],
             'like' => ['created_at', 'updated_at'],
         ];
         

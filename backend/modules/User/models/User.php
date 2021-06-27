@@ -180,7 +180,7 @@ class User extends ActiveRecord implements IdentityInterface
         //        Setting new password
         
         if ($this->new_password) {
-            $this->generateAuthKey();
+            $this->auth_key = Yii::$app->services->string->randomize();
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
         }
         
@@ -281,20 +281,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
-    }
-    
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-    
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-    
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
     }
 }

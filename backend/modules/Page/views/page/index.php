@@ -55,7 +55,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'buttons' => [],
             ],
         ],
     ]); ?>

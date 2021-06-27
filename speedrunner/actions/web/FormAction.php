@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 
 class FormAction extends Action
 {
-    public Model $model;
+    public ?Model $model;
     public string $model_class;
     public array $model_params = [];
     
@@ -29,7 +29,7 @@ class FormAction extends Action
         $this->model = $this->model ?? new $this->model_class($this->model_params);
         
         if ($this->model->load(Yii::$app->request->post()) && $this->model->validate()) {
-            if (call_user_func([$this->model, $this->run_method])) {
+            if ($this->model->{$this->run_method}()) {
                 if ($this->success_message) {
                     Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
                 }
@@ -54,14 +54,11 @@ class FormAction extends Action
         }
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
-        $render_params = $this->render_params ?? fn () => [];
+        $render_params = $this->render_params ?? fn() => [];
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
-            ArrayHelper::merge([
-                'model' => $this->model,
-            ], $render_params())
+            ArrayHelper::merge(['model' => $this->model], $render_params())
         );
     }
 }

@@ -3,11 +3,8 @@
 use yii\helpers\Html;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
-use yii\bootstrap\Alert;
 
 AppAsset::register($this);
-
-//-----------------------------------------------------------------------------------
 
 $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE);
 
@@ -34,7 +31,7 @@ $flashes = json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICO
     <?= $content ?>
 </div>
 
-<div id="main-alert">
+<div id="alerts-wrapper">
     <?= $flashes ?>
 </div>
 

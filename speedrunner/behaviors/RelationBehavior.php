@@ -24,7 +24,7 @@ class RelationBehavior extends Behavior
     
     public function afterSave($event)
     {
-        return call_user_func([$this, $this->type]);
+        return $this->{$this->type}();
     }
     
     public function oneOne()

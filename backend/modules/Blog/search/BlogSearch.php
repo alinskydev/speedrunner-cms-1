@@ -34,7 +34,7 @@ class BlogSearch extends Blog
             ->groupBy('id');
         
         $attribute_groups = [
-            'match' => ['blog.id', 'blog.category_id', 'tags_tmp' => 'blog_tag.id'],
+            '=' => ['blog.id', 'blog.category_id', 'tags_tmp' => 'blog_tag.id'],
             'like' => ['blog.slug', 'blog.published_at', 'blog.created_at', 'blog.updated_at'],
         ];
         

@@ -2,6 +2,34 @@ $(function() {
     
     let el, action, sendData;
     
+    //      Checking alerts wrapper
+    
+    let alertJson,
+        alertLoaderColors = {
+            success: '#80CFB1',
+            warning: '#F5C480',
+            danger: '#F5A480',
+            info: '#80D1D5'
+        };
+    
+    if ($('#alerts-wrapper').html().trim() !== '[]') {
+        alertsJson = JSON.parse($('#alerts-wrapper').html());
+        console.log(alertsJson);
+        
+        for (key in alertsJson) {
+            for (alert_key in alertsJson[key]) {
+                $.toast({
+                    heading: alertsJson[key][alert_key],
+                    position: 'bottom-right',
+                    loaderBg: alertLoaderColors[key],
+                    icon: key,
+                    hideAfter: 4000,
+                    stack: 10
+                });
+            }
+        }
+    }
+    
     //      Cart changing quantity
     
     let quantity;

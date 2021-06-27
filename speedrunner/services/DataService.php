@@ -17,21 +17,19 @@ class DataService
         $query->addSelect(["{$model->tableName()}.*"]);
         
         foreach ($attribute_groups as $group_name => $attributes) {
-            foreach ($attributes as $key => $a) {
-                $dot_position = strpos($a, '.');
-                $model_attributes[$a] = is_int($key) ? substr($a, $dot_position ? $dot_position + 1 : 0, strlen($a)) : $key;
-            }
+            $attributes = array_map(function($value, $key) use ($model, $group_name) {
+                $dot_position = strpos($value, '.');
+                $model_attributes[$value] = is_int($key) ? substr($value, $dot_position ? $dot_position + 1 : 0, strlen($value)) : $key;
+                
+                return [$group_name, $value, $model->{$model_attributes[$value]}];
+            }, $attributes, array_keys($attributes));
             
-            switch ($group_name) {
-                case 'match':
-                    $attributes = array_combine($attributes, array_map(fn($value) => $model->{$model_attributes[$value]}, $attributes));
-                    $query->andFilterWhere($attributes);
-                    break;
-                default:
-                    $attributes = array_map(fn($value) => [$group_name, $value, $model->{$model_attributes[$value]}], $attributes);
-                    array_unshift($attributes, 'and');
-                    $query->andFilterWhere($attributes);
-            }
+            array_unshift($attributes, 'and');
+            $query->andFilterWhere($attributes);
+        }
+        
+        if (!$model->validate()) {
+            $query->andWhere('false');
         }
         
         $dataProvider = Yii::createObject([
@@ -39,10 +37,6 @@ class DataService
             'query' => $query,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
         ]);
-        
-        if (!$model->validate()) {
-            $query->andWhere('false');
-        }
         
         //        Translations
         

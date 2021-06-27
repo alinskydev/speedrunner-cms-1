@@ -10,8 +10,6 @@ use backend\modules\User\models\UserNotification;
 $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
 
-$breadcrumbs = $this->params['breadcrumbs'] ?? [];
-
 $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->user->id])->orderBy('id DESC')->limit(10)->all();
 
 ?>
@@ -109,12 +107,7 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
         </div>
         
         <div class="header-left">
-            <?= Breadcrumbs::widget([
-                'links' => $breadcrumbs,
-                'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
-                'options' => ['class' => 'breadcrumbs'],
-                'activeItemTemplate' => '<li><span>{link}</span></li>'
-            ]) ?>
+            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs'] ?? []]) ?>
         </div>
     </div>
 </header>

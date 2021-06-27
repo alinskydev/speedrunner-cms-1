@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 
 class CreateAction extends Action
 {
-    public array $model_params = [];
+    public ?Model $model;
     
     public string $render_view = 'update';
     public ?\Closure $render_params;
@@ -22,13 +22,12 @@ class CreateAction extends Action
     
     public function run()
     {
-        $model = $this->controller->model;
-        $model->setAttributes($this->model_params, false);
+        $this->model = $this->model ?? $this->controller->model;
         
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $parent = $model->findOne($model->parent_id);
-            $model->refresh();
-            $model->appendTo($parent);
+        if ($this->model->load(Yii::$app->request->post()) && $this->model->validate()) {
+            $parent = $this->model->findOne($this->model->parent_id);
+            $this->model->refresh();
+            $this->model->appendTo($parent);
             
             if ($this->success_message) {
                 Yii::$app->session->addFlash('success', Yii::t('app', $this->success_message));
@@ -42,14 +41,11 @@ class CreateAction extends Action
         }
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
-        $render_params = $this->render_params ?? fn () => [];
+        $render_params = $this->render_params ?? fn() => [];
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
-            ArrayHelper::merge([
-                'model' => $model,
-            ], $render_params())
+            ArrayHelper::merge(['model' => $this->model], $render_params())
         );
     }
 }

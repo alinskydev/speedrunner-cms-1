@@ -31,7 +31,7 @@ class ProductBrandSearch extends ProductBrand
         $query = ProductBrand::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['name', 'slug', 'created_at', 'updated_at'],
         ];
         

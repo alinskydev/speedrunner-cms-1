@@ -1,5 +1,11 @@
 <?php
 
+Yii::$container->set('yii\widgets\Breadcrumbs', [
+    'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
+    'options' => ['class' => 'breadcrumbs'],
+    'activeItemTemplate' => '<li><span>{link}</span></li>'
+]);
+
 Yii::$container->set('yii\bootstrap\ActiveField', [
     'checkboxTemplate' => '<div class="custom-control custom-switch">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
 ]);

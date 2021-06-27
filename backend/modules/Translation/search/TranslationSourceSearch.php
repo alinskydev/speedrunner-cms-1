@@ -27,7 +27,7 @@ class TranslationSourceSearch extends TranslationSource
             ->groupBy('translation_source.id');
         
         $attribute_groups = [
-            'match' => ['translation_source.id'],
+            '=' => ['translation_source.id'],
             'like' => [
                 'translation_source.category', 'translation_source.message',
                 'translations_tmp' => 'translation_message.translation',

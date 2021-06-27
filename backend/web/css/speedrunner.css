@@ -860,7 +860,7 @@ body .select2-hidden-accessible {
     padding: 15px;
 }
 
-#main-alert {
+#alerts-wrapper {
     display: none;
 }
 

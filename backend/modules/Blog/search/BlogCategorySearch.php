@@ -31,7 +31,7 @@ class BlogCategorySearch extends BlogCategory
         $query = BlogCategory::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['slug', 'created_at', 'updated_at'],
         ];
         

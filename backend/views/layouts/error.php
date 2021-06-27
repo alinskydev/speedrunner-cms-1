@@ -7,10 +7,6 @@ use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 
-//-----------------------------------------------------------------------------------
-
-$breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -33,12 +29,7 @@ $breadcrumbs = ArrayHelper::getValue($this->params, 'breadcrumbs', []);
 <header>
     <div class="container-fluid">
         <div class="header-left">
-            <?= Breadcrumbs::widget([
-                'links' => $breadcrumbs,
-                'homeLink' => ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
-                'options' => ['class' => 'breadcrumbs'],
-                'activeItemTemplate' => '<li><span>{link}</span></li>'
-            ]) ?>
+            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs'] ?? []]) ?>
         </div>
     </div>
 </header>

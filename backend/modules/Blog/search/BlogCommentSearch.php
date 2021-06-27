@@ -24,7 +24,7 @@ class BlogCommentSearch extends BlogComment
             ->with(['blog', 'user']);
         
         $attribute_groups = [
-            'match' => ['id', 'blog_id', 'user_id', 'status'],
+            '=' => ['id', 'blog_id', 'user_id', 'status'],
             'like' => ['text', 'created_at'],
         ];
         

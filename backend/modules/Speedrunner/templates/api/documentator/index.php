@@ -18,6 +18,7 @@ $tabs = array_keys($result);
     
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/speedrunner.css">
+    <link rel="stylesheet" href="assets/css/extra.css">
     
     <title><?= $this->title ?></title>
 </head>

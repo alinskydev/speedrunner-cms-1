@@ -30,7 +30,7 @@ class LogActionSearch extends LogAction
             ->groupBy('log_action.id');
         
         $attribute_groups = [
-            'match' => ['log_action.id', 'log_action.user_id', 'log_action.model_class', 'log_action.model_id'],
+            '=' => ['log_action.id', 'log_action.user_id', 'log_action.model_class', 'log_action.model_id'],
             'like' => ['log_action.type', 'attrs_old' => 'log_action_attr.name', 'attrs_new' => 'log_action_attr.name'],
         ];
         

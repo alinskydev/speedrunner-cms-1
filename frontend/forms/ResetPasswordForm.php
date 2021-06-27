@@ -46,7 +46,7 @@ class ResetPasswordForm extends Model
     {
         $user = $this->user;
         $user->new_password = $this->password;
-        $user->removePasswordResetToken();
+        $user->password_reset_token = null;
         $user->save();
         
         return Yii::$app->user->login($user, 3600 * 24 * 30);

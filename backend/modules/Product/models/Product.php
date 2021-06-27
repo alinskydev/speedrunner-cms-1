@@ -22,7 +22,7 @@ class Product extends ActiveRecord
     public function scenarios()
     {
         return ArrayHelper::merge(parent::scenarios(), [
-            'change_quantity' => [],
+            'empty' => [],
         ]);
     }
     

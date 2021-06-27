@@ -23,7 +23,7 @@ class BannerSearch extends Banner
         $query = Banner::find();
         
         $attribute_groups = [
-            'match' => ['id', 'location'],
+            '=' => ['id', 'location'],
             'like' => ['name', 'created_at', 'updated_at'],
         ];
         

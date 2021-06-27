@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a4779551fd7321356aec0a27a528568a3d997a23',
+        'reference' => '2d50087355bd7a2e1edbcc48ea43396cfcf2879e',
         'name' => 'yiisoft/yii2-app-advanced',
         'dev' => true,
     ),
@@ -841,6 +841,15 @@
             'reference' => 'fd9e4d1f39986772a0fe384396be3230d70ec3c2',
             'dev_requirement' => false,
         ),
+        'xemlock/htmlpurifier-html5' => array(
+            'pretty_version' => 'v0.1.11',
+            'version' => '0.1.11.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../xemlock/htmlpurifier-html5',
+            'aliases' => array(),
+            'reference' => 'f0d563f9fd4a82a3d759043483f9a94c0d8c2255',
+            'dev_requirement' => false,
+        ),
         'yii2mod/yii2-rbac' => array(
             'pretty_version' => '2.3',
             'version' => '2.3.0.0',
@@ -865,7 +874,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a4779551fd7321356aec0a27a528568a3d997a23',
+            'reference' => '2d50087355bd7a2e1edbcc48ea43396cfcf2879e',
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-bootstrap' => array(

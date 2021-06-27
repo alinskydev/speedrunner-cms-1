@@ -64,4 +64,20 @@ class HtmlService
     {
         return VarDumper::dump($var, $depth, $highlight);
     }
+    
+    public static function purify($value, $allowed_chars = [])
+    {
+        $config = \HTMLPurifier_HTML5Config::create([
+            'HTML.SafeIframe' => true,
+        ]);
+        
+        $purifier = new \HTMLPurifier($config);
+        $value = $purifier->purify($value);
+        
+        foreach ($allowed_chars as $from => $to) {
+            $value = str_replace($from, $to, $value);
+        }
+        
+        return $value;
+    }
 }

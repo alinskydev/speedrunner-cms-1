@@ -20,8 +20,6 @@ $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
 $menu = Menu::findOne(1)->setJsonAttributes(['name', 'url'])->tree();
 
-$flashes = Yii::$app->session->getAllFlashes();
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -70,8 +68,8 @@ $flashes = Yii::$app->session->getAllFlashes();
     <div class="modal-dialog"></div>
 </div>
 
-<div class="alert-wrapper">
-    <?php print_r($flashes) ?>
+<div id="alerts-wrapper" style="display: none;">
+    <?= json_encode(Yii::$app->session->getAllFlashes(), JSON_UNESCAPED_UNICODE) ?>
 </div>
 
 <?php $this->endBody() ?>

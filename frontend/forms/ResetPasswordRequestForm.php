@@ -33,20 +33,13 @@ class ResetPasswordRequestForm extends Model
     
     public function sendEmail()
     {
-        if (!($user = User::findOne(['email' => $this->email]))) {
-            return false;
-        }
+        $password_reset_token = Yii::$app->services->string->randomize();
         
-        if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
-            $user->generatePasswordResetToken();
-            
-            if (!$user->save()) {
-                return false;
-            }
-        }
+        $user = User::find()->andWhere(['email' => $this->email])->one();
+        $user->updateAttributes(['password_reset_token' => $password_reset_token]);
         
         return Yii::$app->services->mail->send($user->email, Yii::t('app_email', 'Password reset'), 'password_reset', [
-            'token' => $user->password_reset_token,
+            'token' => $password_reset_token,
         ]);
     }
 }

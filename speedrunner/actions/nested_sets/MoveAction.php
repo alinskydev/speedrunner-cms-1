@@ -19,7 +19,7 @@ class MoveAction extends Action
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
-        $first_model->scenario = 'move';
+        $first_model->scenario = 'empty';
         
         switch ($action) {
             case 'after':

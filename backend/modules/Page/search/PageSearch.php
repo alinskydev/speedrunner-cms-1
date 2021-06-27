@@ -31,7 +31,7 @@ class PageSearch extends Page
         $query = Page::find();
         
         $attribute_groups = [
-            'match' => ['id'],
+            '=' => ['id'],
             'like' => ['slug', 'created_at', 'updated_at'],
         ];
         

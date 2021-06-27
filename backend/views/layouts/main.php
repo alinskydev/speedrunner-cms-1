@@ -6,7 +6,9 @@ use yii\web\AssetManager;
 use backend\assets\AppAsset;
 
 AppAsset::register($this);
-(new \alexantr\tinymce\TinyMCE(['name' => false]))->run();
+
+$text_editor = Yii::createObject(['class' => 'alexantr\tinymce\TinyMCE', 'name' => false]);
+$text_editor->run();
 
 ?>
 
@@ -23,6 +25,7 @@ AppAsset::register($this);
     <meta name="text-editor-base-url" content="<?= (new AssetManager())->getBundle('\alexantr\tinymce\WidgetAsset')->baseUrl . '/' ?>">
     <meta name="text-editor-file-picker-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce']) ?>">
     <meta name="text-editor-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce-image-upload']) ?>">
+    <?= Html::tag('meta', null, ['name' => 'text-editor-params', 'content' => json_encode($text_editor->clientOptions, JSON_UNESCAPED_UNICODE)]) ?>
     
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>

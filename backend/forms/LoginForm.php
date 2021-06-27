@@ -1,9 +1,10 @@
 <?php
 
-namespace common\forms;
+namespace backend\forms;
 
 use Yii;
 use yii\base\Model;
+
 use backend\modules\User\models\User;
 
 
@@ -35,7 +36,13 @@ class LoginForm extends Model
     
     public function passwordValidation($attribute, $params)
     {
-        $this->user = User::findByUsername($this->username);
+        $this->user = User::find()
+            ->andWhere([
+                'and',
+                ['username' => $this->username],
+                ['!=', 'role', 'registered'],
+            ])
+            ->one();
         
         if (!$this->user || !$this->user->validatePassword($this->{$attribute})) {
             $this->addError($attribute, Yii::t('app', 'Incorrect {attribute}', ['attribute' => $this->getAttributeLabel('password')]));

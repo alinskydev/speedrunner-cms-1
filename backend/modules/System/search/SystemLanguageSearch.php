@@ -23,7 +23,7 @@ class SystemLanguageSearch extends SystemLanguage
         $query = SystemLanguage::find();
         
         $attribute_groups = [
-            'match' => ['id', 'is_active', 'is_main'],
+            '=' => ['id', 'is_active', 'is_main'],
             'like' => ['name', 'code', 'image', 'created_at', 'updated_at'],
         ];
         

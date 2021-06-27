@@ -17,15 +17,11 @@ class CartController extends Controller
         
         $render_type = Yii::$app->request->isAjax ? 'renderPartial' : 'render';
         
-        return call_user_func(
-            [$this, $render_type],
-            'index',
-            [
-                'page' => $page['page'],
-                'blocks' => $page['blocks'],
-                'cart' => Yii::$app->session->get('cart'),
-            ]
-        );
+        return $this->{$render_type}('index', [
+            'page' => $page['page'],
+            'blocks' => $page['blocks'],
+            'cart' => Yii::$app->session->get('cart'),
+        ]);
     }
     
     public function actionPreview()

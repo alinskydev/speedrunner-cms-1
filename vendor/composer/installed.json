@@ -5444,6 +5444,64 @@
             "install-path": "../wokster/yii2-nested-sets-tree-behavior"
         },
         {
+            "name": "xemlock/htmlpurifier-html5",
+            "version": "v0.1.11",
+            "version_normalized": "0.1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xemlock/htmlpurifier-html5.git",
+                "reference": "f0d563f9fd4a82a3d759043483f9a94c0d8c2255"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xemlock/htmlpurifier-html5/zipball/f0d563f9fd4a82a3d759043483f9a94c0d8c2255",
+                "reference": "f0d563f9fd4a82a3d759043483f9a94c0d8c2255",
+                "shasum": ""
+            },
+            "require": {
+                "ezyang/htmlpurifier": "^4.8",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^1.1|^2.1",
+                "phpunit/phpunit": ">=4.7 <8.0"
+            },
+            "time": "2019-08-07T17:19:21+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "library/HTMLPurifier/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "xemlock",
+                    "email": "xemlock@gmail.com"
+                }
+            ],
+            "description": "HTML5 element definitions for HTML Purifier",
+            "keywords": [
+                "HTML5",
+                "Purifier",
+                "html",
+                "htmlpurifier",
+                "security",
+                "tidy",
+                "validator",
+                "xss"
+            ],
+            "support": {
+                "issues": "https://github.com/xemlock/htmlpurifier-html5/issues",
+                "source": "https://github.com/xemlock/htmlpurifier-html5/tree/master"
+            },
+            "install-path": "../xemlock/htmlpurifier-html5"
+        },
+        {
             "name": "yii2mod/yii2-rbac",
             "version": "2.3",
             "version_normalized": "2.3.0.0",

@@ -25,12 +25,9 @@ class TreeAction extends Action
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
-            ArrayHelper::merge([
-                'root' => $root,
-            ], $render_params())
+            ArrayHelper::merge(['root' => $root], $render_params())
         );
     }
 }

@@ -17,23 +17,22 @@ class DataProviderAction extends Action
         $params = Yii::$app->request->queryParams;
         array_walk_recursive($params, fn (&$v) => $v = trim($v));
         
-        $model = $this->controller->model->searchModel;
-        $model->enums = $this->controller->model->enums;
-        $model->load($params);
-        $model->beforeSearch();
+        $searchModel = $this->controller->model->searchModel;
+        $searchModel->enums = $this->controller->model->enums;
+        $searchModel->load($params);
+        $searchModel->beforeSearch();
         
-        $dataProvider = $model->search();
+        $dataProvider = $searchModel->search();
         
         $render_type = Yii::$app->request->isAjax ? 'renderAjax' : 'render';
         $render_params = $this->render_params ?? fn() => [];
         
-        $model->afterSearch();
+        $searchModel->afterSearch();
         
-        return call_user_func(
-            [$this->controller, $render_type],
+        return $this->controller->{$render_type}(
             $this->render_view,
             ArrayHelper::merge([
-                'searchModel' => $model,
+                'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ], $render_params())
         );

@@ -9,7 +9,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
-use common\forms\LoginForm;
+use frontend\forms\LoginForm;
 use frontend\forms\ResetPasswordRequestForm;
 use frontend\forms\ResetPasswordForm;
 use frontend\forms\SignupForm;

@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <?php if ($cart) { ?>
     <?php foreach ($cart['products'] as $p) { ?>
         <?= $p['name'] ?>
-        <?= Yii::$app->services->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100]) ?>
+        <?= Yii::$app->helpers->image->thumb(ArrayHelper::getValue($p, 'image'), [100, 100]) ?>
         
-        <?= Yii::$app->services->formatter->asPrice($p['total_price']) ?>
+        <?= Yii::$app->helpers->formatter->asPrice($p['total_price']) ?>
         
         <?= Html::beginForm(['cart/change'], 'post', [
             'data-toggle' => 'cart-change-form',
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <?= Html::endForm(); ?>
     <?php } ?>
     
-    <?= Yii::$app->services->formatter->asPrice($cart['total']['price']) ?>
+    <?= Yii::$app->helpers->formatter->asPrice($cart['total']['price']) ?>
     
     <div id="order-form-wrapper">
         <?= $this->render('@frontend/views/order/create', [

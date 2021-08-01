@@ -22,13 +22,11 @@ class ConnectionController extends Controller
     
     public function actions()
     {
-        $upload_allow = [];
-        
-        array_walk(Yii::$app->params['extensions'], function($extensions, $key) use (&$upload_allow) {
-            array_walk($extensions, function($value) use (&$upload_allow, $key) {
+        foreach (Yii::$app->params['extensions'] as $key => $extensions) {
+            foreach ($extensions as $value) {
                 $upload_allow[] = "$key/$value";
-            });
-        });
+            }
+        }
         
         return [
             'elfinder' => [
@@ -47,7 +45,7 @@ class ConnectionController extends Controller
                             
                             'disabled' => ['chmod', 'editor', 'netmount', 'parents', 'resize', 'extract', 'mkfile'],
                             'uploadDeny' => ['all'],
-                            'uploadAllow' => $upload_allow,
+                            'uploadAllow' => $upload_allow ?? [],
                             'uploadOrder' => ['deny', 'allow'],
                             
                             'attributes' => [

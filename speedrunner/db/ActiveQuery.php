@@ -46,7 +46,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
                 }, $result);
             }
             
-            $result = Yii::$app->services->array->asObjects($result);
+            $result = Yii::$app->helpers->array->asObjects($result);
         }
         
         return $result;

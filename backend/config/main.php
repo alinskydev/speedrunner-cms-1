@@ -21,23 +21,17 @@ return [
         'page' => ['class' => 'backend\modules\Page\Module'],
         'product' => ['class' => 'backend\modules\Product\Module'],
         'seo' => ['class' => 'backend\modules\Seo\Module'],
+        'speedrunner' => ['class' => 'backend\modules\Speedrunner\Module'],
         'staticpage' => ['class' => 'backend\modules\Staticpage\Module'],
         'system' => ['class' => 'backend\modules\System\Module'],
         'translation' => ['class' => 'backend\modules\Translation\Module'],
         'user' => ['class' => 'backend\modules\User\Module'],
     ],
-    'as access' => [
-        'class' => 'backend\components\AccessControl',
-        'allowed_actions' => [
-            'auth/login',
-            'auth/logout',
-            'site/error',
-        ],
-    ],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
+            'cookieValidationKey' => 'OO5aqg8gPX4TYCFBukOp4B4wD7lMNhMv',
+            'csrfParam' => '_csrf-backend',
         ],
         'user' => [
             'identityClass' => 'backend\modules\User\models\User',
@@ -63,12 +57,20 @@ return [
         'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapPluginAsset' => [
-                    'js' => []
+                    'js' => [],
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
-                    'css' => []
+                    'css' => [],
                 ],
             ],
+        ],
+    ],
+    'as access' => [
+        'class' => 'backend\components\AccessControl',
+        'allowed_actions' => [
+            'auth/login',
+            'auth/logout',
+            'site/error',
         ],
     ],
     'params' => $params,

@@ -4,14 +4,22 @@ $app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
 $routes_file = __DIR__ . "/../../$app/config/routes.php";
 $routes = $app && file_exists($routes_file) ? require $routes_file : [];
 
+$params = require 'params.php';
+
 return [
     'timeZone' => 'UTC',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'bootstrap' => ['i18n'],
+    'bootstrap' => ['debug', 'i18n'],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'modules' => [
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => $params['debug_ips'],
+        ],
+    ],
     'components' => [
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
@@ -74,21 +82,21 @@ return [
         'helpers' => [
             'class' => 'speedrunner\bootstrap\Components',
             'components' => [
-                'html' => 'speedrunner\helpers\Html',
+                'array' => 'speedrunner\helpers\ArrayHelper',
+                'formatter' => 'speedrunner\helpers\FormatterHelper',
+                'html' => 'speedrunner\helpers\HtmlHelper',
+                'image' => 'speedrunner\helpers\ImageHelper',
+                'string' => 'speedrunner\helpers\StringHelper',
             ],
         ],
         'services' => [
             'class' => 'speedrunner\bootstrap\Components',
             'components' => [
-                'array' => 'speedrunner\services\ArrayService',
                 'cart' => 'speedrunner\services\CartService',
                 'data' => 'speedrunner\services\DataService',
                 'file' => 'speedrunner\services\FileService',
-                'formatter' => 'speedrunner\services\FormatterService',
                 'i18n' => 'speedrunner\services\I18NService',
-                'image' => 'speedrunner\services\ImageService',
                 'mail' => 'speedrunner\services\MailService',
-                'string' => 'speedrunner\services\StringService',
                 
                 'notification' => 'backend\modules\User\services\UserNotificationService',
                 'settings' => 'backend\modules\System\services\SystemSettingsService',

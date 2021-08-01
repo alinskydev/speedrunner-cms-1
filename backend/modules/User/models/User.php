@@ -165,7 +165,7 @@ class User extends ActiveRecord implements IdentityInterface
     
     public static function find()
     {
-        return parent::find()->with(['profile', 'design', 'role']);
+        return parent::find()->with(['profile', 'design']);
     }
     
     public function afterFind()
@@ -186,7 +186,7 @@ class User extends ActiveRecord implements IdentityInterface
         //        Setting new password
         
         if ($this->new_password) {
-            $this->auth_key = Yii::$app->services->string->randomize();
+            $this->auth_key = Yii::$app->helpers->string->randomize();
             $this->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
         }
         

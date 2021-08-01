@@ -113,7 +113,7 @@ class DocumentatorForm extends Model
                                 
                                 unset($rule_tmp[0], $rule_tmp[1]);
                                 
-                                array_walk($rule_tmp, function(&$value, $key) {
+                                foreach ($rule_tmp as $key => &$value) {
                                     if (is_callable($value)) {
                                         $value = "$key: FUNCTION";
                                     } elseif (is_array($value)) {
@@ -121,7 +121,7 @@ class DocumentatorForm extends Model
                                     } else {
                                         $value = "$key: $value";
                                     }
-                                });
+                                }
                                 
                                 $rule_string .= $rule_tmp ? ' (' . implode(', ', $rule_tmp) . ')' : null;
                                 $params['post'][$r][] = $rule_string;

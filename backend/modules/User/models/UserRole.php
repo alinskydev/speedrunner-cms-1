@@ -35,7 +35,7 @@ class UserRole extends ActiveRecord
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['routes'], 'default', 'value' => []],
-            [['routes'], 'in', 'range' => Yii::$app->services->array->leaves($this->enums->routes()), 'allowArray' => true],
+            [['routes'], 'in', 'range' => Yii::$app->helpers->array->leaves($this->enums->routes()), 'allowArray' => true],
         ];
     }
     

@@ -26,7 +26,7 @@ class FileService
         $dir = "$this->base_dir/$save_dir";
         FileHelper::createDirectory($dir);
         
-        $file_name = Yii::$app->services->string->randomize() . ".$file->extension";
+        $file_name = Yii::$app->helpers->string->randomize() . ".$file->extension";
         
         if ($width_height) {
             $image = new Image();
@@ -51,7 +51,7 @@ class FileService
             $dir = "$this->base_dir/$save_dir";
             FileHelper::createDirectory($dir);
             
-            $file_name = Yii::$app->services->string->randomize() . ".$extension";
+            $file_name = Yii::$app->helpers->string->randomize() . ".$extension";
             
             copy($file_url, "$dir/$file_name");
             return "/$save_dir/$file_name";

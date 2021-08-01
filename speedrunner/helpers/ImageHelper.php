@@ -1,6 +1,6 @@
 <?php
 
-namespace speedrunner\services;
+namespace speedrunner\helpers;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -11,7 +11,7 @@ use yii\imagine\Image;
 use Imagine\Image\ManipulatorInterface;
 
 
-class ImageService
+class ImageHelper
 {
     public static function thumb($image_url, $width_height, $type = 'resize')
     {

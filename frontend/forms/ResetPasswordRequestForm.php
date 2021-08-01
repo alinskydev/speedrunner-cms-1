@@ -33,7 +33,7 @@ class ResetPasswordRequestForm extends Model
     
     public function sendEmail()
     {
-        $password_reset_token = Yii::$app->services->string->randomize();
+        $password_reset_token = Yii::$app->helpers->string->randomize();
         
         $user = User::find()->andWhere(['email' => $this->email])->one();
         $user->updateAttributes(['password_reset_token' => $password_reset_token]);

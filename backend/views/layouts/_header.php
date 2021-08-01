@@ -19,13 +19,13 @@ $notifications = UserNotification::find()->andWhere(['user_id' => Yii::$app->use
         <div class="header-right">
             <div class="item dropdown">
                 <button type="button" class="btn btn-link dropdown-toggle flag-wrapper" data-toggle="dropdown">
-                    <img src="<?= Yii::$app->services->image->thumb($langs[Yii::$app->language]['image'], [30, 20], 'crop') ?>">
+                    <img src="<?= Yii::$app->helpers->image->thumb($langs[Yii::$app->language]['image'], [30, 20], 'crop') ?>">
                 </button>
                 
                 <div class="dropdown-menu dropdown-menu-right">
                     <?php foreach ($langs as $l) { ?>
                         <a class="dropdown-item small font-weight-bold" href="<?= $l['url'] ?>">
-                            <img class="mr-1" src="<?= Yii::$app->services->image->thumb($l['image'], [30, 20], 'crop') ?>">
+                            <img class="mr-1" src="<?= Yii::$app->helpers->image->thumb($l['image'], [30, 20], 'crop') ?>">
                             <?= $l['name'] ?>
                         </a>
                     <?php } ?>

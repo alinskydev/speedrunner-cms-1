@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 <?php $form = ActiveForm::begin(); ?>
 
 <?php
-    $img = $model->image ? Html::img(Yii::$app->services->image->thumb($model->image, [300, 300]), [
+    $img = $model->image ? Html::img(Yii::$app->helpers->image->thumb($model->image, [300, 300]), [
         'class' => 'image-placeholder'
     ]) : null;
     

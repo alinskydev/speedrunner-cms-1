@@ -17,10 +17,11 @@ return [
     'components' => [
         'request' => [
             'baseUrl' => '/api',
+            'cookieValidationKey' => 'OO5aqg8gPX4TYCFBukOp4B4wD7lMNhMv',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
                 'multipart/form-data' => 'yii\web\MultipartFormDataParser',
-            ]
+            ],
         ],
         'user' => [
             'identityClass' => 'backend\modules\User\models\User',

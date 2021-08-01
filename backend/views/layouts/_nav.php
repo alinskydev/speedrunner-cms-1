@@ -97,7 +97,7 @@ return [
     [
         'label' => Yii::t('app', 'Cache'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']),
-        'visible' => YII_ENV_DEV,
+        'visible' => in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips']),
         'items' => [
             ['label' => Yii::t('app', 'Remove thumbs'), 'url' => ['/cache/remove-thumbs']],
             ['label' => Yii::t('app', 'Clear'), 'url' => ['/cache/clear']],
@@ -106,7 +106,7 @@ return [
     [
         'label' => 'Speedrunner',
         'icon' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']),
-        'visible' => YII_ENV_DEV,
+        'visible' => in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips']),
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],
             ['label' => Yii::t('app', 'Functions'), 'url' => ['/speedrunner/speedrunner/index']],

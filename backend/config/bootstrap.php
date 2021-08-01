@@ -49,7 +49,7 @@ Yii::$container->set('alexantr\tinymce\TinyMCE', [
         
         'menu' => [],
         'plugins' => [
-            'advlist autolink lists link charmap print preview anchor',
+            'advlist autolink lists link charmap print anchor',
             'searchreplace visualblocks code fullscreen',
             'table contextmenu paste textcolor colorpicker advcode',
             'media image',
@@ -66,7 +66,7 @@ Yii::$container->set('alexantr\tinymce\TinyMCE', [
                 'alignleft aligncenter alignright alignjustify',
                 'bullist numlist table',
                 'link anchor image media', 'charmap',
-                'searchreplace visualblocks preview code fullscreen',
+                'searchreplace visualblocks code fullscreen',
             ]),
         ],
     ],

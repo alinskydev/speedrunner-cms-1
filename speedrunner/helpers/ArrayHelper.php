@@ -1,11 +1,11 @@
 <?php
 
-namespace speedrunner\services;
+namespace speedrunner\helpers;
 
 use Yii;
 
 
-class ArrayService
+class ArrayHelper
 {
     public static function asObjects(array $array)
     {

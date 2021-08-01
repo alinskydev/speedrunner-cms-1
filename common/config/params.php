@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'debug_ips' => ['127.0.0.1'],
+    
     'input_types' => [
         'text_input' => 'Text field',
         'text_area' => 'Text area',

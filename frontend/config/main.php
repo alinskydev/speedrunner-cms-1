@@ -13,8 +13,9 @@ return [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
+            'cookieValidationKey' => 'OO5aqg8gPX4TYCFBukOp4B4wD7lMNhMv',
+            'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
             'identityClass' => 'backend\modules\User\models\User',

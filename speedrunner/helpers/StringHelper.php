@@ -1,11 +1,11 @@
 <?php
 
-namespace speedrunner\services;
+namespace speedrunner\helpers;
 
 use Yii;
 
 
-class StringService
+class StringHelper
 {
     public static function randomize(int $length = 16)
     {

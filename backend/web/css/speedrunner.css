@@ -604,7 +604,7 @@ header .dropdown-toggle::after {
 .grid-view .common-buttons {
     position: fixed;
     bottom: 30px;
-    left: 15px;
+    right: 30px;
     background: #fff;
 }
 

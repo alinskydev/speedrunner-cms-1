@@ -115,7 +115,7 @@ class Order extends ActiveRecord
         //        Setting random key
         
         if ($insert) {
-            $this->key = Yii::$app->services->string->randomize();
+            $this->key = Yii::$app->helpers->string->randomize();
         }
         
         //        Setting old products

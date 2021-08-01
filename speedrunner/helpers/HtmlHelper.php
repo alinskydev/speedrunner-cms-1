@@ -3,11 +3,13 @@
 namespace speedrunner\helpers;
 
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\helpers\VarDumper;
 
 
-class Html extends \yii\helpers\Html
+class HtmlHelper
 {
     public static function allowedLink($text, $url = null, $options = [])
     {
@@ -17,16 +19,17 @@ class Html extends \yii\helpers\Html
             if (!$role || !$role->service->isAllowedByRoute(Yii::$app->urlManager->getRoute($url))) {
                 return null;
             }
-            
-            $options['href'] = Url::to($url);
         }
         
-        return static::tag('a', $text, $options);
+        return Html::a($text, $url, $options);
     }
     
-    public static function dump($var, $depth = 10, $highlight = true)
+    public static function dump($var, $die = false, $depth = 10, $highlight = true)
     {
-        return VarDumper::dump($var, $depth, $highlight);
+        if (in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips'])) {
+            echo VarDumper::dump($var, $depth, $highlight);
+            $die ? die : null;
+        }
     }
     
     public static function purify($value, $allowed_chars = [])

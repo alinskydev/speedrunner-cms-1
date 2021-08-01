@@ -20,14 +20,14 @@ class CartController extends Controller
         return $this->{$render_type}('index', [
             'page' => $page['page'],
             'blocks' => $page['blocks'],
-            'cart' => Yii::$app->session->get('cart'),
+            'cart' => Yii::$app->services->cart->cart,
         ]);
     }
     
     public function actionPreview()
     {
         return $this->renderPartial('preview', [
-            'cart' => Yii::$app->session->get('cart'),
+            'cart' => Yii::$app->services->cart->cart,
         ]);
     }
     

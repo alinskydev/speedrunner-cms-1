@@ -41,6 +41,21 @@ class ElFinder extends Widget
         }
 
         $this->settings['url'] = Url::toRoute($this->connectorRoute);
+        
+        $this->settings['commands'] = [
+            'upload', 'download', 'undo', 'redo',
+            'cut', 'rename', 'edit', 'selectall',
+            'archive', 'view', 'sort', 'fullscreen', 'search',
+        ];
+        
+        $this->settings['uiOptions']['toolbar'] = [
+            ['back', 'forward', 'up', 'undo', 'redo'],
+            ['mkdir', 'upload', 'download'],
+            ['copy', 'cut', 'paste', 'rename', 'edit', 'selectall'],
+            ['quicklook', 'info', 'archive'],
+            ['view', 'sort', 'fullscreen'],
+            ['search'],
+        ];
 
         if (!isset($this->settings['lang'])) {
             $this->settings['lang'] = Yii::$app->language;

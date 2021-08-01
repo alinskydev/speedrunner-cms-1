@@ -18,9 +18,9 @@ class DatesCompareValidator extends Validator
     
     public function validateAttribute($model, $attribute)
     {
-        $message = $this->message ?? Yii::t('app', '{attribute_1} must not be less then {attribute_2}', [
-            'attribute_1' => $model->getAttributeLabel('date_to'),
-            'attribute_2' => $model->getAttributeLabel('date_from'),
+        $message = $this->message ?? Yii::t('app', '{attribute_to} must not be less then {attribute_from}', [
+            'attribute_to' => $model->getAttributeLabel($this->params['to']),
+            'attribute_from' => $model->getAttributeLabel($this->params['from']),
         ]);
         
         $date_from = $model->{$this->params['from']};

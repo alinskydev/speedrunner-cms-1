@@ -33,6 +33,10 @@ class UserRoleService extends ActiveService
     
     public function isAllowedByRoute($route)
     {
-        return $this->model->id == 1 || !in_array($route, Yii::$app->services->array->leaves($this->model->enums->routes())) || in_array($route, $this->model->routes);
+        $condition_1 = $this->model->id == 1;
+        $condition_2 = !in_array($route, Yii::$app->helpers->array->leaves($this->model->enums->routes()));
+        $condition_3 = in_array($route, $this->model->routes);
+        
+        return $condition_1 || $condition_2 || $condition_3;
     }
 }

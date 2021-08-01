@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'checkbox_template' => '<div class="custom-control custom-checkbox">{input}{beginLabel}{labelTitle}{endLabel}{hint}{error}</div>',
-    
     'fileInput_plugin_options' => [
         'initialPreviewAsData' => true,
         'overwriteInitial' => false,

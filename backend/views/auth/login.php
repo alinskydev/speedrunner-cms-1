@@ -19,9 +19,7 @@ $this->title = Yii::t('app', 'Sign in');
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]); ?>
             <?= $form->field($model, 'password')->passwordInput(); ?>
             
-            <?= $form->field($model, 'remember_me', [
-                'checkboxTemplate' => Yii::$app->params['checkbox_template'],
-            ])->checkbox([
+            <?= $form->field($model, 'remember_me')->checkbox([
                 'class' => 'custom-control-input'
             ])->label(null, [
                 'class' => 'custom-control-label'

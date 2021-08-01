@@ -8,10 +8,10 @@ $this->title = Yii::t('app', 'An error occurred');
 
 <div class="site-error">
     <h1>
-        <?= $exception->getName() ?>
+        <?= $exception->statusCode ?: 500 ?>
     </h1>
     
     <div class="alert alert-danger">
-        <?= nl2br(Html::encode($exception->getMessage())) ?>
+        <?= nl2br(Html::encode($message)) ?>
     </div>
 </div>

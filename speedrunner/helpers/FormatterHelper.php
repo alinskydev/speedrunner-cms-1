@@ -1,11 +1,11 @@
 <?php
 
-namespace speedrunner\services;
+namespace speedrunner\helpers;
 
 use Yii;
 
 
-class FormatterService
+class FormatterHelper
 {
     public static function asPrice($price, $format = '{price} $')
     {

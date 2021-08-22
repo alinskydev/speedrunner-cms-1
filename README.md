@@ -7,16 +7,13 @@ Speedrunner CMS, based on Yii2 framework, aims to speed up and simplify developm
 
 ## Installation
 
-**Downloading**
-Clone repository by using
+**Downloading:** clone repository by using
 ```
 git clone https://github.com/alinskydev/speedrunner-cms-1.git <your-folder>
 ```
 or download as [zip file](https://github.com/alinskydev/speedrunner-cms-1/archive/master.zip).
 
-**Creating DB**
-Create database and fill config in `/common/config/main-local.php`.
-Run console command
+**Creating DB:** create database and fill config in `/common/config/main-local.php`, then run console command
 ```
 yii speedrunner/db/import main.sql
 ```

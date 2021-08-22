@@ -3,23 +3,16 @@
 $app = explode('/', $_SERVER['SCRIPT_NAME'])[1] ?? null;
 $routes_file = __DIR__ . "/../../$app/config/routes.php";
 $routes = $app && file_exists($routes_file) ? require $routes_file : [];
-
 $params = require 'params.php';
 
-return [
+$config = [
     'timeZone' => 'UTC',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'bootstrap' => ['debug', 'i18n'],
+    'bootstrap' => ['i18n'],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'modules' => [
-        'debug' => [
-            'class' => 'yii\debug\Module',
-            'allowedIPs' => $params['debug_ips'],
-        ],
-    ],
     'components' => [
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
@@ -105,3 +98,13 @@ return [
         ],
     ],
 ];
+
+if ($params['is_development_ip']) {
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => ['*'],
+    ];
+}
+
+return $config;

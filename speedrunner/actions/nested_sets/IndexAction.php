@@ -7,11 +7,11 @@ use yii\base\Action;
 use yii\helpers\ArrayHelper;
 
 
-class TreeAction extends Action
+class IndexAction extends Action
 {
     public $filter = ['depth' => 0];
     
-    public $render_view = 'tree';
+    public $render_view = 'index';
     public ?\Closure $render_params;
     
     public function run()

@@ -18,14 +18,20 @@ class UserNotificationService extends ActiveService
     
     public static function create(array $user_ids, $action_type, $action_id, array $params = [])
     {
+        $datetime = date('Y-m-d H:i:s');
+        
         foreach ($user_ids as $user_id) {
-            $model = new UserNotification();
-            $model->user_id = $user_id;
-            $model->action_type = $action_type;
-            $model->action_id = $action_id;
-            $model->params = $params;
-            $model->save();
+            $records[] = [
+                $user_id,
+                $action_type,
+                $action_id,
+                $params,
+                $datetime,
+            ];
         }
+        
+        $attributes = ['user_id', 'action_type', 'action_id', 'params', 'created_at'];
+        Yii::$app->db->createCommand()->batchInsert('user_notification', $attributes, $records ?? [])->execute();
     }
     
     public function actionData()

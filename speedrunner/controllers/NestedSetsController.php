@@ -29,8 +29,8 @@ class NestedSetsController extends Controller
     public function actions()
     {
         return [
-            'tree' => [
-                'class' => Actions\nested_sets\TreeAction::className(),
+            'index' => [
+                'class' => Actions\nested_sets\IndexAction::className(),
             ],
             'create' => [
                 'class' => Actions\nested_sets\CreateAction::className(),

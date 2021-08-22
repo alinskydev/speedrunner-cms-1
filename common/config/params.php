@@ -1,7 +1,9 @@
 <?php
 
 return [
-    'debug_ips' => ['127.0.0.1'],
+    'is_development_ip' => in_array($_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'], [
+        '127.0.0.1',
+    ]),
     
     'input_types' => [
         'text_input' => 'Text field',

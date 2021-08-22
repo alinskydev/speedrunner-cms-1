@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     
     public function beforeAction($action)
     {
-        if (!in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips'])) {
+        if (!Yii::$app->params['is_development_ip']) {
             throw new ForbiddenHttpException('You are not allowed to access this page.');
         }
         

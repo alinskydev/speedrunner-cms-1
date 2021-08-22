@@ -11,22 +11,22 @@ use yii\helpers\VarDumper;
 
 class HtmlHelper
 {
-    public static function allowedLink($text, $url = null, $options = [])
+    public static function allowedLink($text, $route = null, $options = [])
     {
-        if ($url !== null) {
+        if ($route !== null) {
             $role = ArrayHelper::getValue(Yii::$app->user->identity, 'role');
             
-            if (!$role || !$role->service->isAllowedByRoute(Yii::$app->urlManager->getRoute($url))) {
+            if (!$role || !$role->service->isAllowedByRoute(Yii::$app->urlManager->getRoute($route))) {
                 return null;
             }
         }
         
-        return Html::a($text, $url, $options);
+        return Html::a($text, $route, $options);
     }
     
     public static function dump($var, $die = false, $depth = 10, $highlight = true)
     {
-        if (in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips'])) {
+        if (Yii::$app->params['is_development_ip']) {
             echo VarDumper::dump($var, $depth, $highlight);
             $die ? die : null;
         }
@@ -34,8 +34,17 @@ class HtmlHelper
     
     public static function purify($value, $allowed_chars = [])
     {
-        $config = \HTMLPurifier_HTML5Config::create([
-            'HTML.SafeIframe' => true,
+        $config = \HTMLPurifier_HTML5Config::createDefault();
+        $config->set('Cache.DefinitionImpl', null);
+        $config->set('HTML.SafeIframe', true);
+        $config->set('HTML.MaxImgLength', null);
+        $config->set('CSS.MaxImgLength', null);
+        
+        $html_definition = $config->getDefinition('HTML', true, true);
+        $html_definition->addElement('meta', 'Inline', 'Empty', 'Common', [
+            'name' => 'Text',
+            'property' => 'Text',
+            'content' => 'Text',
         ]);
         
         $purifier = new \HTMLPurifier($config);

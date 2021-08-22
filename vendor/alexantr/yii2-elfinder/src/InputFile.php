@@ -94,7 +94,7 @@ class InputFile extends InputWidget
             
             if (strpos($file_mime_type, 'image') !== false) {
                 $html = Html::img(
-                    Yii::$app->services->image->thumb($value, [100, 100], 'resize'),
+                    Yii::$app->helpers->image->thumb($value, [100, 100], 'resize'),
                     ['class' => 'preview-elfinder preview-' . $this->options['id']]
                 );
             }

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\web\JsExpression;
 use wbraganca\fancytree\FancytreeWidget;
 
-$this->title = Yii::t('app', 'Menu');
+$this->title = Yii::t('app', 'Product categories');
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <?= $this->title ?>
     <?= Html::a(
         Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
-        ['tree'],
+        ['index'],
         ['class' => 'btn btn-primary btn-icon float-right']
     ) ?>
 </h2>
@@ -41,10 +41,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 
                 <?= FancytreeWidget::widget([
                     'pluginOptions' => [
-                        'data-action_create' => Yii::$app->urlManager->createUrl(['menu/menu/create']),
-                        'data-action_update' => Yii::$app->urlManager->createUrl(['menu/menu/update']),
-                        'data-action_expand' => Yii::$app->urlManager->createUrl(['menu/menu/expand']),
-                        'data-action_move' => Yii::$app->urlManager->createUrl(['menu/menu/move']),
+                        'data-action_create' => Yii::$app->urlManager->createUrl(['product/category/create']),
+                        'data-action_update' => Yii::$app->urlManager->createUrl(['product/category/update']),
+                        'data-action_expand' => Yii::$app->urlManager->createUrl(['product/category/expand']),
+                        'data-action_move' => Yii::$app->urlManager->createUrl(['product/category/move']),
                     ],
                     'options' => [
                         'source' => $root->tree(),

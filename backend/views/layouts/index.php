@@ -19,13 +19,13 @@ $text_editor->run();
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#067a7d">
-    <link rel="shortcut icon" href="<?= Yii::getAlias('@web/favicon.svg') ?>">
+    <link rel="icon" href="<?= Yii::getAlias('@web/favicon.svg') ?>">
     
     <meta name="file-manager-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-input']) ?>">
     <meta name="text-editor-base-url" content="<?= (new AssetManager())->getBundle('\alexantr\tinymce\WidgetAsset')->baseUrl . '/' ?>">
     <meta name="text-editor-file-picker-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce']) ?>">
     <meta name="text-editor-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce-image-upload']) ?>">
-    <?= Html::tag('meta', null, ['name' => 'text-editor-params', 'content' => json_encode($text_editor->clientOptions, JSON_UNESCAPED_UNICODE)]) ?>
+    <meta name="text-editor-params" content="<?= Html::encode(json_encode($text_editor->clientOptions, JSON_UNESCAPED_UNICODE)) ?>">
     
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>

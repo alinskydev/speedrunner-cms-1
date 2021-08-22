@@ -12,7 +12,15 @@ use yii\web\JsExpression;
 ?>
 
 <?php $form = ActiveForm::begin(
-    ArrayHelper::merge(['options' => ['id' => 'update-form']], $form_options)
+    ArrayHelper::merge(
+        [
+            'options' => [
+                'id' => 'update-form',
+                'enctype' => 'multipart/form-data',
+            ],
+        ],
+        $form_options
+    )
 ); ?>
 
 <h2 class="main-title">

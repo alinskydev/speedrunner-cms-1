@@ -29,7 +29,7 @@ return [
         'label' => Yii::t('app', 'Content'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-server']),
         'items' => [
-            ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/tree']],
+            ['label' => Yii::t('app', 'Menu'), 'url' => ['/menu/menu/index']],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/page/page/index']],
             ['label' => Yii::t('app', 'Banners'), 'url' => ['/banner/banner/index']],
             ['template' => Html::tag(
@@ -63,7 +63,7 @@ return [
         'icon' => Html::tag('i', null, ['class' => 'fas fa-boxes']),
         'items' => [
             ['label' => Yii::t('app', 'Products'), 'url' => ['/product/product/index']],
-            ['label' => Yii::t('app', 'Categories'), 'url' => ['/product/category/tree']],
+            ['label' => Yii::t('app', 'Categories'), 'url' => ['/product/category/index']],
             ['label' => Yii::t('app', 'Brands'), 'url' => ['/product/brand/index']],
             ['label' => Yii::t('app', 'Specifications'), 'url' => ['/product/specification/index']],
         ],
@@ -97,7 +97,7 @@ return [
     [
         'label' => Yii::t('app', 'Cache'),
         'icon' => Html::tag('i', null, ['class' => 'fas fa-trash-alt']),
-        'visible' => in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips']),
+        'visible' => Yii::$app->params['is_development_ip'],
         'items' => [
             ['label' => Yii::t('app', 'Remove thumbs'), 'url' => ['/cache/remove-thumbs']],
             ['label' => Yii::t('app', 'Clear'), 'url' => ['/cache/clear']],
@@ -106,7 +106,7 @@ return [
     [
         'label' => 'Speedrunner',
         'icon' => Html::tag('i', 'SR', ['style' => 'font-style: normal; font-weight: bold;']),
-        'visible' => in_array(Yii::$app->request->userIP, Yii::$app->params['debug_ips']),
+        'visible' => Yii::$app->params['is_development_ip'],
         'items' => [
             ['label' => Yii::t('app', 'Information'), 'url' => ['/speedrunner/information/index']],
             ['label' => Yii::t('app', 'Functions'), 'url' => ['/speedrunner/speedrunner/index']],

@@ -1,10 +1,9 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
+    "name": "alinskydev/speedrunner-cms-1",
+    "description": "Speedrunner CMS",
     "keywords": ["yii2", "framework", "advanced", "speedrunner"],
-    "homepage": "http://www.yiiframework.com/",
+    "homepage": "https://speedrunner.dev/",
     "type": "project",
-    "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiisoft/yii2/issues?state=open",
         "forum": "http://www.yiiframework.com/forum/",

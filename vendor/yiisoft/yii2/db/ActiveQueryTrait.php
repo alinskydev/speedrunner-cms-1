@@ -148,10 +148,6 @@ trait ActiveQueryTrait
                 // inherit asArray from primary query
                 $relation->asArray($this->asArray);
             }
-            if ($relation->asObject === null) {
-                // inherit asObject from primary query
-                $relation->asObject($this->asObject);
-            }
             $relation->populateRelation($name, $models);
         }
     }

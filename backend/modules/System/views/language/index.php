@@ -45,7 +45,23 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'updated_at',
             [
                 'class' => 'backend\widgets\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{update} {set_main} {delete}',
+                'buttons' => [
+                    'set_main' => function($url, $model, $key) {
+                        return Html::a(
+                            Html::tag('i', null, ['class' => 'fas fa-check-square']),
+                            ['set-main', 'id' => $model->id],
+                            [
+                                'title' => Yii::t('app', 'Set main'),
+                                'data-sr-trigger' => 'tooltip',
+                                'data-pjax' => 0,
+                            ]
+                        );
+                    },
+                ],
+                'visibleButtons' => [
+                    'set_main' => fn($model, $key, $index) => !$model->is_main,
+                ],
             ],
         ],
     ]); ?>

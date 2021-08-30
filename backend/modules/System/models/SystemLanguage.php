@@ -32,16 +32,8 @@ class SystemLanguage extends ActiveRecord
             [['code'], 'string', 'max' => 20],
             [['code'], 'unique'],
             [['code'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['is_active', 'is_main'], 'boolean'],
-            [['is_main'], 'isMainValidation'],
+            [['is_active'], 'boolean'],
         ];
-    }
-    
-    public function isMainValidation($attribute, $params, $validator)
-    {
-        if (ArrayHelper::getValue($this->oldAttributes, $attribute) && !$this->{$attribute}) {
-            return $this->addError($attribute, Yii::t('app', 'One of the languages must be main'));
-        }
     }
     
     public function attributeLabels()
@@ -61,8 +53,8 @@ class SystemLanguage extends ActiveRecord
     public function beforeSave($insert)
     {
         if ($this->is_main) {
-            SystemLanguage::updateAll(['is_main' => 0]);
             $this->is_active = 1;
+            self::updateAll(['is_main' => 0]);
         }
         
         return parent::beforeSave($insert);

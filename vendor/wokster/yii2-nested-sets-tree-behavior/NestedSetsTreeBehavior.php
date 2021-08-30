@@ -103,7 +103,7 @@ class NestedSetsTreeBehavior extends Behavior
                 $l = count($stack);
 
                 // Check if we're dealing with different levels
-                while ($l > 0 && $stack[$l - 1][$this->depthAttribute] >= $item[$this->depthAttribute]) {
+                while ($l > 0 && $stack[$l - 1][$this->rightAttribute] < $item[$this->rightAttribute]) {
                     array_pop($stack);
                     $l--;
                 }

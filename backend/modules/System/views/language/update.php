@@ -17,7 +17,6 @@ echo UpdateWidget::widget([
                 'code' => 'text_input',
                 'image' => 'file_manager',
                 'is_active' => 'checkbox',
-                'is_main' => 'checkbox',
             ],
         ],
     ],

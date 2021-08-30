@@ -579,7 +579,7 @@ trait ActiveRelationTrait
     private function getModelKey($model, $attributes)
     {
         $key = [];
-        $model = $this->asObject ? json_decode(json_encode($model), true) : $model;
+//        $model = $this->asObject ? json_decode(json_encode($model), true) : $model;
         foreach ($attributes as $attribute) {
             $key[] = $this->normalizeModelKey($model[$attribute]);
         }

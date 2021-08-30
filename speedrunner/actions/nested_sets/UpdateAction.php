@@ -18,7 +18,7 @@ class UpdateAction extends Action
     public ?string $success_message = 'Record has been saved';
     public ?string $error_message = 'An error occurred';
     
-    public $redirect_route = ['tree'];
+    public $redirect_route = ['index'];
     
     public function run($id)
     {

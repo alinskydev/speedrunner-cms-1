@@ -14,12 +14,12 @@ class ExpandAction extends Action
     
     public function run($id)
     {
-        if (!($model = $this->controller->findModel($id))) {
+        if (!($model = $this->controller->findExpandModel($id))) {
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         
         $expanded = Yii::$app->session->get('expanded', []);
-        $expanded_set = ArrayHelper::getValue($expanded, StringHelper::baseName($model->className()), []);
+        $expanded_set = ArrayHelper::getValue($expanded, StringHelper::basename($model->className()), []);
         
         if (isset($expanded_set[$id])) {
             unset($expanded_set[$id]);
@@ -27,7 +27,7 @@ class ExpandAction extends Action
             $expanded_set[$id] = $id;
         }
         
-        $expanded[StringHelper::baseName($model->className())] = $expanded_set;
+        $expanded[StringHelper::basename($model->className())] = $expanded_set;
         return Yii::$app->session->set('expanded', $expanded);
     }
 }

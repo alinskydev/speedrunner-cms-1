@@ -26,6 +26,10 @@ class Menu extends ActiveRecord
     public function behaviors()
     {
         return [
+            'translation' => [
+                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
+                'attributes' => ['name', 'url'],
+            ],
             'tree' => [
                 'class' => \creocoder\nestedsets\NestedSetsBehavior::className(),
                 'treeAttribute' => 'tree',
@@ -34,10 +38,6 @@ class Menu extends ActiveRecord
                 'class' => \wokster\treebehavior\NestedSetsTreeBehavior::className(),
                 'labelAttribute' => 'name',
                 'isAttributeTranslatable' => true,
-            ],
-            'translation' => [
-                'class' => \speedrunner\behaviors\TranslationBehavior::className(),
-                'attributes' => ['name', 'url'],
             ],
         ];
     }

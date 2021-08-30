@@ -108,7 +108,7 @@ class GeneratorForm extends Model
             $dir = $folder_module . 'controllers/';
             FileHelper::createDirectory($dir, $mode = 0644);
             
-            $file_content = Yii::$app->controller->renderPartial("$folder_template_render/controllers/controller.php", ['model' => $this]);
+            $file_content = Yii::$app->controller->renderPartial("$folder_template_render/controllers/Controller.php", ['model' => $this]);
             $file = fopen($dir . $this->controller_name . 'Controller.php', 'w');
             fwrite($file, $file_content);
             fclose($file);

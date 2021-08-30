@@ -22,7 +22,6 @@ class PageController extends CrudController
     
     public function actions()
     {
-        $block_types = BlockType::find()->all();
         $actions = ArrayHelper::filter(parent::actions(), ['index', 'delete']);
         
         return ArrayHelper::merge($actions, [
@@ -30,14 +29,14 @@ class PageController extends CrudController
                 'class' => Actions\crud\CreateAction::className(),
                 'render_view' => 'assign',
                 'render_params' => fn() => [
-                    'types' => $block_types,
+                    'types' => BlockType::find()->orderBy('name')->all(),
                 ],
             ],
             'assign' => [
                 'class' => Actions\crud\UpdateAction::className(),
                 'render_view' => 'assign',
                 'render_params' => fn() =>[
-                    'types' => $block_types,
+                    'types' => BlockType::find()->orderBy('name')->all(),
                 ],
             ],
         ]);

@@ -30,6 +30,26 @@ $(function() {
         }
     }
     
+    //      Lazy load button
+    
+    let offset, offsetMax;
+    
+    $(document).on('click', '[data-toggle="lazy-load-button"]', function(e) {
+        e.preventDefault();
+        
+        el = $(this);
+        action = el.data('action');
+        sendData = {offset: el.data('offset')};
+        offsetMax = parseInt(el.data('offset_max'));
+        
+        $.get(action, sendData, function(data) {
+            $(el.data('result')).append(data);
+            
+            offset = parseInt(el.data('offset'));
+            offset < offsetMax ? el.data('offset', offset + 1) : el.remove();
+        });
+    });
+    
     //      Cart changing quantity
     
     let quantity;

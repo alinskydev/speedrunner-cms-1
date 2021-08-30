@@ -11,7 +11,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
 {
     public $table_name;
     public $lang;
-    public $asObject;
+    public $asObject = false;
     
     public function init()
     {
@@ -23,7 +23,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
     
     public function asObject($value = true)
     {
-        $this->asArray = $value;
+        $this->asArray = true;
         $this->asObject = $value;
         
         return $this;
@@ -33,13 +33,27 @@ class ActiveQuery extends \yii\db\ActiveQuery
     {
         $result = parent::populate($rows);
         
+        if ($this->modelClass == 'backend\modules\Blog\search\BlogSearch' && $this->asArray) {
+            $columns = (new $this->modelClass())->getTableSchema()->columns;
+            
+            foreach ($result as $key => $row) {
+                foreach ($row as $name => $value) {
+                    if (isset($columns[$name])) {
+                        $result[$key][$name] = $columns[$name]->phpTypecast($value);
+                    }
+                }
+            }
+        }
+        
         if ($this->asObject) {
             $behaviors = (new $this->modelClass)->behaviors();
             
             if ($attributes = ArrayHelper::getValue($behaviors, 'translation.attributes')) {
                 $result = array_map(function($value) use ($attributes) {
                     foreach ($attributes as $a) {
-                        $value[$a] = ArrayHelper::getValue(json_decode($value[$a]), $this->lang);
+                        if (isset($value[$a])) {
+                            $value[$a] = ArrayHelper::getValue($value[$a], $this->lang);
+                        }
                     }
                     
                     return $value;

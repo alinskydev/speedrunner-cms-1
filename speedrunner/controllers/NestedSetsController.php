@@ -58,12 +58,11 @@ class NestedSetsController extends Controller
         ];
     }
     
-    public function findModel($id)
-    {
-        return $this->model->find()->withoutRoots()->andWhere(['id' => $id])->one();
-    }
+    public function findModel($id) { return $this->findDefaultModel($id); }
+    public function findSecondModel($id) { return $this->findDefaultModel($id); }
+    public function findExpandModel($id) { return $this->findDefaultModel($id); }
     
-    public function findSecondModel($id)
+    private function findDefaultModel($id)
     {
         return $this->model->find()->withoutRoots()->andWhere(['id' => $id])->one();
     }

@@ -35,10 +35,10 @@ class ConnectionController extends Controller
                 'options' => [
                     'bind' => [
                         'mkdir.pre mkfile.pre rename.pre duplicate.pre paste.pre' => function($cmd, &$result, $args, $elfinder) {
-                            $result['name'] = Inflector::transliterate($result['name']);
+                            $result['name'] = str_replace(' ', '-', Inflector::transliterate($result['name']));
                         },
                         'upload.presave' => function($cmd, &$result, $args, $elfinder) {
-                            $result = Inflector::transliterate($result);
+                            $result = str_replace(' ', '-', Inflector::transliterate($result));
                         },
                     ],
                     'roots' => [

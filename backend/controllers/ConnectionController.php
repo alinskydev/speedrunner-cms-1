@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
+use yii\helpers\Inflector;
 use yii\web\Controller;
 use zxbodya\yii2\elfinder\ConnectorAction;
 
@@ -32,6 +33,14 @@ class ConnectionController extends Controller
             'elfinder' => [
                 'class' => 'alexantr\elfinder\ConnectorAction',
                 'options' => [
+                    'bind' => [
+                        'mkdir.pre mkfile.pre rename.pre duplicate.pre paste.pre' => function($cmd, &$result, $args, $elfinder) {
+                            $result['name'] = Inflector::transliterate($result['name']);
+                        },
+                        'upload.presave' => function($cmd, &$result, $args, $elfinder) {
+                            $result = Inflector::transliterate($result);
+                        },
+                    ],
                     'roots' => [
                         [
                             'driver' => 'LocalFileSystem',

@@ -4,7 +4,6 @@ namespace speedrunner\db;
 
 use Yii;
 use yii\db\Expression;
-use speedrunner\db\ActiveQuery;
 use creocoder\nestedsets\NestedSetsQueryBehavior;
 
 

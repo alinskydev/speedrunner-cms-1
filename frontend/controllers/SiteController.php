@@ -35,7 +35,7 @@ class SiteController extends Controller
     {
         $page = Yii::$app->services->staticpage->home;
         
-        $categories_tree = ProductCategory::find()->andWhere(['depth' => 0])->one()->setJsonAttributes(['name'])->tree();
+        $categories_tree = ProductCategory::find()->andWhere(['depth' => 0])->one()->tree();
         $categories = Yii::$app->helpers->array->buildFullPath($categories_tree, 'slug');
         
         return $this->render('index', [

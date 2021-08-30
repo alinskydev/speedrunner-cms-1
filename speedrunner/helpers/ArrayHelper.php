@@ -15,10 +15,10 @@ class ArrayHelper
     public static function buildFullPath(array $array, $attr, $children_attr = 'children', $parent_value = null, $separator = '/')
     {
         foreach ($array as &$arr) {
-            $arr[$attr] = $parent_value ? $parent_value . $separator . $arr[$attr] : $arr[$attr];
+            $arr->{$attr} = $parent_value ? $parent_value . $separator . $arr->{$attr} : $arr->{$attr};
             
-            if ($arr[$children_attr]) {
-                $arr[$children_attr] = self::buildFullPath($arr[$children_attr], $attr, $children_attr, $arr[$attr], $separator);
+            if ($arr->{$children_attr}) {
+                $arr->{$children_attr} = self::buildFullPath($arr->{$children_attr}, $attr, $children_attr, $arr->{$attr}, $separator);
             }
         }
         

@@ -18,7 +18,7 @@ $curr_url = Yii::$app->request->hostInfo . Yii::$app->request->url;
 
 $user = Yii::$app->user->identity;
 $langs = Yii::$app->services->i18n::$languages;
-$menu = Menu::findOne(1)->setJsonAttributes(['name', 'url'])->tree();
+$menu = Menu::findOne(1)->tree();
 
 ?>
 

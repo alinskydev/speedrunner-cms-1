@@ -40,10 +40,6 @@ class NestedSetsTreeBehavior extends Behavior
      */
     public $hasChildrenOutAttribute = 'folder';
     /**
-     * @var string
-     */
-    public $hrefOutAttribute = 'href';
-    /**
      * @var null|callable
      */
     public $makeLinkCallable = null;
@@ -52,58 +48,43 @@ class NestedSetsTreeBehavior extends Behavior
      */
     
     public $isAttributeTranslatable = false;
-    public $jsonAttributes = [];
 
     public function tree()
     {
-        $makeNode = function ($node) {
-            $newData = [
-                'expanded' => (bool)ArrayHelper::getValue(
-                    Yii::$app->session->get('expanded'),
-                    StringHelper::baseName($this->owner::className()) . ".{$node['id']}"
-                ),
-            ];
-            
-            if (is_callable($makeLink = $this->makeLinkCallable)) {
-                $newData[$this->hrefOutAttribute] = $makeLink($node);
-            }
-            
-            return array_merge($node, $newData);
-        };
-
         // Trees mapped
-        $trees = array();
         $lang = \Yii::$app->language;
+        $trees = [];
         
-        $collection = $this->owner->children()->select(['*']);
+        $query = $this->owner->children()
+            ->select([
+                '*',
+            ]);
         
         if ($this->isAttributeTranslatable) {
-            $collection->addSelect([new Expression("$this->labelAttribute->>'$.$lang' as $this->labelOutAttribute")]);
+            $query->addSelect([new Expression("$this->labelAttribute->>'$.$lang' as $this->labelOutAttribute")]);
         } else {
-            $collection->addSelect("$this->labelAttribute as $this->labelOutAttribute");
+            $query->addSelect("$this->labelAttribute as $this->labelOutAttribute");
         }
         
-        foreach ($this->jsonAttributes as $a) {
-            $collection->addSelect([new Expression("$a->>'$.$lang' as $a")]);
-        }
-        
-        $collection = $collection->asArray()->all();
-
-        if (count($collection) > 0) {
-            foreach ($collection as &$col) $col = $makeNode($col);
+        if ($collection = $query->asObject()->all()) {
+            $expanded_list = ArrayHelper::getValue(Yii::$app->session->get('expanded'), StringHelper::baseName($this->owner::className()), []);
+            
+            foreach ($collection as &$col) {
+                $col->expanded = in_array($col->id, $expanded_list);
+            }
 
             // Node Stack. Used to help building the hierarchy
-            $stack = array();
-
+            $stack = [];
+            
             foreach ($collection as $node) {
                 $item = $node;
-                $item[$this->childrenOutAttribute] = array();
+                $item->{$this->childrenOutAttribute} = [];
 
                 // Number of stack items
                 $l = count($stack);
 
                 // Check if we're dealing with different levels
-                while ($l > 0 && $stack[$l - 1][$this->rightAttribute] < $item[$this->rightAttribute]) {
+                while ($l > 0 && $stack[$l - 1]->{$this->rightAttribute} < $item->{$this->rightAttribute}) {
                     array_pop($stack);
                     $l--;
                 }
@@ -116,20 +97,14 @@ class NestedSetsTreeBehavior extends Behavior
                     $stack[] = &$trees[$i];
                 } else {
                     // Add node to parent
-                    $i = count($stack[$l - 1][$this->childrenOutAttribute]);
-                    $stack[$l - 1][$this->hasChildrenOutAttribute] = true;
-                    $stack[$l - 1][$this->childrenOutAttribute][$i] = $item;
-                    $stack[] = &$stack[$l - 1][$this->childrenOutAttribute][$i];
+                    $i = count($stack[$l - 1]->{$this->childrenOutAttribute});
+                    $stack[$l - 1]->{$this->hasChildrenOutAttribute} = true;
+                    $stack[$l - 1]->{$this->childrenOutAttribute}[$i] = $item;
+                    $stack[] = &$stack[$l - 1]->{$this->childrenOutAttribute}[$i];
                 }
             }
         }
-
+        
         return $trees;
-    }
-    
-    public function setJsonAttributes(array $attributes)
-    {
-        $this->jsonAttributes = $attributes;
-        return $this->owner;
     }
 }

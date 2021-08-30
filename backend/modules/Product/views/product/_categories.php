@@ -12,11 +12,11 @@ function selectCategories($data, $categories)
 {
     foreach ($data as $key => $d) {
         $result[] = [
-            'key' => $d['id'],
-            'title' => $d['title'],
-            'selected' => in_array($d['id'], $categories),
+            'key' => $d->id,
+            'title' => $d->title,
+            'selected' => in_array($d->id, $categories),
             'expanded' => true,
-            'children' => isset($d['children']) ? selectCategories($d['children'], $categories) : [],
+            'children' => selectCategories($d->children, $categories)
         ];
     }
     

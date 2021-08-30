@@ -33,7 +33,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
     {
         $result = parent::populate($rows);
         
-        if ($this->modelClass == 'backend\modules\Blog\search\BlogSearch' && $this->asArray) {
+        if ($this->asArray) {
             $columns = (new $this->modelClass())->getTableSchema()->columns;
             
             foreach ($result as $key => $row) {

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'e83dda7eba2f7b385068affbb3f0c8641a340906',
+        'reference' => '2e6916c0b7ac880671c80bb227aae2fe98ea6ab4',
         'name' => 'alinskydev/speedrunner-cms-1',
         'dev' => true,
     ),
@@ -34,7 +34,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'e83dda7eba2f7b385068affbb3f0c8641a340906',
+            'reference' => '2e6916c0b7ac880671c80bb227aae2fe98ea6ab4',
             'dev_requirement' => false,
         ),
         'behat/gherkin' => array(
@@ -137,12 +137,12 @@
             'dev_requirement' => true,
         ),
         'codeception/codeception' => array(
-            'pretty_version' => '4.1.15',
-            'version' => '4.1.15.0',
+            'pretty_version' => '4.1.22',
+            'version' => '4.1.22.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../codeception/codeception',
             'aliases' => array(),
-            'reference' => '9b174d18ba58bb2e8cc4cecce619d6124df1d83a',
+            'reference' => '9777ec3690ceedc4bce2ed13af7af4ca4ee3088f',
             'dev_requirement' => false,
         ),
         'codeception/lib-asserts' => array(

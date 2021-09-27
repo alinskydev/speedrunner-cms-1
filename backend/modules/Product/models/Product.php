@@ -195,4 +195,26 @@ class Product extends ActiveRecord
         
         return parent::beforeValidate();
     }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        //        Saving parent categories
+        
+        parent::afterSave($insert, $changedAttributes);
+        
+        $this->refresh();
+        
+        foreach ($this->categories as $category) {
+            if ($parent_categories = $category->parents()->withoutRoots()->asObject()->all()) {
+                foreach ($parent_categories as $p_c) {
+                    $records[] = [
+                        $this->id,
+                        $p_c->id,
+                    ];
+                }
+                
+                Yii::$app->db->createCommand()->batchInsert('product_category_ref', ['product_id', 'category_id'], $records)->execute();
+            }
+        }
+    }
 }

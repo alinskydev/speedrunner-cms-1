@@ -27,7 +27,7 @@ use yii\helpers\ArrayHelper;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $relation['model'] ?>;
 
-$relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>]);
+$relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>()]);
 
 ?>
 

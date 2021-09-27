@@ -52,19 +52,19 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
                     $id = $this->db->lastInsertID;
                 }
                 
-                $languages = SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
+                $languages = SystemLanguage::find()->asObject()->all();
                 
                 foreach ($languages as $language) {
                     $exists = (new Query())->from($this->messageTable)->where([
                         'id' => $id,
-                        'language' => $language['code'],
+                        'language' => $language->code,
                     ])->exists($this->db);
                     
                     if (!$exists) {
-                        $this->db->createCommand()->insert($this->messageTable,[
+                        $this->db->createCommand()->insert($this->messageTable, [
                             'id' => $id,
-                            'language' => $language['code'],
-                            'translation'  => '',
+                            'language' => $language->code,
+                            'translation' => '',
                         ])->execute();
                     }
                 }

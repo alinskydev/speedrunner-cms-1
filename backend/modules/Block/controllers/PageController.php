@@ -112,8 +112,8 @@ class PageController extends CrudController
         $key = array_search(Yii::$app->request->post('key'), $images);
         
         if ($key !== false) {
-            unset($images[$key]);
             Yii::$app->services->file->delete($images[$key]);
+            unset($images[$key]);
             
             if ($model->type->has_translation) {
                 $json = ArrayHelper::getValue($model->oldAttributes, 'value');

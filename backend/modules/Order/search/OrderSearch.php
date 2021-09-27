@@ -22,7 +22,8 @@ class OrderSearch extends Order
     public function search()
     {
         $query = Order::find()
-            ->with(['user']);
+            ->with(['user'])
+            ->select(['*', '(total_price) + (delivery_price) as checkout_price']);
         
         $query->andFilterWhere([
             'or',

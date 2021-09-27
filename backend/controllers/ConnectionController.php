@@ -44,7 +44,7 @@ class ConnectionController extends Controller
                     'roots' => [
                         [
                             'driver' => 'LocalFileSystem',
-                            'path' => Yii::getAlias('@frontend/web/uploads/'),
+                            'path' => Yii::getAlias('@frontend/web/uploads'),
                             'URL' => '/uploads/',
                             'mimeDetect' => 'internal',
                             'imgLib' => 'auto',

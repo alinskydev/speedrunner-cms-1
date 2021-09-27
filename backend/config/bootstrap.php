@@ -45,6 +45,8 @@ Yii::$container->set('alexantr\tinymce\TinyMCE', [
         'verify_html' => false,
         'force_p_newlines' => false,
         'forced_root_block' => false,
+        'table_style_by_css' => true,
+        
         'fontsize_formats' => '8px 10px 12px 14px 16px 18px 24px 36px 48px',
         
         'menu' => [],

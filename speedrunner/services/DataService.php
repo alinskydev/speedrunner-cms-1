@@ -12,7 +12,7 @@ use speedrunner\db\ActiveQuery;
 
 class DataService
 {
-    public static function search(ActiveRecord $model, ActiveQuery $query, array $attribute_groups)
+    public static function search(ActiveRecord $model, ActiveQuery $query, array $attribute_groups, array $default_sort = ['id' => SORT_DESC])
     {
         $query->addSelect(["{$model->tableName()}.*"]);
         
@@ -35,7 +35,7 @@ class DataService
         $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => $default_sort],
         ]);
         
         //        Translations

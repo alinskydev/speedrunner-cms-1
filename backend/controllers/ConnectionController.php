@@ -42,7 +42,7 @@ class ConnectionController extends Controller
                         },
                     ],
                     'roots' => [
-                        [
+                        'default' => [
                             'driver' => 'LocalFileSystem',
                             'path' => Yii::getAlias('@frontend/web/uploads'),
                             'URL' => '/uploads/',

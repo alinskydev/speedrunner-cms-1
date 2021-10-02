@@ -44,7 +44,7 @@ $(function() {
     
     //      Select2
     
-    $(document).on('mousedown', '[data-sr-trigger*="select2"]', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="select2"]:not([data-sr-trigger*="select2-ajax"])', function() {
         if (!$(this).hasClass('select2-hidden-accessible')) {
             $(this).select2({
                 allowClear: true,

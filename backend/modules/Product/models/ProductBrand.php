@@ -48,7 +48,7 @@ class ProductBrand extends ActiveRecord
     public function beforeDelete()
     {
         if (Product::find()->andWhere(['brand_id' => $this->id])->exists()) {
-            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete record which contains any products'));
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete brand which contains any products'));
             return false;
         }
         

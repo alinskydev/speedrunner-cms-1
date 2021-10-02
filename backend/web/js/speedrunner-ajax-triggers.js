@@ -83,7 +83,11 @@ $(function() {
     
     $(document).on('change', '[data-sr-trigger*="ajax-change"]', function(event) {
         el = $(this);
-        ajaxSend(event, el, el.data('sr-url'), el.data('sr-method'), {value: el.val()});
+        
+        sentData = {};
+        sentData[el.data('sr-key')] = el.val();
+        
+        ajaxSend(event, el, el.data('sr-url'), el.data('sr-method'), sentData);
     });
     
     //      Ajax keypress
@@ -91,8 +95,11 @@ $(function() {
     $(document).on('keyup', '[data-sr-trigger*="ajax-keypress"]', function(event) {
         el = $(this);
         
+        sentData = {};
+        sentData[el.data('sr-key')] = el.val();
+        
         if (el.val().length >= el.data('sr-min')) {
-            ajaxSend(event, el, el.data('sr-url'), el.data('sr-method'), {value: el.val()});
+            ajaxSend(event, el, el.data('sr-url'), el.data('sr-method'), sentData);
         }
     });
 });

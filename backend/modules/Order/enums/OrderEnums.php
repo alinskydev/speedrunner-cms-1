@@ -44,8 +44,8 @@ class OrderEnums
                 'class' => 'warning',
                 'products_action' => 'minus',
             ],
-            'payed' => [
-                'label' => Yii::t('app', 'Payed'),
+            'paid' => [
+                'label' => Yii::t('app', 'Paid'),
                 'class' => 'info',
                 'products_action' => 'minus',
             ],

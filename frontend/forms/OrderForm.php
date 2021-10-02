@@ -81,7 +81,7 @@ class OrderForm extends Model
         
         //        Mailing
         
-        Yii::$app->services->mail->send($this->order->email, Yii::t('app_mail', 'Your order has been created'), 'order_created', [
+        Yii::$app->services->mail->send([$this->order->email], Yii::t('app_mail', 'Your order has been created'), 'order_created', [
             'order' => $this->order->attributes,
         ]);
         

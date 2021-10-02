@@ -21,7 +21,7 @@ class DataService
                 $dot_position = strpos($value, '.');
                 $model_attributes[$value] = is_int($key) ? substr($value, $dot_position ? $dot_position + 1 : 0, strlen($value)) : $key;
                 
-                return [$group_name, $value, $model->{$model_attributes[$value]}];
+                return [$group_name, $value, strtolower($model->{$model_attributes[$value]})];
             }, $attributes, array_keys($attributes));
             
             array_unshift($attributes, 'and');

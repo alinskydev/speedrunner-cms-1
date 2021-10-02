@@ -14,7 +14,6 @@ $(function() {
     
     if ($('#alerts-wrapper').html().trim() !== '[]') {
         alertsJson = JSON.parse($('#alerts-wrapper').html());
-        console.log(alertsJson);
         
         for (key in alertsJson) {
             for (alert_key in alertsJson[key]) {

@@ -48,6 +48,6 @@ class FeedbackForm extends Model
             ];
         }
         
-        return Yii::$app->services->mail->send($admin_email, Yii::t('app_mail', 'Feedback'), 'feedback', $data);
+        return Yii::$app->services->mail->send([$admin_email], Yii::t('app_mail', 'Feedback'), 'feedback', $data);
     }
 }

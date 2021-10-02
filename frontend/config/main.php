@@ -42,6 +42,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'assetManager' => [
+            'appendTimestamp' => true,
             'bundles' => [
 //                'yii\web\JqueryAsset' => [
 //                    'sourcePath' => null,

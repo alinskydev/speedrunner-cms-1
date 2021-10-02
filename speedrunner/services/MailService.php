@@ -10,7 +10,7 @@ class MailService
 {
     private $dir = '@common/mail';
     
-    public function send($email, $subject, $view, $data = null, $file = null)
+    public function send(array $emails, $subject, $view, $data = null, $file = null)
     {
         $lang = Yii::$app->language;
         $lang = is_dir(Yii::getAlias("$this->dir/html/$lang")) ? $lang : 'en';
@@ -21,7 +21,7 @@ class MailService
         $mailer = new Mailer([
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'localhost',
+                'host' => 'local.host',
                 'username' => 'noreply@local.host',
                 'password' => 'password',
                 'port' => '587', // Port 25 is a very common port too
@@ -29,8 +29,7 @@ class MailService
         ]);
         
         $message = $mailer->compose()
-            ->setFrom(['noreply@alltest.uz' => Yii::$app->services->settings->site_name])
-            ->setTo($email)
+            ->setFrom(["noreply@{$_SERVER['HTTP_HOST']}" => Yii::$app->services->settings->site_name])
             ->setSubject($subject)
             ->setHtmlBody($content);
         
@@ -38,7 +37,11 @@ class MailService
             $message->attach($file['file'], ['fileName' => $file['name']]);
         }
         
-        return $message->send();
+        foreach ($emails as $email) {
+            if (!$message->setTo($email)->send()) return false;
+        }
+        
+        return true;
     }
     
     public function changeDir($dir)

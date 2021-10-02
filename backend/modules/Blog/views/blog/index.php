@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->category, 'name'),
+                'value' => fn($model) => ArrayHelper::getValue($model->category, 'name'),
             ],
             [
                 'attribute' => 'tags_tmp',
@@ -93,14 +93,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => implode('<br>', ArrayHelper::getColumn($model->tags, 'name')),
+                'value' => fn($model) => implode('<br>', ArrayHelper::getColumn($model->tags, 'name')),
             ],
             [
                 'attribute' => 'published_at',
                 'filterInputOptions' => [
                     'class' => 'form-control',
-                    'data-sr-trigger' => 'datepicker'
-                ]
+                    'data-sr-trigger' => 'datepicker',
+                ],
             ],
             'created_at',
             [

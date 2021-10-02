@@ -53,12 +53,12 @@ class UserRole extends ActiveRecord
     public function beforeDelete()
     {
         if ($this->id == 1) {
-            Yii::$app->session->addFlash('danger', Yii::t('app', 'You cannot delete this record'));
+            Yii::$app->session->addFlash('danger', Yii::t('app', 'You cannot delete this role'));
             return false;
         }
         
         if (User::find()->andWhere(['role_id' => $this->id])->exists()) {
-            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete record which contains any users'));
+            Yii::$app->session->addFlash('warning', Yii::t('app', 'You cannot delete role which contains any users'));
             return false;
         }
         

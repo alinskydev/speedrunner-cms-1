@@ -54,7 +54,7 @@ class SystemLanguage extends ActiveRecord
     {
         if ($this->is_main) {
             $this->is_active = 1;
-            self::updateAll(['is_main' => 0]);
+            self::updateAll(['is_main' => 0], ['!=', 'id', $this->id]);
         }
         
         return parent::beforeSave($insert);

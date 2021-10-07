@@ -38,6 +38,7 @@ class HtmlHelper
         $config->set('Cache.DefinitionImpl', null);
         $config->set('HTML.SafeIframe', true);
         $config->set('HTML.MaxImgLength', null);
+        $config->set('Attr.AllowedFrameTargets', ['_blank', '_self', '_parent', '_top']);
         $config->set('CSS.MaxImgLength', null);
         
         $html_definition = $config->getDefinition('HTML', true, true);

@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'format' => 'raw',
                 'value' => fn ($model) => Html::a(
                     $model->slug,
-                    Yii::$app->urlManagerFrontend->createUrl(['blog/index', 'slug' => $model->slug]),
+                    Yii::$app->urlManagerFrontend->createUrl(['blog/index', 'category' => $model->slug]),
                     ['target' => '_blank']
                 ),
             ],

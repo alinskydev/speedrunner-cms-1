@@ -42,10 +42,15 @@ class HtmlHelper
         $config->set('CSS.MaxImgLength', null);
         
         $html_definition = $config->getDefinition('HTML', true, true);
+        
         $html_definition->addElement('meta', 'Inline', 'Empty', 'Common', [
             'name' => 'Text',
             'property' => 'Text',
             'content' => 'Text',
+        ]);
+        
+        $html_definition->addElement('iframe', 'Block', 'Inline', 'Common', [
+            'src' => 'Text',
         ]);
         
         $purifier = new \HTMLPurifier($config);

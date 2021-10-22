@@ -25,6 +25,11 @@ foreach ($blocks as $key => $block_part) {
             
             case 'checkbox':
                 $attribute = [
+                    'container_options' => [
+                        'labelOptions' => [
+                            'label' => $b->label,
+                        ],
+                    ],
                     'options' => [
                         'id' => "staticpageblock-$b->id",
                         'name' => "StaticpageBlock[$b->id][value]",

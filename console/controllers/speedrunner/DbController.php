@@ -11,7 +11,7 @@ class DbController extends Controller
 {
     public function actionImport($file)
     {
-        $file = Yii::getAlias("@console/db/$file");
+        $file = Yii::getAlias("@console/templates/install/db/$file");
         
         if ((is_file($file)) && pathinfo($file)['extension'] == 'sql') {
             if (Console::confirm('Are you sure?')) {
@@ -35,7 +35,7 @@ class DbController extends Controller
     
     public function actionExport($file)
     {
-        $file = Yii::getAlias("@console/db/$file");
+        $file = Yii::getAlias("@console/templates/install/db/$file");
         
         if ((!is_file($file))) {
             if (Console::confirm('Are you sure?')) {

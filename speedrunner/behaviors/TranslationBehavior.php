@@ -33,14 +33,14 @@ class TranslationBehavior extends Behavior
     
     public function beforeSave($event)
     {
-        $langs = Yii::$app->urlManager->languages;
+        $langs = SystemLanguage::find()->asObject()->all();
         
         foreach ($this->attributes as $a) {
             if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
                 $json[Yii::$app->language] = $this->owner->{$a};
             } else {
                 foreach ($langs as $l) {
-                    $json[$l['code']] = $this->owner->{$a};
+                    $json[$l->code] = $this->owner->{$a};
                 }
             }
             

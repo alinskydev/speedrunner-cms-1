@@ -12,10 +12,8 @@ use speedrunner\db\ActiveQuery;
 
 class DataService
 {
-    public static function search(ActiveRecord $model, ActiveQuery $query, array $attribute_groups, $default_sort = null)
+    public static function search(ActiveRecord $model, ActiveQuery $query, array $attribute_groups, array $default_sort = ['id' => SORT_DESC])
     {
-        $default_sort = $default_sort ?? ['defaultOrder' => ['id' => SORT_DESC]];
-        
         $query->addSelect(["{$model->tableName()}.*"]);
         
         foreach ($attribute_groups as $group_name => $attributes) {
@@ -37,7 +35,7 @@ class DataService
         $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::className(),
             'query' => $query,
-            'sort' => $default_sort,
+            'sort' => ['defaultOrder' => $default_sort],
         ]);
         
         //        Translations
@@ -50,12 +48,10 @@ class DataService
                 $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($column, '$.$lang'))"), strtolower($model->{$t_a})]);
                 $query->addSelect([new Expression("$column->>'$.$lang' as json_$t_a")]);
                 
-                if ($dataProvider->sort) {
-                    $dataProvider->sort->attributes[$t_a] = [
-                        'asc' => ["json_$t_a" => SORT_ASC],
-                        'desc' => ["json_$t_a" => SORT_DESC],
-                    ];
-                }
+                $dataProvider->sort->attributes[$t_a] = [
+                    'asc' => ["json_$t_a" => SORT_ASC],
+                    'desc' => ["json_$t_a" => SORT_DESC],
+                ];
             }
         }
         

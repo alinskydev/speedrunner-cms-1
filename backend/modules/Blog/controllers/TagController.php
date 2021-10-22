@@ -20,6 +20,6 @@ class TagController extends CrudController
     
     public function actions()
     {
-        return ArrayHelper::filter(parent::actions(), ['index', 'delete']);
+        return ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
     }
 }

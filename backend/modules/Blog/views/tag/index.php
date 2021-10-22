@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use backend\widgets\grid\GridView;
 
@@ -10,6 +9,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <h2 class="main-title">
     <?= $this->title ?>
+    <?= Yii::$app->helpers->html->allowedLink(
+        Html::tag('i', null, ['class' => 'fas fa-plus-square']) . Yii::t('app', 'Create'),
+        ['create'],
+        ['class' => 'btn btn-primary btn-icon float-right']
+    ) ?>
 </h2>
 
 <div class="main-shadow p-3">
@@ -30,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             'created_at',
             [
                 'class' => 'backend\widgets\grid\ActionColumn',
-                'template' => '{delete}',
+                'template' => '{update}{delete}',
             ],
         ],
     ]); ?>

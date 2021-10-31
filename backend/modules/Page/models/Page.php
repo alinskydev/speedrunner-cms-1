@@ -5,7 +5,9 @@ namespace backend\modules\Page\models;
 use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+
 use speedrunner\validators\SlugValidator;
+use speedrunner\validators\TranslationValidator;
 
 
 class Page extends ActiveRecord
@@ -30,9 +32,10 @@ class Page extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name', 'image'], 'string', 'max' => 100],
-            [['description'], 'string'],
+            [['name'], 'each', 'rule' => ['required']],
+            [['name'], 'each', 'rule' => ['string', 'max' => 100]],
+            [['image'], 'string', 'max' => 100],
+            [['description'], 'each', 'rule' => ['string']],
             
             [['slug'], SlugValidator::className()],
         ];

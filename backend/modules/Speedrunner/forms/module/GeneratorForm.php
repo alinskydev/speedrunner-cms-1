@@ -173,7 +173,7 @@ class GeneratorForm extends Model
             //        View relations
             
             foreach ($this->view_relations as $r) {
-                $dir = $folder_module . 'views/' . strtolower($this->controller_name) . '/';
+                $dir = $folder_module . 'views/' . mb_strtolower($this->controller_name) . '/';
                 FileHelper::createDirectory($dir, $mode = 0644);
                 
                 $file_content = Yii::$app->controller->renderPartial("$folder_template_render/views/_relations.php", [

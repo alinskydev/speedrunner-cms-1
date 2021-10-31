@@ -16,6 +16,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public $searchModel = null;
     public $service = null;
     
+    public $translation_attributes = [];
+    
     public function init()
     {
         //        Setting enums

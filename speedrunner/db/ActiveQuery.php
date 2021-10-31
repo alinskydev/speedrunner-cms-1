@@ -88,7 +88,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
                     "$this->table_name.id",
                     new Expression("$this->table_name.$attribute->>'$.$this->lang' as text"),
                 ])->andFilterWhere([
-                    'like', new Expression("LOWER(JSON_EXTRACT($this->table_name.$attribute, '$.$this->lang'))"), strtolower($q)
+                    'like', new Expression("LOWER(JSON_EXTRACT($this->table_name.$attribute, '$.$this->lang'))"), mb_strtolower($q)
                 ]);
                 
                 break;

@@ -53,7 +53,7 @@ class DestroyerForm extends Model
             //        DB
             
             $tables = Yii::$app->db->schema->getTableNames();
-            $table_prefix = strtolower($m);
+            $table_prefix = mb_strtolower($m);
             $sql[] = 'SET FOREIGN_KEY_CHECKS = 0';
             
             foreach ($tables as $t) {

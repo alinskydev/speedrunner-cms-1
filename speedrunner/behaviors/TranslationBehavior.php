@@ -27,24 +27,25 @@ class TranslationBehavior extends Behavior
     public function afterFind($event)
     {
         foreach ($this->attributes as $a) {
+            $this->owner->translation_attributes[$a] = $this->owner->{$a};
             $this->owner->{$a} = ArrayHelper::getValue($this->owner->{$a}, Yii::$app->language);
         }
     }
     
     public function beforeSave($event)
     {
-        $langs = SystemLanguage::find()->asObject()->all();
-        
-        foreach ($this->attributes as $a) {
-            if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
-                $json[Yii::$app->language] = $this->owner->{$a};
-            } else {
-                foreach ($langs as $l) {
-                    $json[$l->code] = $this->owner->{$a};
-                }
-            }
-            
-            $this->owner->{$a} = $json;
-        }
+//        $langs = SystemLanguage::find()->asObject()->all();
+//        
+//        foreach ($this->attributes as $a) {
+//            if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
+//                $json[Yii::$app->language] = $this->owner->{$a};
+//            } else {
+//                foreach ($langs as $l) {
+//                    $json[$l->code] = $this->owner->{$a};
+//                }
+//            }
+//            
+//            $this->owner->{$a} = $json;
+//        }
     }
 }

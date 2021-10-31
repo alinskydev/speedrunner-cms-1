@@ -1,11 +1,11 @@
 <?php
 
-$index_title = ($model->module_name == $model->controller_name) ? $model->module_name : "$model->module_name " . strtolower($model->controller_name);
+$index_title = ($model->module_name == $model->controller_name) ? $model->module_name : "$model->module_name " . mb_strtolower($model->controller_name);
 
 //      Attributes
 
 $attrs = $model->attrs_fields ?: [];
-$controller_url = strtolower($model->module_name) . '/' . strtolower($model->controller_name);
+$controller_url = mb_strtolower($model->module_name) . '/' . mb_strtolower($model->controller_name);
 
 echo '<?php';
 

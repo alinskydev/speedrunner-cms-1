@@ -61,8 +61,8 @@ class DuplicatorForm extends Model
             $name_from = Yii::getAlias("@backend/modules/$this->module_name_from");
             $name_to = Yii::getAlias("@backend/modules/$this->module_name_to");
             
-            $replace_arr_from = [$this->module_name_from, strtolower($this->module_name_from)];
-            $replace_arr_to = [$this->module_name_to, strtolower($this->module_name_to)];
+            $replace_arr_from = [$this->module_name_from, mb_strtolower($this->module_name_from)];
+            $replace_arr_to = [$this->module_name_to, mb_strtolower($this->module_name_to)];
             
             FileHelper::createDirectory($name_to);
             

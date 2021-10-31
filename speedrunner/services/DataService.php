@@ -23,7 +23,7 @@ class DataService
                 $dot_position = strpos($value, '.');
                 $model_attributes[$value] = is_int($key) ? substr($value, $dot_position ? $dot_position + 1 : 0, strlen($value)) : $key;
                 
-                return [$group_name, $value, strtolower($model->{$model_attributes[$value]})];
+                return [$group_name, $value, mb_strtolower($model->{$model_attributes[$value]})];
             }, $attributes, array_keys($attributes));
             
             array_unshift($attributes, 'and');
@@ -47,7 +47,7 @@ class DataService
             
             foreach ($translation_attributes as $t_a) {
                 $column = $model->tableName() . ".$t_a";
-                $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($column, '$.$lang'))"), strtolower($model->{$t_a})]);
+                $query->andFilterWhere(['like', new Expression("LOWER(JSON_EXTRACT($column, '$.$lang'))"), mb_strtolower($model->{$t_a})]);
                 $query->addSelect([new Expression("$column->>'$.$lang' as json_$t_a")]);
                 
                 if ($dataProvider->sort) {

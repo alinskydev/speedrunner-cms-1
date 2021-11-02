@@ -67,7 +67,7 @@ class ActionColumn extends Column
      * signature:
      *
      * ```php
-     * function ($url, $model, $key) {
+     * function($url, $model, $key) {
      *     // return the button HTML code
      * }
      * ```
@@ -80,7 +80,7 @@ class ActionColumn extends Column
      *
      * ```php
      * [
-     *     'update' => function ($url, $model, $key) {
+     *     'update' => function($url, $model, $key) {
      *         return $model->status === 'editable' ? Html::a('Update', $url) : '';
      *     },
      * ],
@@ -93,7 +93,7 @@ class ActionColumn extends Column
      * The callbacks must use the following signature:
      *
      * ```php
-     * function ($model, $key, $index) {
+     * function($model, $key, $index) {
      *     return $model->status === 'editable';
      * }
      * ```
@@ -114,7 +114,7 @@ class ActionColumn extends Column
      * Since 2.0.10 it can accept additional parameter, which refers to the column instance itself:
      *
      * ```php
-     * function (string $action, mixed $model, mixed $key, integer $index, ActionColumn $this) {
+     * function(string $action, mixed $model, mixed $key, integer $index, ActionColumn $this) {
      *     //return string;
      * }
      * ```
@@ -161,7 +161,7 @@ class ActionColumn extends Column
     protected function initDefaultButton($name, $iconName, $additionalOptions = [])
     {
         if (!isset($this->buttons[$name]) && strpos($this->template, '{' . $name . '}') !== false) {
-            $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {
+            $this->buttons[$name] = function($url, $model, $key) use ($name, $iconName, $additionalOptions) {
                 switch ($name) {
                     case 'view':
                         $title = Yii::t('yii', 'View');
@@ -214,7 +214,7 @@ class ActionColumn extends Column
      */
     protected function renderDataCellContent($model, $key, $index)
     {
-        $buttons = preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
+        $buttons = preg_replace_callback('/\\{([\w\-\/]+)\\}/', function($matches) use ($model, $key, $index) {
             $name = $matches[1];
             
             if (isset($this->visibleButtons[$name])) {

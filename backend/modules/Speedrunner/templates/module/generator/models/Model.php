@@ -20,8 +20,6 @@ foreach ($model->view_relations as $r) {
     $columns[$r['var_name']]->dbType = 'json';
 }
 
-$rules = $model->generateRules($columns);
-
 $attrs = $model->attrs_fields ?: [];
 
 echo '<?php';
@@ -57,15 +55,18 @@ class <?= $model->model_name ?> extends ActiveRecord
     {
         return [
 <?php if ($model->has_seo_meta) { ?>
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-<?php } ?>
-<?php if (isset($attrs['slug'])) { ?>
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
 <?php } ?>
 <?php if ($model->attrs_translation) { ?>
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['<?= implode("', '", array_keys($model->attrs_translation)) ?>'],
+            ],
+<?php } ?>
+<?php if (isset($attrs['slug'])) { ?>
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
             ],
 <?php } ?>
 <?php if (isset($attrs_fields['files'])) { ?>
@@ -98,9 +99,11 @@ class <?= $model->model_name ?> extends ActiveRecord
     }
     
 <?php } ?>
-    public function rules()
+    public function prepareRules()
     {
-        return [<?= empty($rules) ? null : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
+        return [
+            <?= $model->generateRules($columns) ?>
+        ];
     }
     
     public function attributeLabels()

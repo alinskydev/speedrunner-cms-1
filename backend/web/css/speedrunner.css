@@ -954,12 +954,8 @@ table.multiple-input-list.table-renderer tr > td:first-child {
     padding-left: 0.75rem;
 }
 
-.input-group .nav-link {
-    opacity: 0.6;
-}
-
-.input-group .nav-link.active {
-    opacity: 1;
+.nav-input-tabs a:not(.active) {
+    opacity: 0.5;
 }
 
 

@@ -40,7 +40,7 @@ class StaticpageController extends Controller
         return $this->render('update', [
             'model' => $model,
             'blocks' => ArrayHelper::index($model->blocks, null, 'part_name'),
-            'new_block' => new StaticpageBlock,
+            'new_block' => new StaticpageBlock(),
         ]);
     }
     

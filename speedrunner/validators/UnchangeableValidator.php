@@ -11,8 +11,6 @@ use yii\validators\Validator;
 
 class UnchangeableValidator extends Validator
 {
-    public $params;
-    
     public function validateAttribute($model, $attribute)
     {
         $message = $this->message ?? Yii::t('app', 'You cannot change {attribute}', [

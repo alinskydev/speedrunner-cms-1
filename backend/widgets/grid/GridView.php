@@ -97,7 +97,7 @@ class GridView extends BaseListView
      * data model returned by [[dataProvider]]. It should have the following signature:
      *
      * ```php
-     * function ($model, $key, $index, $grid)
+     * function($model, $key, $index, $grid)
      * ```
      *
      * - `$model`: the current data model being rendered

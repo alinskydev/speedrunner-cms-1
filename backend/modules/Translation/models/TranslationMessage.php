@@ -15,10 +15,12 @@ class TranslationMessage extends ActiveRecord
         return '{{%translation_message}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['translation'], 'string'],
+            'translation' => [
+                ['string'],
+            ],
         ];
     }
     

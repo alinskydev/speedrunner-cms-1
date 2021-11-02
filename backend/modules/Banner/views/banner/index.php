@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'location',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->locations(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->enums->locations(), "$model->location.label"),
+                'value' => fn($model) => ArrayHelper::getValue($model->enums->locations(), "$model->location.label"),
             ],
             'created_at',
             'updated_at',

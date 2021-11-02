@@ -46,17 +46,6 @@ class SpeedrunnerController extends Controller
                 ],
             ],
             [
-                'label' => 'Block',
-                'actions' => [
-                    'block_generator' => [
-                        'url' => ['speedrunner/block/generator'],
-                        'label' => 'Generator',
-                        'bg_class' => 'info',
-                        'icon_class' => 'fas fa-th'
-                    ],
-                ],
-            ],
-            [
                 'label' => 'API',
                 'actions' => [
                     'api_generator' => [

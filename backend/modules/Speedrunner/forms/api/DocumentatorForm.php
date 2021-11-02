@@ -3,7 +3,7 @@
 namespace backend\modules\Speedrunner\forms\api;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\FileHelper;
@@ -14,11 +14,13 @@ class DocumentatorForm extends Model
 {
     public $module;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['module'], 'required'],
-            [['module'], 'in', 'range' => array_keys($this->modulesList())],
+            'module' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->modulesList())],
+            ],
         ];
     }
     
@@ -65,17 +67,23 @@ class DocumentatorForm extends Model
             
             if ($form_method_reflection = ArrayHelper::getValue($methods, 'actions')) {
                 foreach ($form_method_reflection->invoke($controller) as $action_key => $action) {
-                    if ($action['class'] == 'speedrunner\actions\rest\FormAction') {
+                    $form_action_classes = [
+                        \speedrunner\actions\rest\FormAction::className(),
+                        \speedrunner\actions\rest\CreateAction::className(),
+                        \speedrunner\actions\rest\UpdateAction::className(),
+                    ];
+                    
+                    if (in_array($action['class'], $form_action_classes)) {
                         $forms[$action_key] = $action['model'] ?? new $action['model_class'];
                     }
                 }
             }
             
             if ($controller_comment = $controller_reflection->getDocComment()) {
-                $controller_comment = explode(PHP_EOL, $controller_comment);
+                $controller_comment = explode("\n", $controller_comment);
                 array_shift($controller_comment);
                 array_pop($controller_comment);
-                $controller_comment = implode(PHP_EOL, $controller_comment);
+                $controller_comment = implode("\n", $controller_comment);
                 
                 $result[$controller_name]['comment'] = str_replace('* ', null, $controller_comment);
             }
@@ -99,32 +107,16 @@ class DocumentatorForm extends Model
                         $params['get'] = ArrayHelper::getColumn($params['get'], 'name');
                     }
                     
-                    $get_param_values = array_map(fn ($value) => "{{$value}}", $params['get']);
+                    $get_param_values = array_map(fn($value) => "{{$value}}", $params['get']);
                     $link = array_merge(["$module->id/$controller_url/$a_key"], array_combine($params['get'], $get_param_values));
                     $url = Yii::$app->urlManagerApi->createFileUrl($link);
                     
                     //        POST params
                     
                     if ($form = ArrayHelper::getValue($forms ?? [], $a_key)) {
-                        foreach ($form->rules() as $rule) {
-                            foreach ($rule[0] as $r) {
-                                $rule_tmp = $rule;
-                                $rule_string = $rule_tmp[1];
-                                
-                                unset($rule_tmp[0], $rule_tmp[1]);
-                                
-                                foreach ($rule_tmp as $key => &$value) {
-                                    if (is_callable($value)) {
-                                        $value = "$key: FUNCTION";
-                                    } elseif (is_array($value)) {
-                                        $value = "$key: [" . self::implodeRecursive(', ', $value) . ']';
-                                    } else {
-                                        $value = "$key: $value";
-                                    }
-                                }
-                                
-                                $rule_string .= $rule_tmp ? ' (' . implode(', ', $rule_tmp) . ')' : null;
-                                $params['post'][$r][] = $rule_string;
+                        foreach ($form->prepareRules() as $attribute => $rules) {
+                            foreach ($rules as $r) {
+                                $params['post'][$attribute][] = $r;
                             }
                         }
                     }

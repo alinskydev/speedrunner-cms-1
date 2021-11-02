@@ -15,17 +15,26 @@ class LogActionAttr extends ActiveRecord
         return '{{%log_action_attr}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['value_old'], EitherValidator::className(), 'either_attributes' => ['value_new']],
-            [['value_new'], EitherValidator::className(), 'either_attributes' => ['value_old']],
-            [['name'], 'string', 'max' => 100],
-            
-            [['name'], 'in', 'not' => true, 'range' => [
-                'id', 'created_at', 'updated_at',
-            ]],
+            'name' => [
+                ['required'],
+                ['string', 'max' => 100],
+                [
+                    'in',
+                    'not' => true,
+                    'range' => [
+                        'id', 'created_at', 'updated_at',
+                    ],
+                ],
+            ],
+            'value_old' => [
+                [EitherValidator::className(), 'either_attributes' => ['value_new']],
+            ],
+            'value_new' => [
+                [EitherValidator::className(), 'either_attributes' => ['value_old']],
+            ],
         ];
     }
     

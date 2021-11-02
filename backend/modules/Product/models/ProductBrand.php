@@ -18,18 +18,28 @@ class ProductBrand extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => false,
+            ],
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name', 'image'], 'string', 'max' => 100],
-            
-            [['slug'], SlugValidator::className()],
+            'name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
         ];
     }
     

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\System\models\SystemLanguage;
 use backend\modules\Product\models\ProductSpecificationOption;
@@ -31,7 +32,10 @@ $options = ArrayHelper::merge($model->options, [new ProductSpecificationOption])
                 </td>
                 
                 <td>
-                    <?= $form->field($o, 'name', ['template' => '{input}'])->textInput([
+                    <?= $form->field($o, 'name', [
+                        'class' => TranslationActiveField::className(),
+                        'template' => '{input}',
+                    ])->textInput([
                         'name' => "ProductSpecification[options_tmp][$o_id][name]",
                     ]) ?>
                 </td>

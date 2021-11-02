@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->helpers->image->thumb($model->images[0] ?? null, [40, 40])),
+                'value' => fn($model) => Html::img(Yii::$app->helpers->image->thumb($model->images[0] ?? null, [40, 40])),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn ($model) => Html::a(
+                'value' => fn($model) => Html::a(
                     $model->slug,
                     Yii::$app->urlManagerFrontend->createUrl(['product/view', 'slug' => $model->slug]),
                     ['target' => '_blank']
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'main_category_id',
                 'format' => 'raw',
                 'filter' => ArrayHelper::map($categories, 'id', 'text'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
+                'value' => fn($model) => ArrayHelper::getValue($model->mainCategory, 'name'),
                 'filterInputOptions' => [
                     'class' => 'form-control',
                     'data-sr-trigger' => 'select2',
@@ -81,12 +81,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->brand, 'name'),
+                'value' => fn($model) => ArrayHelper::getValue($model->brand, 'name'),
             ],
             [
                 'attribute' => 'price',
                 'format' => 'raw',
-                'value' => function ($model) {
+                'value' => function($model) {
                     $result[] = $model->price ? $model->getAttributeLabel('price') . ": $model->price" : null;
                     $result[] = $model->discount ? $model->getAttributeLabel('discount') . ": $model->discount%" : null;
                     

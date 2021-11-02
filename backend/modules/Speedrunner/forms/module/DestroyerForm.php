@@ -3,7 +3,7 @@
 namespace backend\modules\Speedrunner\forms\module;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
@@ -12,11 +12,13 @@ class DestroyerForm extends Model
 {
     public $modules;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['modules'], 'required'],
-            [['modules'], 'in', 'range' => array_keys($this->modulesList()), 'allowArray' => true],
+            'modules' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->modulesList()), 'allowArray' => true],
+            ],
         ];
     }
     

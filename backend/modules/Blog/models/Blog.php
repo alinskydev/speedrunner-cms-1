@@ -20,11 +20,14 @@ class Blog extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'short_description', 'full_description'],
+            ],
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
             ],
             'files' => [
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
@@ -34,20 +37,38 @@ class Blog extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name', 'image'], 'required'],
-            [['name', 'image'], 'string', 'max' => 100],
-            [['short_description'], 'string', 'max' => 1000],
-            [['full_description'], 'string'],
-            [['published_at'], 'date', 'format' => 'php: d.m.Y H:i'],
-            [['images'], 'each','rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
-            [['tags_tmp'], 'safe'],
-            
-            [['slug'], SlugValidator::className()],
-            
-            [['category_id'], 'exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'category_id' => [
+                ['exist', 'targetClass' => BlogCategory::className(), 'targetAttribute' => 'id'],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'short_description' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'full_description' => [
+                ['each', 'rule' => ['string']],
+            ],
+            'published_at' => [
+                ['date', 'format' => 'php: d.m.Y H:i'],
+            ],
+            'images' => [
+                ['each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            ],
+            'tags_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     
@@ -78,7 +99,7 @@ class Blog extends ActiveRecord
     public function getTags()
     {
         return $this->hasMany(BlogTag::className(), ['id' => 'tag_id'])
-            ->viaTable('blog_tag_ref', ['blog_id' => 'id'], function ($query) {
+            ->viaTable('blog_tag_ref', ['blog_id' => 'id'], function($query) {
                 $query->onCondition(['language' => Yii::$app->language]);
             });
     }

@@ -3,8 +3,6 @@
 namespace backend\modules\Block\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Block\models\BlockPage;
 
 

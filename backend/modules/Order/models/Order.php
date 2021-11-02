@@ -47,24 +47,48 @@ class Order extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['full_name', 'email', 'phone', 'address', 'delivery_type', 'payment_type', 'products_tmp'], 'required'],
-            
-            [['full_name', 'email', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 1000],
-            [['email'], 'email'],
-            
-            [['delivery_price'], 'integer', 'min' => 0],
-            [['delivery_price'], 'default', 'value' => 0],
-            [['delivery_type'], 'in', 'range' => array_keys($this->enums->deliveryTypes())],
-            [['payment_type'], 'in', 'range' => array_keys($this->enums->paymentTypes())],
-            [['status'], 'in', 'range' => array_keys($this->enums->statuses())],
-            
-            [['products_tmp'], 'safe'],
-            
-            [['user_id'], 'exist', 'targetClass' => User::className(), 'targetAttribute' => 'id'],
+            'user_id' => [
+                ['exist', 'targetClass' => User::className(), 'targetAttribute' => 'id'],
+            ],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'email' => [
+                ['required'],
+                ['email'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'address' => [
+                ['required'],
+                ['string', 'max' => 1000],
+            ],
+            'delivery_type' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->enums->deliveryTypes())],
+            ],
+            'delivery_price' => [
+                ['integer', 'min' => 0],
+                ['default', 'value' => 0],
+            ],
+            'payment_type' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->enums->paymentTypes())],
+            ],
+            'status' => [
+                ['in', 'range' => array_keys($this->enums->statuses())],
+            ],
+            'products_tmp' => [
+                ['required'],
+                ['safe'],
+            ],
         ];
     }
     

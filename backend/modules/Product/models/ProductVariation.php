@@ -29,16 +29,33 @@ class ProductVariation extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name', 'price', 'quantity', 'sku'], 'required'],
-            [['name', 'sku'], 'string', 'max' => 100],
-            [['price', 'quantity'], 'integer', 'min' => 0],
-            [['sku'], 'unique'],
-            [['discount'], 'integer', 'min' => 0, 'max' => 100],
-            [['discount'], 'default', 'value' => 0],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'price' => [
+                ['required'],
+                ['integer', 'min' => 0],
+            ],
+            'discount' => [
+                ['integer', 'min' => 0, 'max' => 100],
+                ['default', 'value' => 0],
+            ],
+            'quantity' => [
+                ['required'],
+                ['integer', 'min' => 0],
+            ],
+            'sku' => [
+                ['required'],
+                ['unique'],
+                ['string', 'max' => 100],
+            ],
+            'images' => [
+                ['each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            ],
         ];
     }
     

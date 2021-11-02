@@ -3,7 +3,7 @@
 namespace backend\modules\Speedrunner\forms\module;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
@@ -15,13 +15,21 @@ class DuplicatorForm extends Model
     public $module_name_from;
     public $module_name_to;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['duplicate_types', 'module_name_from', 'module_name_to'], 'required'],
-            [['duplicate_types'], 'in', 'range' => array_keys($this->duplicateTypes()), 'allowArray' => true],
-            [['module_name_from'], 'in', 'range' => array_keys($this->modulesList())],
-            [['module_name_to'], 'in', 'range' => array_keys($this->modulesList()), 'not' => true],
+            'duplicate_types' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->duplicateTypes()), 'allowArray' => true],
+            ],
+            'module_name_from' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->modulesList())],
+            ],
+            'module_name_to' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->modulesList()), 'not' => true],
+            ],
         ];
     }
     

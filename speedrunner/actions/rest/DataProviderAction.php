@@ -10,18 +10,15 @@ use yii\helpers\ArrayHelper;
 
 class DataProviderAction extends Action
 {
-    public Model $model;
-    public string $model_class;
-    public array $model_params = [];
-    
+    public ?Model $model;
     public ?\Closure $render_params;
     
     public function run()
     {
-        $this->model = $this->model ?? new $this->model_class($this->model_params);
+        $this->model = $this->model ?? $this->controller->model;
         
         $params = Yii::$app->request->get('filter', []);
-        array_walk_recursive($params, fn (&$v) => $v = trim($v));
+        array_walk_recursive($params, fn(&$v) => $v = trim($v));
         
         $this->model = $this->model->searchModel;
         $this->model->load([$this->model->formName() => $params]);

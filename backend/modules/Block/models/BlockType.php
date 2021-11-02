@@ -13,11 +13,17 @@ class BlockType extends ActiveRecord
         return '{{%block_type}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['label', 'image'], 'required'],
-            [['label', 'image'], 'string', 'max' => 100],
+            'label' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
         ];
     }
     

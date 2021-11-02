@@ -51,6 +51,22 @@ $(function() {
         }
     });
     
+    //      Relations table translation tabs
+    
+    let href, tabLink, tabContainer;
+    
+    $(document).on('show.bs.tab', '.nav-input-tabs a', function() {
+        href = $(this).attr('href').substring(1);
+        
+        tabLink = $('[href="' + $(this).attr('href') + '"]');
+        tabLink.closest('.nav').find('a').removeClass('active');
+        tabLink.addClass('active');
+        
+        tabContainer = $('[id="' + href + '"]');
+        tabContainer.closest('.tab-content').find('.tab-pane').removeClass('active');
+        tabContainer.removeClass('fade').addClass('active');
+    });
+    
     //      Toast
     
     let alertJson,

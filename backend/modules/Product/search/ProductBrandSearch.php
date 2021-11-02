@@ -3,8 +3,6 @@
 namespace backend\modules\Product\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Product\models\ProductBrand;
 
 

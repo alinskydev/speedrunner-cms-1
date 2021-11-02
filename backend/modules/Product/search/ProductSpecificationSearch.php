@@ -3,8 +3,6 @@
 namespace backend\modules\Product\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Product\models\ProductSpecification;
 
 
@@ -13,7 +11,7 @@ class ProductSpecificationSearch extends ProductSpecification
     public function rules()
     {
         return [
-            [['id', 'view_filter', 'view_compare'], 'integer'],
+            [['id', 'show_in_filter', 'show_in_compare'], 'integer'],
             [['name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -23,7 +21,7 @@ class ProductSpecificationSearch extends ProductSpecification
         $query = ProductSpecification::find();
         
         $attribute_groups = [
-            '=' => ['id', 'view_filter', 'view_compare'],
+            '=' => ['id', 'show_in_filter', 'show_in_compare'],
             'like' => ['created_at', 'updated_at'],
         ];
         

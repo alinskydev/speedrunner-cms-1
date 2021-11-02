@@ -27,11 +27,14 @@ class BlockPage extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name'],
+            ],
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
             ],
             'relations_one_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
@@ -50,14 +53,19 @@ class BlockPage extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['blocks_tmp'], 'safe'],
-            
-            [['slug'], SlugValidator::className()],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'blocks_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     

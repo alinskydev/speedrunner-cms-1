@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use backend\modules\User\models\User;
 
 
@@ -11,15 +11,17 @@ class ResetPasswordRequestForm extends Model
 {
     public $email;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['email'], 'required'],
-            [['email'], 'email'],
-            [
+            'email' => [
+                ['required'],
                 ['email'],
-                'exist',
-                'targetClass' => '\backend\modules\User\models\User', 'message' => Yii::t('app', 'There is no user with this email address')
+                [
+                    'exist',
+                    'targetClass' => User::className(),
+                    'message' => Yii::t('app', 'There is no user with this email address'),
+                ],
             ],
         ];
     }

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use backend\widgets\crud\UpdateWidget;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->label]);
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

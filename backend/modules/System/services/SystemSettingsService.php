@@ -16,7 +16,7 @@ class SystemSettingsService
     public function __construct()
     {
         if (self::$attributes === null) {
-            $settings = Yii::$app->db->cache(function ($db) {
+            $settings = Yii::$app->db->cache(function($db) {
                 return SystemSettings::find()->asArray()->all();
             }, 0, new TagDependency(['tags' => 'system_settings']));
             

@@ -11,4 +11,8 @@ return [
 //    ],
     
     '<module>/staticpage/<name>' => '<module>/staticpage/view',
+    
+    '<module>/<controller>/view/<id>' => '<module>/<controller>/view',
+    '<module>/<controller>/update/<id>' => '<module>/<controller>/update',
+    '<module>/<controller>/delete/<id>' => '<module>/<controller>/delete',
 ];

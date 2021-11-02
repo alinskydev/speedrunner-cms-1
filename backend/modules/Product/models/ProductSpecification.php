@@ -40,13 +40,22 @@ class ProductSpecification extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['view_filter', 'view_compare'], 'boolean'],
-            [['options_tmp'], 'safe'],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'show_in_filter' => [
+                ['boolean'],
+            ],
+            'show_in_compare' => [
+                ['boolean'],
+            ],
+            'options_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     
@@ -55,8 +64,8 @@ class ProductSpecification extends ActiveRecord
         return [
             'id' => Yii::t('app', 'Id'),
             'name' => Yii::t('app', 'Name'),
-            'view_filter' => Yii::t('app', 'View in filter'),
-            'view_compare' => Yii::t('app', 'View in compare'),
+            'show_in_filter' => Yii::t('app', 'Show in filter'),
+            'show_in_compare' => Yii::t('app', 'Show in compare'),
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
             

@@ -17,8 +17,8 @@ class EitherValidator extends Validator
     
     public function validateAttribute($model, $attribute)
     {
-        $message_params = array_map(function ($value) use ($model) {
-            return implode(' & ', array_map(fn ($val) => $model->getAttributeLabel($val), $value));
+        $message_params = array_map(function($value) use ($model) {
+            return implode(' & ', array_map(fn($val) => $model->getAttributeLabel($val), $value));
         }, array_merge([$this->attributes], [$this->either_attributes]));
         
         $message = $this->message ?? Yii::t('app', 'One of these attributes is required: {value}', [

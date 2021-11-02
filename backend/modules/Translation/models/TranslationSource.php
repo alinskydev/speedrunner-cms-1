@@ -19,10 +19,12 @@ class TranslationSource extends ActiveRecord
         return '{{%translation_source}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['translations_tmp'], 'safe'],
+            'translations_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     

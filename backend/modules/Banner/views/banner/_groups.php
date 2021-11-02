@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use alexantr\elfinder\InputFile;
+use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\Banner\models\BannerGroup;
 
@@ -35,28 +36,40 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
                 </td>
                 
                 <td>
-                    <?= $form->field($value, 'text_1', ['template' => '{input}'])->textArea([
+                    <?= $form->field($value, 'text_1', [
+                        'class' => TranslationActiveField::className(),
+                        'template' => '{input}',
+                    ])->textArea([
                         'name' => "Banner[groups_tmp][$value_id][text_1]",
                         'rows' => 5,
                     ]) ?>
                 </td>
                 
                 <td>
-                    <?= $form->field($value, 'text_2', ['template' => '{input}'])->textArea([
+                    <?= $form->field($value, 'text_2', [
+                        'class' => TranslationActiveField::className(),
+                        'template' => '{input}',
+                    ])->textArea([
                         'name' => "Banner[groups_tmp][$value_id][text_2]",
                         'rows' => 5,
                     ]) ?>
                 </td>
                 
                 <td>
-                    <?= $form->field($value, 'text_3', ['template' => '{input}'])->textArea([
+                    <?= $form->field($value, 'text_3', [
+                        'class' => TranslationActiveField::className(),
+                        'template' => '{input}',
+                    ])->textArea([
                         'name' => "Banner[groups_tmp][$value_id][text_3]",
                         'rows' => 5,
                     ]) ?>
                 </td>
                 
                 <td>
-                    <?= $form->field($value, 'link', ['template' => '{input}'])->textArea([
+                    <?= $form->field($value, 'link', [
+                        'class' => TranslationActiveField::className(),
+                        'template' => '{input}',
+                    ])->textArea([
                         'name' => "Banner[groups_tmp][$value_id][link]",
                         'rows' => 5,
                     ]) ?>

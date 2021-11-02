@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\Product\models\ProductVariation;
 
@@ -34,6 +35,7 @@ $relations = ArrayHelper::merge($model->variations, [new ProductVariation]);
                 
                 <td>
                     <?= $form->field($value, 'name', [
+                        'class' => TranslationActiveField::className(),
                         'template' => '{label}{input}',
                         'options' => ['class' => 'form-group mb-3'],
                     ])->textInput([

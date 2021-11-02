@@ -3,8 +3,6 @@
 namespace backend\modules\System\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\System\models\SystemLanguage;
 
 

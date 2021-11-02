@@ -19,8 +19,7 @@ class TranslationBehavior extends Behavior
     {
         return [
             ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
-            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+            ActiveRecord::EVENT_BEFORE_VALIDATE => 'beforeValidate',
         ];
     }
     
@@ -32,20 +31,16 @@ class TranslationBehavior extends Behavior
         }
     }
     
-    public function beforeSave($event)
+    public function beforeValidate($event)
     {
-//        $langs = SystemLanguage::find()->asObject()->all();
-//        
-//        foreach ($this->attributes as $a) {
-//            if ($json = ArrayHelper::getValue($this->owner->oldAttributes, $a)) {
-//                $json[Yii::$app->language] = $this->owner->{$a};
-//            } else {
-//                foreach ($langs as $l) {
-//                    $json[$l->code] = $this->owner->{$a};
-//                }
-//            }
-//            
-//            $this->owner->{$a} = $json;
-//        }
+        if (!method_exists($this->owner, 'search')) {
+            foreach ($this->attributes as $a) {
+                foreach (Yii::$app->urlManager->languages as $lang_code => $lang) {
+                    $value[$lang_code] = $this->owner->{$a}[$lang_code] ?? null;
+                }
+                
+                $this->owner->{$a} = $value;
+            }
+        }
     }
 }

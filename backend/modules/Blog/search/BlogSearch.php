@@ -3,8 +3,6 @@
 namespace backend\modules\Blog\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Blog\models\Blog;
 
 

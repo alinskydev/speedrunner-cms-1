@@ -13,11 +13,11 @@ class User
         return [
             'id',
             'username',
-            'access_token' => fn ($model) => $model->auth_key,
+            'access_token' => fn($model) => $model->auth_key,
             'full_name',
             'phone',
             'address',
-            'image' => fn ($model) => $model->image ? Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image) : null,
+            'image' => fn($model) => $model->image ? Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image) : null,
             'created_at',
             'updated_at',
         ];

@@ -3,8 +3,6 @@
 namespace backend\modules\User\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\User\models\User;
 
 

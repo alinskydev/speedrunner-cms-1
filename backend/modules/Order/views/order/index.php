@@ -50,12 +50,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
+                'value' => fn($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             [
                 'attribute' => 'full_name',
                 'format' => 'raw',
-                'value' => function ($model) {
+                'value' => function($model) {
                     $result[] = $model->getAttributeLabel('full_name') . ": $model->full_name";
                     $result[] = $model->getAttributeLabel('email') . ": $model->email";
                     $result[] = $model->getAttributeLabel('phone') . ": $model->phone";
@@ -67,18 +67,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'delivery_type',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->deliveryTypes(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->enums->deliveryTypes(), "$model->delivery_type.label"),
+                'value' => fn($model) => ArrayHelper::getValue($model->enums->deliveryTypes(), "$model->delivery_type.label"),
             ],
             [
                 'attribute' => 'payment_type',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->paymentTypes(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($model->enums->paymentTypes(), "$model->payment_type.label"),
+                'value' => fn($model) => ArrayHelper::getValue($model->enums->paymentTypes(), "$model->payment_type.label"),
             ],
             [
                 'attribute' => 'checkout_price',
                 'format' => 'raw',
-                'value' => function ($model) {
+                'value' => function($model) {
                     $prices = ['total_quantity', 'total_price', 'delivery_price'];
                     
                     foreach ($prices as $p) {
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => 'status',
                 'format' => 'raw',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
-                'value' => function ($model) {
+                'value' => function($model) {
                     if (!Yii::$app->user->identity->role->service->isAllowedByRoute('order/order/change-status')) {
                         return ArrayHelper::getValue($model->enums->statuses(), "$model->status.label");
                     }
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     );
                     
                     $result .= Dropdown::widget([
-                        'items' => array_map(function ($key, $value) use ($model) {
+                        'items' => array_map(function($key, $value) use ($model) {
                             return [
                                 'label' => $value['label'],
                                 'url' => ['change-status', 'id' => $model->id, 'status' => $key],

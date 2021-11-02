@@ -7,7 +7,6 @@ use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 use speedrunner\validators\SlugValidator;
-use speedrunner\validators\TranslationValidator;
 
 
 class Page extends ActiveRecord
@@ -20,24 +19,35 @@ class Page extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
             ],
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
+            ],
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'each', 'rule' => ['required']],
-            [['name'], 'each', 'rule' => ['string', 'max' => 100]],
-            [['image'], 'string', 'max' => 100],
-            [['description'], 'each', 'rule' => ['string']],
-            
-            [['slug'], SlugValidator::className()],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'description' => [
+                ['each', 'rule' => ['string']],
+            ],
         ];
     }
     

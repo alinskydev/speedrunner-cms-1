@@ -8,7 +8,9 @@ use alexantr\tinymce\TinyMCE;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
+use speedrunner\widgets\TranslationActiveField;
+
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
 
 ?>
 
@@ -62,10 +64,10 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             
             <div class="tab-content p-3">
                 <div id="tab-information" class="tab-pane active">
-                    <?= $form->field($model, 'name')->textInput() ?>
+                    <?= $form->field($model, 'name', ['class' => TranslationActiveField::className()])->textInput() ?>
                     <?= $form->field($model, 'slug')->textInput() ?>
                     <?= $form->field($model, 'image')->widget(InputFile::className()) ?>
-                    <?= $form->field($model, 'description')->widget(TinyMCE::className()) ?>
+                    <?= $form->field($model, 'description', ['class' => TranslationActiveField::className()])->widget(TinyMCE::className()) ?>
                     
                     <?php
                         if ($model->isNewRecord) {

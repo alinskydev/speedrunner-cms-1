@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Assign: {name}', ['name' => $model->name]);
+use speedrunner\widgets\TranslationActiveField;
+
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Assign: {name}', ['name' => $model->id]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -37,7 +39,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-lg-10 col-md-9 mt-3 mt-md-0">
         <div class="tab-content main-shadow p-3">
             <div id="tab-information" class="tab-pane active">
-                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'name', ['class' => TranslationActiveField::className()])->textInput() ?>
                 <?= $form->field($model, 'slug')->textInput() ?>
             </div>
             
@@ -125,7 +127,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             placeholder: 'sortable-placeholder mb-2',
             connectWith: '#sortable-to',
             helper: 'clone',
-            start: function (event, ui) {
+            start: function(event, ui) {
                 ui.placeholder.height(ui.helper.outerHeight());
                 
                 $(ui.item).show();
@@ -134,7 +136,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 before = $(ui.item).prev();
                 parent = $(ui.item).parent();
             },
-            stop: function (event, ui) {
+            stop: function(event, ui) {
                 if (ui.item.parent().is('#sortable-to')) {
                     if (before.length) {
                         before.after(clone);

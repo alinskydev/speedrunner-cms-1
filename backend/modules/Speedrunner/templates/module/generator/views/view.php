@@ -15,7 +15,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 
-$this->title = Yii::t('app', 'View: {value}', ['value' => $model->name]);
+$this->title = Yii::t('app', 'View: {value}', ['value' => $model->id]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

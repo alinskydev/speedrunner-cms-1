@@ -19,16 +19,16 @@ class SeoMetaService
         $this->model = $model;
     }
     
-    public function getMetaValue()
+    public function getMetaValue($is_for_update = false)
     {
+        $lang = Yii::$app->language;
         $model = SeoMeta::find()
             ->andWhere([
                 'model_class' => StringHelper::basename($this->model->className()),
                 'model_id' => $this->model->id,
-                'lang' => Yii::$app->language,
             ])
             ->one();
         
-        return ArrayHelper::getValue($model, 'value', []);
+        return ArrayHelper::getValue($model, $is_for_update ? 'value' : "value.$lang", []);
     }
 }

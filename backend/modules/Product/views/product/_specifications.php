@@ -12,7 +12,7 @@ foreach ($specifications as $key => $s) {
         ArrayHelper::map($s->options, 'id', 'name'),
         [
             'separator' => Html::tag('div', null, ['class' => 'mb-2']),
-            'item' => function ($index, $label, $name, $checked, $value) {
+            'item' => function($index, $label, $name, $checked, $value) {
                 $result = Html::checkbox('Product[options_tmp][]', $checked, [
                     'id' => "productoption-$value",
                     'class' => 'custom-control-input',

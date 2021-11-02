@@ -12,6 +12,8 @@ use backend\modules\Seo\services\SeoMetaService;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
+    use \speedrunner\base\traits\ModelRulesTrait;
+    
     public $enums = null;
     public $searchModel = null;
     public $service = null;
@@ -59,17 +61,35 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $api_module_name = 'v1';
         $api_class_name = "api\modules\\$api_module_name\models\\$module_name\\$class_name";
         
-        return class_exists($api_class_name) ? (new $api_class_name())->fields() : parent::fields();
+        $fields = class_exists($api_class_name) ? (new $api_class_name())->fields() : parent::fields();
+        
+        foreach ($fields as $key => $value) {
+            if (is_string($value) && isset($this->translation_attributes[$value])) {
+                $result[$value] = fn($model) => $this->translation_attributes[$value];
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        
+        return $result ?? [];
+    }
+    
+    //        Setting translations
+    
+    public function setTranslations()
+    {
+        foreach ($this->translation_attributes as $attribute => $value) {
+            $this->{$attribute} = $value;
+        }
     }
     
     //        Seo meta registration
     
-    public function registerSeoMeta($group = 'page')
+    public function registerSeoMeta($type = 'page')
     {
-        $seo_meta_service = new SeoMetaService($this);
-        $seo_meta = $seo_meta_service->getMetaValue();
+        $seo_meta = (new SeoMetaService($this))->getMetaValue();
         
-        Yii::$app->view->params['seo_meta'][$group] = [
+        Yii::$app->view->params['seo_meta'][$type] = [
             'head' => ArrayHelper::getValue($seo_meta, 'head'),
             'body' => [
                 'top' => ArrayHelper::getValue($seo_meta, 'body_top'),

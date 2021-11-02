@@ -69,13 +69,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ],
                                 ]
                             ]),
-                            'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
+                            'value' => fn($model) => ArrayHelper::getValue($model->user, 'username'),
                         ],
                         'text:ntext',
                         [
                             'attribute' => 'status',
                             'filter' => ArrayHelper::getColumn($searchModel['comments']->enums->statuses(), 'label'),
-                            'value' => fn ($model) => ArrayHelper::getValue($searchModel['comments']->enums->statuses(), "$model->status.label"),
+                            'value' => fn($model) => ArrayHelper::getValue($searchModel['comments']->enums->statuses(), "$model->status.label"),
                         ],
                         'created_at',
                     ],
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     ],
                                 ]
                             ]),
-                            'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
+                            'value' => fn($model) => ArrayHelper::getValue($model->user, 'username'),
                         ],
                         'mark',
                         'created_at',

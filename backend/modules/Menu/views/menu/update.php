@@ -4,7 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
+use speedrunner\widgets\TranslationActiveField;
+
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
 
 ?>
 
@@ -37,8 +39,8 @@ $this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Up
             
             <div class="tab-content p-3">
                 <div id="tab-information" class="tab-pane active">
-                    <?= $form->field($model, 'name')->textInput() ?>
-                    <?= $form->field($model, 'url')->textInput() ?>
+                    <?= $form->field($model, 'name', ['class' => TranslationActiveField::className()])->textInput() ?>
+                    <?= $form->field($model, 'url', ['class' => TranslationActiveField::className()])->textInput() ?>
                     
                     <?php
                         if ($model->isNewRecord) {

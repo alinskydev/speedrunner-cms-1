@@ -3,7 +3,9 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
+use speedrunner\validators\SlugValidator;
+
 use backend\modules\User\models\User;
 
 
@@ -16,18 +18,36 @@ class SignupForm extends Model
     public $password;
     public $confirm_password;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['username', 'email', 'full_name', 'password', 'confirm_password'], 'required'],
-            [['username'], 'unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This username has already been taken')],
-            [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
-            [['email'], 'email'],
-            [['email'], 'unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This email has already been taken')],
-            [['username', 'email', 'full_name', 'phone'], 'string', 'max' => 100],
-            
-            [['password'], 'string', 'min' => 8, 'max' => 50],
-            [['confirm_password'], 'compare', 'compareAttribute' => 'password'],
+            'username' => [
+                ['required'],
+                ['string', 'max' => 100],
+                ['unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This username has already been taken')],
+                ['match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet chars and digits')],
+            ],
+            'email' => [
+                ['required'],
+                ['email'],
+                ['string', 'max' => 100],
+                ['unique', 'targetClass' => User::className(), 'message' => Yii::t('app', 'This email has already been taken')],
+            ],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['string', 'max' => 100],
+            ],
+            'password' => [
+                ['required'],
+                ['string', 'min' => 8, 'max' => 50],
+            ],
+            'confirm_password' => [
+                ['required'],
+                ['compare', 'compareAttribute' => 'password'],
+            ],
         ];
     }
     
@@ -36,11 +56,10 @@ class SignupForm extends Model
         return [
             'username' => Yii::t('app', 'Username'),
             'email' => Yii::t('app', 'Email'),
-            'password' => Yii::t('app', 'Password'),
-            'confirm_password' => Yii::t('app', 'Confirm password'),
-            
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
+            'password' => Yii::t('app', 'Password'),
+            'confirm_password' => Yii::t('app', 'Confirm password'),
         ];
     }
     

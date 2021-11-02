@@ -17,16 +17,26 @@ class OrderProduct extends ActiveRecord
         return '{{%order_product}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['product_id', 'quantity'], 'required'],
-            [['variation_id'], 'required', 'when' => fn ($model) => $model->product->variations],
-            
-            [['quantity'], 'integer', 'min' => 1],
-            
-            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
-            [['variation_id'], 'exist', 'targetClass' => ProductVariation::className(), 'targetAttribute' => 'id', 'filter' => ['product_id' => $this->product_id]],
+            'product_id' => [
+                ['required'],
+                ['exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
+            ],
+            'variation_id' => [
+                ['required', 'when' => fn($model) => $model->product->variations],
+                [
+                    'exist',
+                    'targetClass' => ProductVariation::className(),
+                    'targetAttribute' => 'id',
+                    'filter' => ['product_id' => $this->product_id],
+                ],
+            ],
+            'quantity' => [
+                ['required'],
+                ['integer', 'min' => 1],
+            ],
         ];
     }
     

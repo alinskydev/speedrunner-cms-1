@@ -6,6 +6,8 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
+use speedrunner\validators\SlugValidator;
+
 
 class SystemLanguage extends ActiveRecord
 {
@@ -24,15 +26,24 @@ class SystemLanguage extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name', 'code', 'image'], 'required'],
-            [['name', 'image'], 'string', 'max' => 100],
-            [['code'], 'string', 'max' => 20],
-            [['code'], 'unique'],
-            [['code'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            [['is_active'], 'boolean'],
+            'name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'code' => [
+                ['required'],
+                [SlugValidator::className(), 'max' => 20],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'is_active' => [
+                ['boolean'],
+            ],
         ];
     }
     

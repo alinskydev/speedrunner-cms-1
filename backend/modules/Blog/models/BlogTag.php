@@ -13,12 +13,14 @@ class BlogTag extends ActiveRecord
         return '{{%blog_tag}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'unique'],
-            [['name'], 'string', 'max' => 100],
+            'name' => [
+                ['required'],
+                ['unique'],
+                ['string', 'max' => 100],
+            ],
         ];
     }
     

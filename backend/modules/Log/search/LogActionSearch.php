@@ -3,8 +3,6 @@
 namespace backend\modules\Log\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Log\models\LogAction;
 
 

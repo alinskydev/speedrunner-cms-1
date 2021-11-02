@@ -1,6 +1,6 @@
 <?php
 
-namespace speedrunner\behaviors;
+namespace backend\modules\Seo\behaviors;
 
 use Yii;
 use yii\base\Behavior;
@@ -27,7 +27,6 @@ class SeoMetaBehavior extends Behavior
         $filter = [
             'model_class' => StringHelper::basename($this->owner->className()),
             'model_id' => $this->owner->id,
-            'lang' => Yii::$app->language,
         ];
         
         $seo_model = SeoMeta::find()->andWhere($filter)->one() ?? new SeoMeta($filter);

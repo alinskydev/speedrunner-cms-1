@@ -3,8 +3,6 @@
 namespace backend\modules\Order\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Order\models\Order;
 
 

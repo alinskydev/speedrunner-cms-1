@@ -7,7 +7,7 @@ $title = ($model->module_name == $model->controller_name) ? $model->module_name 
 //      Attributes
 
 $attrs = $model->attrs_fields ?: [];
-$attrs = array_filter($attrs, fn ($value) => ArrayHelper::getValue($value, 'grid_view'));
+$attrs = array_filter($attrs, fn($value) => ArrayHelper::getValue($value, 'grid_view'));
 
 $buttons_template[] = in_array('view', $model->controller_actions) ? '{view} ' : null;
 $buttons_template[] = in_array('update', $model->controller_actions) ? '{update} ' : null;
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'attribute' => '$key',
                 'format' => 'raw',
                 'filter' => [],
-                'value' => fn (\$model) => \$model->$key,
+                'value' => fn(\$model) => \$model->$key,
             ],\n";
                 break;
             
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn (\$model) => Html::img(Yii::\$app->helpers->image->thumb(\$model->$key, [40, 40])),
+                'value' => fn(\$model) => Html::img(Yii::\$app->helpers->image->thumb(\$model->$key, [40, 40])),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         echo "            [
                 'attribute' => 'slug',
                 'format' => 'raw',
-                'value' => fn (\$model) => Html::a(
+                'value' => fn(\$model) => Html::a(
                     \$model->slug,
                     Yii::\$app->urlManagerFrontend->createUrl(['{route}', 'slug' => \$model->slug]),
                     ['target' => '_blank']

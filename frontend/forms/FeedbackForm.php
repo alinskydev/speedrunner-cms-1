@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 
 
 class FeedbackForm extends Model
@@ -13,13 +13,25 @@ class FeedbackForm extends Model
     public $phone;
     public $message;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['full_name', 'email', 'message'], 'required'],
-            [['full_name', 'email', 'phone'], 'string', 'max' => 100],
-            [['message'], 'string', 'max' => 1000],
-            [['email'], 'email'],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'email' => [
+                ['required'],
+                ['email'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['string', 'max' => 100],
+            ],
+            'message' => [
+                ['required'],
+                ['string', 'max' => 1000],
+            ],
         ];
     }
     

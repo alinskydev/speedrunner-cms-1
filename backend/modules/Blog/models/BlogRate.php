@@ -14,13 +14,13 @@ class BlogRate extends ActiveRecord
         return '{{%blog_rate}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['blog_id', 'mark'], 'required'],
-            [['mark'], 'integer', 'min' => 1, 'max' => 10],
-            
-            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
+            'mark' => [
+                ['required'],
+                ['integer', 'min' => 1, 'max' => 10],
+            ],
         ];
     }
     

@@ -13,7 +13,7 @@ class MetaController extends Controller
 {
     public function actionUpdate()
     {
-        $filter = ['model_class' => 'SeoMeta', 'lang' => Yii::$app->language];
+        $filter = ['model_class' => 'SeoMeta'];
         $model = SeoMeta::find()->andWhere($filter)->one() ?: new SeoMeta($filter);
         
         if (($model->value = Yii::$app->request->post('SeoMeta')) && $model->save()) {

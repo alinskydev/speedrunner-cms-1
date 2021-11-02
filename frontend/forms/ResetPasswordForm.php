@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\base\InvalidParamException;
 use backend\modules\User\models\User;
 
@@ -25,12 +25,17 @@ class ResetPasswordForm extends Model
         return parent::init();
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['password', 'confirm_password'], 'required'],
-            [['password'], 'string', 'min' => 8, 'max' => 50],
-            [['confirm_password'], 'compare', 'compareAttribute' => 'password'],
+            'password' => [
+                ['required'],
+                ['string', 'min' => 8, 'max' => 50],
+            ],
+            'confirm_password' => [
+                ['required'],
+                ['compare', 'compareAttribute' => 'password'],
+            ],
         ];
     }
     

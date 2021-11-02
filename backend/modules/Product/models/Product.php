@@ -29,11 +29,14 @@ class Product extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'short_description', 'full_description'],
+            ],
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
             ],
             'files' => [
                 'class' => \speedrunner\behaviors\FileBehavior::className(),
@@ -77,7 +80,7 @@ class Product extends ActiveRecord
                 ],
             ],
             'log_actions' => [
-                'class' => \speedrunner\behaviors\LogActionBehavior::className(),
+                'class' => \backend\modules\Log\behaviors\LogActionBehavior::className(),
                 'relations_one_many' => [
                     'variations_tmp' => [
                         'relation' => 'variations',
@@ -98,33 +101,69 @@ class Product extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name', 'brand_id', 'main_category_id'], 'required'],
-            [['price', 'quantity', 'sku'], 'required', 'enableClientValidation' => false, 'when' => fn ($model) => !$model->variations_tmp],
-            
-            [['price', 'quantity'], 'integer', 'min' => 0],
-            [['discount'], 'integer', 'min' => 0, 'max' => 100],
-            [['discount'], 'default', 'value' => 0],
-            [['name', 'sku'], 'string', 'max' => 100],
-            [['sku'], 'unique'],
-            [['short_description'], 'string', 'max' => 1000],
-            [['full_description'], 'string'],
-            [['images'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
-            [['related_ids'], 'default', 'value' => []],
-            [['variations_tmp'], 'safe'],
-            
-            [['slug'], SlugValidator::className()],
-            
-            [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
-            [['main_category_id'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
-            
-            [['categories_tmp'], 'exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id', 'allowArray' => true],
-            [['options_tmp'], 'exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id', 'allowArray' => true],
-            [['related_ids'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id', 'allowArray' => true, 'filter' => function ($query) {
-                $query->andWhere(['!=', 'id', $this->id]);
-            }],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'short_description' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'full_description' => [
+                ['each', 'rule' => ['string']],
+            ],
+            'images' => [
+                ['each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024]],
+            ],
+            'brand_id' => [
+                ['required'],
+                ['exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
+            ],
+            'main_category_id' => [
+                ['required'],
+                ['exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id'],
+            ],
+            'price' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => !$model->variations_tmp],
+                ['integer', 'min' => 0],
+            ],
+            'discount' => [
+                ['integer', 'min' => 0, 'max' => 100],
+                ['default', 'value' => 0],
+            ],
+            'quantity' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => !$model->variations_tmp],
+                ['integer', 'min' => 0],
+            ],
+            'sku' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => !$model->variations_tmp],
+                ['unique'],
+                ['string', 'max' => 100],
+            ],
+            'related_ids' => [
+                [
+                    'exist',
+                    'targetClass' => Product::className(),
+                    'targetAttribute' => 'id',
+                    'allowArray' => true,
+                    'filter' => fn($query) => $query->andWhere(['!=', 'id', $this->id]),
+                ],
+                ['default', 'value' => []],
+            ],
+            'categories_tmp' => [
+                ['exist', 'targetClass' => ProductCategory::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            ],
+            'options_tmp' => [
+                ['exist', 'targetClass' => ProductSpecificationOption::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            ],
+            'variations_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     

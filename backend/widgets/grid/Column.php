@@ -35,7 +35,7 @@ class Column extends BaseObject
     public $footer;
     /**
      * @var callable This is a callable that will be used to generate the content of each cell.
-     * The signature of the function should be the following: `function ($model, $key, $index, $column)`.
+     * The signature of the function should be the following: `function($model, $key, $index, $column)`.
      * Where `$model`, `$key`, and `$index` refer to the model, key and index of the row currently being rendered
      * and `$column` is a reference to the [[Column]] object.
      */
@@ -56,8 +56,8 @@ class Column extends BaseObject
     public $headerOptions = [];
     /**
      * @var array|\Closure the HTML attributes for the data cell tag. This can either be an array of
-     * attributes or an anonymous function ([[Closure]]) that returns such an array.
-     * The signature of the function should be the following: `function ($model, $key, $index, $column)`.
+     * attributes or an anonymous function([[Closure]]) that returns such an array.
+     * The signature of the function should be the following: `function($model, $key, $index, $column)`.
      * Where `$model`, `$key`, and `$index` refer to the model, key and index of the row currently being rendered
      * and `$column` is a reference to the [[Column]] object.
      * A function may be used to assign different attributes to different rows based on the data in that row.

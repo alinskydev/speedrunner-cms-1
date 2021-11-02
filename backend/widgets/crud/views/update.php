@@ -158,7 +158,7 @@ use yii\web\JsExpression;
                                     
                                     $initial_preview = $multiple ? ($files ?? []) : ($files ?? '');
                                     $initial_preview_config = $multiple ? (
-                                        ArrayHelper::getColumn($files ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value])
+                                        ArrayHelper::getColumn($files ?? [], fn($value) => ['key' => $value, 'downloadUrl' => $value])
                                     ) : [];
                                     
                                     echo $form->field(

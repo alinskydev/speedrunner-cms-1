@@ -6,6 +6,8 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
+
+use speedrunner\validators\SlugValidator;
 use speedrunner\validators\UnchangeableValidator;
 
 
@@ -19,20 +21,10 @@ class User extends ActiveRecord implements IdentityInterface
     public $phone;
     public $address;
     
-    public $design_theme;
-    public $design_font;
-    public $design_border_radius;
-    
     public $profile_attributes = [
         'full_name',
         'phone',
         'address',
-    ];
-    
-    public $design_attributes = [
-        'design_theme',
-        'design_font',
-        'design_border_radius',
     ];
     
     public static function tableName()
@@ -45,7 +37,6 @@ class User extends ActiveRecord implements IdentityInterface
         return ArrayHelper::merge(parent::scenarios(), [
             'update_profile' => [
                 'full_name', 'phone', 'address', 'new_password',
-                'design_theme', 'design_font', 'design_border_radius',
             ],
         ]);
     }
@@ -71,57 +62,55 @@ class User extends ActiveRecord implements IdentityInterface
                             'relational' => $this->profile_attributes,
                         ],
                     ],
-                    'design' => [
-                        'model' => new UserDesign(),
-                        'relation' => 'design',
-                        'attributes' => [
-                            'main' => 'user_id',
-                            'relational' => $this->design_attributes,
-                        ],
-                    ],
                 ],
             ],
             'log_actions' => [
-                'class' => \speedrunner\behaviors\LogActionBehavior::className(),
+                'class' => \backend\modules\Log\behaviors\LogActionBehavior::className(),
                 'exclude_attributes' => ['auth_key', 'password_hash', 'password_reset_token', 'user_id'],
                 'relations_one_one' => [
                     'profile' => [
                         'relation' => 'profile',
                         'attributes' => $this->profile_attributes,
                     ],
-                    'design' => [
-                        'relation' => 'design',
-                        'attributes' => $this->design_attributes,
-                    ],
                 ],
             ],
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['username', 'email', 'full_name'], 'required'],
-            [['new_password'], 'required', 'enableClientValidation' => false, 'when' => fn($model) => $model->isNewRecord],
-            
-            [['username', 'email'], 'unique'],
-            [['username'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => Yii::t('app', 'Field must contain only alphabet and numerical chars')],
-            [['username', 'full_name', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 1000],
-            [['email'], 'email'],
-            [['image'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
-            [['new_password'], 'string', 'min' => 8, 'max' => 50],
-            
-            [['design_theme'], 'in', 'range' => array_keys($this->enums->designThemes())],
-            [['design_font'], 'in', 'range' => array_keys($this->enums->designFonts())],
-            [['design_border_radius'], 'integer', 'min' => 0],
-            [['design_theme'], 'default', 'value' => 'nav_left'],
-            [['design_font'], 'default', 'value' => 'roboto'],
-            [['design_border_radius'], 'default', 'value' => 0],
-            
-            [['role_id'], 'required', 'enableClientValidation' => false, 'when' => fn($model) => $model->id == 1],
-            [['role_id'], 'exist', 'targetClass' => UserRole::className(), 'targetAttribute' => 'id'],
-            [['role_id'], UnchangeableValidator::className(), 'when' => fn($model) => $model->id == 1],
+            'username' => [
+                ['required'],
+                [SlugValidator::className(), 'message' => Yii::t('app', 'Field must be unique and contain only alphabet chars and digits')],
+            ],
+            'role_id' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => $model->id == 1],
+                ['exist', 'targetClass' => UserRole::className(), 'targetAttribute' => 'id'],
+                [UnchangeableValidator::className(), 'when' => fn($model) => $model->id == 1],
+            ],
+            'email' => [
+                ['required'],
+                ['unique'],
+                ['email'],
+            ],
+            'image' => [
+                ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
+            ],
+            'new_password' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => $model->isNewRecord],
+                ['string', 'min' => 8, 'max' => 50],
+            ],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['string', 'max' => 100],
+            ],
+            'address' => [
+                ['string', 'max' => 1000],
+            ],
         ];
     }
     
@@ -141,10 +130,6 @@ class User extends ActiveRecord implements IdentityInterface
             'full_name' => Yii::t('app', 'Full name'),
             'phone' => Yii::t('app', 'Phone'),
             'address' => Yii::t('app', 'Address'),
-            
-            'design_theme' => Yii::t('app', 'Theme'),
-            'design_font' => Yii::t('app', 'Font'),
-            'design_border_radius' => Yii::t('app', 'Border radius'),
         ];
     }
     
@@ -158,24 +143,15 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
     
-    public function getDesign()
-    {
-        return $this->hasOne(UserDesign::className(), ['user_id' => 'id']);
-    }
-    
     public static function find()
     {
-        return parent::find()->with(['profile', 'design']);
+        return parent::find()->with(['profile']);
     }
     
     public function afterFind()
     {
         foreach ($this->profile_attributes as $p_a) {
             $this->{$p_a} = $this->profile->{$p_a};
-        }
-        
-        foreach ($this->design_attributes as $p_a) {
-            $this->{$p_a} = $this->design->{$p_a};
         }
         
         return parent::afterFind();

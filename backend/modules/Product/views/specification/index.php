@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 ]
             ],
             'name',
-            'view_filter:boolean',
-            'view_compare:boolean',
+            'show_in_filter:boolean',
+            'show_in_compare:boolean',
             'created_at',
             'updated_at',
             [

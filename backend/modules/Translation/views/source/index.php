@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'translations_tmp',
                 'format' => 'raw',
-                'value' => fn ($model) => ArrayHelper::getValue($model, 'currentTranslation.translation'),
+                'value' => fn($model) => ArrayHelper::getValue($model, 'currentTranslation.translation'),
                 'contentOptions' => [
                     'style' => 'max-width: 300px; white-space: normal;',
                 ],
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'has_translation',
                 'format' => 'boolean',
-                'value' => fn ($model) => (bool)ArrayHelper::getValue($model, 'currentTranslation.translation'),
+                'value' => fn($model) => (bool)ArrayHelper::getValue($model, 'currentTranslation.translation'),
             ],
             [
                 'class' => 'backend\widgets\grid\ActionColumn',

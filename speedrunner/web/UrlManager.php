@@ -21,7 +21,7 @@ class UrlManager extends \yii\web\UrlManager
     
     public function init()
     {
-        $this->languages = Yii::$app->db->cache(function ($db) {
+        $this->languages = Yii::$app->db->cache(function($db) {
             return SystemLanguage::find()->andWhere(['is_active' => 1])->indexBy('code')->asArray()->all();
         }, 0, new TagDependency(['tags' => 'active_system_languages']));
         

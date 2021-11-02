@@ -145,7 +145,7 @@ $tabs = array_keys($result);
                                                     }
                                                     
                                                     if ($params['post']) {
-                                                        echo Html::tag('pre', json_encode($params['post'], JSON_PRETTY_PRINT));
+                                                        echo Html::tag('pre', json_encode($params['post'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
                                                     }
                                                 ?>
                                             </td>

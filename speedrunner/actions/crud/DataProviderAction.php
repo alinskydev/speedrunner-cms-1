@@ -15,7 +15,7 @@ class DataProviderAction extends Action
     public function run()
     {
         $params = Yii::$app->request->queryParams;
-        array_walk_recursive($params, fn (&$v) => $v = trim($v));
+        array_walk_recursive($params, fn(&$v) => $v = trim($v));
         
         $searchModel = $this->controller->model->searchModel;
         $searchModel->enums = $this->controller->model->enums;

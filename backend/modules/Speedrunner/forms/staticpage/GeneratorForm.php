@@ -3,7 +3,7 @@
 namespace backend\modules\Speedrunner\forms\staticpage;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Staticpage\models\Staticpage;
@@ -19,13 +19,26 @@ class GeneratorForm extends Model
     
     public $blocks = [];
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name', 'label'], 'required'],
-            [['name', 'label', 'route'], 'string', 'max' => 100],
-            [['has_seo_meta'], 'boolean'],
-            [['blocks'], 'safe'],
+            'name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'label' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'route' => [
+                ['string', 'max' => 100],
+            ],
+            'has_seo_meta' => [
+                ['boolean'],
+            ],
+            'blocks' => [
+                ['safe'],
+            ],
         ];
     }
     

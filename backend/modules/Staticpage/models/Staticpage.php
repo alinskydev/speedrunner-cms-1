@@ -33,7 +33,7 @@ class Staticpage extends ActiveRecord
     public function afterFind()
     {
         if ($this->has_seo_meta) {
-            $this->attachBehavior('seo_meta', \speedrunner\behaviors\SeoMetaBehavior::className());
+            $this->attachBehavior('seo_meta', \backend\modules\Seo\behaviors\SeoMetaBehavior::className());
         }
         
         return parent::afterFind();

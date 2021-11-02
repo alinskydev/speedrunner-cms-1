@@ -3,8 +3,6 @@
 namespace backend\modules\Banner\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Banner\models\Banner;
 
 

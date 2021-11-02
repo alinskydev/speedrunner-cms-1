@@ -6,6 +6,8 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
+use speedrunner\validators\SlugValidator;
+
 
 class ProductCategory extends ActiveRecord
 {
@@ -27,11 +29,14 @@ class ProductCategory extends ActiveRecord
     public function behaviors()
     {
         return [
-            'seo_meta' => \speedrunner\behaviors\SeoMetaBehavior::className(),
-            'sluggable' => \speedrunner\behaviors\SluggableBehavior::className(),
+            'seo_meta' => \backend\modules\Seo\behaviors\SeoMetaBehavior::className(),
             'translation' => [
                 'class' => \speedrunner\behaviors\TranslationBehavior::className(),
                 'attributes' => ['name', 'description'],
+            ],
+            'sluggable' => [
+                'class' => \speedrunner\behaviors\SluggableBehavior::className(),
+                'is_translateable' => true,
             ],
             'relations_many_many' => [
                 'class' => \speedrunner\behaviors\RelationBehavior::className(),
@@ -59,18 +64,29 @@ class ProductCategory extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
-            
-            [['name', 'slug', 'image'], 'string', 'max' => 100],
-            [['description'], 'string'],
-            [['slug'], 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
-            
-            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
-            [['specifications_tmp'], 'exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'image' => [
+                ['string', 'max' => 100],
+            ],
+            'slug' => [
+                [SlugValidator::className()],
+            ],
+            'description' => [
+                ['each', 'rule' => ['string']],
+            ],
+            'parent_id' => [
+                ['required', 'when' => fn($model) => $model->isNewRecord],
+                ['exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            ],
+            'specifications_tmp' => [
+                ['exist', 'targetClass' => ProductSpecification::className(), 'targetAttribute' => 'id', 'allowArray' => true],
+            ],
         ];
     }
     

@@ -21,7 +21,7 @@ use yii\helpers\Html;
  *     // ...
  *     [
  *         'class' => 'yii\grid\RadioButtonColumn',
- *         'radioOptions' => function ($model) {
+ *         'radioOptions' => function($model) {
  *              return [
  *                  'value' => $model['value'],
  *                  'checked' => $model['value'] == 2
@@ -42,9 +42,9 @@ class RadioButtonColumn extends Column
     public $name = 'radioButtonSelection';
     /**
      * @var array|\Closure the HTML attributes for the radio buttons. This can either be an array of
-     * attributes or an anonymous function ([[Closure]]) returning such an array.
+     * attributes or an anonymous function([[Closure]]) returning such an array.
      *
-     * The signature of the function should be as follows: `function ($model, $key, $index, $column)`
+     * The signature of the function should be as follows: `function($model, $key, $index, $column)`
      * where `$model`, `$key`, and `$index` refer to the model, key and index of the row currently being rendered
      * and `$column` is a reference to the [[RadioButtonColumn]] object.
      *
@@ -53,7 +53,7 @@ class RadioButtonColumn extends Column
      * in the following way (in this example using the `name` attribute of the model):
      *
      * ```php
-     * 'radioOptions' => function ($model, $key, $index, $column) {
+     * 'radioOptions' => function($model, $key, $index, $column) {
      *     return ['value' => $model->attribute];
      * }
      * ```

@@ -3,8 +3,6 @@
 namespace backend\modules\Translation\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Translation\models\TranslationSource;
 
 

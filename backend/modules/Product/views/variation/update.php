@@ -37,7 +37,7 @@ use yii\web\JsExpression;
                 'pluginOptions' => array_merge(Yii::$app->params['fileInput_plugin_options'], [
                     'deleteUrl' => Yii::$app->urlManager->createUrl(['product/variation/file-delete', 'id' => $model->id, 'attr' => 'images']),
                     'initialPreview' => $model->images ?? [],
-                    'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?? [], fn ($value) => ['key' => $value, 'downloadUrl' => $value]),
+                    'initialPreviewConfig' => ArrayHelper::getColumn($model->images ?? [], fn($value) => ['key' => $value, 'downloadUrl' => $value]),
                 ]),
                 'pluginEvents' => [
                     'filesorted' => new JsExpression("function(event, params) {

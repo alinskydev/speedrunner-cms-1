@@ -13,16 +13,14 @@ use yii\validators\StringValidator;
 
 class SlugValidator extends Validator
 {
-    public $params = [
-        'pattern' => '/^[a-zA-Z0-9\-]+$/',
-        'min' => 1,
-        'max' => 100,
-    ];
+    public $pattern = '/^[a-zA-Z0-9\-]+$/';
+    public $min = 1;
+    public $max = 100;
     
     public function validateAttribute($model, $attribute)
     {
-        (new UniqueValidator())->validateAttribute($model, $attribute);
-        (new RegularExpressionValidator(['pattern' => $this->params['pattern']]))->validateAttribute($model, $attribute);
-        (new StringValidator(['min' => $this->params['min'], 'max' => $this->params['max']]))->validateAttribute($model, $attribute);
+        (new UniqueValidator(['message' => $this->message]))->validateAttribute($model, $attribute);
+        (new RegularExpressionValidator(['pattern' => $this->pattern, 'message' => $this->message]))->validateAttribute($model, $attribute);
+        (new StringValidator(['min' => $this->min, 'max' => $this->max, 'message' => $this->message]))->validateAttribute($model, $attribute);
     }
 }

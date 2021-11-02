@@ -3,7 +3,7 @@
 namespace backend\modules\Speedrunner\forms\module;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\db\Schema;
@@ -28,14 +28,38 @@ class GeneratorForm extends Model
     public $attrs_fields = [];
     public $attrs_translation = [];
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['module_name', 'generate_files', 'controller_name', 'controller_actions', 'table_name'], 'required'],
-            [['has_seo_meta'], 'boolean'],
-            [['model_relations', 'view_relations', 'attrs_fields'], 'safe'],
-            [['module_name'], 'in', 'range' => $this->modulesList(), 'not' => true, 'when' => fn ($model) => in_array('module', $this->generate_files)],
-            [['controller_actions'], 'in', 'allowArray' => true, 'range' => $this->getControllerActions()],
+            'module_name' => [
+                ['required'],
+                ['in', 'range' => $this->modulesList(), 'not' => true, 'when' => fn($model) => in_array('module', $this->generate_files)],
+            ],
+            'generate_files' => [
+                ['required'],
+            ],
+            'controller_name' => [
+                ['required'],
+            ],
+            'controller_actions' => [
+                ['required'],
+                ['in', 'allowArray' => true, 'range' => $this->getControllerActions()],
+            ],
+            'table_name' => [
+                ['required'],
+            ],
+            'has_seo_meta' => [
+                ['boolean'],
+            ],
+            'model_relations' => [
+                ['safe'],
+            ],
+            'view_relations' => [
+                ['safe'],
+            ],
+            'attrs_fields' => [
+                ['safe'],
+            ],
         ];
     }
     
@@ -91,7 +115,7 @@ class GeneratorForm extends Model
         
         FileHelper::createDirectory($folder_module, $mode = 0644);
         
-        $this->attrs_translation = array_filter($this->attrs_fields, fn ($value) => ArrayHelper::getValue($value, 'has_translation')) ?: [];
+        $this->attrs_translation = array_filter($this->attrs_fields, fn($value) => ArrayHelper::getValue($value, 'has_translation')) ?: [];
         
         //        Module
         
@@ -192,8 +216,7 @@ class GeneratorForm extends Model
     
     public function generateRules($columns)
     {
-        $types = [];
-        $lengths = [];
+        $attributes = [];
         $rules = [];
         
         foreach ($columns as $column) {
@@ -202,73 +225,83 @@ class GeneratorForm extends Model
             }
             
             if ($column->name == 'slug') {
-                $types['slug'][] = $column->name;
+                $attributes[$column->name][] = ['SlugValidator::className()'];
                 continue;
             }
             
             if (!$column->allowNull && $column->defaultValue === null && !in_array($column->type, ['date', 'time', 'datetime'])) {
-                $types['required'][] = $column->name;
+                $attributes[$column->name][] = ["'required'"];
             }
             
             switch ($column->type) {
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
-                    $types['integer'][] = $column->name;
+                    $attributes[$column->name][] = ["'integer'"];
                     break;
                 case Schema::TYPE_TINYINT:
                     if ($column->size == 1) {
-                        $types['boolean'][] = $column->name;
+                        $attributes[$column->name][] = ["'boolean'"];
                     } else {
-                        $types['integer'][] = $column->name;
+                        $attributes[$column->name][] = ["'integer'"];
                     }
                     break;
                 case Schema::TYPE_BOOLEAN:
-                    $types['boolean'][] = $column->name;
+                    $attributes[$column->name][] = ["'boolean'"];
                     break;
                 case Schema::TYPE_FLOAT:
                 case Schema::TYPE_DOUBLE:
                 case Schema::TYPE_DECIMAL:
                 case Schema::TYPE_MONEY:
-                    $types['number'][] = $column->name;
+                    $attributes[$column->name][] = ["'number'"];
                     break;
                 case Schema::TYPE_DATE:
+                    $attributes[$column->name][] = ["'date'", "'format'" => "'php: d.m.Y'"];
+                    break;
                 case Schema::TYPE_TIME:
+                    $attributes[$column->name][] = ["'date'", "'format'" => "'php: H:i'"];
+                    break;
                 case Schema::TYPE_DATETIME:
                 case Schema::TYPE_TIMESTAMP:
-                    $types['safe'][] = $column->name;
+                    $attributes[$column->name][] = ["'date'", "'format'" => "'php: d.m.Y H:i'"];
                     break;
                 case Schema::TYPE_JSON:
                     if (in_array($column->name, array_keys($this->attrs_translation))) {
-                        $types['string'][] = $column->name;
+                        $attributes[$column->name][] = ["'string'"];
                     } else {
-                        $types['safe'][] = $column->name;
+                        $attributes[$column->name][] = ["'safe'"];
                     }
                     break;
                 default:
                     if ($column->size > 0) {
-                        $lengths[$column->size][] = $column->name;
+                        $attributes[$column->name][] = ["'string'", "'max'" => $column->size];
                     } else {
-                        $types['string'][] = $column->name;
+                        $attributes[$column->name][] = ["'string'"];
                     }
             }
         }
         
-        foreach ($types as $type => $columns) {
-            switch ($type) {
-                case 'slug':
-                    $rules[] = "[['" . implode("', '", $columns) . "'], SlugValidator::className()]";
-                    break;
-                default:
-                    $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+        foreach ($attributes as $attribute => &$rules) {
+            foreach ($rules as $rule_index => &$rule) {
+                foreach ($rule as $key => $r) {
+                    if ($key) {
+                        $rule[] = "$key => $r";
+                    } else {
+                        $rule[] = $r;
+                    }
+                    
+                    unset($rule[$key]);
+                }
+                
+                $rule = implode(', ', $rule);
             }
+            
+            $result[$attribute] = "'$attribute' => [";
+            $result[$attribute] .= "\n                [" . implode("],\n                [", $rules) . "],\n";
+            $result[$attribute] .= "            ],\n";
         }
         
-        foreach ($lengths as $length => $columns) {
-            $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
-        }
-        
-        return $rules;
+        return implode("            ", $result ?? []);
     }
     
     public function generateSearchRules($columns)

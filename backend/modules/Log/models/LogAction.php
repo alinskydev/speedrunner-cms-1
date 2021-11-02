@@ -6,7 +6,6 @@ use Yii;
 use speedrunner\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
-use backend\modules\Log\lists\LogActionModelsList;
 use backend\modules\User\models\User;
 
 
@@ -15,15 +14,6 @@ class LogAction extends ActiveRecord
     public static function tableName()
     {
         return '{{%log_action}}';
-    }
-
-    public function rules()
-    {
-        return [
-            [['type', 'model_class'], 'required'],
-            [['type'], 'in', 'range' => array_keys($this->enums->types())],
-            [['model_class'], 'in', 'range' => array_keys((new LogActionModelsList)::$data)],
-        ];
     }
     
     public function attributeLabels()

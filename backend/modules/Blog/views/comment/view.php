@@ -41,17 +41,17 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'id',
                         [
                             'attribute' => 'blog_id',
-                            'value' => fn ($model) => ArrayHelper::getValue($model->blog, 'name'),
+                            'value' => fn($model) => ArrayHelper::getValue($model->blog, 'name'),
                         ],
                         [
                             'attribute' => 'user_id',
-                            'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
+                            'value' => fn($model) => ArrayHelper::getValue($model->user, 'username'),
                         ],
                         'text:ntext',
                         [
                             'attribute' => 'status',
                             'format' => 'raw',
-                            'value' => function ($model) use ($form) {
+                            'value' => function($model) use ($form) {
                                 return $form->field($model, 'status', [
                                     'template' => '{input}{hint}{error}',
                                     'options' => ['class' => 'm-0'],

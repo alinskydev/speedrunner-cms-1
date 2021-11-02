@@ -1,9 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use backend\widgets\crud\UpdateWidget;
+use yii\helpers\ArrayHelper;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->name]);
+use backend\widgets\crud\UpdateWidget;
+use speedrunner\widgets\TranslationActiveField;
+
+$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -13,10 +16,22 @@ echo UpdateWidget::widget([
         'information' => [
             'label' => Yii::t('app', 'Information'),
             'attributes' => [
-                'name' => 'text_input',
+                [
+                    'name' => 'name',
+                    'type' => 'text_input',
+                    'container_options' => [
+                        'class' => TranslationActiveField::className(),
+                    ],
+                ],
                 'slug' => 'text_input',
                 'image' => 'file_manager',
-                'description' => 'text_editor',
+                [
+                    'name' => 'description',
+                    'type' => 'text_editor',
+                    'container_options' => [
+                        'class' => TranslationActiveField::className(),
+                    ],
+                ],
             ],
         ],
     ],

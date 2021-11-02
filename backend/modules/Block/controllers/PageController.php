@@ -56,6 +56,7 @@ class PageController extends CrudController
         }
         
         $model->scenario = 'empty';
+        $model->setTranslations();
         $model->save();
         $model->afterFind();
         
@@ -79,7 +80,7 @@ class PageController extends CrudController
         return $this->render('update', [
             'model' => $model,
             'blocks' => $model->blocks,
-            'new_block' => new Block,
+            'new_block' => new Block(),
         ]);
     }
     

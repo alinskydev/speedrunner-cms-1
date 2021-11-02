@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -42,17 +42,29 @@ class ProfileForm extends Model
         return 'User';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['full_name'], 'required'],
-            [['confirm_password'], 'required', 'enableClientValidation' => false, 'when' => fn ($model) => $model->new_password],
-            
-            [['full_name', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 1000],
-            [['image'], 'file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
-            [['new_password'], 'string', 'min' => 8, 'max' => 50],
-            [['confirm_password'], 'compare', 'compareAttribute' => 'new_password'],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['string', 'max' => 100],
+            ],
+            'address' => [
+                ['string', 'max' => 1000],
+            ],
+            'image' => [
+                ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024],
+            ],
+            'new_password' => [
+                ['string', 'min' => 8, 'max' => 50],
+            ],
+            'confirm_password' => [
+                ['required', 'enableClientValidation' => false, 'when' => fn($model) => $model->new_password],
+                ['compare', 'compareAttribute' => 'new_password'],
+            ],
         ];
     }
     

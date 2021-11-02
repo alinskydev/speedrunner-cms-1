@@ -22,8 +22,6 @@ echo '<?php';
 namespace backend\modules\<?= $model->module_name ?>\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\<?= $model->module_name ?>\models\<?= $model->model_name ?>;
 
 

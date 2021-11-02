@@ -3,7 +3,7 @@
 namespace backend\modules\Translation\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -24,12 +24,17 @@ class TranslationImportForm extends Model
         return parent::init();
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['category', 'file'], 'required'],
-            [['category'], 'in', 'range' => array_keys($this->available_categories)],
-            [['file'], 'file', 'extensions' => ['json'], 'maxSize' => 1024 * 1024],
+            'category' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->available_categories)],
+            ],
+            'file' => [
+                ['required'],
+                ['file', 'extensions' => ['json'], 'maxSize' => 1024 * 1024],
+            ],
         ];
     }
     

@@ -24,6 +24,7 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $relation['model'] ?>;
 

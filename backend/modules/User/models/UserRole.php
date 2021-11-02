@@ -29,13 +29,17 @@ class UserRole extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['routes'], 'default', 'value' => []],
-            [['routes'], 'in', 'range' => Yii::$app->helpers->array->leaves($this->enums->routes()), 'allowArray' => true],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'routes' => [
+                ['default', 'value' => []],
+                ['in', 'range' => Yii::$app->helpers->array->leaves($this->enums->routes()), 'allowArray' => true],
+            ],
         ];
     }
     

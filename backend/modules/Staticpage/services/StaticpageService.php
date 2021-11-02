@@ -16,7 +16,7 @@ class StaticpageService
     public function __construct()
     {
         if (self::$pages === null) {
-            self::$pages = Yii::$app->db->cache(function ($db) {
+            self::$pages = Yii::$app->db->cache(function($db) {
                 return Staticpage::find()->with(['blocks'])->indexBy('name')->all();
             }, 0, new TagDependency(['tags' => 'staticpages']));
         }

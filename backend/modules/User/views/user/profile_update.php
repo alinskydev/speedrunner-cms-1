@@ -26,22 +26,5 @@ echo UpdateWidget::widget([
                 ],
             ],
         ],
-        
-        'design' => [
-            'label' => Yii::t('app', 'Design'),
-            'attributes' => [
-                [
-                    'name' => 'design_theme',
-                    'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->enums->designThemes(), 'label'),
-                ],
-                [
-                    'name' => 'design_font',
-                    'type' => 'select',
-                    'data' => ArrayHelper::getColumn($model->enums->designFonts(), 'label'),
-                ],
-                'design_border_radius' => 'text_input',
-            ],
-        ],
     ],
 ]);

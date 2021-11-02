@@ -29,7 +29,7 @@ class StaticpageController extends RestController
         if ($model = StaticPage::find()->with(['blocks'])->andWhere(['name' => $name])->one()) {
             return $model;
         } else {
-            throw new \yii\web\NotFoundHttpException;
+            throw new \yii\web\NotFoundHttpException('Entity not found');
         }
     }
 }

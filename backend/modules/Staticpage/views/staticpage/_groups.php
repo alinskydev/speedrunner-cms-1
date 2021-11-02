@@ -6,13 +6,7 @@ use alexantr\elfinder\InputFile;
 use alexantr\tinymce\TinyMCE;
 
 $attrs = ArrayHelper::index($model->attrs, 'name');
-
-foreach ($attrs as $a) {
-    $name = $a['name'];
-    $new_group['__key__'][$name] = null;
-}
-
-$groups = ArrayHelper::merge($model->value, $new_group);
+$groups = ArrayHelper::merge($model->value, ['__key__' => array_fill_keys(array_keys($attrs), null)]);
 
 ?>
 
@@ -33,11 +27,9 @@ $groups = ArrayHelper::merge($model->value, $new_group);
                     <td class="w-100">
                         <?php foreach ($attrs as $a_key => $a_value) { ?>
                             <div class="form-group mb-3">
-                                <label>
-                                    <?= $a_value['label'] ?>
-                                </label>
-                                
                                 <?php
+                                    echo Html::label($a_value['label']);
+                                    
                                     $input_name = "StaticpageBlock[$model->id][value][$key][$a_key]";
                                     $input_value = ArrayHelper::getValue($group, $a_key);
                                     

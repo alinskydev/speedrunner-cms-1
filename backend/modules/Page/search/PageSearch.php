@@ -3,8 +3,6 @@
 namespace backend\modules\Page\search;
 
 use Yii;
-use yii\base\Model;
-
 use backend\modules\Page\models\Page;
 
 

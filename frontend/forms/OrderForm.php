@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Order\models\Order;
@@ -35,15 +35,30 @@ class OrderForm extends Model
         return parent::init();
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['full_name', 'email', 'phone', 'address', 'delivery_type'], 'required'],
-            [['full_name', 'email', 'phone'], 'string', 'max' => 100],
-            [['address'], 'string', 'max' => 1000],
-            [['email'], 'email'],
-            
-            [['delivery_type'], 'in', 'range' => array_keys($this->order->enums->deliveryTypes())],
+            'full_name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'email' => [
+                ['required'],
+                ['email'],
+                ['string', 'max' => 100],
+            ],
+            'phone' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'address' => [
+                ['required'],
+                ['string', 'max' => 1000],
+            ],
+            'delivery_type' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->order->enums->deliveryTypes())],
+            ],
         ];
     }
     

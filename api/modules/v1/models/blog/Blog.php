@@ -15,7 +15,7 @@ class Blog
             'name',
             'short_description',
             'full_description',
-            'image' => fn ($model) => $model->image ? Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image) : null,
+            'image' => fn($model) => $model->image ? Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->image) : null,
             'published_at',
             'created_at',
         ];

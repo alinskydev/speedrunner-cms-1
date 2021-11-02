@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->blog, 'name'),
+                'value' => fn($model) => ArrayHelper::getValue($model->blog, 'name'),
             ],
             [
                 'attribute' => 'user_id',
@@ -67,13 +67,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ],
                     ]
                 ]),
-                'value' => fn ($model) => ArrayHelper::getValue($model->user, 'username'),
+                'value' => fn($model) => ArrayHelper::getValue($model->user, 'username'),
             ],
             'text:ntext',
             [
                 'attribute' => 'status',
                 'filter' => ArrayHelper::getColumn($searchModel->enums->statuses(), 'label'),
-                'value' => fn ($model) => ArrayHelper::getValue($searchModel->enums->statuses(), "$model->status.label"),
+                'value' => fn($model) => ArrayHelper::getValue($searchModel->enums->statuses(), "$model->status.label"),
             ],
             'created_at',
             [

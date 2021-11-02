@@ -200,18 +200,6 @@ class ActiveField extends Component
      *
      * @return string the rendering result.
      */
-    
-    public function init()
-    {
-        if (isset($this->model->translation_attributes[$this->attribute])) {
-            $translations = $this->model->translation_attributes[$this->attribute];
-            
-            $this->model->{$this->attribute} = $translations;
-        }
-        
-        return parent::init();
-    }
-    
     public function render($content = null)
     {
         if ($content === null) {
@@ -416,51 +404,7 @@ class ActiveField extends Component
 
         $this->addAriaAttributes($options);
         $this->adjustLabelFor($options);
-        
-        $attribute = $this->model->{$this->attribute};
-        
-        if (is_array($attribute)) {
-            $html[] = Html::beginTag('div', ['class' => 'input-group']);
-            $html[] = Html::beginTag('div', ['class' => 'tab-content flex-fill']);
-            
-            $langs = Yii::$app->urlManager->languages;
-            
-            foreach ($langs as $lang_code => $lang) {
-                $options['value'] = $attribute[$lang_code] ?? null;
-                $tab_id = Html::getInputId($this->model, "{$this->attribute}_{$lang_code}_tab");
-                $tab_id = "lang-$this->attribute-$lang_code";
-                
-                $html[] = Html::beginTag('div', [
-                    'class' => 'tab-pane ' . (array_search($lang_code, array_keys($langs)) === 0 ? 'active' : 'fade'),
-                    'id' => $tab_id,
-                ]);
-                
-                $html[] = Html::activeTextInput($this->model, "$this->attribute[$lang_code]", $options);
-                $html[] = Html::endTag('div');
-            }
-            
-            $html[] = Html::endTag('div');
-            $html[] = Html::beginTag('div', ['class' => 'input-group-append h-100']);
-            $html[] = Html::beginTag('div', ['class' => 'nav', 'role' => 'tablist']);
-            
-            foreach ($langs as $lang_code => $lang) {
-                $tab_id = Html::getInputId($this->model, "{$this->attribute}_{$lang_code}_tab");
-                $tab_id = "lang-$this->attribute-$lang_code";
-                
-                $html[] = Html::beginTag('a', ['href' => "#$tab_id", 'class' => 'nav-link p-0', 'data-toggle' => 'pill']);
-                $html[] = Html::beginTag('div', ['class' => 'input-group-text bg-primary']);
-                $html[] = Html::img(Yii::$app->helpers->image->thumb($lang['image'], [30, 24]));
-                $html[] = Html::endTag('div');
-                $html[] = Html::endTag('a');
-            }
-            
-            $html[] = Html::endTag('div');
-            $html[] = Html::endTag('div');
-            $html[] = Html::endTag('div');
-            $this->parts['{input}'] = implode(null, $html);
-        } else {
-            $this->parts['{input}'] = Html::activeTextInput($this->model, $this->attribute, $options);
-        }
+        $this->parts['{input}'] = Html::activeTextInput($this->model, $this->attribute, $options);
 
         return $this;
     }

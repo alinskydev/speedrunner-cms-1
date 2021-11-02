@@ -14,7 +14,7 @@ class StaticpageBlock
             'name',
             'label',
             'part_name',
-            'value' => function ($model) {
+            'value' => function($model) {
                 switch ($model->type) {
                     case 'file_manager':
                         return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->value);

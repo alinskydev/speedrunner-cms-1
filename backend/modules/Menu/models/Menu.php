@@ -42,14 +42,20 @@ class Menu extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['parent_id'], 'required', 'when' => fn ($model) => $model->isNewRecord],
-            [['name', 'url'], 'string', 'max' => 100],
-            
-            [['parent_id'], 'exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            'name' => [
+                ['each', 'rule' => ['required']],
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'url' => [
+                ['each', 'rule' => ['string', 'max' => 100]],
+            ],
+            'parent_id' => [
+                ['required', 'when' => fn($model) => $model->isNewRecord],
+                ['exist', 'targetClass' => self::className(), 'targetAttribute' => 'id'],
+            ],
         ];
     }
     

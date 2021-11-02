@@ -3,7 +3,7 @@
 namespace frontend\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 
 use backend\modules\User\models\User;
 
@@ -16,12 +16,19 @@ class LoginForm extends Model
     public $password;
     public $remember_me = true;
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['username', 'password'], 'required'],
-            [['remember_me'], 'boolean'],
-            [['password'], 'passwordValidation'],
+            'username' => [
+                ['required'],
+            ],
+            'password' => [
+                ['required'],
+                ['passwordValidation'],
+            ],
+            'remember_me' => [
+                ['boolean'],
+            ],
         ];
     }
     

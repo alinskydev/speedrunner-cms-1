@@ -63,7 +63,7 @@ class DataColumn extends Column
      * @var string|Closure an anonymous function or a string that is used to determine the value to display in the current column.
      *
      * If this is an anonymous function, it will be called for each row and the return value will be used as the value to
-     * display for every data model. The signature of this function should be: `function ($model, $key, $index, $column)`.
+     * display for every data model. The signature of this function should be: `function($model, $key, $index, $column)`.
      * Where `$model`, `$key`, and `$index` refer to the model, key and index of the row currently being rendered
      * and `$column` is a reference to the [[DataColumn]] object.
      *

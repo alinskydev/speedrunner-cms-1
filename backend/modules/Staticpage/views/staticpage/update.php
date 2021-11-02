@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+
 use backend\widgets\crud\UpdateWidget;
 
 $this->title = Yii::t('app', 'Static page: {label}', ['label' => $model->label]);

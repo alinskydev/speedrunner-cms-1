@@ -3,7 +3,7 @@
 namespace backend\modules\Translation\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Translation\models\TranslationSource;
@@ -27,12 +27,17 @@ class TranslationExportForm extends Model
         return parent::init();
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['category', 'languages'], 'required'],
-            [['category'], 'in', 'range' => array_keys($this->available_categories)],
-            [['languages'], 'in', 'range' => array_keys($this->available_languages), 'allowArray' => true],
+            'category' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->available_categories)],
+            ],
+            'languages' => [
+                ['required'],
+                ['in', 'range' => array_keys($this->available_languages), 'allowArray' => true],
+            ],
         ];
     }
     
@@ -53,7 +58,7 @@ class TranslationExportForm extends Model
             ])
             ->asArray()->all();
         
-        $data = ArrayHelper::map($sources, 'message', function ($value) {
+        $data = ArrayHelper::map($sources, 'message', function($value) {
             return ArrayHelper::map($value['translations'], 'language', 'translation');
         });
         

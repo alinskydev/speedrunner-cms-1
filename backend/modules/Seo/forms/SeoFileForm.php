@@ -3,7 +3,7 @@
 namespace backend\modules\Seo\forms;
 
 use Yii;
-use yii\base\Model;
+use speedrunner\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -27,11 +27,15 @@ class SeoFileForm extends Model
         $this->robots = file_exists(static::$files_url['robots']) ? file_get_contents(static::$files_url['robots']) : null;
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['robots'], 'string'],
-            [['sitemap'], 'file', 'extensions' => ['xml'], 'maxSize' => 1024 * 1024 * 100],
+            'robots' => [
+                ['string'],
+            ],
+            'sitemap' => [
+                ['file', 'extensions' => ['xml'], 'maxSize' => 1024 * 1024 * 100],
+            ],
         ];
     }
     

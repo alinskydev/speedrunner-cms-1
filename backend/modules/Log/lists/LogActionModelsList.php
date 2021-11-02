@@ -20,7 +20,7 @@ class LogActionModelsList
                     'name' => 'Product',
                     'module' => Yii::t('app', 'Products'),
                     'label' => Yii::t('app', 'Products'),
-                    'model' => ($model = new \backend\modules\Product\models\Product()),
+                    'model' => (new \backend\modules\Product\models\Product()),
                     'index_url' => ['/product/product/index', 'ProductSearch[id]'],
                     'relations' => [
                         'brand_id' => ['link' => 'brand', 'attr' => 'name'],
@@ -39,7 +39,7 @@ class LogActionModelsList
                     'name' => 'User',
                     'module' => Yii::t('app', 'Users'),
                     'label' => Yii::t('app', 'Users'),
-                    'model' => ($model = new \backend\modules\User\models\User()),
+                    'model' => (new \backend\modules\User\models\User()),
                     'index_url' => ['/user/user/index', 'UserSearch[id]'],
                     'relations' => [
                         'role_id' => ['link' => 'role', 'attr' => 'name'],
@@ -47,10 +47,7 @@ class LogActionModelsList
                     'attributes' => [
                         'translation' => [],
                         'boolean' => [],
-                        'enum' => [
-                            'design_theme' => $model->enums->designThemes(),
-                            'design_font' => $model->enums->designFonts(),
-                        ],
+                        'enum' => [],
                         'text' => [],
                         'json' => [],
                     ],

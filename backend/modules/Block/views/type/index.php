@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'header' => false,
                 'format' => 'raw',
                 'filter' => false,
-                'value' => fn ($model) => Html::img(Yii::$app->helpers->image->thumb($model->image, [40, 40])),
+                'value' => fn($model) => Html::img(Yii::$app->helpers->image->thumb($model->image, [40, 40])),
                 'headerOptions' => [
                     'style' => 'width: 65px;'
                 ],
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             [
                 'attribute' => 'input_type',
                 'filter' => Yii::$app->params['input_types'],
-                'value' => fn ($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->input_type),
+                'value' => fn($model) => ArrayHelper::getValue(Yii::$app->params['input_types'], $model->input_type),
             ],
             [
                 'class' => 'backend\widgets\grid\ActionColumn',

@@ -15,24 +15,35 @@ class StaticpageBlock extends ActiveRecord
         return '{{%staticpage_block}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['value'], 'string', 'when' => function ($model) {
-                return in_array($model->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']);
-            }],
-            [['value'], 'boolean', 'when' => function ($model) {
-                return in_array($model->input_type, ['checkbox']);
-            }],
-            [['value'], 'each', 'rule' => ['file', 'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024], 'when' => function ($model) {
-                return in_array($model->input_type, ['files']);
-            }],
-            [['value'], 'valueValidation', 'when' => function ($model) {
-                return in_array($model->input_type, ['groups']);
-            }],
-            [['value'], 'default', 'value' => function ($model) {
-                return in_array($model->input_type, ['files', 'groups']) ? [] : '';
-            }],
+            'value' => [
+                [
+                    'string',
+                    'when' => fn($model) => in_array($model->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']),
+                ],
+                [
+                    'boolean',
+                    'when' => fn($model) => in_array($model->input_type, ['checkbox']),
+                ],
+                [
+                    'each',
+                    'rule' => [
+                        'file',
+                        'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024,
+                    ],
+                    'when' => fn($model) => in_array($model->input_type, ['files']),
+                ],
+                [
+                    'valueValidation',
+                    'when' => fn($model) => in_array($model->input_type, ['groups']),
+                ],
+                [
+                    'default',
+                    'value' => fn($model) => in_array($model->input_type, ['files', 'groups']) ? [] : '',
+                ],
+            ],
         ];
     }
     

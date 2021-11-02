@@ -36,12 +36,16 @@ class Banner extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['groups_tmp'], 'safe'],
+            'name' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
+            'groups_tmp' => [
+                ['safe'],
+            ],
         ];
     }
     

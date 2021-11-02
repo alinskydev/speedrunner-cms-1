@@ -26,15 +26,19 @@ class SystemSettings extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['value'], 'string', 'max' => '100', 'when' => function ($model) {
-                return in_array($model->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']);
-            }],
-            [['value'], 'boolean', 'when' => function ($model) {
-                return in_array($model->input_type, ['checkbox']);
-            }],
+            'value' => [
+                [
+                    'string',
+                    'when' => fn($model) => in_array($model->input_type, ['text_input', 'text_area', 'file_manager', 'text_editor']),
+                ],
+                [
+                    'boolean',
+                    'when' => fn($model) => in_array($model->input_type, ['checkbox']),
+                ],
+            ],
         ];
     }
     

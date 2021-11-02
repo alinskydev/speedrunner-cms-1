@@ -23,12 +23,25 @@ class BannerGroup extends ActiveRecord
         ];
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['image'], 'required'],
-            [['text_1', 'text_2', 'text_3', 'link'], 'string', 'max' => 1000],
-            [['image'], 'string', 'max' => 100],
+            'text_1' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'text_2' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'text_3' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'link' => [
+                ['each', 'rule' => ['string', 'max' => 1000]],
+            ],
+            'image' => [
+                ['required'],
+                ['string', 'max' => 100],
+            ],
         ];
     }
     

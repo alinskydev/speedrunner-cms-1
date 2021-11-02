@@ -1,6 +1,6 @@
 <?php
 
-namespace speedrunner\behaviors;
+namespace backend\modules\Log\behaviors;
 
 use Yii;
 use yii\base\Behavior;
@@ -117,7 +117,7 @@ class LogActionBehavior extends Behavior
             return Yii::$app->session->addFlash('warning', Yii::t('app', "Record hasn't been saved to the actions log"));
         }
         
-        $relations = ArrayHelper::getValue(LogActionModelsList::$data, "$log_action->model_class.relations", []);
+        $relations = ArrayHelper::getValue((new LogActionModelsList())::$data, "$log_action->model_class.relations", []);
         $counter = 0;
         
         foreach ($changedAttributes as $key => $a) {

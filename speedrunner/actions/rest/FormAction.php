@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 
 class FormAction extends Action
 {
-    public Model $model;
+    public ?Model $model;
     public string $model_class;
     public array $model_params = [];
     public array $model_files = [];

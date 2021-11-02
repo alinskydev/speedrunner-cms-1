@@ -15,31 +15,29 @@ class SeoMeta extends ActiveRecord
         return '{{%seo_meta}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['value'], 'required'],
-            [['value'], 'valueValidation'],
+            'value' => [
+                ['required'],
+                ['valueValidation'],
+            ],
         ];
     }
     
     public function valueValidation($attribute, $params, $validator)
     {
-        if (!is_array($this->value)) {
+        $value = $this->value;
+        
+        if (!is_array($value)) {
             return $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
         }
         
-        foreach ((array)$this->value as $key => $v) {
-            if (!is_string($v) || !array_key_exists($key, $this->enums->types())) {
+        array_walk_recursive($value, function($value, $key) use ($attribute) {
+            if (!is_string($value) || !array_key_exists($key, $this->enums->types())) {
                 return $this->addError($attribute, Yii::t('app', '{attribute} is incorrect', ['attribute' => $this->getAttributeLabel($attribute)]));
             }
-        }
-    }
-    
-    public function beforeSave($insert)
-    {
-        $this->lang = Yii::$app->language;
-        return parent::beforeSave($insert);
+        });
     }
     
     public function afterSave($insert, $changedAttributes)

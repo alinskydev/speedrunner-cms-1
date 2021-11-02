@@ -14,14 +14,13 @@ class BlogComment extends ActiveRecord
         return '{{%blog_comment}}';
     }
     
-    public function rules()
+    public function prepareRules()
     {
         return [
-            [['blog_id', 'text'], 'required'],
-            [['status'], 'in', 'range' => array_keys($this->enums->statuses())],
-            [['text'], 'string', 'max' => 1000],
-            
-            [['blog_id'], 'exist', 'targetClass' => Blog::className(), 'targetAttribute' => 'id'],
+            'text' => [
+                ['required'],
+                ['string', 'max' => 1000],
+            ],
         ];
     }
     

@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 
 use speedrunner\widgets\TranslationActiveField;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
+$this->title = Yii::$app->helpers->html->pageTitle($model);
 
 ?>
 

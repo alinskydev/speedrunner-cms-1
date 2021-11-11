@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 
 use speedrunner\widgets\TranslationActiveField;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Assign: {name}', ['name' => $model->id]);
+$this->title = Yii::$app->helpers->html->pageTitle($model, 'name', 'Assign');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Block pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

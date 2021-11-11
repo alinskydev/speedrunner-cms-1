@@ -63,6 +63,17 @@ class HtmlHelper
         return $value;
     }
     
+    public static function pageTitle($model, $attribute = 'name', $action_label = 'Update')
+    {
+        if ($model->isNewRecord) {
+            return Yii::t('app', 'Create');
+        } else {
+            $value = $model->{$attribute};
+            $value = is_array($value) ? ArrayHelper::getValue($value, Yii::$app->language) : $value;
+            return Yii::t('app', "$action_label: {value}", ['value' => $value]);
+        }
+    }
+    
     public static function saveButtons(array $buttons_list, $form_action = null)
     {
         $form_action = $form_action ?? Url::to();

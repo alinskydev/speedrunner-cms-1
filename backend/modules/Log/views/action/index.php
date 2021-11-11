@@ -88,18 +88,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 'class' => 'backend\widgets\grid\ActionColumn',
                 'template' => '{view} {link}',
                 'buttons' => [
-                    'link' => function($url, $model, $key) {
-                        return Html::a(
-                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
-                            ArrayHelper::getValue($model->service->findAndFill(), 'index_url'),
-                            [
-                                'target' => '_blank',
-                                'title' => Yii::t('app', 'Link'),
-                                'data-sr-trigger' => 'tooltip',
-                                'data-pjax' => 0,
-                            ]
-                        );
-                    },
                     'view' => function($url, $model, $key) {
                         return Html::button(
                             Html::tag('i', null, ['class' => 'fas fa-eye']),
@@ -112,6 +100,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 'data-sr-url' => Yii::$app->urlManager->createUrl(['log/action/view', 'id' => $model->id]),
                                 'data-sr-wrapper' => '#main-modal',
                                 'data-sr-callback' => '$("#main-modal").modal()',
+                            ]
+                        );
+                    },
+                    'link' => function($url, $model, $key) {
+                        return Html::a(
+                            Html::tag('i', null, ['class' => 'fas fa-external-link-alt']),
+                            ArrayHelper::getValue($model->service->findAndFill(), 'index_url'),
+                            [
+                                'target' => '_blank',
+                                'title' => Yii::t('app', 'Link'),
+                                'data-sr-trigger' => 'tooltip',
+                                'data-pjax' => 0,
                             ]
                         );
                     },

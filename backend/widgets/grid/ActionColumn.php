@@ -222,16 +222,18 @@ class ActionColumn extends Column
                     ? call_user_func($this->visibleButtons[$name], $model, $key, $index)
                     : $this->visibleButtons[$name];
             } else {
-                $route = Yii::$app->controller->getUniqueId() . "/$name";
-                $isVisible = Yii::$app->user->identity->role->service->isAllowedByRoute($route);
+                $isVisible = true;
             }
+            
+            $route = Yii::$app->controller->getUniqueId() . "/$name";
+            $isVisible = $isVisible && Yii::$app->user->identity->role->service->isAllowedByRoute($route);
             
             if ($isVisible && isset($this->buttons[$name])) {
                 $url = $this->createUrl($name, $model, $key, $index);
                 return call_user_func($this->buttons[$name], $url, $model, $key);
             }
             
-            return '';
+            return null;
         }, $this->template);
         
         return Html::tag('div', $buttons, ['class' => 'action-buttons']);

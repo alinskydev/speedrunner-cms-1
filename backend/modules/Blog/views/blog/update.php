@@ -7,7 +7,7 @@ use yii\web\JsExpression;
 use backend\widgets\crud\UpdateWidget;
 use speedrunner\widgets\TranslationActiveField;
 
-$this->title = $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update: {value}', ['value' => $model->id]);
+$this->title = Yii::$app->helpers->html->pageTitle($model);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blogs'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

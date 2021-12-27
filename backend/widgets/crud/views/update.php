@@ -158,7 +158,18 @@ use yii\web\JsExpression;
                                     
                                     $initial_preview = $multiple ? ($files ?? []) : ($files ?? '');
                                     $initial_preview_config = $multiple ? (
-                                        ArrayHelper::getColumn($files ?? [], fn($value) => ['key' => $value, 'downloadUrl' => $value])
+                                        ArrayHelper::getColumn($files ?? [], function($value) {
+                                            $file = Yii::getAlias("@frontend/web$value");
+                                            $widget_filetype = is_file($file) ? mime_content_type($file) : 'other';
+                                            $widget_type = explode('/', $widget_filetype)[0];
+                                            
+                                            return [
+                                                'key' => $value,
+                                                'downloadUrl' => $value,
+                                                'type' => $widget_type,
+                                                'filetype' => $widget_filetype,
+                                            ];
+                                        })
                                     ) : [];
                                     
                                     echo $form->field(

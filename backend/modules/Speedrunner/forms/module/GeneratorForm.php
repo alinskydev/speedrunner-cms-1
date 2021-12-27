@@ -229,7 +229,7 @@ class GeneratorForm extends Model
                 continue;
             }
             
-            if (!$column->allowNull && $column->defaultValue === null && !in_array($column->type, ['date', 'time', 'datetime'])) {
+            if (!$column->allowNull && $column->defaultValue === null && !in_array($column->type, ['date', 'time', 'datetime', 'json'])) {
                 $attributes[$column->name][] = ["'required'"];
             }
             
@@ -267,7 +267,8 @@ class GeneratorForm extends Model
                     break;
                 case Schema::TYPE_JSON:
                     if (in_array($column->name, array_keys($this->attrs_translation))) {
-                        $attributes[$column->name][] = ["'string'"];
+                        $attributes[$column->name][] = ["'each', 'rule' => ['required']"];
+                        $attributes[$column->name][] = ["'each', 'rule' => ['string']"];
                     } else {
                         $attributes[$column->name][] = ["'safe'"];
                     }

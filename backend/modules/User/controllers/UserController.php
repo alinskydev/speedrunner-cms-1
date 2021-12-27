@@ -20,9 +20,13 @@ class UserController extends CrudController
     
     public function actions()
     {
+        if (!($user = Yii::$app->user->identity)) {
+            return [];
+        }
+        
         $actions = ArrayHelper::filter(parent::actions(), ['index', 'create', 'update', 'delete']);
         
-        $profile_update_model = clone(Yii::$app->user->identity);
+        $profile_update_model = clone($user);
         $profile_update_model->scenario = 'update_profile';
         
         return ArrayHelper::merge($actions, [

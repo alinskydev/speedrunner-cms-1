@@ -22,7 +22,7 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'reset-password-request', 'reset-password'],
+                'only' => ['signup', 'reset-password-request', 'reset-password', 'logout'],
                 'rules' => [
                     [
                         'actions' => ['signup', 'reset-password-request', 'reset-password'],

@@ -32,15 +32,6 @@ class LoginForm extends Model
         ];
     }
     
-    public function attributeLabels()
-    {
-        return [
-            'username' => Yii::t('app', 'Username'),
-            'password' => Yii::t('app', 'Password'),
-            'remember_me' => Yii::t('app', 'Remember me'),
-        ];
-    }
-    
     public function passwordValidation($attribute, $params)
     {
         $this->user = User::find()
@@ -54,6 +45,15 @@ class LoginForm extends Model
         if (!$this->user || !$this->user->validatePassword($this->{$attribute})) {
             $this->addError($attribute, Yii::t('app', 'Incorrect {attribute}', ['attribute' => $this->getAttributeLabel('password')]));
         }
+    }
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'remember_me' => Yii::t('app', 'Remember me'),
+        ];
     }
     
     public function login()

@@ -7,7 +7,7 @@ use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\Banner\models\BannerGroup;
 
-$relations = ArrayHelper::merge($model->groups, [new BannerGroup]);
+$relations = ArrayHelper::merge($model->groups, [new BannerGroup()]);
 
 ?>
 

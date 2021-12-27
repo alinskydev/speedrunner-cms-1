@@ -14,7 +14,9 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+
 use backend\widgets\crud\UpdateWidget;
+use speedrunner\widgets\TranslationActiveField;
 
 $this->title = Yii::$app->helpers->html->pageTitle($model);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', '<?= $index_title ?>s'), 'url' => ['index']];

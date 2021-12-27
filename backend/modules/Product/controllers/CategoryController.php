@@ -5,7 +5,6 @@ namespace backend\modules\Product\controllers;
 use Yii;
 use speedrunner\controllers\NestedSetsController;
 use speedrunner\actions as Actions;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use backend\modules\Product\models\ProductCategory;

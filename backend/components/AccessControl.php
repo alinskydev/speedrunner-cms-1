@@ -1,7 +1,7 @@
 <?php
- 
+
 namespace backend\components;
- 
+
 use Yii;
 use yii\base\Action;
 use yii\base\ActionFilter;

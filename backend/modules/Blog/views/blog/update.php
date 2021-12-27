@@ -62,7 +62,7 @@ echo UpdateWidget::widget([
                                     newTag: true
                                 };
                             }'),
-                        ]
+                        ],
                     ]
                 ],
                 [

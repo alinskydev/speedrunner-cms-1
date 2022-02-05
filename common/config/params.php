@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'is_development_ip' => in_array($_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'], [
+    'is_development_ip' => in_array($_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? null, [
         '127.0.0.1',
     ]),
     

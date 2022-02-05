@@ -31,7 +31,8 @@ class StaticpageBlock extends ActiveRecord
                     'each',
                     'rule' => [
                         'file',
-                        'extensions' => Yii::$app->params['extensions']['image'], 'maxSize' => 1024 * 1024,
+                        'extensions' => Yii::$app->params['extensions']['image'],
+                        'maxSize' => 1024 * 1024,
                     ],
                     'when' => fn($model) => in_array($model->input_type, ['files']),
                 ],

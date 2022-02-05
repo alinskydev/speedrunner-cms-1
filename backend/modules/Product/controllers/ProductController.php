@@ -21,21 +21,21 @@ class ProductController extends CrudController
         $this->model = new Product();
         return parent::init();
     }
-    
+
     public function actions()
     {
         $actions = ArrayHelper::filter(parent::actions(), ['delete']);
-        
+
         return ArrayHelper::merge($actions, [
             'index' => [
                 'class' => Actions\crud\DataProviderAction::className(),
-                'render_params' => fn() => [
+                'render_params' => fn () => [
                     'categories' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                 ],
             ],
             'create' => [
                 'class' => Actions\crud\CreateAction::className(),
-                'render_params' => fn() => [
+                'render_params' => fn () => [
                     'categories' => [
                         'list' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                         'tree' => ProductCategory::findOne(1)->tree(),
@@ -44,7 +44,7 @@ class ProductController extends CrudController
             ],
             'update' => [
                 'class' => Actions\crud\UpdateAction::className(),
-                'render_params' => fn() => [
+                'render_params' => fn () => [
                     'categories' => [
                         'list' => ProductCategory::find()->itemsTree('name', 'translation')->withoutRoots()->asArray()->all(),
                         'tree' => ProductCategory::findOne(1)->tree(),
@@ -61,40 +61,22 @@ class ProductController extends CrudController
             ],
         ]);
     }
-    
+
     public function findModel($id)
     {
         return $this->model->find()->with(['categories', 'variations'])->andWhere(['id' => $id])->one();
     }
-    
+
     public function actionSpecifications($id = null, array $categories = [])
     {
         $model = $this->model->findOne($id) ?: $this->model;
         $specifications = ProductSpecification::find()->byAssignedCategies($categories)->asObject()->all();
-        
+
         return $this->asJson([
             'specifications' => $this->renderPartial('_specifications', [
                 'specifications' => $specifications,
                 'options' => ArrayHelper::getColumn($model->options, 'id'),
             ]),
         ]);
-    }
-    
-    public function actionVariations($id, $variation_id = null, $name)
-    {
-        $variations = ProductVariation::find()->itemsList('name', 'translation', null, null)->andWhere(['product_id' => $id])->asArray()->all();
-        
-        if (!$variations) {
-            return null;
-        }
-        
-        return Html::label(Yii::t('app', 'Variation')) . Html::dropDownList(
-            $name,
-            $variation_id,
-            ArrayHelper::map($variations, 'id', 'text'),
-            [
-                'class' => 'form-control',
-            ]
-        );
     }
 }

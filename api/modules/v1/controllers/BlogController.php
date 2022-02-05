@@ -39,8 +39,14 @@ class BlogController extends RestController
         return [
             'index' => Actions\rest\DataProviderAction::className(),
             'view' => Actions\rest\ViewAction::className(),
-            'create' => Actions\rest\CreateAction::className(),
-            'update' => Actions\rest\UpdateAction::className(),
+            'create' => [
+                'class' => Actions\rest\CreateAction::className(),
+                'model_files' => ['images'],
+            ],
+            'update' => [
+                'class' => Actions\rest\UpdateAction::className(),
+                'model_files' => ['images'],
+            ],
             'delete' => Actions\rest\DeleteAction::className(),
         ];
     }

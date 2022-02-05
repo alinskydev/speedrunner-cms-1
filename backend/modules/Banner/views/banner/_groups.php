@@ -83,7 +83,7 @@ $relations = ArrayHelper::merge($model->groups, [new BannerGroup()]);
                         ],
                     ])->widget(InputFile::className(), [
                         'options' => [
-                            'id' => "banner-group-image-$value_id",
+                            'id' => "banner-groups-image-$value_id",
                             'name' => "Banner[groups_tmp][$value_id][image]",
                         ]
                     ]) ?>

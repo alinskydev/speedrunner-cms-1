@@ -25,7 +25,6 @@
         "wbraganca/yii2-fancytree-widget": "*",
         "wokster/yii2-nested-sets-tree-behavior": "*",
         "kartik-v/yii2-krajee-base": "dev-master",
-        "codeception/codeception": "^4.1",
         "guzzlehttp/guzzle": "^7.2",
         "alexantr/yii2-elfinder": "^1.7",
         "yiisoft/yii2-imagine": "^2.3",
@@ -34,9 +33,7 @@
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.0.0",
-        "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "yiisoft/yii2-faker": "~2.0.0"
     },
     "config": {
         "process-timeout": 1800,

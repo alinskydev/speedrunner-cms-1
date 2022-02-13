@@ -5,6 +5,7 @@ namespace speedrunner\helpers;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
@@ -61,6 +62,63 @@ class HtmlHelper
         }
         
         return $value;
+    }
+    
+    public static function picture($image_url, $width_height = null, $thumb_type = 'resize', $options = [])
+    {
+        if ($width_height) {
+            $image_url = ImageHelper::thumb($image_url, $width_height, $thumb_type);
+        }
+        
+        $image = Yii::getAlias('@frontend/web') . $image_url;
+        
+        if (!is_file($image)) {
+            return false;
+        }
+        
+        $image_mime_type = mime_content_type($image);
+        
+        if (in_array($image_mime_type, ['image/png', 'image/jpeg'])) {
+            $dir = Yii::getAlias('@frontend/web/assets/thumbs/webp');
+            FileHelper::createDirectory($dir);
+            
+            $image_name = md5(filemtime($image) . filesize($image)) . '.webp';
+            $source_image = "$dir/$image_name";
+            
+            if (!is_file($source_image)) {
+                switch ($image_mime_type) {
+                    case 'image/png':
+                        $image = imagecreatefrompng($image);
+		        	    imagepalettetotruecolor($image);
+		        	    imagealphablending($image, true);
+		        	    imagesavealpha($image, true);
+                        break;
+                        
+                    case 'image/jpeg':
+                        $image = imagecreatefromjpeg($image);
+		        	    imagepalettetotruecolor($image);
+                        break;
+                }
+                
+                imagewebp($image, $source_image);
+            }
+            
+            $source_image = str_replace(Yii::getAlias('@frontend/web'), null, $source_image);
+        } else {
+            $source_image = $image_url;
+        }
+        
+        $result = [
+            Html::beginTag('picture', $options),
+            Html::tag('source', null, [
+                'srcset' => $source_image,
+                'type' => mime_content_type(Yii::getAlias("@frontend/web/$source_image")),
+            ]),
+            Html::img($image_url),
+            Html::endTag('picture'),
+        ];
+        
+        return implode(null, $result);
     }
     
     public static function pageTitle($model, $attribute = 'name', $action_label = 'Update')

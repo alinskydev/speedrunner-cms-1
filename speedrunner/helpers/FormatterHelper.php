@@ -13,4 +13,9 @@ class FormatterHelper
             'price' => Yii::$app->formatter->asDecimal($price),
         ]);
     }
+
+    public static function asDate($date, $format = 'd.m.Y')
+    {
+        return date($format, strtotime($date));
+    }
 }

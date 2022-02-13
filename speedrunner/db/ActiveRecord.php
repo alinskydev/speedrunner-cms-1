@@ -58,8 +58,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $module_name = str_replace('backend\modules\\', null, get_called_class());
         $module_name = str_replace("\models\\$class_name", null, $module_name);
         
-        $api_module_name = 'v1';
-        $api_class_name = "api\modules\\$api_module_name\models\\$module_name\\$class_name";
+        $api_class_name = "api\\models\\$module_name\\$class_name";
         
         $fields = class_exists($api_class_name) ? (new $api_class_name())->fields() : parent::fields();
         

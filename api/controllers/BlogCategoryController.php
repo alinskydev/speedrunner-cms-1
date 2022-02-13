@@ -1,24 +1,30 @@
 <?php
 
-namespace api\modules\v1\controllers;
+namespace api\controllers;
 
 use Yii;
 use speedrunner\controllers\RestController;
 use speedrunner\actions as Actions;
 use yii\helpers\ArrayHelper;
 
-use frontend\forms\FeedbackForm;
+use backend\modules\Blog\models\BlogCategory;
 
 
-class FeedbackController extends RestController
+class BlogCategoryController extends RestController
 {
+    public function init()
+    {
+        $this->model = new BlogCategory();
+        return parent::init();
+    }
+    
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'send' => ['post'],
+                    'index' => ['get'],
                 ],
             ],
         ]);
@@ -27,11 +33,7 @@ class FeedbackController extends RestController
     public function actions()
     {
         return [
-            'send' => [
-                'class' => Actions\rest\FormAction::className(),
-                'model_class' => FeedbackForm::className(),
-                'run_method' => 'sendEmail',
-            ],
+            'index' => Actions\rest\DataProviderAction::className(),
         ];
     }
 }

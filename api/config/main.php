@@ -11,9 +11,6 @@ return [
     'homeUrl' => '/api',
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
-    'modules' => [
-        'v1' => ['class' => 'api\modules\v1\Module'],
-    ],
     'components' => [
         'request' => [
             'baseUrl' => '/api',

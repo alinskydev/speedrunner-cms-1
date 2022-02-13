@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\v1\models\Staticpage;
+namespace api\models\Staticpage;
 
 use Yii;
 use yii\helpers\ArrayHelper;

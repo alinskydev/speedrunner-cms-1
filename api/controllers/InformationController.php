@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\v1\controllers;
+namespace api\controllers;
 
 use Yii;
 use speedrunner\controllers\RestController;

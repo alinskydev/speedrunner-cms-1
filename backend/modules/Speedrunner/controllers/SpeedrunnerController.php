@@ -11,7 +11,7 @@ class SpeedrunnerController extends Controller
     public function actionIndex()
     {
         $action_types = [
-            [
+            'module' => [
                 'label' => 'Module',
                 'actions' => [
                     'module_generator' => [
@@ -34,24 +34,13 @@ class SpeedrunnerController extends Controller
                     ],
                 ],
             ],
-            [
+            'staticpage' => [
                 'label' => 'Static page',
                 'actions' => [
                     'staticpage_generator' => [
                         'url' => ['speedrunner/staticpage/generator'],
                         'label' => 'Generator',
                         'bg_class' => 'warning',
-                        'icon_class' => 'fas fa-file-alt'
-                    ],
-                ],
-            ],
-            [
-                'label' => 'API',
-                'actions' => [
-                    'api_generator' => [
-                        'url' => ['speedrunner/api/documentator'],
-                        'label' => 'Documentator',
-                        'bg_class' => 'success',
                         'icon_class' => 'fas fa-file-alt'
                     ],
                 ],

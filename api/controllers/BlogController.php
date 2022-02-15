@@ -29,6 +29,7 @@ class BlogController extends RestController
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['post'],
+                    'file-delete' => ['post'],
                 ],
             ],
         ]);
@@ -48,6 +49,10 @@ class BlogController extends RestController
                 'model_files' => ['images'],
             ],
             'delete' => Actions\rest\DeleteAction::className(),
+            'file-delete' => [
+                'class' => Actions\rest\FileDeleteAction::className(),
+                'allowed_attributes' => ['images'],
+            ],
         ];
     }
 }

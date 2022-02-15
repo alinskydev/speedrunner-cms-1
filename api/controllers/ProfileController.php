@@ -22,8 +22,9 @@ class ProfileController extends RestController
             'verbs' => [
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'information' => ['get'],
+                    'view' => ['get'],
                     'update' => ['post'],
+                    'file-delete' => ['post'],
                 ],
             ],
         ]);
@@ -32,16 +33,21 @@ class ProfileController extends RestController
     public function actions()
     {
         return [
+            'view' => Actions\rest\ViewAction::className(),
             'update' => [
                 'class' => Actions\rest\FormAction::className(),
                 'model_class' => ProfileForm::className(),
                 'model_files' => ['image'],
                 'run_method' => 'update',
             ],
+            'file-delete' => [
+                'class' => Actions\rest\FileDeleteAction::className(),
+                'allowed_attributes' => ['image'],
+            ],
         ];
     }
     
-    public function actionInformation()
+    public function findModel($id)
     {
         return Yii::$app->user->identity;
     }

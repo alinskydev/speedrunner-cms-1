@@ -19,15 +19,18 @@ class MailService
         $content = Yii::$app->controller->renderPartial($view, ['data' => $data]);
         
         $mailer = new Mailer([
+            'useFileTransport' => true,
+            'fileTransportPath' => "$this->dir/runtime",
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'local.host',
-                'username' => 'noreply@local.host',
+                'host' => 'localhost',
+                'username' => 'noreply@localhost',
                 'password' => 'password',
                 'port' => '587', // Port 25 is a very common port too
+                'encryption' => 'tls',
             ],
         ]);
-        
+
         $message = $mailer->compose()
             ->setFrom(["noreply@{$_SERVER['HTTP_HOST']}" => Yii::$app->services->settings->site_name])
             ->setSubject($subject)

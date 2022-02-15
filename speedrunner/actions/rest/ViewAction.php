@@ -12,7 +12,7 @@ class ViewAction extends Action
 {
     public ?Model $model;
     
-    public function run($id = null)
+    public function run($id)
     {
         $this->model = $this->model ?? $this->controller->findModel($id);
         

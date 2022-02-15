@@ -15,17 +15,9 @@ class SystemSettings
             'name',
             'label',
             'value' => function($model) {
-                switch ($model->type) {
+                switch ($model->input_type) {
                     case 'file_manager':
                         return Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($model->value);
-                    case 'files':
-                        foreach ($model->value as $v) {
-                            $result[] = Yii::$app->urlManagerFrontend->createAbsoluteFileUrl($v);
-                        }
-                        
-                        return $result ?? [];
-                    case 'groups':
-                        return $model->value;
                     default:
                         return $model->value;
                 }

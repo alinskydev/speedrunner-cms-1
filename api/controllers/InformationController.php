@@ -34,9 +34,9 @@ class InformationController extends RestController
     public function actionIndex()
     {
         return [
-            'settings' => SystemSettings::find()->andWhere(['not in', 'name', ['delete_model_file']])->all(),
-            'languages' => SystemLanguage::find()->all(),
-            'static_pages' => Staticpage::find()->select(['name', 'label'])->asObject()->all(),
+            'settings' => SystemSettings::find()->andWhere(['not in', 'name', ['delete_model_file']])->orderBy('sort')->indexBy('name')->all(),
+            'languages' => Yii::$app->services->i18n::$languages,
+            'staticpages' => Staticpage::find()->select(['name', 'label'])->indexBy('name')->asObject()->all(),
         ];
     }
 }

@@ -16,7 +16,7 @@ class ProfileController extends RestController
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
+            'auth' => [
                 'class' => \yii\filters\auth\HttpBasicAuth::className(),
             ],
             'verbs' => [

@@ -25,8 +25,6 @@ $text_editor->run();
     
     <meta name="file-manager-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/elfinder-input']) ?>">
     <meta name="text-editor-base-url" content="<?= (new AssetManager())->getBundle('\alexantr\tinymce\WidgetAsset')->baseUrl . '/' ?>">
-    <meta name="text-editor-file-picker-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce']) ?>">
-    <meta name="text-editor-image-upload-connection-url" content="<?= Yii::$app->urlManager->createUrl(['connection/tinymce-image-upload']) ?>">
     <meta name="text-editor-params" content="<?= Html::encode(json_encode($text_editor->clientOptions, JSON_UNESCAPED_UNICODE)) ?>">
     
     <?= Html::csrfMetaTags() ?>

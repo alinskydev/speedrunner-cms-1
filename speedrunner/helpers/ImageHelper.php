@@ -23,6 +23,7 @@ class ImageHelper
         
         $image = Yii::getAlias('@frontend/web') . $image_url;
         $extension = pathinfo($image, PATHINFO_EXTENSION);
+        $extension = mb_strtolower($extension);
         
         if (!is_file($image)) {
             return Yii::$app->services->settings->image_placeholder;

@@ -86,9 +86,9 @@ class InputFile extends InputWidget
         $this->options['id'] .= '-' . uniqid();
         
         $this->preview = function ($value) {
-            if (!is_file(($file = Yii::getAlias("@frontend/web/$value")))) {
-                return false;
-            }
+            $file = Yii::getAlias("@frontend/web/$value");
+
+            if (!is_file($file)) return false;
             
             $file_mime_type = mime_content_type($file);
             
@@ -97,16 +97,14 @@ class InputFile extends InputWidget
                     Yii::$app->helpers->image->thumb($value, [100, 100], 'resize'),
                     ['class' => 'preview-elfinder preview-' . $this->options['id']]
                 );
-            }
-            
-            if (strpos($file_mime_type, 'audio') !== false) {
+            } elseif (strpos($file_mime_type, 'audio') !== false) {
                 $source_tag = Html::tag('source', null, ['src' => $value]);
                 $html = Html::tag('audio', $source_tag, ['class' => 'preview-elfinder preview-' . $this->options['id'], 'controls' => true]);
-            }
-            
-            if (strpos($file_mime_type, 'video') !== false) {
+            } elseif (strpos($file_mime_type, 'video') !== false) {
                 $source_tag = Html::tag('source', '', ['src' => $value]);
                 $html = Html::tag('video', $source_tag, ['class' => 'preview-elfinder preview-' . $this->options['id'], 'controls' => true]);
+            } else {
+                $html = Html::tag('div', null, ['class' => 'fas fa-file-alt preview-elfinder-file']);
             }
             
             return $html;

@@ -64,14 +64,12 @@ function (file) {
     
     if (filetypeImageArr.includes(value.split(".").pop().toLowerCase())) {
         html = '<img class="preview-elfinder" src="' + value + '">';
-    }
-    
-    if (filetypeAudioArr.includes(value.split(".").pop().toLowerCase())) {
+    } else if (filetypeAudioArr.includes(value.split(".").pop().toLowerCase())) {
         html = '<audio class="preview-elfinder" controls><source src="' + value + '"></audio>';
-    }
-    
-    if (filetypeVideoArr.includes(value.split(".").pop().toLowerCase())) {
+    } else if (filetypeVideoArr.includes(value.split(".").pop().toLowerCase())) {
         html = '<video class="preview-elfinder" controls><source src="' + value + '"></video>';
+    } else {
+        html = '<div class="fas fa-file-alt preview-elfinder-file"></div>';
     }
     
     el.val(value).trigger("change");

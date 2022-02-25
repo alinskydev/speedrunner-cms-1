@@ -21,7 +21,7 @@ return [
         'application' => ['doc', 'docx', 'rtf', 'xls', 'xlsx', 'pdf'], 
         'audio' => ['mp3', 'ogg'],
         'image' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg+xml'],
-        'text' => ['txt', 'csv'],
+        'text' => ['plain', 'txt', 'csv'],
         'video' => ['mp4', 'flv'],
     ],
     

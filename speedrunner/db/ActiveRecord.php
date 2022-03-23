@@ -55,8 +55,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         $class_name = StringHelper::basename(get_called_class());
         
-        $module_name = str_replace('backend\modules\\', null, get_called_class());
-        $module_name = str_replace("\models\\$class_name", null, $module_name);
+        $module_name = str_replace('backend\modules\\', '', get_called_class());
+        $module_name = str_replace("\models\\$class_name", '', $module_name);
         
         $api_class_name = "api\\models\\$module_name\\$class_name";
         

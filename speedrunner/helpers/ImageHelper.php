@@ -49,7 +49,7 @@ class ImageHelper
                 $new_thumb->save($thumb, ['quality' => 100]);
             }
             
-            return str_replace(Yii::getAlias('@frontend/web'), null, $thumb);
+            return str_replace(Yii::getAlias('@frontend/web'), '', $thumb);
         } else {
             return $image_url;
         }

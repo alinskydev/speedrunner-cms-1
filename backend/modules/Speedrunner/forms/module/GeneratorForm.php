@@ -205,7 +205,7 @@ class GeneratorForm extends Model
                     'relation' => $r
                 ]);
                 
-                $file = fopen($dir . '_' . str_replace('_tmp', null, $r['var_name']) . '.php', 'w');
+                $file = fopen($dir . '_' . str_replace('_tmp', '', $r['var_name']) . '.php', 'w');
                 fwrite($file, $file_content);
                 fclose($file);
             }

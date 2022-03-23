@@ -44,7 +44,7 @@ $types = [
                     </td>
                     
                     <td>
-                        <?= Html::input('text', "GeneratorForm[model_relations][$key][name]", str_replace($table_name, null, $key), [
+                        <?= Html::input('text', "GeneratorForm[model_relations][$key][name]", str_replace($table_name, '', $key), [
                             'class' => 'form-control',
                         ]); ?>
                     </td>

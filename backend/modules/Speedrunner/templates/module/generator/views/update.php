@@ -80,7 +80,7 @@ echo UpdateWidget::widget([
             ],
         ],
 <?php foreach ($model->view_relations as $r) { ?>
-<?php $var_name_rel = str_replace('_tmp', null, $r['var_name']); ?>
+<?php $var_name_rel = str_replace('_tmp', '', $r['var_name']); ?>
         '<?= $var_name_rel ?>' => [
             'label' => Yii::t('app', '<?= ucfirst($var_name_rel) ?>'),
             'attributes' => [

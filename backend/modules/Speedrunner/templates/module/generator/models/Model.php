@@ -85,7 +85,7 @@ class <?= $model->model_name ?> extends ActiveRecord
 <?php foreach ($model->view_relations as $r) { ?>
                     '<?= $r['var_name'] ?>' => [
                         'model' => new <?= $r['model'] ?>(),
-                        'relation' => '<?= str_replace('_tmp', null, $r['var_name']) ?>',
+                        'relation' => '<?= str_replace('_tmp', '', $r['var_name']) ?>',
                         'attributes' => [
                             'main' => '',
                             'relational' => [],

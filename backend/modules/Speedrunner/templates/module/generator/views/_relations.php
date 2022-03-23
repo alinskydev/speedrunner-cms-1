@@ -15,7 +15,7 @@ foreach ($model->view_relations as $r) {
     }
 }
 
-$var_name_relation = str_replace('_tmp', null, $relation['var_name']);
+$var_name_relation = str_replace('_tmp', '', $relation['var_name']);
 
 echo '<?php';
 

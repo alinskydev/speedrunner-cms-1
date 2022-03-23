@@ -84,6 +84,6 @@ class TranslationActiveField extends \yii\bootstrap\ActiveField
         $html[] = Html::endTag('div');
         $html[] = Html::endTag('div');
         
-        return implode(null, $html);
+        return implode('', $html);
     }
 }

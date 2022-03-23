@@ -56,7 +56,7 @@ class LogActionService extends ActiveService
                 } else {
                     $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                     $value = str_replace("},\n", "\n<hr>", $value);
-                    $value = str_replace(['{', '}', '[', ']', '"'], null, $value);
+                    $value = str_replace(['{', '}', '[', ']', '"'], '', $value);
                 }
             }
             

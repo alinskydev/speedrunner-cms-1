@@ -28,9 +28,9 @@ class UserRoleEnums
         $controllers_files[] = "$controllers_dir/CacheController.php";
         
         foreach ($controllers_files as $file) {
-            $file = str_replace([$modules_dir, $controllers_dir, 'Controller.php'], null, $file);
+            $file = str_replace([$modules_dir, $controllers_dir, 'Controller.php'], '', $file);
             $file = str_replace('\\', '/', $file);
-            $file = str_replace('/controllers', null, $file);
+            $file = str_replace('/controllers', '', $file);
             $file = ltrim($file, '/');
             
             $route_arr = explode('/', $file);

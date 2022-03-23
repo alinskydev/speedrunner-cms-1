@@ -421,7 +421,7 @@ class GridView extends BaseListView
                 }
             }
             
-            $result .= Html::tag('div', implode(null, $buttons), [
+            $result .= Html::tag('div', implode('', $buttons), [
                 'class' => 'common-buttons main-shadow p-2 d-none'
             ]);
         }

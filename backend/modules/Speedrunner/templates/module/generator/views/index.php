@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>
             [
                 'class' => 'backend\widgets\grid\ActionColumn',
-                'template' => '<?= implode(null, $buttons_template) ?>',
+                'template' => '<?= implode('', $buttons_template) ?>',
             ],
         ],
     ]); ?>

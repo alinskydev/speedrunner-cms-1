@@ -103,7 +103,7 @@ class HtmlHelper
                 imagewebp($image, $source_image);
             }
             
-            $source_image = str_replace(Yii::getAlias('@frontend/web'), null, $source_image);
+            $source_image = str_replace(Yii::getAlias('@frontend/web'), '', $source_image);
         } else {
             $source_image = $image_url;
         }
@@ -118,7 +118,7 @@ class HtmlHelper
             Html::endTag('picture'),
         ];
         
-        return implode(null, $result);
+        return implode('', $result);
     }
     
     public static function pageTitle($model, $attribute = 'name', $action_label = 'Update')

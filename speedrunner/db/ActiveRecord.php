@@ -86,15 +86,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     
     public function registerSeoMeta($type = 'page')
     {
-        $seo_meta = (new SeoMetaService($this))->getMetaValue();
-        
-        Yii::$app->view->params['seo_meta'][$type] = [
-            'head' => ArrayHelper::getValue($seo_meta, 'head'),
-            'body' => [
-                'top' => ArrayHelper::getValue($seo_meta, 'body_top'),
-                'bottom' => ArrayHelper::getValue($seo_meta, 'body_bottom'),
-            ],
-        ];
+        Yii::$app->view->params['seo_meta'][$type] = (new SeoMetaService($this))->getMetaValue();
     }
     
     //        Setting query

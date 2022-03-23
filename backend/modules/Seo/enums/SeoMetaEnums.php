@@ -14,12 +14,8 @@ class SeoMetaEnums
                 'label' => 'Head',
                 'input_type' => 'text_area',
             ],
-            'body_top' => [
-                'label' => 'Body top',
-                'input_type' => 'text_area',
-            ],
-            'body_bottom' => [
-                'label' => 'Body bottom',
+            'body' => [
+                'label' => 'Body',
                 'input_type' => 'text_area',
             ],
         ];

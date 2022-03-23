@@ -16,18 +16,10 @@ class View extends \yii\web\View
         parent::head();
     }
     
-    public function beginBody()
-    {
-        echo ArrayHelper::getValue($this->params, 'seo_meta.global.body.top');
-        echo ArrayHelper::getValue($this->params, 'seo_meta.page.body.top');
-        
-        parent::beginBody();
-    }
-    
     public function endBody()
     {
-        echo ArrayHelper::getValue($this->params, 'seo_meta.global.body.bottom');
-        echo ArrayHelper::getValue($this->params, 'seo_meta.page.body.bottom');
+        echo ArrayHelper::getValue($this->params, 'seo_meta.global.body');
+        echo ArrayHelper::getValue($this->params, 'seo_meta.page.body');
         
         parent::endBody();
     }

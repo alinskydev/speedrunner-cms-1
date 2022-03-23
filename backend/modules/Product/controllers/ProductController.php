@@ -79,4 +79,23 @@ class ProductController extends CrudController
             ]),
         ]);
     }
+    
+    public function actionVariations($id, $name, $variation_id = null)
+    {
+        $variations = ProductVariation::find()
+            ->itemsList('name', 'translation', null, null)
+            ->andWhere(['product_id' => $id])
+            ->asArray()->all();
+        
+        if (!$variations) return null;
+        
+        return Html::label(Yii::t('app', 'Variation')) . Html::dropDownList(
+            $name,
+            $variation_id,
+            ArrayHelper::map($variations, 'id', 'text'),
+            [
+                'class' => 'form-control',
+            ]
+        );
+    }
 }

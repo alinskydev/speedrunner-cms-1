@@ -24,61 +24,24 @@ echo '<?php';
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use backend\widgets\crud\RelationsWidget;
 use speedrunner\widgets\TranslationActiveField;
 
 use backend\modules\<?= $model->module_name ?>\models\<?= $relation['model'] ?>;
 
-$relations = ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>()]);
-
-?>
-
-<table class="table table-relations">
-    <thead>
-        <tr>
-            <th style="width: 50px;"></th>
+echo RelationsWidget::widget([
+    'form' => $form,
+    'relations' => ArrayHelper::merge($model-><?= $var_name_relation ?>, [new <?= $relation['model'] ?>()]),
+    'name_prefix' => '<?= $relation['model'] ?>[<?= $relation['var_name'] ?>]',
+    'attributes' => [
 <?php foreach ($columns as $key => $c) { ?>
-            <th><?= '<?= ' ?>$relations[0]->getAttributeLabel('<?= $key ?>') ?></th>
+        [
+            'name' => '<?= $key ?>',
+            'type' => 'text_input',
+            'container_options' => [
+                'class' => TranslationActiveField::className(),
+            ],
+        ],
 <?php } ?>
-            <th style="width: 50px;"></th>
-        </tr>
-    </thead>
-    
-    <tbody data-sr-trigger="sortable">
-        <?= "<?php foreach (\$relations as \$value) { ?>\n" ?>
-            <?= "<?php \$value_id = \$value->isNewRecord ? '__key__' : \$value->id ?>\n" ?>
-            
-            <tr class="<?= "<?= \$value->isNewRecord ? 'table-new-relation' : null ?>" ?>" data-table="<?= $var_name_relation ?>">
-                <td>
-                    <div class="btn btn-primary table-sorter">
-                        <i class="fas fa-arrows-alt"></i>
-                    </div>
-                </td>
-                
-<?php foreach ($columns as $key => $c) { ?>
-                <td>
-                    <?= '<?= ' ?>$form->field($value, '<?= $key ?>', ['template' => '{input}'])->textArea([
-                        'name' => "<?= $model->model_name ?>[<?= $relation['var_name'] ?>][$value_id][<?= $key ?>]",
-                        'rows' => 5,
-                    ]) ?>
-                </td>
-                
-<?php } ?>
-                <td>
-                    <button type="button" class="btn btn-danger btn-remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </td>
-            </tr>
-        <?= '<?php ' ?>} ?>
-    </tbody>
-    
-    <tfoot>
-        <tr>
-            <td colspan="<?= count($columns) + 2 ?>">
-                <button type="button" class="btn btn-success btn-block btn-add" data-table="<?= $var_name_relation ?>">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+    ],
+]);

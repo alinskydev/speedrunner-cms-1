@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b23f509496f45a45231809a51a8153446ba5e889',
+        'reference' => 'a5fa79d40937f9b3cdf34625fdfede0059449f8e',
         'name' => 'alinskydev/speedrunner-cms-1',
         'dev' => true,
     ),
@@ -34,7 +34,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b23f509496f45a45231809a51a8153446ba5e889',
+            'reference' => 'a5fa79d40937f9b3cdf34625fdfede0059449f8e',
             'dev_requirement' => false,
         ),
         'bower-asset/bootstrap' => array(
@@ -182,12 +182,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.7.0',
-            'version' => '1.7.0.0',
+            'pretty_version' => '1.8.5',
+            'version' => '1.8.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => '53330f47520498c0ae1f61f7e2c90f55690c06a3',
+            'reference' => '337e3ad8e5716c15f9657bd214d16cc5e69df268',
             'dev_requirement' => false,
         ),
         'imagine/imagine' => array(

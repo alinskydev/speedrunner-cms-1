@@ -3,11 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\web\Controller;
-use zxbodya\yii2\elfinder\ConnectorAction;
 
 
 class ConnectionController extends Controller

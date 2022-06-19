@@ -35,6 +35,6 @@ return [
             'fullscreen' => '<i class="fas fa-compress"></i>',
             'borderless' => '<i class="fas fa-arrows-alt"></i>',
             'close' => '<i class="fas fa-times"></i>',
-        ]
+        ],
     ],
 ];

@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     let el, url, sendData,
         csrf = $('meta[name="csrf-token"]').attr('content');
@@ -13,9 +13,10 @@ $(function() {
         fontAwesome: true
     };
 
-    $(document).on('mousedown', '[data-sr-trigger*="datepicker"], input[name*="Search[created_at]"], input[name*="Search[updated_at]"]', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="datepicker"], input[name*="Search[created_at]"], input[name*="Search[updated_at]"]', function () {
         if (!$(this).hasClass("hasDatepicker")) {
-            $(this).datetimepicker({...datepickerOptions,
+            $(this).datetimepicker({
+                ...datepickerOptions,
                 ... {
                     format: 'dd.mm.yyyy',
                     startView: 2,
@@ -25,9 +26,10 @@ $(function() {
         }
     });
 
-    $(document).on('mousedown', '[data-sr-trigger*="datetimepicker"]', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="datetimepicker"]', function () {
         if (!$(this).hasClass("hasDatepicker")) {
-            $(this).datetimepicker({...datepickerOptions,
+            $(this).datetimepicker({
+                ...datepickerOptions,
                 ... {
                     format: 'dd.mm.yyyy hh:ii'
                 }
@@ -35,9 +37,10 @@ $(function() {
         }
     });
 
-    $(document).on('mousedown', '[data-sr-trigger*="timepicker"]', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="timepicker"]', function () {
         if (!$(this).hasClass("hasDatepicker")) {
-            $(this).datetimepicker({...datepickerOptions,
+            $(this).datetimepicker({
+                ...datepickerOptions,
                 ... {
                     format: 'hh:ii',
                     formatViewType: 'time',
@@ -50,7 +53,7 @@ $(function() {
 
     //      Select2
 
-    $(document).on('mousedown', '[data-sr-trigger*="select2"]:not([data-sr-trigger*="select2-ajax"])', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="select2"]:not([data-sr-trigger*="select2-ajax"])', function () {
         if (!$(this).hasClass('select2-hidden-accessible')) {
             $(this).select2({
                 allowClear: true,
@@ -59,7 +62,7 @@ $(function() {
         }
     });
 
-    $(document).on('mousedown', '[data-sr-trigger*="select2-ajax"]', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="select2-ajax"]', function () {
         url = $(this).data('url');
 
         if (!$(this).hasClass('select2-hidden-accessible')) {
@@ -70,7 +73,7 @@ $(function() {
                     url: url,
                     dataType: 'json',
                     delay: 300,
-                    data: function(params) { return { q: params.term }; }
+                    data: function (params) { return { q: params.term }; }
                 }
             }).select2('open');
         }
@@ -81,7 +84,7 @@ $(function() {
     let fileManagerId, fileManagerParams,
         fileManagerUrl = $('meta[name="file-manager-connection-url"]').attr('content');
 
-    $(document).on('mousedown', '[data-sr-trigger*="file_manager"] .yii2-elfinder-select-button', function() {
+    $(document).on('mousedown', '[data-sr-trigger*="file_manager"] .yii2-elfinder-select-button', function () {
         if ($(this).hasClass('elfinder-initialized')) {
             return false;
         }
@@ -93,7 +96,7 @@ $(function() {
         window.open(fileManagerUrl + '?id=' + fileManagerId, 'elfinder-select-file', fileManagerParams).focus();
     });
 
-    $(document).on('click', '.btn-elfinder-remove', function() {
+    $(document).on('click', '.btn-elfinder-remove', function () {
         $(this).closest('.elfinder-container').find('img, audio, video, .preview-elfinder-file').remove();
         $(this).closest('.elfinder-container').find('input').removeAttr('value');
     });
@@ -105,7 +108,7 @@ $(function() {
 
     alexantr.tinyMceWidget.setBaseUrl(textEditorBaseUrl);
 
-    $(document).on('click', '[data-sr-trigger*="text_editor"]', function() {
+    $(document).on('click', '[data-sr-trigger*="text_editor"]', function () {
         if ($(this).prev('.mce-tinymce').length === 0) {
             alexantr.tinyMceWidget.register($(this).attr('id'), textEditorParams);
         }
@@ -113,12 +116,12 @@ $(function() {
 
     //      Sortable
 
-    $(document).on('mouseenter', '[data-sr-trigger*="sortable"]', function() {
+    $(document).on('mouseenter', '[data-sr-trigger*="sortable"]', function () {
         if (!$(this).hasClass('ui-sortable')) {
             $(this).sortable({
                 handle: '.table-sorter',
                 placeholder: 'sortable-placeholder',
-                start: function(event, ui) {
+                start: function (event, ui) {
                     ui.placeholder.height(ui.helper.outerHeight());
                 }
             });
@@ -133,7 +136,7 @@ $(function() {
 
     //      Toggle session
 
-    $(document).on('click', '[data-sr-trigger*="toggle_session"]', function(event) {
+    $(document).on('click', '[data-sr-trigger*="toggle_session"]', function (event) {
         event.preventDefault();
 
         el = $(this);
@@ -144,7 +147,7 @@ $(function() {
             value: el.data('sr-value')
         };
 
-        $.post(url, sendData, function(data) {
+        $.post(url, sendData, function (data) {
             if (el.data('sr-callback') !== undefined) {
                 eval(el.data('sr-callback'));
             }

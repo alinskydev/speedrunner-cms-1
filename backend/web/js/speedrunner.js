@@ -69,7 +69,7 @@ $(function() {
     
     //      Toast
     
-    let alertJson,
+    let alertsJson,
         alertLoaderColors = {
             success: '#80CFB1',
             warning: '#F5C480',

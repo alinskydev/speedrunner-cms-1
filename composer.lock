@@ -1576,16 +1576,16 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.59",
+            "version": "2.1.70",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "06ada3132cefd057e1d89cb016f8c82473d420d4"
+                "reference": "e7ea668fd569fc9903fb1c431d47d58f2daad2f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/06ada3132cefd057e1d89cb016f8c82473d420d4",
-                "reference": "06ada3132cefd057e1d89cb016f8c82473d420d4",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/e7ea668fd569fc9903fb1c431d47d58f2daad2f2",
+                "reference": "e7ea668fd569fc9903fb1c431d47d58f2daad2f2",
                 "shasum": ""
             },
             "require": {
@@ -1632,9 +1632,15 @@
             "homepage": "http://elfinder.org",
             "support": {
                 "issues": "https://github.com/Studio-42/elFinder/issues",
-                "source": "https://github.com/Studio-42/elFinder/tree/2.1.59"
+                "source": "https://github.com/Studio-42/elFinder/tree/2.1.70"
             },
-            "time": "2021-06-13T15:04:24+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/nao-pon",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-08-03T12:51:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

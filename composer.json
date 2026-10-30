@@ -32,7 +32,7 @@
         "xemlock/htmlpurifier-html5": "^0.1.11"
     },
     "require-dev": {
-        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.2.5",
         "yiisoft/yii2-faker": "~2.0.0"
     },
     "config": {
